@@ -16,6 +16,7 @@ ASSETS_PATH_PAGE3 = Path(r"C:\Users\RAJAVEL MS\myproject\TestAPI\assets\frame2")
 
 
 
+
 def relative_to_assets_page1(path: str) -> Path:
     return ASSETS_PATH_PAGE1 / Path(path)
 
