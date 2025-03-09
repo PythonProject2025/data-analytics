@@ -1,0 +1,17 @@
+{
+  "name": "customtkinter-app",
+  "version": "1.0.0",
+  "description": "CustomTkinter application",
+  "main": "src/main.py",
+  "scripts": {
+    "dev": "vite",
+    "start": "python src/main.py"
+  },
+  "dependencies": {
+    "customtkinter": "^5.2.0",
+    "pillow": "^9.5.0"
+  },
+  "devDependencies": {
+    "vite": "^4.2.0"
+  }
+}
