@@ -4,7 +4,7 @@ from src.assets_management import assets_manage
 
 
 class ProcessSelectionPage(ctk.CTkFrame):
-    def __init__(self, parent, filename):
+    def __init__(self, parent, file_path,filename):
         super().__init__(parent, corner_radius=0)
 
 
@@ -42,7 +42,7 @@ class ProcessSelectionPage(ctk.CTkFrame):
             self.button_frame, text="", image=self.data_filtering_button_image,font=("Inter", 14, "bold"),
             width=int(parent.winfo_width() * 0.4),  # 60% Width
             height=70,
-            command=lambda: parent.show_page("DataFilteringPage",filename)
+            command=lambda: parent.show_page("DataFilteringPage",file_path,filename)
         )
         self.data_filtering_button.grid(row=0, column=0, padx=20, pady=40, sticky="ew")
 

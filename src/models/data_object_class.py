@@ -1,6 +1,5 @@
 import json
 
-
 class DataObject:
     """Unified data model for managing raw data, user selections, and processed results."""
     def __init__(self):
@@ -10,29 +9,35 @@ class DataObject:
 
         # Preprocessing Configuration
         self.data_filtering= {
+            "filepath":{},
             "Outlier Detection": {
-                "IQR": {"parameters": {}},
-                "Isolation Forest": {"parameters": {"contamination": None}}#(Range: 0 - 0.5) TAKE USER INPUT
+                "Method": "IQR", # IQR or Isolation Forest
+                "Parameters": {"contamination": None,
+                               "column_names": []}#(Range: 0 - 0.5) TAKE USER INPUT
             },
-            "Interpolation": {"Spline": {}, "Kriging": {}},
             "Smoothing": {
-                "SMA": {"parameters": {"window_size": None}},#(Range: 5-100 ) #TAKE USER INPUT
-                "TES": {
-                    "parameters": {
-                        "seasonal_periods": None,#(Range: 1-12) #TAKE USER INPUT
-                        "trend": None,#add/mul/None TAKE USER INPUT
-                        "seasonal": None,#add/mul/None TAKE USER INPUT
-                        "smoothing_level": None,# Range: (0 to 1) TAKE USER INPUT
-                        "smoothing_trend": None,# Range: (0 to 1) TAKE USER INPUT
-                        "smoothing_seasonal": None,# Range: (0 to 1) TAKE USER INPUT
-                    }
+                "Method": "SMA", #SMA or TES
+                "parameters": {
+                    # If SMA, then only window size otherwise options 
+                    # from seasonal periods
+                    "window_size": 15,#(Range: 5-100 ) #TAKE USER INPUT
+                    "seasonal_periods": None,#(Range: 1-12) #TAKE USER INPUT
+                    "trend": None,#add/mul/None TAKE USER INPUT
+                    "seasonal": None,#add/mul/None TAKE USER INPUT
+                    "smoothing_level": None,# Range: (0 to 1) TAKE USER INPUT
+                    "smoothing_trend": None,# Range: (0 to 1) TAKE USER INPUT
+                    "smoothing_seasonal": None,# Range: (0 to 1) TAKE USER INPUT
                 }
             },
             "Train-Test Split": {
                 "parameters": {
                     "test_size": None,
                     "random_state": None
-                }
+                },
+                "split_data": {"X_train": None, 
+                               "X_test": None, 
+                               "y_train": None, 
+                               "y_test": None}
             }
         }
 
@@ -108,23 +113,20 @@ class DataObject:
         # Outputs for Different Models
         self.outputs = {
             "Data Processing":{
-                "Outlier Detection": {
-                    "IQR": {    "Method": "IQR",
-                                "Removed Outliers": "X rows removed",
-                                "Original data size": "No of rows, No of columns",
-                                "Cleaned data size":  "No of rows, No of columns"},
-                    "Isolation Forest": {   "Method": "Isolation Forest",
-                                            "Removed Outliers": "X rows removed",
-                                            "Original data size": "No of rows, No of columns",
-                                             "Cleaned data size":  "No of rows, No of columns"},
-                },
+                "Outlier Detection": {"Method": "Isolation Forest", # IQR or Isolation Forest
+                                      "Removed Outliers": "X rows removed",
+                                      "Original data size": "No of rows, No of columns",
+                                      "Cleaned data size":  "No of rows, No of columns",
+                                      "cleaned_data": None # Outlier output data
+                                      },
+                
                 "Interpolation": {
-                    "Spline": {     "Method": "Spline Interpolation",
-                                    "Filled Missing Values": "X values interpolated"},
-                    "Kriging": {"Method": "Kriging Interpolation",
-                                "Grid Interpolated": "Spatial transformation applied"}
+                    "Method": "Spline Interpolation",
+                    "Filled Missing Values": "X values interpolated",
+                    "Interpolated_Data": None
                 },
                 "Smoothing": {
+                    # Either SMA or TES will be given as Output
                      "SMA": {"Method": "Simple Moving Average",
                              "Smoothed Values": "X window size applied"},
                      "TES": {"Method": "Triple Exponential Smoothing",
@@ -133,7 +135,8 @@ class DataObject:
                                 "seasonal": "input given by the user",
                                 "smoothing level(alpha)": "input given by the user",
                                 "smoothing trend(beta)":  "input given by the user",
-                                "smoothing seasonal(gamma)":"input given by the user"}
+                                "smoothing seasonal(gamma)":"input given by the user"},
+                    "smoothed_data": None
                 }
             },
             "Regression": {

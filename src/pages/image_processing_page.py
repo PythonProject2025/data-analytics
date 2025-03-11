@@ -1,20 +1,42 @@
 import json
 import customtkinter as ctk
-from tkinter import Button, PhotoImage, Toplevel,messagebox
+from tkinter import Button, PhotoImage, Toplevel,messagebox,filedialog
 from src.assets_management import assets_manage, load_image
 from src.models.data_object_class import DataObject
 import requests
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from PIL import Image, ImageTk
+from tensorflow.keras.callbacks import Callback
+
+
+class TrainingLogger(Callback):
+    """Custom callback to capture training logs."""
+    def __init__(self, log_display):
+        super().__init__()
+        self.log_display = log_display  # Reference to the CTkTextbox widget
+        self.logs = []  # Store logs
+
+    def on_epoch_end(self, epoch, logs=None):
+        """Called at the end of each epoch."""
+        if logs is None:
+            logs = {}
+        log_entry = f"Epoch {epoch + 1}: Loss = {logs.get('loss', 'N/A')}, Accuracy = {logs.get('accuracy', 'N/A')}"
+        self.logs.append(log_entry)
+        self.log_display.insert(ctk.END, log_entry + "\n")  # Update the UI
+        self.log_display.see(ctk.END)  # Scroll to the end
 
 
 class ImageProcessingPage(ctk.CTkFrame):
     def __init__(self, parent,file_path,file_name=" ",):
         super().__init__(parent, corner_radius=0)
 
+        right_frame_height = int(0.8 * self.winfo_screenheight())
+
         self.file_name = file_name
         self.file_path = file_path
+        self.uploaded_image_path = None
         
 
         # Configure grid
@@ -46,19 +68,16 @@ class ImageProcessingPage(ctk.CTkFrame):
         self.graph_frame.grid_rowconfigure(1, weight=4)  # Allow graph display to expand
         self.graph_frame.grid_columnconfigure(0, weight=1)
 
-        # Dropdown ComboBox (Centered)
-        self.dropdown = ctk.CTkComboBox(self.graph_frame, values=["Option 1", "Option 2", "Option 3"])
-        self.dropdown.grid(row=0, column=0, padx=10, pady=10, sticky="n")  # `sticky="n"` keeps it at the top
-
+       
         # Graph Display Area (Expanded)
-        self.graph_display = ctk.CTkFrame(self.graph_frame, fg_color="#D1D1D1", height=250, corner_radius=10)  # Increased Size
-        self.graph_display.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")  # Expands to fill space
-
+        self.log_display = ctk.CTkTextbox(self.graph_frame, height=250, wrap='word',fg_color="transparent")
+        self.log_display.grid(row=0, column=0, padx=10, pady=10, sticky='nsew')
 
         self.Info_button_image = PhotoImage(file=assets_manage("info_B.png"))
+        self.upload_button_image = load_image("Upload Icon_B.png")
 
         # Right Side Frame (Segmented Buttons)
-        self.right_frame = ctk.CTkFrame(self, fg_color="#171821")
+        self.right_frame = ctk.CTkScrollableFrame(self, fg_color="#171821", width=300 , height= right_frame_height)
         self.right_frame.grid(row=0, column=1, sticky="en", padx=10, pady=10)
         self.right_frame.grid_columnconfigure(0, weight=1)
 
@@ -105,7 +124,7 @@ class ImageProcessingPage(ctk.CTkFrame):
         radio_label.grid(row=0, column=0, sticky="nesw")
         create_info_button(radio_frame, "Select activation function")
 
-        # ✅ Store as an instance variable
+        #  Store as an instance variable
         self.radio_var = ctk.StringVar(value="relu")  # Default: relu
         ctk.CTkRadioButton(radio_frame, text="ReLU", variable=self.radio_var, value="relu").grid(row=1, column=0, padx=10, pady=5, sticky="w")
         ctk.CTkRadioButton(radio_frame, text="sigmoid", variable=self.radio_var, value="sigmoid").grid(row=1, column=1, padx=10, pady=5, sticky="w")
@@ -177,7 +196,47 @@ class ImageProcessingPage(ctk.CTkFrame):
         self.random_state_slider.grid(row=2, column=0, padx=10, sticky="ew")
 
         return frame
+    
+    def create_image_train_frame(self):
+        frame = ctk.CTkFrame(self.segment_container, fg_color="#E0E0E0", corner_radius=10)
+        frame.grid_columnconfigure(0, weight=1)
 
+        # Upload Image Button
+        self.upload_button = ctk.CTkButton(frame, text="Upload Image",image=self.upload_button_image,command=self.upload_image)
+        self.upload_button.grid(row=0, column=0, padx=10, pady=10)
+
+        # Label to show uploaded file name
+        self.image_label = ctk.CTkLabel(frame, text="No file uploaded", font=("Inter", 12))
+        self.image_label.grid(row=1, column=0, padx=10, pady=5)
+
+        # Preview Button
+        self.preview_button = ctk.CTkButton(frame, text="Preview Image", command=self.preview_image, state="disabled")
+        self.preview_button.grid(row=2, column=0, padx=10, pady=10)
+
+        return frame
+
+    def upload_image(self):
+        file_path = filedialog.askopenfilename(filetypes=[("Image Files", "*.png;*.jpg;*.jpeg")])
+        if file_path:
+            self.uploaded_image_path = file_path
+            self.image_label.configure(text=f"Uploaded: {file_path.split('/')[-1]}")
+            self.preview_button.configure(state="normal")  # Enable preview button
+
+    def preview_image(self):
+       
+        if self.uploaded_image_path:
+            preview_window = ctk.CTkToplevel(self)
+            preview_window.title("Image Preview")
+            preview_window.geometry("500x500")
+            preview_window.grab_set()  # Prevents flickering
+
+            img = Image.open(self.uploaded_image_path)
+            img.thumbnail((450, 450))
+            img = ImageTk.PhotoImage(img)
+
+            image_label = ctk.CTkLabel(preview_window, image=img, text="")
+            image_label.image = img  # Keep a reference
+            image_label.pack(expand=True)
 
 
     def show_info_dialog(self, text):
@@ -195,109 +254,107 @@ class ImageProcessingPage(ctk.CTkFrame):
             self.current_segment.grid_forget()
         self.current_segment = self.segments[segment_name]
         self.current_segment.grid(row=1, column=0, sticky="nsew")
+        self.segmented_frame.set(segment_name)
 
     def submit_action(self):
         """Collects parameters from UI components and sends them to backend."""
-    
-        # Activation Function Selection
-        activation_function = self.radio_var.get()
-    
-        # Epochs
-        epochs = int(self.epoch_slider.get())
 
-        # Optimizer
-        optimizer = self.optimizer_combobox.get()
+        active_tab = self.segmented_frame.get()  
 
-        # Test Size
-        test_size = float(self.test_size_slider.get())
+        if active_tab == "Image Processing":
+            print("Image Processing Submitted")
+        
+            # Create Image Train tab only if it doesn't exist
+            if "Image Train" not in self.segments:
+                self.segmented_frame.configure(values=["Image Processing", "Image Train"])
+                self.segments["Image Train"] = self.create_image_train_frame()
 
-        # Random State
-        random_state = int(self.random_state_slider.get())
+            
 
-        # Create DataObject
-        dataobject = DataObject()
-        dataobject.image_processing["fileio"]["zipFilePath"] = self.file_path
-        dataobject.image_processing["fileio"]["isZipped"] = True
-        dataobject.image_processing["model_params"]["activation_fn"] = activation_function
-        dataobject.image_processing["model_params"]["optimizer"] = optimizer
-        dataobject.image_processing["training_params"]["epochs"] = epochs
-        dataobject.image_processing["train_test_split"]["test_size"] = test_size
-        dataobject.image_processing["train_test_split"]["random_state"] = random_state
+            
+            # Activation Function Selection
+            activation_function = self.radio_var.get()
+        
+            # Epochs
+            epochs = int(self.epoch_slider.get())
 
-        # Convert DataObject to JSON
-        json_data = {"dataobject": dataobject.to_dict()}
+            # Optimizer
+            optimizer = self.optimizer_combobox.get()
 
-        try:
-            response = requests.post(
-                'http://127.0.0.1:8000/api/imageprocessing/',
-                json=json_data
-            )
+            # Test Size
+            test_size = float(self.test_size_slider.get())
 
-            if response.status_code == 200:
-                response_data = response.json()
-                
-                # Extract confusion matrix data
-                cm_data= response_data["confusionMatrix"]
-                
-                if cm_data:
-                    self.plot_confusion_matrix(cm_data)  # Call plotting function
-                    print("Response received successfully")
-                else:
-                    messagebox.showerror("Error", "Confusion Matrix data not received.")
-            else:
-                messagebox.showerror(
-                    "Error", response.json().get('error', 'File upload failed.')
+            # Random State
+            random_state = int(self.random_state_slider.get())
+
+            # Create DataObject
+            dataobject = DataObject()
+            dataobject.image_processing["fileio"]["zipFilePath"] = self.file_path
+            dataobject.image_processing["fileio"]["isZipped"] = True
+            dataobject.image_processing["model_params"]["activation_fn"] = activation_function
+            dataobject.image_processing["model_params"]["optimizer"] = optimizer
+            dataobject.image_processing["training_params"]["epochs"] = epochs
+            dataobject.image_processing["train_test_split"]["test_size"] = test_size
+            dataobject.image_processing["train_test_split"]["random_state"] = random_state
+
+            # Convert DataObject to JSON
+            json_data = {"dataobject": dataobject.to_dict()}
+
+            try:
+                # Initialize the logger
+                logger = TrainingLogger(self.log_display)
+
+                response = requests.post(
+                    'http://127.0.0.1:8000/api/imageprocessing/',
+                    json=json_data
                 )
-        except Exception as e:
-            messagebox.showerror("Error", str(e))
+
+                if response.status_code == 200:
+                    response_data = response.json()
+                    
+                    # Extract confusion matrix data
+                    cm_data= response_data["confusionMatrix"]
+                    
+                    if cm_data:
+                        self.plot_confusion_matrix(cm_data)  # Call plotting function
+                        print("Response received successfully")
+                    else:
+                        messagebox.showerror("Error", "Confusion Matrix data not received.")
+                else:
+                    messagebox.showerror(
+                        "Error", response.json().get('error', 'File upload failed.')
+                    )
+            except Exception as e:
+                messagebox.showerror("Error", str(e))
+
+        elif active_tab == "Image Train":
+            print("Image Train Submitted")
 
 
     def plot_confusion_matrix(self, cm_data):
-        from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+        popup = ctk.CTkToplevel(self)
+        popup.title('Confusion Matrix')
+        popup.geometry('800x800')
+        
+        labels = cm_data["labels"]
+        cm_values = np.array(cm_data["values"])
+        
+        fig, ax = plt.subplots(figsize=(8, 8))
+        cax = ax.matshow(cm_values, cmap="viridis")
+        fig.colorbar(cax)
 
-def plot_confusion_matrix(self, cm_data):
-    """Plots the confusion matrix inside the UI."""
+        for i in range(cm_values.shape[0]):
+            for j in range(cm_values.shape[1]):
+                ax.text(j, i, f"{cm_values[i, j]:.2f}", ha="center", va="center", color="white")
 
-    # Clear previous plots in graph_display
-    for widget in self.graph_display.winfo_children():
-        widget.destroy()
+        ax.set_xticklabels([""] + labels, rotation=45)
+        ax.set_yticklabels([""] + labels)
+        
+        canvas = FigureCanvasTkAgg(fig, master=popup)
+        canvas_widget = canvas.get_tk_widget()
+        canvas_widget.pack(fill='both', expand=True)
+        canvas.draw()
 
-    labels = cm_data["labels"]
-    cm_percentage = np.array(cm_data["values"])
-    xlabel = cm_data["xlabel"]
-    ylabel = cm_data["ylabel"]
-    title = cm_data["title"]
-    tick_marks = np.array(cm_data["tick_marks"])
-
-    # Create Figure for Matplotlib
-    fig, ax = plt.subplots(figsize=(5, 4))  # Adjusted for UI
-
-    cax = ax.matshow(cm_percentage, cmap="viridis")
-    fig.colorbar(cax)
-
-    # Annotate the confusion matrix
-    for i in range(cm_percentage.shape[0]):
-        for j in range(cm_percentage.shape[1]):
-            text = f"{cm_percentage[i, j]:.2f}%\n({int(cm_percentage[i, j])})"
-            ax.text(j, i, text, ha="center", va="center", color="white")
-
-    # Set labels and title
-    ax.set_xlabel(xlabel)
-    ax.set_ylabel(ylabel)
-    ax.set_xticks(tick_marks)
-    ax.set_yticks(tick_marks)
-    ax.set_xticklabels(labels, rotation=45)
-    ax.set_yticklabels(labels)
-    ax.set_title(title)
-
-    plt.tight_layout()
-
-    # Embed Matplotlib Figure inside Tkinter
-    canvas = FigureCanvasTkAgg(fig, master=self.graph_display)
-    canvas_widget = canvas.get_tk_widget()
-    canvas_widget.pack(fill="both", expand=True)  # Makes it responsive
-
-    canvas.draw()
 
 
 
