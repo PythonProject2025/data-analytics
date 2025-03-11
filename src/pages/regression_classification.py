@@ -204,4 +204,4 @@ class RegressionClassificationpage(ctk.CTkFrame):
 
     def submit_action(self):
         """Submit button action placeholder."""
-        print("Submitted!")
+        

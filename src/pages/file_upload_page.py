@@ -56,6 +56,6 @@ class FileUploadPage(ctk.CTkFrame):
 
             file_name = os.path.basename(file_path)  # Extract only the file name
             if file_path.endswith(".csv"):
-                self.app.show_page("Process_selection",file_name)
+                self.app.show_page("Process_selection",file_path,file_name)
             elif file_path.endswith(".zip"):
                 self.app.show_page("ImageProcessingPage",file_path,file_name)
