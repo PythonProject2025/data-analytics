@@ -11,7 +11,7 @@ class DataObject:
             "Outlier Detection": {
                 "Method": "IQR", # IQR or Isolation Forest
                 "Parameters": {"contamination": None,
-                               "column_names": []}#(Range: 0 - 0.5) TAKE USER INPUT
+                               "column_names": []}#TAKE USER INPUT
             },
             "Smoothing": {
                 "Method": "SMA", #SMA or TES
@@ -29,8 +29,9 @@ class DataObject:
             },
             "Train-Test Split": {
                 "parameters": {
-                    "test_size": None,
-                    "random_state": None
+                    "test_size": 0.2,
+                    "random_state": 42,
+                    "target_column": None
                 },
                 "split_data": {"X_train": None, 
                                "X_test": None, 

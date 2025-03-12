@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from tkinter import Button, PhotoImage, Toplevel
+from tkinter import Button, PhotoImage, Toplevel,messagebox
 from src.assets_management import assets_manage, load_image
 
 
@@ -8,6 +8,8 @@ class AImodelPage(ctk.CTkFrame):
         super().__init__(parent, corner_radius=0)
 
         self.file_name = file_name
+        right_frame_height = int(0.8 * self.winfo_screenheight())
+
 
         # Configure grid
         self.grid_rowconfigure(0, weight=1)
@@ -38,19 +40,16 @@ class AImodelPage(ctk.CTkFrame):
         self.graph_frame.grid_rowconfigure(1, weight=4)  # Allow graph display to expand
         self.graph_frame.grid_columnconfigure(0, weight=1)
 
-        # Dropdown ComboBox (Centered)
-        self.dropdown = ctk.CTkComboBox(self.graph_frame, values=["Option 1", "Option 2", "Option 3"])
-        self.dropdown.grid(row=0, column=0, padx=10, pady=10, sticky="n")  # `sticky="n"` keeps it at the top
-
+       
         # Graph Display Area (Expanded)
         self.graph_display = ctk.CTkFrame(self.graph_frame, fg_color="#D1D1D1", height=250, corner_radius=10)  # Increased Size
-        self.graph_display.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")  # Expands to fill space
+        self.graph_display.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")  # Expands to fill space
 
 
         self.Info_button_image = PhotoImage(file=assets_manage("info_B.png"))
 
         # Right Side Frame (Segmented Buttons for AI Model)
-        self.right_frame = ctk.CTkFrame(self, fg_color="#171821")
+        self.right_frame = ctk.CTkScrollableFrame(self, fg_color="#171821", width=300 , height= right_frame_height)
         self.right_frame.grid(row=0, column=1, sticky="en", padx=10, pady=10)
         self.right_frame.grid_columnconfigure(0, weight=1)
 
@@ -190,18 +189,77 @@ class AImodelPage(ctk.CTkFrame):
         ctk.CTkLabel(dialog, text=text, font=("Inter", 12)).pack(pady=20)
         ctk.CTkButton(dialog, text="OK", command=dialog.destroy).pack()
 
-    def change_segment(self, segment_name):
-        """Switch between segment frames."""
-        if self.current_segment:
-            self.current_segment.grid_forget()
-        self.current_segment = self.segments[segment_name]
-        self.current_segment.grid(row=1, column=0, sticky="nsew")
-
     def create_info_button(self,parent, text):
             """Creates an inline info button next to the label."""
             button = Button(parent, text="", image=self.Info_button_image, width=8, height=8, command=lambda: self.show_info_dialog(text))
             button.grid(row=0, column=1, padx=5, sticky="w") 
 
+    from tkinter import messagebox
+
+    def change_segment(self, segment_name):
+        """Switch between segment frames with validation checks."""
+        if segment_name == "ANN":
+            messagebox.showwarning("Model Restriction", "This method is only for regression.")
+            
+
+        elif segment_name == "XGBoost":
+            messagebox.showwarning("Model Restriction", "This method is only for classification.")
+           
+
+        # If switching is allowed, update the tab
+        if self.current_segment:
+            self.current_segment.grid_forget()
+        self.current_segment = self.segments[segment_name]
+        self.current_segment.grid(row=1, column=0, sticky="nsew")
+        self.segmented_frame.set(segment_name)  # Highlight the active segment
+
     def submit_action(self):
-        """Submit button action placeholder."""
-        print("Submitted!")
+        """Submit button action with printing respective slider values."""
+        selected_model = self.segmented_frame.get()  # Get the currently selected model
+        print(f"Submitting model: {selected_model}")
+
+        # Retrieve slider values for the selected model
+        if selected_model == "Random Forest":
+            n_estimators = self.get_slider_value("n_estimators")
+            max_depth = self.get_slider_value("max_depth")
+            min_samples_split = self.get_slider_value("min_samples_split")
+            min_samples_leaf = self.get_slider_value("min_samples_leaf")
+            print(f"n_estimators: {n_estimators}, max_depth: {max_depth}, min_samples_split: {min_samples_split}, min_samples_leaf: {min_samples_leaf}")
+
+        elif selected_model == "CatBoost":
+            n_estimators = self.get_slider_value("n_estimators")
+            learning_rate = self.get_slider_value("learning_rate")
+            max_depth = self.get_slider_value("max_depth")
+            reg_lambda = self.get_slider_value("reg_lambda")
+            print(f"n_estimators: {n_estimators}, learning_rate: {learning_rate}, max_depth: {max_depth}, reg_lambda: {reg_lambda}")
+
+        elif selected_model == "ANN":
+            layer_number = self.get_slider_value("Layer Number")
+            units = self.get_slider_value("Units")
+            activation = self.get_combobox_value("Activation Function")
+            optimizer = self.get_combobox_value("Optimizer")
+            batch_size = self.get_slider_value("Batch Size")
+            epochs = self.get_slider_value("Epochs")
+            print(f"Layer Number: {layer_number}, Units: {units}, Activation: {activation}, Optimizer: {optimizer}, Batch Size: {batch_size}, Epochs: {epochs}")
+
+        elif selected_model == "XGBoost":
+            n_estimators = self.get_slider_value("n_estimators")
+            learning_rate = self.get_slider_value("learning_rate")
+            min_split_loss = self.get_slider_value("min_split_loss")
+            max_depth = self.get_slider_value("max_depth")
+            print(f"n_estimators: {n_estimators}, learning_rate: {learning_rate}, min_split_loss: {min_split_loss}, max_depth: {max_depth}")
+
+    def get_slider_value(self, slider_name):
+        """Helper function to retrieve slider values."""
+        for widget in self.current_segment.winfo_children():
+            if isinstance(widget, ctk.CTkSlider) and slider_name in widget.winfo_parent():
+                return widget.get()
+        return None
+
+    def get_combobox_value(self, combobox_name):
+        """Helper function to retrieve combobox values."""
+        for widget in self.current_segment.winfo_children():
+            if isinstance(widget, ctk.CTkComboBox) and combobox_name in widget.winfo_parent():
+                return widget.get()
+        return None
+

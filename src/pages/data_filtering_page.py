@@ -101,10 +101,6 @@ class DataFilteringPage(ctk.CTkFrame):
         if self.file_path:  
             self.load_csv_columns(self.file_path)
         
-    
-
-
-
     def create_segment_frame(self):
         """Creates a frame for each segment."""
         frame = ctk.CTkFrame(self.segment_container, fg_color="#E0E0E0", corner_radius=10)
@@ -278,8 +274,6 @@ class DataFilteringPage(ctk.CTkFrame):
             frame.tes_frame.configure(height=250)
             frame.tes_frame.grid()
 
-
-
     def toggle_slider(self, frame, show):
         """Shows or hides the slider based on radio button selection."""
         if show:
@@ -337,8 +331,6 @@ class DataFilteringPage(ctk.CTkFrame):
         except Exception as e:
             print("Error loading CSV:", str(e))
 
-
-
     def submit_action(self):
         current_segment = self.segmented_frame.get()  # Get the active segment
         
@@ -359,10 +351,11 @@ class DataFilteringPage(ctk.CTkFrame):
             self.run_outlier_detection()
         elif current_segment == "Interpolation":
             print (self.interpolation_radio_var.get())
-
+            self.run_interpolation()
         elif current_segment == "Smoothing":
             print (self.smoothing_radio_var.get())
             print (self.sma_slider.get())
+            self.run_smoothing()
         # ✅ Print TES Parameters if TES is selected
         if self.smoothing_radio_var.get() == "TES":
             print("\n--- TES Parameters ---")
@@ -371,7 +364,8 @@ class DataFilteringPage(ctk.CTkFrame):
                     print(f"{key}: {widget.get()}")
                 elif isinstance(widget, ctk.CTkEntry):
                     print(f"{key}: {widget.get()}")
-
+            self.run_scaling_encoding()
+            
     def move_to_next_segment(self):
         """Move to the next available segment after submission."""
         segment_order = ["Outlier Detection", "Interpolation", "Smoothing"]
@@ -402,13 +396,18 @@ class DataFilteringPage(ctk.CTkFrame):
         try:
            
             response = requests.post(
-                    'http://127.0.0.1:8000/api/outlier_detection/',
+                    f"http://127.0.0.1:8000/api/{process_name}/",
                     json=json_data
             )
  
             if response.status_code == 200:
                     response_data = response.json()
                     print(response_data)
+                    if process_name == "outlier_detection" and "cleaned_data" in response_data:
+                        self.cleaned_data = response_data["cleaned_data"]  # Store cleaned data JSON
+                    elif process_name == "interpolation" and "interpolated_data" in response_data:
+                        self.interpolated_data = response_data["interpolated_data"]  # Store interpolated data JSON
+                    return response_data
             else:
                     messagebox.showerror(
                         "Error", response.json().get('error', 'File upload failed.')
@@ -433,4 +432,36 @@ class DataFilteringPage(ctk.CTkFrame):
         print(json_data)
         # Send request
         self.send_request("outlier_detection", json_data)
+
+    def run_interpolation(self):
+        """Runs interpolation and updates the data object."""
+        if not hasattr(self, "cleaned_data"):
+            messagebox.showerror("Error", "Cleaned data is missing. Please run Outlier Detection first.")
+            return
         
+        json_data = {
+            "cleaned_data": self.cleaned_data  
+        }
+        print("going to send request to interpolation")
+        # Send request to backend
+        self.send_request("interpolation", json_data)
+        
+    def run_smoothing(self):
+        """Runs smoothing and updates the data object."""
+        if not hasattr(self, "interpolated_data"):
+            messagebox.showerror("Error", "Interpolated data is missing. Please run Outlier Detection first and then Interpolation.")
+            return
+        dataobject = DataObject()
+        dataobject.data_filtering["Smoothing"]["Method"] = self.smoothing_radio_var.get()
+        dataobject.data_filtering["Smoothing"]["parameters"]["window_size"] = int(round(self.sma_slider.get()))
+        
+        # Convert DataObject to JSON
+        json_data = {"dataobject": dataobject.to_dict()}
+        print(json_data)
+        json_data = {
+            "dataobject": dataobject.to_dict(),
+            "interpolated_data": self.interpolated_data 
+        }
+        print("going to send request to smoothing")
+        # Send request to backend
+        self.send_request("smoothing", json_data)

@@ -17,10 +17,12 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import include, path
-from backend.api.data_preprocessing_engine import DataFilteringFileAPIView
+from backend.api.data_preprocessing_engine import DataFilteringFileAPIView, InterpolationAPIView, SmoothingAPIView
 from backend.api.image_processing_engine import ImageProcessingAPIView
 
 urlpatterns = [
     path('outlier_detection/', DataFilteringFileAPIView.as_view(), name='datafiltering_file'),
+    path('interpolation/', InterpolationAPIView.as_view(), name='datafiltering_file'),
+    path('smoothing/', SmoothingAPIView.as_view(), name='datafiltering_file'),
     path('imageprocessing/', ImageProcessingAPIView.as_view(), name='imageprocessing')
 ]

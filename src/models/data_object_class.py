@@ -127,9 +127,9 @@ class DataObject:
                 },
                 "Smoothing": {
                     # Either SMA or TES will be given as Output
-                     "SMA": {"Method": "Simple Moving Average",
+                    "SMA": {"Method": "Simple Moving Average",
                              "Smoothed Values": "X window size applied"},
-                     "TES": {"Method": "Triple Exponential Smoothing",
+                    "TES": {"Method": "Triple Exponential Smoothing",
                                 "seasonal_periods": "input given by the user", 
                                 "trend": "input given by the user", 
                                 "seasonal": "input given by the user",

@@ -6,11 +6,11 @@ import pandas as pd
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "models")))
 
 # Import Outlier Detection Class and DataObject
-from Outlier_final import OutlierDetection
-from Smoothing_final_1 import SmoothingMethods
-from data_object_final import DataObject  
-from Spline_Interpolation_final import SplineInterpolator
-from data_object_final import DataObject
+from Project_main.Outlier_final import OutlierDetection
+from Project_main.Smoothing_final import SmoothingMethods
+from Project_main.Spline_Interpolation_final import SplineInterpolator
+from Project_main.Scaling_and_Encoding_final import EncodeAndScaling
+from Project_main.data_object_final import DataObject  
 
 # -------------------- FUNCTION: RUN OUTLIER DETECTION -------------------- #
 def run_outlier_detection(dataset, data_object):
@@ -51,12 +51,8 @@ def run_outlier_detection(dataset, data_object):
     return data
 
 # -------------------- FUNCTION: RUN INTERPOLATION -------------------- #
-def run_interpolation(cleaned_outlier_data,data_object):
+def run_interpolation(cleaned_outlier_data):
     """Runs the cubic spline interpolation on the dataset after outlier detection."""
-
-    column_names = data_object["Parameters"]["column_names"]
-    # Store original data size (before interpolation)
-    original_size = cleaned_outlier_data.shape
 
     # Initialize the Interpolator
     interpolator = SplineInterpolator(cleaned_outlier_data)
@@ -64,7 +60,7 @@ def run_interpolation(cleaned_outlier_data,data_object):
 
     # Efficiently update only values inside the predefined structure
     data = {"Method": "Spline Interpolation",
-            "Filled_Missing_Values": interpolated_data.shape[0] - original_size[0],
+            "Filled_Missing_Values": cleaned_outlier_data.isna().sum().sum() - interpolated_data.isna().sum().sum(),
             "Interpolated_Data": interpolated_data
     }
 
@@ -101,7 +97,7 @@ def run_smoothing(interpolated_data, data_object):
         smoothing_seasonal = smoothing_config["TES"]["parameters"]["smoothing_seasonal"]
 
         smoothed_data = smoother.apply_tes(seasonal_periods, 
-                                           trend, 
+                                            trend, 
                                            seasonal, 
                                            smoothing_level, 
                                            smoothing_trend, 
@@ -120,6 +116,20 @@ def run_smoothing(interpolated_data, data_object):
 
     return data
 
+# -------------------- FUNCTION: RUN ENCODING, SCALING, TRAIN TEST SPLIT -------------------- #
+
+def run_encoding_scaling_train_test_split(data, data_object):
+    """
+    Runs encoding, scaling, and train-test splitting on the dataset after smoothing.
+    
+    :param smoothed_data: The dataset after smoothing.
+    :return: Dictionary containing train-test split and details.
+    """
+    # Initialize the Encoder & Scaler
+    processor = EncodeAndScaling(data)
+    data= processor.preprocess(data_object["parameters"])  # No need to pass test_size or random_state
+
+    return data
 # -------------------- FUNCTION: RETURN FINAL DATA OBJECT -------------------- #
 def get_final_results():
     """Returns the final DataObject output for GUI processing."""
@@ -133,7 +143,7 @@ if __name__ == "__main__":
     data_object = DataObject()  
 
     # Retrieve dataset from DataObject's raw_data
-    data_object.raw_data = pd.read_csv("/Users/niharikav/Desktop/MAIT_Notes/OOPS/OOPS project/Steel_industry_data.csv")  # Stores uploaded file data
+    data_object.raw_data = pd.read_csv("Steel_industry_data.csv")  # Stores uploaded file data
     dataset = data_object.raw_data
 
     data_object.data_filtering["Outlier Detection"]["Parameters"]["column_names"] = ["Lagging_Current_Reactive.Power_kVarh"]
@@ -147,6 +157,7 @@ if __name__ == "__main__":
 
     # Retrieve cleaned data from Outlier Detection
     cleaned_outlier_data = data_object.outputs["Data Processing"]["Outlier Detection"]["cleaned_data"]
+
     # Run Interpolation
     data_object.outputs["Data Processing"]["Interpolation"] = run_interpolation(cleaned_outlier_data)
 
@@ -154,12 +165,30 @@ if __name__ == "__main__":
     print(data_object.outputs["Data Processing"]["Interpolation"])
 
     interpolated_data = data_object.outputs["Data Processing"]["Interpolation"]["Interpolated_Data"]
+
+    # Retrieve interpolated data from Interpolation
+    interpolated_data = data_object.outputs["Data Processing"]["Interpolation"]["Interpolated_Data"]
+
     # Run Smoothing
     data_object.outputs["Data Processing"]["Smoothing"] = run_smoothing(interpolated_data, 
                   data_object.data_filtering["Smoothing"])
 
     print("Smoothing completed successfully.")
     print(data_object.outputs["Data Processing"]["Smoothing"])
+
+    # Retrieve smoothed data from Smoothing
+    #This dataset will be given by the user if they decide not go throught the preprocessing pipeline
+    data = data_object.outputs["Data Processing"]["Smoothing"]["smoothed_data"] 
+    #data = data_object.raw_data
+
+    # Run Encoding, Scaling, Train-Test Split
+
+    data_object.data_filtering["Train-Test Split"]["parameters"]["target_column"] = ["Load_Type"]
+    data_object.data_filtering["Train-Test Split"]["split_data"] = run_encoding_scaling_train_test_split(data ,
+                                                                                                         data_object.data_filtering["Train-Test Split"])
+
+    print("Encoding, Scaling, Train-Test Split completed successfully.")
+    print(data_object.data_filtering["Train-Test Split"]["split_data"])
 
     # Return final results (to be handled by GUI)
     final_results = get_final_results()
