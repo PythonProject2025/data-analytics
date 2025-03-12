@@ -1,3 +1,4 @@
+import io
 import os
 import sys
 import pandas as pd
@@ -9,7 +10,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "models"
 
 # Import processing classes
 from data_filtering.Outlier_final import OutlierDetection
-from data_filtering.Smoothing_final_1 import SmoothingMethods
+from data_filtering.Smoothing_final import SmoothingMethods
 from data_filtering.Spline_Interpolation_final import SplineInterpolator
 from data_filtering.Scaling_and_Encoding_final import EncodeAndScaling
 from models.data_object_class import DataObject
@@ -28,7 +29,6 @@ class DataFilteringFileAPIView(APIView):
         # Retrieve dataset from DataObject's raw_data
         data_object.raw_data = pd.read_csv(data_object.data_filtering["filepath"])  # Stores uploaded file data
         dataset = data_object.raw_data
-        print(data_object.data_filtering["Outlier Detection"])
         # Step 1: Outlier Detection
         data_object.outputs["Data Processing"]["Outlier Detection"] = self.run_outlier_detection(
             dataset, data_object.data_filtering["Outlier Detection"]
@@ -89,15 +89,15 @@ class DataFilteringFileAPIView(APIView):
 class InterpolationAPIView(APIView):
     
     def post(self, request):
-        print("Received request data:", request.data)
-        data_dict = request.data.get("dataobject", {})
 
-        if not data_dict:
-            return Response({"error": "Invalid request, 'dataobject' missing"}, status=status.HTTP_400_BAD_REQUEST)
-
-        # Load data into DataObject
         data_object = DataObject()
-        cleaned_outlier_data = pd.DataFrame.from_dict(data_dict.get("cleaned_data", {}))
+        cleaned_outlier_data_json = request.data.get("cleaned_data", "[]")
+        if not cleaned_outlier_data_json:
+            return Response({"error": "Cleaned data missing from request"}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            cleaned_outlier_data = pd.read_json(io.StringIO(cleaned_outlier_data_json))
+        except ValueError as e:
+            return Response({"error": f"Invalid JSON format: {str(e)}"}, status=status.HTTP_400_BAD_REQUEST)
 
         # Step 2: Interpolation
         data_object.outputs["Data Processing"]["Interpolation"] = self.run_interpolation(cleaned_outlier_data)
@@ -109,7 +109,7 @@ class InterpolationAPIView(APIView):
             "step": "Interpolation",
             "method": data_object.outputs["Data Processing"]["Interpolation"]["Method"],
             "filled_missing_values": data_object.outputs["Data Processing"]["Interpolation"]["Filled_Missing_Values"],
-            "interpolated_data": data_object.outputs["Data Processing"]["Interpolation"]["Interpolated_Data"].to_dict()
+            "interpolated_data": data_object.outputs["Data Processing"]["Interpolation"]["Interpolated_Data"].to_json(orient="records")
         }
         return Response(response_data, status=status.HTTP_200_OK)
 
@@ -132,7 +132,6 @@ class InterpolationAPIView(APIView):
 class SmoothingAPIView(APIView):
     
     def post(self, request):
-        print("Received request data:", request.data)
         data_dict = request.data.get("dataobject", {})
 
         if not data_dict:
@@ -140,8 +139,15 @@ class SmoothingAPIView(APIView):
 
         # Load data into DataObject
         data_object = DataObject()
-        interpolated_data = pd.DataFrame.from_dict(data_dict.get("interpolated_data", {}))
-
+        data_object.data_filtering = data_dict.get("data_filtering", {})
+        interpolated_data_json = request.data.get("interpolated_data", "[]")
+        if not interpolated_data_json:
+            return Response({"error": "Interpolated data missing from request"}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            interpolated_data = pd.read_json(io.StringIO(interpolated_data_json))
+        except ValueError as e:
+            return Response({"error": f"Invalid JSON format: {str(e)}"}, status=status.HTTP_400_BAD_REQUEST)
+        print("reached smoothing backend")
         # Step 3: Smoothing
         data_object.outputs["Data Processing"]["Smoothing"] = self.run_smoothing(
             interpolated_data, data_object.data_filtering["Smoothing"]
@@ -152,8 +158,8 @@ class SmoothingAPIView(APIView):
 
         response_data = {
             "step": "Smoothing",
-            "method": data_object.outputs["Data Processing"]["Smoothing"]["Method"],
-            "smoothed_data": data_object.outputs["Data Processing"]["Smoothing"]["smoothed_data"].to_dict()
+            "method": data_object.outputs["Data Processing"]["Smoothing"]["SMA"]["Method"],
+            "smoothed_data": data_object.outputs["Data Processing"]["Smoothing"]["smoothed_data"].to_json(orient="records")
         }
         return Response(response_data, status=status.HTTP_200_OK)
 

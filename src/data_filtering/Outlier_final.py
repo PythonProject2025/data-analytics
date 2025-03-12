@@ -9,7 +9,7 @@ class OutlierDetection:
         :param data: Pandas DataFrame containing the dataset.
         """
         self.data = data  # Dataset
-        #self.numeric_columns = self.data.select_dtypes(include=["number"]).columns  # Select numeric columns
+        self.numeric_columns = self.data.select_dtypes(include=["number"]).columns  # Select numeric columns
 
     def is_numeric_columns(self, dataset, column_names):
         """Checks if the values in the given columns are numeric."""
@@ -55,7 +55,7 @@ class OutlierDetection:
             raise ValueError("Non-numeric columns detected. Please select numeric columns for Isolation Forest outlier detection.")
 
         cleaned_data = self.data.copy()
-        selected_data = cleaned_data[self.is_numeric_columns]
+        selected_data = cleaned_data[self.numeric_columns]
 
         # Fit Isolation Forest
         i_forest = IsolationForest(contamination=contamination, random_state=42)

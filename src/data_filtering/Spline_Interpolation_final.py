@@ -41,4 +41,22 @@ class SplineInterpolator:
 
         return cleaned_data  # Return the cleaned dataset
 
-   
+    # def plot_interpolation(self):
+    #     """Plots original and interpolated data for each numeric column."""
+    #     for column in self.numeric_columns:
+    #         if not self.check_column_validity(column):
+    #             continue
+
+    #         plt.figure(figsize=(10, 6))
+    #         known_data = self.data[self.data[column].notnull()]
+    #         interpolated_data = self.data[self.data[column].isnull() == False]
+
+    #         plt.scatter(known_data.index, known_data[column], color="blue", label="Original Data (Known)")
+    #         plt.scatter(interpolated_data.index, interpolated_data[column], color="red", label="Interpolated Data")
+
+    #         plt.title(f"Cubic Spline Interpolation for {column}")
+    #         plt.xlabel("Index")
+    #         plt.ylabel(column)
+    #         plt.legend()
+    #         plt.grid(True)
+    #         plt.show()

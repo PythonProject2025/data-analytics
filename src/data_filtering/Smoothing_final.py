@@ -26,8 +26,8 @@ class SmoothingMethods:
         if not numeric_cols:
             raise ValueError("No numeric columns found for SMA.")
         
-        sma_results = data[numeric_cols].rolling(window=window).mean()
-        return pd.DataFrame(sma_results)
+        data[numeric_cols] = data[numeric_cols].rolling(window=window, min_periods=1).mean()
+        return data
 
 
     def apply_tes(self, data, seasonal_periods, trend, seasonal, smoothing_level, smoothing_trend, smoothing_seasonal):
@@ -59,7 +59,7 @@ class SmoothingMethods:
                                          smoothing_seasonal=smoothing_seasonal)
                 tes_results[column] = fitted_model.fittedvalues
             except Exception as e:
-                print(f"Warning: TES could not be applied to '{column}'. Error: {e}")
+                print(f"Warning: TES could not be applied to '{column}' as column contains nulls. Error: {e}")
                 tes_results[column] = np.nan  # Fill failed columns with NaN  
 
         return tes_results
