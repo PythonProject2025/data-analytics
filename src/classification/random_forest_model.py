@@ -2,7 +2,7 @@
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV
 from base_model import ClassifierClass
-from data_object_final import data_object
+from models.data_object_class import DataObject
 
 class RandomForestModel(ClassifierClass):
     def __init__(self, data_train, data_test, target_train, target_test, target_labels):
@@ -13,7 +13,8 @@ class RandomForestModel(ClassifierClass):
     def train(self):
         grid_search = GridSearchCV(RandomForestClassifier(random_state=42), self.param_grid, cv=3, scoring='accuracy')
         grid_search.fit(self.data_train, self.target_train)
-
+        
+        data_object = DataObject()
 
         print(f"Best parameters for RandomForest: {grid_search.best_params_}")
         #n_estimators = int(input("Enter the number of estimators (e.g., 50, 100, 150): "))

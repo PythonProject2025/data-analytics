@@ -2,7 +2,7 @@
 from sklearn.svm import SVC
 from sklearn.model_selection import GridSearchCV
 from base_model import ClassifierClass
-from data_object_final import data_object
+from models.data_object_class import DataObject
 
 class SVCModel(ClassifierClass):
     def __init__(self, data_train, data_test, target_train, target_test, target_labels):
@@ -13,7 +13,7 @@ class SVCModel(ClassifierClass):
     def train(self):
         grid_search = GridSearchCV(SVC(), self.param_grid, cv=3, scoring='accuracy')
         grid_search.fit(self.data_train, self.target_train)
-
+        data_object = DataObject()
         print(f"Best parameters for SVC: {grid_search.best_params_}")
         #C = float(input("Enter the value for C (e.g., 0.1, 1, 10): "))
         #kernel = input("Enter the kernel type (e.g., 'linear', 'rbf'): ")

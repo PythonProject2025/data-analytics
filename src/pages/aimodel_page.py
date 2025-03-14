@@ -1,5 +1,8 @@
 import customtkinter as ctk
 from tkinter import Button, PhotoImage, Toplevel,messagebox
+
+import requests
+from src.models.data_object_class import DataObject
 from src.assets_management import assets_manage, load_image
 
 
@@ -220,41 +223,72 @@ class AImodelPage(ctk.CTkFrame):
 
         # Retrieve slider values for the selected model
         if selected_model == "Random Forest":
-            n_estimators = self.get_slider_value("n_estimators")
-            max_depth = self.get_slider_value("max_depth")
-            min_samples_split = self.get_slider_value("min_samples_split")
-            min_samples_leaf = self.get_slider_value("min_samples_leaf")
-            print(f"n_estimators: {n_estimators}, max_depth: {max_depth}, min_samples_split: {min_samples_split}, min_samples_leaf: {min_samples_leaf}")
-
+            dataobject = DataObject()
+            print(self.get_slider_value("n_estimators"))
+            print(float(self.get_slider_value("max_depth")))
+            dataobject.ai_model["Selected Model"]= selected_model
+            dataobject.ai_model["RandomForest"]["n_estimators"] = float(self.get_slider_value("n_estimators"))
+            dataobject.ai_model["RandomForest"]["max_depth"] = float(self.get_slider_value("max_depth"))
+            dataobject.ai_model["RandomForest"]["min_samples_split"]= float(self.get_slider_value("min_samples_split"))
+            dataobject.ai_model["RandomForest"]["min_samples_leaf"]= float(self.get_slider_value("min_samples_split"))
+            
+            # Convert DataObject to JSON
+            json_data = {"dataobject": dataobject.to_dict()}
+            print(json_data)
+            # Send request
+            self.send_request(json_data)
+            
         elif selected_model == "CatBoost":
-            n_estimators = self.get_slider_value("n_estimators")
-            learning_rate = self.get_slider_value("learning_rate")
-            max_depth = self.get_slider_value("max_depth")
-            reg_lambda = self.get_slider_value("reg_lambda")
-            print(f"n_estimators: {n_estimators}, learning_rate: {learning_rate}, max_depth: {max_depth}, reg_lambda: {reg_lambda}")
-
+            dataobject = DataObject()
+            dataobject.ai_model["Selected Model"]= selected_model
+            dataobject.ai_model["CatBoost"]["n_estimators"] = self.get_slider_value("n_estimators")
+            dataobject.ai_model["CatBoost"]["learning_rate"] = self.get_slider_value("learning_rate")
+            dataobject.ai_model["CatBoost"]["max_depth"]= self.get_slider_value("max_depth")
+            dataobject.ai_model["CatBoost"]["reg_lambda"]= self.get_slider_value("reg_lambda")
+            
+            # Convert DataObject to JSON
+            json_data = {"dataobject": dataobject.to_dict()}
+            print(json_data)
+            # Send request
+            self.send_request(json_data)
+            
         elif selected_model == "ANN":
-            layer_number = self.get_slider_value("Layer Number")
-            units = self.get_slider_value("Units")
-            activation = self.get_combobox_value("Activation Function")
-            optimizer = self.get_combobox_value("Optimizer")
-            batch_size = self.get_slider_value("Batch Size")
-            epochs = self.get_slider_value("Epochs")
-            print(f"Layer Number: {layer_number}, Units: {units}, Activation: {activation}, Optimizer: {optimizer}, Batch Size: {batch_size}, Epochs: {epochs}")
+            
+            dataobject = DataObject()
+            dataobject.ai_model["Selected Model"]= selected_model
+            dataobject.ai_model["ArtificialNeuralNetwork"]["layer_number"] = float(self.get_slider_value("Layer Number"))
+            dataobject.ai_model["ArtificialNeuralNetwork"]["units"] = self.get_slider_value("Units")
+            dataobject.ai_model["ArtificialNeuralNetwork"]["activation"]= self.get_combobox_value("Activation Function")
+            dataobject.ai_model["ArtificialNeuralNetwork"]["optimizer"]= self.get_combobox_value("Optimizer")
+            dataobject.ai_model["ArtificialNeuralNetwork"]["batch_size"]= self.get_slider_value("Batch Size")
+            dataobject.ai_model["ArtificialNeuralNetwork"]["epochs"]= self.get_slider_value("Epochs")
+            
+            # Convert DataObject to JSON
+            json_data = {"dataobject": dataobject.to_dict()}
+            print(json_data)
+            # Send request
+            self.send_request(json_data)
 
         elif selected_model == "XGBoost":
-            n_estimators = self.get_slider_value("n_estimators")
-            learning_rate = self.get_slider_value("learning_rate")
-            min_split_loss = self.get_slider_value("min_split_loss")
-            max_depth = self.get_slider_value("max_depth")
-            print(f"n_estimators: {n_estimators}, learning_rate: {learning_rate}, min_split_loss: {min_split_loss}, max_depth: {max_depth}")
+            
+            dataobject.ai_model["Selected Model"] = selected_model
+            dataobject.ai_model["XGBoost"]["n_estimators"] = self.get_slider_value("n_estimators")
+            dataobject.ai_model["XGBoost"]["learning_rate"] = self.get_slider_value("learning_rate")
+            dataobject.ai_model["XGBoost"]["min_split_loss"]= self.get_slider_value("min_split_loss")
+            dataobject.ai_model["XGBoost"]["max_depth"]= self.get_slider_value("max_depth")
+            
+            # Convert DataObject to JSON
+            json_data = {"dataobject": dataobject.to_dict()}
+            print(json_data)
+            # Send request
+            self.send_request(json_data)
 
     def get_slider_value(self, slider_name):
         """Helper function to retrieve slider values."""
         for widget in self.current_segment.winfo_children():
             if isinstance(widget, ctk.CTkSlider) and slider_name in widget.winfo_parent():
                 return widget.get()
-        return None
+        return 0
 
     def get_combobox_value(self, combobox_name):
         """Helper function to retrieve combobox values."""
@@ -262,4 +296,24 @@ class AImodelPage(ctk.CTkFrame):
             if isinstance(widget, ctk.CTkComboBox) and combobox_name in widget.winfo_parent():
                 return widget.get()
         return None
-
+    
+    def send_request(self, json_data):
+        """Send the request to the Django backend and return the response."""
+ 
+        try:
+           
+            response = requests.post(
+                    "http://127.0.0.1:8000/api/ai_model/",
+                    json=json_data
+            )
+ 
+            if response.status_code == 200:
+                    response_data = response.json()
+                    print(response_data)
+                    
+            else:
+                    messagebox.showerror(
+                        "Error", response.json().get('error', 'File upload failed.')
+                    )
+        except Exception as e:
+                messagebox.showerror("Error", str(e))

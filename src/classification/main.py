@@ -1,13 +1,15 @@
 # File: main.py
+from requests import Response
 from data_processing import load_and_preprocess_data
 from random_forest_model import RandomForestModel
 from svc_model import SVCModel
 from knn_model import KNNModel
 from data_object_final import data_object
+from rest_framework import status
 
 def main():
     # Load and preprocess data
-    #filepath = r"E:\TH_koeln_AIT\Courses\Oop\Project\ml_project_final\classification\data\car.data"
+    # filepath = r"E:\TH_koeln_AIT\Courses\Oop\Project\ml_project_final\classification\data\car.data"
     #data_train, data_test, target_train, target_test, target_labels = load_and_preprocess_data(filepath)
     
     # Extract dataset from DataObject
@@ -36,7 +38,19 @@ def main():
         # Train and evaluate the model
         model.train()
         accuracy, report, cm, mse = model.evaluate(model.model)
-        model.display_confusion_matrix(cm)
+        data_object.outputs["Classification"][model] = {
+            "accuracy": accuracy,
+            "mse": mse,
+            "cm": cm.tolist()  # Convert to list for JSON serialization
+        }
+        response_data = {
+            "testLoss": dataObj.outputs["Image_Processing"]["testLoss"],
+            "testAccuracy": dataObj.outputs["Image_Processing"]["testAccuracy"],
+            "confusionMatrix": dataObj.outputs["Image_Processing"]["confusionMatrix"]
+        }
+
+        return Response(response_data, status=status.HTTP_200_OK)
+        # model.display_confusion_matrix(cm)
 
     except ValueError as e:
         print(e)

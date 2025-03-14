@@ -32,17 +32,20 @@ class DataObject:
             "Train-Test Split": {
                 "parameters": {
                     "test_size": None,
-                    "random_state": None
+                    "random_state": None,
+                    "target_column": "Usage_kWh"
                 },
                 "split_data": {"X_train": None, 
                                "X_test": None, 
                                "y_train": None, 
                                "y_test": None}
+                
             }
         }
 
         # AI Model Configuration
         self.ai_model = {
+            "Selected Model":{},
             "RandomForest": {
                 "n_estimators": {"min": 10, "max": 500, "default": 200},
                 "max_depth": {"min": 3, "max": 50, "default": 20},
@@ -73,18 +76,18 @@ class DataObject:
 
         # Classification & Regression Config
         self.classification = {
-            "Inputs": {"x_train": None, "x_test": None, "y_train": None, "y_test": None},
+            "Inputs": {"x_train": None, "x_test": None, "y_train": None, "y_test": None,"y_label":None},
             "Model_Selection": {"RandomForest": {}, "SVC": {}, "KNN": {}},
             "RandomForest": {"n_estimators": {50, 100, 150}, "max_depth": {5, 10, 20}},
             "SVC": {"C": {0.1, 1, 10}, "kernel": {"min": 0.01, "max": 0.1, "default": 0.03}, "max_depth": {'linear', 'rbf'}, "gamma": {'scale', 'auto'}},
-            "KNN": {"n_neighbours": {3, 5, 7}, "weights": {'uniform', 'distance'}, "p": {1, 2}},
+            "KNN": {"n_neighbours": {3, 5, 7}, "weights": {'uniform', 'distance'}, "p": {1, 2}}
         }
 
         self.regression = {
             "Model_Selection": {
                 "Linear_Regression": {},
-                "Polynomial_Regression": {"polynomial_degree": []},
-                "Ridge_Regression": {"polynomial_degree_ridge": [], "alpha_values_ridge": []},
+                "Polynomial_Regression": {"polynomial_degree": []}, #5,7,8,2,9(only single digit integer upto comma seperated 5 values)
+                "Ridge_Regression": {"polynomial_degree_ridge": [], "alpha_values_ridge": []},#alpha float(limit4digits) 0-1 upto 5 values
                 "Lasso_Regression": {"polynomial_degree_lasso": [], "alpha_values_lasso": []}
             }
         }
@@ -127,10 +130,9 @@ class DataObject:
                 },
                 "Smoothing": {
                     # Either SMA or TES will be given as Output
-                    "SMA": {"Method": "Simple Moving Average",
-                             "Smoothed Values": "X window size applied"},
-                    "TES": {"Method": "Triple Exponential Smoothing",
-                                "seasonal_periods": "input given by the user", 
+                    "Method": "Simple Moving Average",
+                    "SMA": {"Smoothed Values": "X window size applied"},
+                    "TES": {    "seasonal_periods": "input given by the user", 
                                 "trend": "input given by the user", 
                                 "seasonal": "input given by the user",
                                 "smoothing level(alpha)": "input given by the user",
