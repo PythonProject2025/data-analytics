@@ -1,9 +1,18 @@
 import customtkinter as ctk
-from tkinter import Button, PhotoImage, Toplevel, messagebox
-import requests
-from src.models.data_object_class import DataObject
+from tkinter import Button, PhotoImage, Toplevel,messagebox
 from src.assets_management import assets_manage, load_image
 import pandas as pd
+import tkinter as tk
+from tkinter import ttk
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import numpy as np
+import threading
+from src.models.data_object_class import DataObject
+import requests
+from matplotlib.backend_bases import MouseEvent
+from matplotlib.backends.backend_tkagg import NavigationToolbar2Tk
+import matplotlib.patches as patches
 
 
 
@@ -18,18 +27,23 @@ class DataFilteringPage(ctk.CTkFrame):
         right_frame_height = int(0.8 * window_height)  # 60% of the screen height
 
         self.segment_completion = {
+                                    "Select Filter Process": False,
                                     "Outlier Detection": False,
                                     "Interpolation": False,
-                                    "Smoothing": False
+                                    "Smoothing": False,
+                                    "Scaling & Encoding": False
                                   }
-        self.visible_segments = ["Outlier Detection"]
+        self.visible_segments = ["Select Filter Process"]
+        self.data = pd.read_csv(self.file_path)  # Load CSV data
+        self.column_names = list(self.data.columns)[1:]  # Exclude first column (Date)
+        self.column_name = self.column_names[0] if self.column_names else None
 
 
 
         # Configure grid
         self.grid_rowconfigure(0, weight=1)
-        self.grid_columnconfigure(0, weight=8)  # Left side (70%)
-        self.grid_columnconfigure(1, weight=2)  # Right side (30%)
+        self.grid_columnconfigure(0, weight=8)  
+        self.grid_columnconfigure(1, weight=2)  
 
          # Left Side Frame
         self.left_frame = ctk.CTkFrame(self, fg_color="transparent")
@@ -42,6 +56,10 @@ class DataFilteringPage(ctk.CTkFrame):
         self.left_frame.grid_rowconfigure(0, weight=0)
         self.label = ctk.CTkLabel(self.label_frame, text=self.file_name, font=("Inter", 16, "bold"))
         self.label.place(relx=0.5, rely=0.5, anchor="center")
+        self.preview_label = ctk.CTkLabel(self.label_frame, text="Preview", font=("Inter", 12, "bold"),
+                                  text_color="blue", cursor="hand2")
+        self.preview_label.place(relx=0.9, rely=0.5, anchor="center")  # Adjusted position
+        self.preview_label.bind("<Button-1>", lambda event: self.preview_csv())
         self.cancel_button = ctk.CTkButton(self.left_frame, text="X", width=30, height=25, command=lambda: parent.show_page("file_upload"))
         self.cancel_button.grid(row=0, column=1, padx=10, pady=10)
 
@@ -59,7 +77,7 @@ class DataFilteringPage(ctk.CTkFrame):
 
         # Graph Display Area (Expanded)
         self.graph_display = ctk.CTkFrame(self.graph_frame, fg_color="#D1D1D1", height=250, corner_radius=10)  # Increased Size
-        self.graph_display.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")  # Expands to fill space
+        self.graph_display.grid(row=1, column=0, padx=0, pady=10, sticky="nsew")  # Expands to fill space
 
 
         self.Info_button_image = PhotoImage(file=assets_manage("info_B.png"))
@@ -81,13 +99,16 @@ class DataFilteringPage(ctk.CTkFrame):
         self.segment_container.grid(row=1, column=0, sticky="s", padx=10, pady=10)
 
         # Define ordered segment list
-        self.segment_order = ["Outlier Detection", "Interpolation", "Smoothing"]
+        self.segment_order = ["Select Filter Process","Outlier Detection", "Interpolation", "Smoothing"]
+        self.scaling_segment = "Scaling & Encoding"
 
         # Create segment frames
         self.segments = {
+            "Select Filter Process": self.create_process_selection_frame(),
             "Outlier Detection": self.create_segment_frame(),
             "Interpolation": self.create_interpolation_frame(),
             "Smoothing": self.create_smoothing_frame(),
+            
         }
 
         # Submit Button
@@ -96,11 +117,32 @@ class DataFilteringPage(ctk.CTkFrame):
 
         # Show default segment
         self.current_segment = None
-        self.change_segment("Outlier Detection")
+        self.change_segment("Select Filter Process")
 
         if self.file_path:  
             self.load_csv_columns(self.file_path)
         
+        # Initial Boxplot for first column
+        if self.column_name:
+            self.plot_boxplot(self.column_name)
+
+    def create_process_selection_frame(self):
+        """Creates the initial process selection frame."""
+        frame = ctk.CTkFrame(self.segment_container, fg_color="#E0E0E0", corner_radius=10)
+        frame.grid_columnconfigure(0, weight=1)
+        radio_frame = ctk.CTkFrame(frame, fg_color="#D1D1D1", corner_radius=10)
+        radio_frame.grid(row=1, column=0, padx=10, pady=15, sticky="new")
+
+        self.process_radio_var = ctk.StringVar(value="Filtering Method")  # Default
+
+        ctk.CTkRadioButton(radio_frame, text="Filtering Method", variable=self.process_radio_var,
+                           value="Filtering Method").grid(row=0, column=0, padx=10, pady=10, sticky="w")
+        ctk.CTkRadioButton(radio_frame, text="Scaling & Encoding", variable=self.process_radio_var,
+                           value="Scaling & Encoding").grid(row=1, column=0, padx=10, pady=10, sticky="w")
+
+        return frame
+        
+    
     def create_segment_frame(self):
         """Creates a frame for each segment."""
         frame = ctk.CTkFrame(self.segment_container, fg_color="#E0E0E0", corner_radius=10)
@@ -108,7 +150,7 @@ class DataFilteringPage(ctk.CTkFrame):
 
         def create_info_button(parent, text):
             button = Button(parent, text="", image=self.Info_button_image, width=8, height=8, command=lambda: self.show_info_dialog(text))
-            button.grid(row=0, column=1, padx=5, sticky="e")
+            button.grid(row=0, column=1, padx=5, sticky="w")
 
         # Radio Button FrameS
         radio_frame = ctk.CTkFrame(frame, fg_color="#D1D1D1", corner_radius=10)
@@ -155,7 +197,7 @@ class DataFilteringPage(ctk.CTkFrame):
 
         def create_info_button(parent, text):
             button = Button(parent, text="", image=self.Info_button_image, width=8, height=8, command=lambda: self.show_info_dialog(text))
-            button.grid(row=0, column=1, padx=5, sticky="e")
+            button.grid(row=0, column=1, padx=5, sticky="w")
 
         radio_frame = ctk.CTkFrame(frame, fg_color="#D1D1D1", corner_radius=10)
         radio_frame.grid(row=0, column=1, padx=10, pady=15, sticky="ew")
@@ -263,6 +305,53 @@ class DataFilteringPage(ctk.CTkFrame):
         frame.tes_frame = tes_frame
 
         return frame
+    
+    def create_scaling_encoding_frame(self):
+        
+        """Creates Scaling & Encoding tab with sliders."""
+        frame = ctk.CTkFrame(self.segment_container, fg_color="#E0E0E0", corner_radius=10)
+        frame.grid_columnconfigure(0, weight=1)
+
+        def create_info_button(parent, text, row, column):
+            """Creates an inline info button next to the label."""
+            button = Button(parent, text="", image=self.Info_button_image, width=8, height=8,
+                            command=lambda: self.show_info_dialog(text))
+            button.grid(row=row, column=column, padx=5, sticky="w")
+
+        # 🔹 Test Size Slider
+        test_size_frame = ctk.CTkFrame(frame, fg_color="#D1D1D1", corner_radius=10)
+        test_size_frame.grid(row=0, column=0, padx=10, pady=15, sticky="nsew")
+
+        test_size_label = ctk.CTkLabel(test_size_frame, text="Test Size", font=("Inter", 12, "bold"), fg_color="#A0A0A0")
+        test_size_label.grid(row=0, column=0, sticky="nesw")
+        create_info_button(test_size_frame, "Defines the proportion of the dataset used for testing.", row=0, column=1)
+
+        test_size_value_label = ctk.CTkLabel(test_size_frame, text="Value: 0.2", font=("Inter", 12))
+        test_size_value_label.grid(row=1, column=0, pady=5)
+
+        self.test_size_slider = ctk.CTkSlider(test_size_frame, from_=0.0, to=1.0,
+                                            command=lambda value: test_size_value_label.configure(text=f"Value: {float(value):.2f}"))
+        self.test_size_slider.set(0.2)
+        self.test_size_slider.grid(row=2, column=0, padx=10, sticky="ew")
+
+        # 🔹 Random State Slider
+        random_state_frame = ctk.CTkFrame(frame, fg_color="#D1D1D1", corner_radius=10)
+        random_state_frame.grid(row=1, column=0, padx=10, pady=15, sticky="nsew")
+
+        random_state_label = ctk.CTkLabel(random_state_frame, text="Random State", font=("Inter", 12, "bold"), fg_color="#A0A0A0")
+        random_state_label.grid(row=0, column=0, sticky="nesw")
+        create_info_button(random_state_frame, "Seed value for reproducibility in data splitting.", row=0, column=1)
+
+        random_state_value_label = ctk.CTkLabel(random_state_frame, text="Value: 42", font=("Inter", 12))
+        random_state_value_label.grid(row=1, column=0, pady=5)
+
+        self.random_state_slider = ctk.CTkSlider(random_state_frame, from_=0, to=100,
+                                                command=lambda value: random_state_value_label.configure(text=f"Value: {int(value)}"))
+        self.random_state_slider.set(42)
+        self.random_state_slider.grid(row=2, column=0, padx=10, sticky="ew")
+
+        return frame
+
 
     def toggle_smoothing_options(self, frame, method):
         """Toggles between SMA and TES parameters using grid layout."""
@@ -273,6 +362,8 @@ class DataFilteringPage(ctk.CTkFrame):
             frame.sma_slider_frame.grid_remove()
             frame.tes_frame.configure(height=250)
             frame.tes_frame.grid()
+
+
 
     def toggle_slider(self, frame, show):
         """Shows or hides the slider based on radio button selection."""
@@ -290,24 +381,6 @@ class DataFilteringPage(ctk.CTkFrame):
         ctk.CTkLabel(dialog, text=text, font=("Inter", 12)).pack(pady=20)
         ctk.CTkButton(dialog, text="OK", command=dialog.destroy).pack()
 
-    def change_segment(self, segment_name):
-        """Switch between segment frames while controlling access."""
-        segment_order = ["Outlier Detection", "Interpolation", "Smoothing"]
-
-        # Ensure all previous segments are completed before allowing the switch
-        selected_index = segment_order.index(segment_name)
-        for i in range(selected_index):
-            if not self.segment_completion[segment_order[i]]:
-                return  # Prevent access if a previous segment is incomplete
-
-        # If allowed, switch segment
-        if self.current_segment:
-            self.current_segment.grid_forget()
-        
-        self.current_segment = self.segments[segment_name]
-        self.current_segment.grid(row=1, column=0, sticky="nsew")
-        self.segmented_frame.set(segment_name)  # Ensure correct highlighting
-
     def load_csv_columns(self, file_path):
         """Loads column names from the uploaded CSV file and updates dropdown & checkboxes."""
         try:
@@ -315,8 +388,8 @@ class DataFilteringPage(ctk.CTkFrame):
             column_names = df.columns.tolist()[1:]  # Extract column names
 
             # Dropdown ComboBox (Centered)
-            self.dropdown = ctk.CTkComboBox(self.graph_frame, values=column_names)
-            self.dropdown.grid(row=0, column=0, padx=10, pady=10, sticky="n")
+            self.dropdown = ctk.CTkComboBox(self.graph_frame, values=column_names,command=self.update_boxplot,width=280,justify="center")
+            self.dropdown.grid(row=0, column=0, padx=10, pady=20, sticky="n")
             self.dropdown.set(column_names[0] if column_names else "Select Column")
 
             for widget in self.scroll_frame.winfo_children():
@@ -331,9 +404,41 @@ class DataFilteringPage(ctk.CTkFrame):
         except Exception as e:
             print("Error loading CSV:", str(e))
 
-    def submit_action(self):
-        current_segment = self.segmented_frame.get()  # Get the active segment
+
+    
+
+
+    def change_segment(self, segment_name):
+        """Switch between segment frames while controlling access."""
+        segment_order = ["Select Filter Process", "Outlier Detection", "Interpolation", "Smoothing"]
         
+        # Ensure all previous segments are completed before allowing the switch
+        if segment_name in segment_order:
+            selected_index = segment_order.index(segment_name)
+            for i in range(selected_index):
+                if not self.segment_completion[segment_order[i]]:
+                    return  # Prevent access if a previous segment is incomplete
+
+        # If allowed, switch segment
+        if self.current_segment:
+            self.current_segment.grid_forget()
+
+        # ✅ Show correct frame when Scaling & Encoding is selected directly
+        if segment_name == "Scaling & Encoding":
+            self.current_segment = self.create_scaling_encoding_frame()
+            self.segmented_frame.configure(values=["Scaling & Encoding"])  # Only show this tab
+        else:
+            self.current_segment = self.segments[segment_name]
+            self.segmented_frame.configure(values=self.visible_segments)  # Maintain available tabs
+
+        self.current_segment.grid(row=1, column=0, sticky="nsew")
+        self.segmented_frame.set(segment_name)
+
+
+    def submit_action(self):
+        """Handles segment transitions and submission logic."""
+        current_segment = self.segmented_frame.get()  # Get the active segment
+
         # If already completed, move to the next segment instead of re-submitting
         if self.segment_completion[current_segment]:
             self.move_to_next_segment()
@@ -343,53 +448,240 @@ class DataFilteringPage(ctk.CTkFrame):
         print(f"{current_segment} completed!")
 
         # Lock the completed segment
-        self.lock_segment(self.segments[current_segment])
+        if current_segment in self.segments:
+            self.lock_segment(self.segments[current_segment])
+
+        # Print parameter values based on segment
+        if current_segment == "Outlier Detection":
+            print(self.radio_var.get())
+            print(self.slider.get())
+            self.run_outlier_detection()
+
+        elif current_segment == "Interpolation":
+            print(self.interpolation_radio_var.get())
+            self.run_interpolation()
+
+        elif current_segment == "Smoothing":
+            print(self.smoothing_radio_var.get())
+            print(self.sma_slider.get())
+            self.run_smoothing()
+
+            # ✅ Print TES Parameters if TES is selected
+            if self.smoothing_radio_var.get() == "TES":
+                print("\n--- TES Parameters ---")
+                for key, widget in self.tes_params.items():
+                    if isinstance(widget, ctk.CTkSlider):
+                        print(f"{key}: {widget.get()}")
+                    elif isinstance(widget, ctk.CTkEntry):
+                        print(f"{key}: {widget.get()}")
+
+        elif current_segment == "Scaling & Encoding":
+            print("\n--- Scaling & Encoding Parameters ---")
+            print(f"Test Size: {self.test_size_slider.get()}")
+            print(f"Random State: {self.random_state_slider.get()}")
+            self.run_scaling_and_encoding()
+
+        # ✅ Remove Filtering Segments After Smoothing Completion
+        if current_segment == "Smoothing":
+            self.visible_segments = ["Scaling & Encoding"]
 
         # Enable the next segment in the segmented frame
         self.move_to_next_segment()
-        if current_segment == "Outlier Detection":
-            self.run_outlier_detection()
-        elif current_segment == "Interpolation":
-            print (self.interpolation_radio_var.get())
-            self.run_interpolation()
-        elif current_segment == "Smoothing":
-            print (self.smoothing_radio_var.get())
-            print (self.sma_slider.get())
-            self.run_smoothing()
-        # ✅ Print TES Parameters if TES is selected
-        if self.smoothing_radio_var.get() == "TES":
-            print("\n--- TES Parameters ---")
-            for key, widget in self.tes_params.items():
-                if isinstance(widget, ctk.CTkSlider):
-                    print(f"{key}: {widget.get()}")
-                elif isinstance(widget, ctk.CTkEntry):
-                    print(f"{key}: {widget.get()}")
-            self.run_scaling_encoding()
-            
+
+
     def move_to_next_segment(self):
         """Move to the next available segment after submission."""
-        segment_order = ["Outlier Detection", "Interpolation", "Smoothing"]
+        segment_order = ["Select Filter Process", "Outlier Detection", "Interpolation", "Smoothing"]
         current_segment = self.segmented_frame.get()
-        current_index = segment_order.index(current_segment)
+        
+        # Check the index of the current segment
+        if current_segment == "Select Filter Process":
+            selected_process = self.process_radio_var.get()
+            if selected_process == "Filtering Method":
+                self.visible_segments = ["Outlier Detection"]
+            else:
+                self.visible_segments = ["Scaling & Encoding"]
+                self.change_segment("Scaling & Encoding")
+                return  # Prevent unnecessary switching
 
-        # Unlock the next segment and update the header
-        if current_index + 1 < len(segment_order):
-            next_segment = segment_order[current_index + 1]
-            if next_segment not in self.visible_segments:
-                self.visible_segments.append(next_segment)  # Unlock the next process
-                self.segmented_frame.configure(values=self.visible_segments)  # Update segment tab
-            self.change_segment(next_segment)  # Move to next tab
+        elif current_segment == "Outlier Detection":
+            self.visible_segments.append("Interpolation")
 
-        # Disable submit button if all processes are completed
-        if all(self.segment_completion.values()):
+        elif current_segment == "Interpolation":
+            self.visible_segments.append("Smoothing")
+
+        elif current_segment == "Smoothing":
+            # ✅ Remove previous tabs & show only Scaling & Encoding
+            self.visible_segments = ["Scaling & Encoding"]
+
+        elif current_segment == "Scaling & Encoding":
+            # ✅ Hide submit button once Scaling & Encoding is completed
             self.submit_button.configure(state="disabled")
+            return
+
+        self.segmented_frame.configure(values=self.visible_segments)
+        self.change_segment(self.visible_segments[-1])
 
     def lock_segment(self, frame):
         """Disable all widgets in the given segment."""
         for child in frame.winfo_children():
             if isinstance(child, (ctk.CTkRadioButton, ctk.CTkSlider, ctk.CTkEntry, ctk.CTkCheckBox, ctk.CTkComboBox)):
                 child.configure(state="disabled")
-                
+
+    def preview_csv(self):
+        """Opens a new popup window to display the CSV file with scrollbars."""
+        if not self.file_path:
+            messagebox.showerror("Error", "No CSV file selected!")
+            return
+
+        # Read the CSV file
+        try:
+            df = pd.read_csv(self.file_path)  # Load CSV
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to open CSV: {e}")
+            return
+
+        # Create a new popup window
+        preview_window = ctk.CTkToplevel(self)
+        preview_window.title("CSV Preview")
+        preview_window.geometry("900x500")
+        preview_window.grab_set()
+
+        # Create a frame for the Treeview
+        frame = tk.Frame(preview_window)
+        frame.pack(fill="both", expand=True)
+
+        # Treeview (table) widget
+        tree = ttk.Treeview(frame, columns=list(df.columns), show="headings")
+
+        # Add column headers
+        for col in df.columns:
+            tree.heading(col, text=col)
+            tree.column(col, width=150)  # Adjust column width
+
+        # Insert rows (limit to first 50 rows to avoid UI lag)
+        for index, row in df.head(50).iterrows():
+            tree.insert("", "end", values=list(row))
+
+        # Add vertical scrollbar
+        v_scrollbar = ttk.Scrollbar(frame, orient="vertical", command=tree.yview)
+        tree.configure(yscroll=v_scrollbar.set)
+
+        # Add horizontal scrollbar
+        h_scrollbar = ttk.Scrollbar(frame, orient="horizontal", command=tree.xview)
+        tree.configure(xscroll=h_scrollbar.set)
+
+        # Pack elements
+        tree.pack(side="top", fill="both", expand=True)
+        v_scrollbar.pack(side="right", fill="y")
+        h_scrollbar.pack(side="bottom", fill="x")
+
+    def update_boxplot(self, column_name):
+        """Triggered when a new column is selected in the dropdown."""
+        self.column_name = column_name
+
+        # Show loading text
+        self.show_loading_message()
+
+        # Generate plot asynchronously to prevent UI freezing
+        threading.Thread(target=lambda: self.plot_boxplot(column_name), daemon=True).start()
+
+    def show_loading_message(self):
+        """Displays a loading message in the graph display area."""
+        for widget in self.graph_display.winfo_children():
+            widget.destroy()
+
+        loading_label = ctk.CTkLabel(self.graph_display, text="Loading...", font=("Inter", 14, "bold"))
+        loading_label.place(relx=0.5, rely=0.5, anchor="center")
+
+
+
+
+
+    def plot_boxplot(self, column_name):
+        """Generates and embeds an interactive boxplot with UI enhancements."""
+        if column_name not in self.data.columns:
+            return
+
+        # Clear previous widgets in the graph display area
+        for widget in self.graph_display.winfo_children():
+            widget.destroy()
+
+        # Create Matplotlib figure
+        fig, ax = plt.subplots(figsize=(7, 4))  # Slightly larger size
+        fig.patch.set_facecolor("#E0E0E0")  # Match UI theme
+        ax.set_facecolor("#E0E0E0")
+
+        # Generate Boxplot with Better Formatting
+        box = ax.boxplot(self.data[column_name], vert=False, patch_artist=True, widths=0.6,
+                        boxprops=dict(facecolor='lightblue', edgecolor='black', linewidth=1.2),
+                        medianprops=dict(color='red', linewidth=1.5),
+                        whiskerprops=dict(color='black', linewidth=1.2, linestyle="--"))
+
+        # Improve readability
+        ax.set_title(f"Box Plot of {column_name}", fontsize=13, fontweight="bold")
+        ax.set_xlabel(column_name, fontsize=11)
+        ax.tick_params(axis="x", labelsize=10)
+        ax.grid(color='gray', linestyle='--', linewidth=0.5, alpha=0.7)
+
+        # Enable Zooming and Panning with Scroll Wheel
+        def on_scroll(event):
+            """Handles zooming on mouse scroll."""
+            base_scale = 1.1
+            scale_factor = base_scale if event.step > 0 else 1 / base_scale
+
+            xlim = ax.get_xlim()
+            x_range = (xlim[1] - xlim[0]) * scale_factor
+            ax.set_xlim([xlim[0] + x_range * 0.1, xlim[1] - x_range * 0.1])
+            fig.canvas.draw()
+
+        # Show data values on hover
+        tooltip = ax.annotate("", xy=(0, 0), xytext=(15, 15),
+                            textcoords="offset points",
+                            bbox=dict(boxstyle="round,pad=0.3", fc="lightgray", ec="black", lw=1),
+                            arrowprops=dict(arrowstyle="->", connectionstyle="arc3,rad=0.2"),
+                            fontsize=9, visible=False)
+
+        def on_hover(event):
+            """Displays value tooltips when hovering over the boxplot."""
+            if event.inaxes == ax:
+                for i, line in enumerate(box["medians"]):
+                    if line.contains(event)[0]:
+                        value = self.data[column_name].median()
+                        tooltip.set_text(f"Median: {value:.2f}")
+                        tooltip.set_position((event.xdata, event.ydata))
+                        tooltip.set_visible(True)
+                        fig.canvas.draw_idle()
+                        return
+            tooltip.set_visible(False)
+            fig.canvas.draw_idle()
+
+        # Connect the scroll and hover events
+        fig.canvas.mpl_connect("scroll_event", on_scroll)
+        fig.canvas.mpl_connect("motion_notify_event", on_hover)
+
+        # Embed Matplotlib Figure inside Tkinter Frame
+        canvas = FigureCanvasTkAgg(fig, master=self.graph_display)
+        canvas_widget = canvas.get_tk_widget()
+        canvas_widget.pack(fill="both", expand=True)
+
+        # Add Toolbar for Navigation (Zoom, Pan, Save)
+        toolbar_frame = ctk.CTkFrame(self.graph_display, fg_color="#E0E0E0")  # Match toolbar bg color
+        toolbar_frame.pack(side="top", fill="x")
+
+        toolbar = NavigationToolbar2Tk(canvas, toolbar_frame)
+        toolbar.config(background="#E0E0E0")  # Set toolbar background
+        for child in toolbar.winfo_children():
+            child.config(bg="#E0E0E0")  # Change toolbar button backgrounds
+
+        toolbar.update()
+
+        # Render the plot
+        canvas.draw()
+
+
+
+
     def send_request(self, process_name, json_data):
         """Send the request to the Django backend and return the response."""
  
@@ -407,6 +699,8 @@ class DataFilteringPage(ctk.CTkFrame):
                         self.cleaned_data = response_data["cleaned_data"]  # Store cleaned data JSON
                     elif process_name == "interpolation" and "interpolated_data" in response_data:
                         self.interpolated_data = response_data["interpolated_data"]  # Store interpolated data JSON
+                    elif process_name == "smoothing" and "smoothed_data" in response_data:
+                        self.smoothed_data = response_data["smoothed_data"]  # Store smoothed data JSON
                     return response_data
             else:
                     messagebox.showerror(
@@ -442,7 +736,7 @@ class DataFilteringPage(ctk.CTkFrame):
         json_data = {
             "cleaned_data": self.cleaned_data  
         }
-        print("going to send request to interpolation")
+        print(type(self.cleaned_data))
         # Send request to backend
         self.send_request("interpolation", json_data)
         
@@ -453,7 +747,22 @@ class DataFilteringPage(ctk.CTkFrame):
             return
         dataobject = DataObject()
         dataobject.data_filtering["Smoothing"]["Method"] = self.smoothing_radio_var.get()
-        dataobject.data_filtering["Smoothing"]["parameters"]["window_size"] = int(round(self.sma_slider.get()))
+        
+        # If SMA is selected, store window size
+        if self.smoothing_radio_var.get() == "SMA":
+            dataobject.data_filtering["Smoothing"]["parameters"]["window_size"] = int(round(self.sma_slider.get()))
+    
+        # If TES is selected, store TES parameters
+        elif self.smoothing_radio_var.get() == "TES":
+            tes_params = {}
+            for key, widget in self.tes_params.items():
+                if isinstance(widget, ctk.CTkSlider):
+                    tes_params[key] = float(widget.get())  # Get float value from sliders
+                elif isinstance(widget, ctk.CTkEntry):
+                    tes_params[key] = widget.get()  # Get text value from entries
+
+        # Store TES parameters in DataObject
+        dataobject.data_filtering["Smoothing"]["parameters"].update(tes_params)
         
         # Convert DataObject to JSON
         json_data = {"dataobject": dataobject.to_dict()}
@@ -465,3 +774,24 @@ class DataFilteringPage(ctk.CTkFrame):
         print("going to send request to smoothing")
         # Send request to backend
         self.send_request("smoothing", json_data)
+        
+    def run_scaling_and_encoding(self):
+        """Runs scaling and encoding and updates the data object."""
+        if not hasattr(self, "smoothed_data"):
+            messagebox.showerror("Error", "Smoothed data is missing. Please run Outlier Detection, Interpolation and Smoothing.")
+            return
+        dataobject = DataObject()
+        # to be edited need to add the user given test-size and random state
+        dataobject.data_filtering["Train-Test Split"]["parameters"]["test_size"] = int(round(self.test_size_slider.get()))
+        dataobject.data_filtering["Train-Test Split"]["parameters"]["random_state"] = int(round(self.random_state_slider.get()))
+        
+        # Convert DataObject to JSON
+        json_data = {"dataobject": dataobject.to_dict()}
+        print(self.smoothed_data)
+        json_data = {
+            "dataobject": dataobject.to_dict(),
+            "smoothed_data": self.smoothed_data 
+        }
+        print("going to send request to scaling")
+        # Send request to backend
+        self.send_request("scaling_encoding", json_data)

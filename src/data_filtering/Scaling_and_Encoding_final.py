@@ -26,7 +26,7 @@ class EncodeAndScaling:
         scaled_data = pd.DataFrame(scaler.fit_transform(encoded_data), columns=encoded_data.columns)
         return scaled_data
     
-    def train_test_split(self, processed_data, target_column, test_size=0.2, random_state=42):
+    def train_test_split(self, processed_data, target_column, test_size, random_state):
         """
         Splits the processed dataset into training and testing sets.
         :param processed_data: The encoded and scaled dataset.
@@ -78,6 +78,7 @@ class EncodeAndScaling:
 
 
         # Debugging prints
+        
         print("Target column:", target_column)
         print("Data Columns:", self.data.columns)
         print("Checking if target column exists:", target_column in self.data.columns)

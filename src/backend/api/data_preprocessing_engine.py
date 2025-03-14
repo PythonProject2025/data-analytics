@@ -152,16 +152,18 @@ class SmoothingAPIView(APIView):
         data_object.outputs["Data Processing"]["Smoothing"] = self.run_smoothing(
             interpolated_data, data_object.data_filtering["Smoothing"]
         )
+        
+        smoothing_result = data_object.outputs["Data Processing"]["Smoothing"]
 
         print("Smoothing completed successfully.")
-        print(data_object.outputs["Data Processing"]["Smoothing"])
+        print(smoothing_result)
 
-        response_data = {
-            "step": "Smoothing",
-            "method": data_object.outputs["Data Processing"]["Smoothing"]["SMA"]["Method"],
-            "smoothed_data": data_object.outputs["Data Processing"]["Smoothing"]["smoothed_data"].to_json(orient="records")
-        }
-        return Response(response_data, status=status.HTTP_200_OK)
+        # Convert the smoothed data to JSON format for response
+        if "smoothed_data" in smoothing_result:
+            smoothing_result["smoothed_data"] = smoothing_result["smoothed_data"].to_json(orient="records")
+
+        # Return full response from run_smoothing()
+        return Response(smoothing_result, status=status.HTTP_200_OK)
 
     def run_smoothing(self,interpolated_data, data_object):
         """Runs the smoothing process based on the method defined in DataObject."""
@@ -179,68 +181,58 @@ class SmoothingAPIView(APIView):
             smoothed_data = smoother.calculate_sma(interpolated_data, window_size)
 
             # Efficiently update only values inside the predefined structure
-            data = {"SMA": {"Method": "Simple Moving Average",
-                            "Window Size Applied": window_size},
+            data = {"Method": "Simple Moving Average",
+                    "SMA": {
+                            "Window Size Applied": window_size
+                        },
                     "smoothed_data": smoothed_data
             }
 
+        # elif method_name == "TES":
+        #     seasonal_periods = smoothing_config["seasonal_periods"]
+        #     trend = smoothing_config["trend"]
+        #     seasonal = smoothing_config["seasonal"]
+        #     smoothing_level = smoothing_config["smoothing_level"]
+        #     smoothing_trend = smoothing_config["smoothing_trend"]
+        #     smoothing_seasonal = smoothing_config["smoothing_seasonal"]
+
+        #     smoothed_data = smoother.apply_tes(interpolated_data,seasonal_periods, 
+        #                                     trend, 
+        #                                     seasonal, 
+        #                                     smoothing_level, 
+        #                                     smoothing_trend, 
+        #                                     smoothing_seasonal)
+
+        #     # Efficiently update only values inside the predefined structure
+        #     data = {"Method": "Triple Exponential Smoothing",
+        #             "TES": {
+        #                     "Seasonal Periods": seasonal_periods,
+        #                     "Trend": trend,
+        #                     "Seasonal": seasonal,
+        #                     "Smoothing Level": smoothing_level,
+        #                     "Smoothing Trend": smoothing_trend,
+        #                     "Smoothing Seasonal": smoothing_seasonal},
+        #             "smoothed_data": smoothed_data
+        #     }
+        
         elif method_name == "TES":
-            seasonal_periods = smoothing_config["parameters"]["seasonal_periods"]
-            trend = smoothing_config["TES"]["parameters"]["trend"]
-            seasonal = smoothing_config["TES"]["parameters"]["seasonal"]
-            smoothing_level = smoothing_config["TES"]["parameters"]["smoothing_level"]
-            smoothing_trend = smoothing_config["TES"]["parameters"]["smoothing_trend"]
-            smoothing_seasonal = smoothing_config["TES"]["parameters"]["smoothing_seasonal"]
+            tes_params = data_object["parameters"]
 
-            smoothed_data = smoother.apply_tes(seasonal_periods, 
-                                            trend, 
-                                            seasonal, 
-                                            smoothing_level, 
-                                            smoothing_trend, 
-                                            smoothing_seasonal)
+            smoothed_data = smoother.apply_tes(
+                interpolated_data,
+                tes_params["seasonal_periods"],
+                tes_params["trend"],
+                tes_params["seasonal"],
+                tes_params["smoothing_level"],
+                tes_params["smoothing_trend"],
+                tes_params["smoothing_seasonal"]
+            )
 
-            # Efficiently update only values inside the predefined structure
-            data = {"TES": {"Method": "Triple Exponential Smoothing",
-                            "Seasonal Periods": seasonal_periods,
-                            "Trend": trend,
-                            "Seasonal": seasonal,
-                            "Smoothing Level": smoothing_level,
-                            "Smoothing Trend": smoothing_trend,
-                            "Smoothing Seasonal": smoothing_seasonal},
-                    "smoothed_data": smoothed_data
+            # Return all values inside a structured dictionary
+            data = {
+                "Method": "Triple Exponential Smoothing",
+                "TES": tes_params,
+                "smoothed_data": smoothed_data
             }
-
+            
         return data
-
-class ScalingEncodingAPIView(APIView):
-    
-    def post(self, request):
-        print("Received request data:", request.data)
-        data_dict = request.data.get("dataobject", {})
-
-        if not data_dict:
-            return Response({"error": "Invalid request, 'dataobject' missing"}, status=status.HTTP_400_BAD_REQUEST)
-
-        # Load data into DataObject
-        data_object = DataObject()
-        smoothed_data = pd.DataFrame.from_dict(data_dict.get("smoothed_data", {}))
-
-        # Step 4: Scaling & Encoding
-        data_object.data_filtering["Train-Test Split"]["split_data"] = self.run_encoding_scaling_train_test_split(
-            smoothed_data, data_object.data_filtering["Train-Test Split"]
-        )
-
-        print("Encoding, Scaling, Train-Test Split completed successfully.")
-        print(data_object.data_filtering["Train-Test Split"]["split_data"])
-
-        response_data = {
-            "step": "Scaling & Encoding",
-            "processed_data": data_object.data_filtering["Train-Test Split"]["split_data"].to_dict()
-        }
-        return Response(response_data, status=status.HTTP_200_OK)
-
-    def run_encoding_scaling_train_test_split(self, data, params):
-        """Runs encoding, scaling, and train-test splitting."""
-        processor = EncodeAndScaling(data)
-        processed_data = processor.preprocess(params["parameters"])
-        return processed_data
