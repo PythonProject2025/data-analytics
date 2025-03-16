@@ -4,14 +4,20 @@ from tkinter import Button, PhotoImage, Toplevel,messagebox
 import requests
 from src.models.data_object_class import DataObject
 from src.assets_management import assets_manage, load_image
+import tkinter as tk
+from tkinter import ttk
 
 
 class AImodelPage(ctk.CTkFrame):
-    def __init__(self, parent,file_name=" "):
+    def __init__(self, parent, file_data=None, file_name=None, *args, **kwargs):
         super().__init__(parent, corner_radius=0)
 
+        self.parent=parent
+        self.file_data=file_data
         self.file_name = file_name
         right_frame_height = int(0.8 * self.winfo_screenheight())
+        self.sliders = {}
+        self.comboboxes ={}
 
 
         # Configure grid
@@ -30,6 +36,10 @@ class AImodelPage(ctk.CTkFrame):
         self.left_frame.grid_rowconfigure(0, weight=0)
         self.label = ctk.CTkLabel(self.label_frame, text=self.file_name, font=("Inter", 16, "bold"))
         self.label.place(relx=0.5, rely=0.5, anchor="center")
+        self.preview_label = ctk.CTkLabel(self.label_frame, text="Preview", font=("Inter", 12, "bold"),
+                                  text_color="blue", cursor="hand2")
+        self.preview_label.place(relx=0.9, rely=0.5, anchor="center")  # Adjusted position
+        self.preview_label.bind("<Button-1>", lambda event: self.preview_data())
         self.cancel_button = ctk.CTkButton(self.left_frame, text="X", width=30, height=25, command=lambda: parent.show_page("file_upload"))
         self.cancel_button.grid(row=0, column=1, padx=10, pady=10)
 
@@ -81,6 +91,7 @@ class AImodelPage(ctk.CTkFrame):
         # Show default segment
         self.current_segment = None
         self.change_segment("Random Forest")
+        
 
 
     def create_rf_frame(self):
@@ -89,10 +100,10 @@ class AImodelPage(ctk.CTkFrame):
         frame.grid_columnconfigure(0, weight=1)
 
         # Sliders for Random Forest
-        self.create_slider_frame(frame, "n_estimators", 10, 500, 200, row=0)
-        self.create_slider_frame(frame, "max_depth", 3, 50, 20, row=1)
-        self.create_slider_frame(frame, "min_samples_split", 4, 10, 5, row=2)
-        self.create_slider_frame(frame, "min_samples_leaf", 1, 10, 1, row=3)
+        self.create_slider_frame(frame, "RandomForest","n_estimators", 10, 500, 200, row=0)
+        self.create_slider_frame(frame, "RandomForest","max_depth", 3, 50, 20, row=1)
+        self.create_slider_frame(frame, "RandomForest","min_samples_split", 4, 10, 5, row=2)
+        self.create_slider_frame(frame, "RandomForest","min_samples_leaf", 1, 10, 1, row=3)
 
         return frame
 
@@ -103,10 +114,10 @@ class AImodelPage(ctk.CTkFrame):
         frame.grid_columnconfigure(0, weight=1)
 
         # Sliders for CatBoost
-        self.create_slider_frame(frame, "n_estimators", 100, 1000, 500, row=0)
-        self.create_slider_frame(frame, "learning_rate", 0.01, 0.1, 0.03, row=1)
-        self.create_slider_frame(frame, "max_depth", 4, 10, 6, row=2)
-        self.create_slider_frame(frame, "reg_lambda", 1, 10, 3, row=3)
+        self.create_slider_frame(frame, " CatBoost","n_estimators", 100, 1000, 500, row=0)
+        self.create_slider_frame(frame, " CatBoost","learning_rate", 0.01, 0.1, 0.03, row=1)
+        self.create_slider_frame(frame, " CatBoost","max_depth", 4, 10, 6, row=2)
+        self.create_slider_frame(frame, " CatBoost","reg_lambda", 1, 10, 3, row=3)
 
         return frame
 
@@ -117,8 +128,8 @@ class AImodelPage(ctk.CTkFrame):
         frame.grid_columnconfigure(0, weight=1)
 
         # Sliders for ANN
-        self.create_slider_frame(frame, "Layer Number", 1, 6, 3, row=0)
-        self.create_slider_frame(frame, "Units", 1, 256, 128, row=1)
+        self.create_slider_frame(frame, "ANN","Layer Number", 1, 6, 3, row=0)
+        self.create_slider_frame(frame, "ANN","Units", 1, 256, 128, row=1)
         
         # Activation Function Dropdown
         self.create_combobox_frame(frame, "Activation Function", ["relu", "sigmoid", "tanh", "softmax"], "relu", row=2)
@@ -127,8 +138,8 @@ class AImodelPage(ctk.CTkFrame):
         self.create_combobox_frame(frame, "Optimizer", ["adam", "sgd", "rmsprop"], "adam", row=3)
         
         # Sliders for ANN
-        self.create_slider_frame(frame, "Batch Size", 16, 128, 30, row=4)
-        self.create_slider_frame(frame, "Epochs", 10, 300, 100, row=5)
+        self.create_slider_frame(frame, "ANN","Batch Size", 16, 128, 30, row=4)
+        self.create_slider_frame(frame, "ANN","Epochs", 10, 300, 100, row=5)
 
         return frame
 
@@ -139,15 +150,15 @@ class AImodelPage(ctk.CTkFrame):
         frame.grid_columnconfigure(0, weight=1)
 
         # Sliders for XGBoost
-        self.create_slider_frame(frame, "n_estimators", 100, 1000, 200, row=0)
-        self.create_slider_frame(frame, "learning_rate", 0.01, 0.3, 0.3, row=1)
-        self.create_slider_frame(frame, "min_split_loss", 3, 10, 10, row=2)
-        self.create_slider_frame(frame, "max_depth", 0, 10, 6, row=3)
+        self.create_slider_frame(frame, "XGBoost","n_estimators", 100, 1000, 200, row=0)
+        self.create_slider_frame(frame, "XGBoost","learning_rate", 0.01, 0.3, 0.3, row=1)
+        self.create_slider_frame(frame, "XGBoost","min_split_loss", 3, 10, 10, row=2)
+        self.create_slider_frame(frame, "XGBoost","max_depth", 0, 10, 6, row=3)
 
         return frame
     
 
-    def create_slider_frame(self, parent, label_text, from_, to, default, row):
+    def create_slider_frame(self, parent, model_name,label_text, from_, to, default, row):
         """Creates a frame with a slider."""
         frame = ctk.CTkFrame(parent, fg_color="#D1D1D1", corner_radius=10)
         frame.grid(row=row, column=0, padx=10, pady=10, sticky="nsew")
@@ -167,6 +178,13 @@ class AImodelPage(ctk.CTkFrame):
         slider.set(default)
         slider.grid(row=2, column=0, padx=10, sticky="ew")
 
+        
+        if model_name not in self.sliders:
+            self.sliders[model_name] = {}
+
+        # ✅ Store the slider under its model category
+        self.sliders[model_name][label_text] = slider
+
 
     def create_combobox_frame(self, parent, label_text, options, default, row):
         """Creates a frame with a dropdown combobox."""
@@ -181,6 +199,8 @@ class AImodelPage(ctk.CTkFrame):
         combobox = ctk.CTkComboBox(frame, values=options)
         combobox.set(default)
         combobox.grid(row=1, column=0, padx=10, pady=5, sticky="ew")
+
+        self.comboboxes[label_text] = combobox
 
 
     def show_info_dialog(self, text):
@@ -224,14 +244,18 @@ class AImodelPage(ctk.CTkFrame):
         # Retrieve slider values for the selected model
         if selected_model == "Random Forest":
             dataobject = DataObject()
-            print(self.get_slider_value("n_estimators"))
-            print(float(self.get_slider_value("max_depth")))
+            print(self.sliders["RandomForest"]["n_estimators"].get())
             dataobject.ai_model["Selected Model"]= selected_model
-            dataobject.ai_model["RandomForest"]["n_estimators"] = float(self.get_slider_value("n_estimators"))
-            dataobject.ai_model["RandomForest"]["max_depth"] = float(self.get_slider_value("max_depth"))
-            dataobject.ai_model["RandomForest"]["min_samples_split"]= float(self.get_slider_value("min_samples_split"))
-            dataobject.ai_model["RandomForest"]["min_samples_leaf"]= float(self.get_slider_value("min_samples_split"))
+            dataobject.ai_model["RandomForest"]["n_estimators"] = float(self.sliders["RandomForest"]["n_estimators"].get())
+            dataobject.ai_model["RandomForest"]["max_depth"] = float(self.sliders["RandomForest"]["max_depth"].get())
+            dataobject.ai_model["RandomForest"]["min_samples_split"]= float(self.sliders["RandomForest"]["min_samples_split"].get())
+            dataobject.ai_model["RandomForest"]["min_samples_leaf"]= float(self.sliders["RandomForest"]["min_samples_leaf"].get())
             
+            print (float(self.sliders["RandomForest"]["n_estimators"].get()))
+            print(float(self.sliders["RandomForest"]["max_depth"].get()))
+            print(float(self.sliders["RandomForest"]["min_samples_split"].get()))
+            print(float(self.sliders["RandomForest"]["min_samples_leaf"].get()))
+
             # Convert DataObject to JSON
             json_data = {"dataobject": dataobject.to_dict()}
             print(json_data)
@@ -241,10 +265,10 @@ class AImodelPage(ctk.CTkFrame):
         elif selected_model == "CatBoost":
             dataobject = DataObject()
             dataobject.ai_model["Selected Model"]= selected_model
-            dataobject.ai_model["CatBoost"]["n_estimators"] = self.get_slider_value("n_estimators")
-            dataobject.ai_model["CatBoost"]["learning_rate"] = self.get_slider_value("learning_rate")
-            dataobject.ai_model["CatBoost"]["max_depth"]= self.get_slider_value("max_depth")
-            dataobject.ai_model["CatBoost"]["reg_lambda"]= self.get_slider_value("reg_lambda")
+            dataobject.ai_model["CatBoost"]["n_estimators"] = float(self.sliders["CatBoost"]["n_estimators"].get())
+            dataobject.ai_model["CatBoost"]["learning_rate"] = float(self.sliders["CatBoost"]["learning_rate"].get())
+            dataobject.ai_model["CatBoost"]["max_depth"]= float(self.sliders["CatBoost"]["max_depth"].get())
+            dataobject.ai_model["CatBoost"]["reg_lambda"]= float(self.sliders["CatBoost"]["reg_lambda"].get())
             
             # Convert DataObject to JSON
             json_data = {"dataobject": dataobject.to_dict()}
@@ -256,12 +280,12 @@ class AImodelPage(ctk.CTkFrame):
             
             dataobject = DataObject()
             dataobject.ai_model["Selected Model"]= selected_model
-            dataobject.ai_model["ArtificialNeuralNetwork"]["layer_number"] = float(self.get_slider_value("Layer Number"))
-            dataobject.ai_model["ArtificialNeuralNetwork"]["units"] = self.get_slider_value("Units")
+            dataobject.ai_model["ArtificialNeuralNetwork"]["layer_number"] = float(self.sliders["ANN"]["Layer_number"].get())
+            dataobject.ai_model["ArtificialNeuralNetwork"]["units"] = float(self.sliders["ANN"]["Units"].get())
             dataobject.ai_model["ArtificialNeuralNetwork"]["activation"]= self.get_combobox_value("Activation Function")
             dataobject.ai_model["ArtificialNeuralNetwork"]["optimizer"]= self.get_combobox_value("Optimizer")
-            dataobject.ai_model["ArtificialNeuralNetwork"]["batch_size"]= self.get_slider_value("Batch Size")
-            dataobject.ai_model["ArtificialNeuralNetwork"]["epochs"]= self.get_slider_value("Epochs")
+            dataobject.ai_model["ArtificialNeuralNetwork"]["batch_size"]= float(self.sliders["ANN"]["Batch_size"].get())
+            dataobject.ai_model["ArtificialNeuralNetwork"]["epochs"]= float(self.sliders["ANN"]["Epochs"].get())
             
             # Convert DataObject to JSON
             json_data = {"dataobject": dataobject.to_dict()}
@@ -272,10 +296,10 @@ class AImodelPage(ctk.CTkFrame):
         elif selected_model == "XGBoost":
             
             dataobject.ai_model["Selected Model"] = selected_model
-            dataobject.ai_model["XGBoost"]["n_estimators"] = self.get_slider_value("n_estimators")
-            dataobject.ai_model["XGBoost"]["learning_rate"] = self.get_slider_value("learning_rate")
-            dataobject.ai_model["XGBoost"]["min_split_loss"]= self.get_slider_value("min_split_loss")
-            dataobject.ai_model["XGBoost"]["max_depth"]= self.get_slider_value("max_depth")
+            dataobject.ai_model["XGBoost"]["n_estimators"] = float(self.sliders["XGBoost"]["n_estimators"].get())
+            dataobject.ai_model["XGBoost"]["learning_rate"] = float(self.sliders["XGBoost"]["learning_rate"].get())
+            dataobject.ai_model["XGBoost"]["min_split_loss"]= float(self.sliders["XGBoost"]["min_split_loss"].get())
+            dataobject.ai_model["XGBoost"]["max_depth"]= float(self.sliders["XGBoost"]["max_depth"].get())
             
             # Convert DataObject to JSON
             json_data = {"dataobject": dataobject.to_dict()}
@@ -296,6 +320,50 @@ class AImodelPage(ctk.CTkFrame):
             if isinstance(widget, ctk.CTkComboBox) and combobox_name in widget.winfo_parent():
                 return widget.get()
         return None
+    
+    def preview_data(self):
+        """Opens a new popup window to display the scaled and encoded data."""
+        
+        if not hasattr(self, "file_data") or self.file_data is None or self.file_data.empty:
+            messagebox.showerror("Error", "No processed data available for preview!")
+            return
+
+        # ✅ Create a new popup window
+        preview_window = ctk.CTkToplevel(self)
+        preview_window.title("Processed Data Preview")
+        preview_window.geometry("900x500")
+        preview_window.grab_set()
+
+        # ✅ Create a frame for the Treeview
+        frame = tk.Frame(preview_window)
+        frame.pack(fill="both", expand=True)
+
+        # ✅ Treeview (Table) widget
+        tree = ttk.Treeview(frame, columns=list(self.file_data.columns), show="headings")
+
+        # ✅ Add column headers
+        for col in self.file_data.columns:
+            tree.heading(col, text=col)
+            tree.column(col, width=150)  # Adjust column width
+
+        # ✅ Insert rows (limit to first 50 rows to avoid UI lag)
+        for index, row in self.file_data.head(50).iterrows():
+            tree.insert("", "end", values=list(row))
+
+        # ✅ Add vertical scrollbar
+        v_scrollbar = ttk.Scrollbar(frame, orient="vertical", command=tree.yview)
+        tree.configure(yscroll=v_scrollbar.set)
+
+        # ✅ Add horizontal scrollbar
+        h_scrollbar = ttk.Scrollbar(frame, orient="horizontal", command=tree.xview)
+        tree.configure(xscroll=h_scrollbar.set)
+
+        # ✅ Pack elements
+        tree.pack(side="top", fill="both", expand=True)
+        v_scrollbar.pack(side="right", fill="y")
+        h_scrollbar.pack(side="bottom", fill="x")
+
+        print("✅ Processed Data preview displayed successfully!")
     
     def send_request(self, json_data):
         """Send the request to the Django backend and return the response."""

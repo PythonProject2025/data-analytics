@@ -79,7 +79,7 @@ class App(ctk.CTk):
 
     def load_header_image(self):
         """Loads the header image."""
-        image_path = assets_manage("image_3.png")
+        image_path = assets_manage("Data Analytics.png")
         img = Image.open(image_path)
         resized_img = img.resize((self.winfo_width(), 60))
         header_img = ctk.CTkImage(light_image=resized_img, dark_image=resized_img, size=(self.winfo_width(), 60))
@@ -92,7 +92,7 @@ class App(ctk.CTk):
 
     def resize_header_image(self, event):
         """Resizes the header image when the window is resized."""
-        image_path = assets_manage("image_3.png")
+        image_path = assets_manage("Data Analytics.png")
         img = Image.open(image_path)
         resized_img = img.resize((self.winfo_width(), 60))
         header_img = ctk.CTkImage(light_image=resized_img, dark_image=resized_img, size=(self.winfo_width(), 60))
@@ -100,7 +100,7 @@ class App(ctk.CTk):
         self.header_label.configure(image=header_img)
         self.header_label.image = header_img
 
-    def show_page(self, page_name, *args):
+    def show_page(self, page_name,*args,**kwargs):
         """Handles navigation between different pages."""
 
         if hasattr(self, "current_page") and self.current_page:
@@ -118,7 +118,7 @@ class App(ctk.CTk):
         }
 
         if page_name in page_mapping:
-            self.current_page = page_mapping[page_name](self, *args)  # Pass arguments if needed
+            self.current_page = page_mapping[page_name](self, *args,**kwargs)
             self.current_page.grid(row=1, column=2, columnspan=7, rowspan=7, sticky="nsew") # Ensure it fills the UI
         else:
             print(f"Error: Page '{page_name}' not found!")

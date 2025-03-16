@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from tkinter import Button, PhotoImage, Toplevel,messagebox
+from tkinter import Button, PhotoImage, Toplevel,messagebox,filedialog
 from src.assets_management import assets_manage, load_image
 import pandas as pd
 import tkinter as tk
@@ -12,7 +12,9 @@ from src.models.data_object_class import DataObject
 import requests
 from matplotlib.backend_bases import MouseEvent
 from matplotlib.backends.backend_tkagg import NavigationToolbar2Tk
+import json
 import matplotlib.patches as patches
+
 
 
 
@@ -20,6 +22,7 @@ class DataFilteringPage(ctk.CTkFrame):
     def __init__(self, parent,file_path,file_name=" "):
         super().__init__(parent, corner_radius=0)
 
+        self.parent = parent
         self.file_name = file_name
         self.file_path=file_path
         self.current_segment_index = 0
@@ -114,6 +117,8 @@ class DataFilteringPage(ctk.CTkFrame):
         # Submit Button
         self.submit_button = ctk.CTkButton(self.right_frame, text="Submit", command=self.submit_action)
         self.submit_button.grid(row=2, column=0, pady=10)
+
+        #self.add_export_send_buttons()
 
         # Show default segment
         self.current_segment = None
@@ -434,6 +439,8 @@ class DataFilteringPage(ctk.CTkFrame):
         self.current_segment.grid(row=1, column=0, sticky="nsew")
         self.segmented_frame.set(segment_name)
 
+        
+
 
     def submit_action(self):
         """Handles segment transitions and submission logic."""
@@ -443,6 +450,16 @@ class DataFilteringPage(ctk.CTkFrame):
         if self.segment_completion[current_segment]:
             self.move_to_next_segment()
             return
+        
+         # ✅ Check for column selection if in "Outlier Detection"
+        if current_segment == "Outlier Detection":
+            selected_columns = [
+                child.cget("text") for child in self.scroll_frame.winfo_children()
+                if isinstance(child, ctk.CTkCheckBox) and child.get()
+            ]
+            if not selected_columns:
+                messagebox.showerror("Error", "You must select at least one column before proceeding!")
+                return  # 🚫 Stop further execution
 
         self.segment_completion[current_segment] = True  # Mark as completed
         print(f"{current_segment} completed!")
@@ -450,6 +467,8 @@ class DataFilteringPage(ctk.CTkFrame):
         # Lock the completed segment
         if current_segment in self.segments:
             self.lock_segment(self.segments[current_segment])
+
+      
 
         # Print parameter values based on segment
         if current_segment == "Outlier Detection":
@@ -485,8 +504,14 @@ class DataFilteringPage(ctk.CTkFrame):
         if current_segment == "Smoothing":
             self.visible_segments = ["Scaling & Encoding"]
 
+    
+           # ✅ Update button visibility
+        self.update_buttons_visibility()
+
         # Enable the next segment in the segmented frame
         self.move_to_next_segment()
+
+      
 
 
     def move_to_next_segment(self):
@@ -578,6 +603,7 @@ class DataFilteringPage(ctk.CTkFrame):
 
     def update_boxplot(self, column_name):
         """Triggered when a new column is selected in the dropdown."""
+        
         self.column_name = column_name
 
         # Show loading text
@@ -593,19 +619,25 @@ class DataFilteringPage(ctk.CTkFrame):
 
         loading_label = ctk.CTkLabel(self.graph_display, text="Loading...", font=("Inter", 14, "bold"))
         loading_label.place(relx=0.5, rely=0.5, anchor="center")
+        
 
 
-
-
-
-    def plot_boxplot(self, column_name):
+    def plot_boxplot(self, column_name,cleaned=False):
         """Generates and embeds an interactive boxplot with UI enhancements."""
-        if column_name not in self.data.columns:
+        if cleaned and hasattr(self, "cleaned_data")and isinstance(self.cleaned_data, pd.DataFrame):
+            plot_data = self.cleaned_data
+            print("ommala")  # Use cleaned data from response
+        else:
+            plot_data = self.data  # Use raw CSV data
+
+        if column_name not in plot_data.columns:
             return
 
         # Clear previous widgets in the graph display area
         for widget in self.graph_display.winfo_children():
             widget.destroy()
+
+  
 
         # Create Matplotlib figure
         fig, ax = plt.subplots(figsize=(7, 4))  # Slightly larger size
@@ -613,7 +645,7 @@ class DataFilteringPage(ctk.CTkFrame):
         ax.set_facecolor("#E0E0E0")
 
         # Generate Boxplot with Better Formatting
-        box = ax.boxplot(self.data[column_name], vert=False, patch_artist=True, widths=0.6,
+        box = ax.boxplot(plot_data[column_name], vert=False, patch_artist=True, widths=0.6,
                         boxprops=dict(facecolor='lightblue', edgecolor='black', linewidth=1.2),
                         medianprops=dict(color='red', linewidth=1.5),
                         whiskerprops=dict(color='black', linewidth=1.2, linestyle="--"))
@@ -647,7 +679,7 @@ class DataFilteringPage(ctk.CTkFrame):
             if event.inaxes == ax:
                 for i, line in enumerate(box["medians"]):
                     if line.contains(event)[0]:
-                        value = self.data[column_name].median()
+                        value = plot_data[column_name].median()
                         tooltip.set_text(f"Median: {value:.2f}")
                         tooltip.set_position((event.xdata, event.ydata))
                         tooltip.set_visible(True)
@@ -679,6 +711,65 @@ class DataFilteringPage(ctk.CTkFrame):
         # Render the plot
         canvas.draw()
 
+    def plot_line_graph(self, column_name, original_data, processed_data, title):
+        """
+        Plots a line graph for original and processed data (interpolation or smoothing).
+        
+        Parameters:
+            column_name (str): The name of the column to plot.
+            original_data (pd.Series or np.ndarray): The original data.
+            processed_data (pd.Series or np.ndarray): The processed data (interpolated or smoothed).
+            title (str): The title of the plot.
+        """
+        # Ensure data is a Pandas Series to prevent errors
+        if isinstance(original_data, np.ndarray):
+            original_data = pd.Series(original_data, name=column_name)
+
+        if isinstance(processed_data, np.ndarray):
+            processed_data = pd.Series(processed_data, name=column_name)
+
+        # Clear previous widgets in the graph display area
+        for widget in self.graph_display.winfo_children():
+            widget.destroy()
+
+        # Create Matplotlib figure
+        fig, ax = plt.subplots(figsize=(7, 4))  # Slightly larger size
+        fig.patch.set_facecolor("#E0E0E0")  # Match UI theme
+        ax.set_facecolor("#E0E0E0")
+
+        # Plot original data
+        ax.plot(original_data.index, original_data, color="blue", label="Original Data")
+
+        # Plot processed data
+        ax.plot(processed_data.index, processed_data, color="red", label=title)
+
+        # Improve readability
+        ax.set_title(f"{title} for {column_name}", fontsize=13, fontweight="bold")
+        ax.set_xlabel("Index", fontsize=11)
+        ax.set_ylabel(column_name, fontsize=11)
+        ax.legend()
+        ax.grid(color='gray', linestyle='--', linewidth=0.5, alpha=0.7)
+
+        # Embed Matplotlib Figure inside Tkinter Frame
+        canvas = FigureCanvasTkAgg(fig, master=self.graph_display)
+        canvas_widget = canvas.get_tk_widget()
+        canvas_widget.pack(fill="both", expand=True)
+
+        # Add Toolbar for Navigation (Zoom, Pan, Save)
+        toolbar_frame = ctk.CTkFrame(self.graph_display, fg_color="#E0E0E0")  # Match toolbar bg color
+        toolbar_frame.pack(side="top", fill="x")
+
+        toolbar = NavigationToolbar2Tk(canvas, toolbar_frame)
+        toolbar.config(background="#E0E0E0")  # Set toolbar background
+        for child in toolbar.winfo_children():
+            child.config(bg="#E0E0E0")  # Change toolbar button backgrounds
+
+        toolbar.update()
+
+        # Render the plot
+        canvas.draw()
+
+
 
 
 
@@ -694,9 +785,10 @@ class DataFilteringPage(ctk.CTkFrame):
  
             if response.status_code == 200:
                     response_data = response.json()
-                    print(response_data)
+                    #print(response_data)
                     if process_name == "outlier_detection" and "cleaned_data" in response_data:
                         self.cleaned_data = response_data["cleaned_data"]  # Store cleaned data JSON
+                        #print(self.cleaned_data)
                     elif process_name == "interpolation" and "interpolated_data" in response_data:
                         self.interpolated_data = response_data["interpolated_data"]  # Store interpolated data JSON
                     elif process_name == "smoothing" and "smoothed_data" in response_data:
@@ -711,47 +803,107 @@ class DataFilteringPage(ctk.CTkFrame):
  
     def run_outlier_detection(self):
         """Runs outlier detection and updates the data object."""
-        selected_columns = []
+        self.selected_columns = []
         for child in self.scroll_frame.winfo_children():
             if isinstance(child, ctk.CTkCheckBox) and child.get():
-                selected_columns.append(child.cget("text"))  # Get checkbox label as column name
+                self.selected_columns.append(child.cget("text"))  # Get checkbox label as column name
+
+            #  Restriction: Ensure at least one column is selected
+        if not self.selected_columns:
+            messagebox.showerror("Error", "You must select at least one column before proceeding!")
+            return 
+
         dataobject = DataObject()
         dataobject.data_filtering["filepath"] = self.file_path
         dataobject.data_filtering["Outlier Detection"]["Method"] = self.radio_var.get()
         dataobject.data_filtering["Outlier Detection"]["Parameters"]["contamination"] = float(self.slider.get())
-        dataobject.data_filtering["Outlier Detection"]["Parameters"]["column_names"]= selected_columns
+        dataobject.data_filtering["Outlier Detection"]["Parameters"]["column_names"]= self.selected_columns
         
-        # Convert DataObject to JSON
         json_data = {"dataobject": dataobject.to_dict()}
-        print(json_data)
+        #print(json_data)
         # Send request
-        self.send_request("outlier_detection", json_data)
+        
+
+
+        self.show_loading_message()
+        self.graph_display.update_idletasks()
+        response =self.send_request("outlier_detection", json_data)
+
+        if response and "cleaned_data" in response:
+            self.cleaned_data_str = response["cleaned_data"]  # Extract cleaned data as string
+
+        try:
+            # ✅ Convert JSON string to Python Dictionary
+            cleaned_data_dict = json.loads(self.cleaned_data_str)
+
+            # ✅ Convert Dictionary to DataFrame
+            self.cleaned_data = pd.DataFrame.from_dict(cleaned_data_dict)
+            print(self.cleaned_data)
+            print(type(self.cleaned_data))
+
+            # ✅ Ensure cleaned data is properly formatted before updating UI
+            if not self.cleaned_data.empty:
+                self.update_dropdown(self.selected_columns)  # Update dropdown with selected columns
+                self.plot_boxplot(self.selected_columns[0], cleaned=True)  # Plot cleaned data
+
+        except json.JSONDecodeError as e:
+            print("❌ Error: Failed to parse cleaned data JSON:", e)
+            self.cleaned_data = None
+       
 
     def run_interpolation(self):
-        """Runs interpolation and updates the data object."""
+                
         if not hasattr(self, "cleaned_data"):
             messagebox.showerror("Error", "Cleaned data is missing. Please run Outlier Detection first.")
             return
-        
+
         json_data = {
-            "cleaned_data": self.cleaned_data  
+            "cleaned_data": self.cleaned_data_str
         }
-        print(type(self.cleaned_data))
+        print("going to send request to interpolation")
         # Send request to backend
-        self.send_request("interpolation", json_data)
+        response = self.send_request("interpolation", json_data)
+
+        if response and "interpolated_data" in response:
+            self.interpolated_data_str = response["interpolated_data"]  # Extract interpolated data as string
+
+            try:
+                # Convert JSON string to Python Dictionary
+                interpolated_data_dict = json.loads(self.interpolated_data_str)
+
+                # Convert Dictionary to DataFrame
+                self.interpolated_data = pd.DataFrame.from_dict(interpolated_data_dict)
+                print(self.interpolated_data)
+                print(type(self.interpolated_data))
+
+                # Ensure interpolated data is properly formatted before updating UI
+                if not self.interpolated_data.empty:
+
+                    # Plot interpolation data
+                    self.update_dropdown(self.selected_columns)
+                    self.plot_line_graph(
+                        column_name=self.selected_columns[0],
+                        original_data=self.data[self.selected_columns[0]],
+                        processed_data=self.interpolated_data[self.selected_columns[0]],
+                        title="Interpolated Data"
+                    )
+
+            except json.JSONDecodeError as e:
+                print("❌ Error: Failed to parse interpolated data JSON:", e)
+                self.interpolated_data = None
         
     def run_smoothing(self):
-        """Runs smoothing and updates the data object."""
         if not hasattr(self, "interpolated_data"):
             messagebox.showerror("Error", "Interpolated data is missing. Please run Outlier Detection first and then Interpolation.")
             return
+
         dataobject = DataObject()
         dataobject.data_filtering["Smoothing"]["Method"] = self.smoothing_radio_var.get()
-        
+
         # If SMA is selected, store window size
         if self.smoothing_radio_var.get() == "SMA":
             dataobject.data_filtering["Smoothing"]["parameters"]["window_size"] = int(round(self.sma_slider.get()))
-    
+
         # If TES is selected, store TES parameters
         elif self.smoothing_radio_var.get() == "TES":
             tes_params = {}
@@ -761,37 +913,516 @@ class DataFilteringPage(ctk.CTkFrame):
                 elif isinstance(widget, ctk.CTkEntry):
                     tes_params[key] = widget.get()  # Get text value from entries
 
-        # Store TES parameters in DataObject
-        dataobject.data_filtering["Smoothing"]["parameters"].update(tes_params)
-        
+            # Store TES parameters in DataObject
+            dataobject.data_filtering["Smoothing"]["parameters"].update(tes_params)
+
         # Convert DataObject to JSON
         json_data = {"dataobject": dataobject.to_dict()}
-        print(json_data)
         json_data = {
             "dataobject": dataobject.to_dict(),
-            "interpolated_data": self.interpolated_data 
+            "interpolated_data": self.interpolated_data_str
         }
         print("going to send request to smoothing")
         # Send request to backend
-        self.send_request("smoothing", json_data)
-        
+        response = self.send_request("smoothing", json_data)
+
+        if response and "smoothed_data" in response:
+            self.smoothed_data_str = response["smoothed_data"]  # Extract smoothed data as string
+
+            try:
+                # Convert JSON string to Python Dictionary
+                smoothed_data_dict = json.loads(self.smoothed_data_str)
+
+                # Convert Dictionary to DataFrame
+                self.smoothed_data = pd.DataFrame.from_dict(smoothed_data_dict)
+                print(self.smoothed_data)
+                print(type(self.smoothed_data))
+
+                # Ensure smoothed data is properly formatted before updating UI
+                if not self.smoothed_data.empty:
+                    # Plot smoothing data
+                    self.update_dropdown(self.selected_columns)
+                    self.plot_line_graph(
+                        column_name=self.selected_columns[0],
+                        original_data=self.data[self.selected_columns[0]],
+                        processed_data=self.smoothed_data[self.selected_columns[0]],
+                        title="Smoothed Data"
+                    )
+
+            except json.JSONDecodeError as e:
+                print("❌ Error: Failed to parse smoothed data JSON:", e)
+                self.smoothed_data = None
+
     def run_scaling_and_encoding(self):
         """Runs scaling and encoding and updates the data object."""
-        if not hasattr(self, "smoothed_data"):
-            messagebox.showerror("Error", "Smoothed data is missing. Please run Outlier Detection, Interpolation and Smoothing.")
-            return
-        dataobject = DataObject()
-        # to be edited need to add the user given test-size and random state
-        dataobject.data_filtering["Train-Test Split"]["parameters"]["test_size"] = int(round(self.test_size_slider.get()))
-        dataobject.data_filtering["Train-Test Split"]["parameters"]["random_state"] = int(round(self.random_state_slider.get()))
         
-        # Convert DataObject to JSON
-        json_data = {"dataobject": dataobject.to_dict()}
-        print(self.smoothed_data)
+        if not hasattr(self, "smoothed_data"):
+            messagebox.showerror("Error", "Smoothed data is missing. Please run Outlier Detection, Interpolation, and Smoothing.")
+            return
+
+        dataobject = DataObject()
+        dataobject.data_filtering["Train-Test Split"]["parameters"]["test_size"] = self.test_size_slider.get()
+        dataobject.data_filtering["Train-Test Split"]["parameters"]["random_state"] = int(round(self.random_state_slider.get()))
+
         json_data = {
             "dataobject": dataobject.to_dict(),
-            "smoothed_data": self.smoothed_data 
+            "smoothed_data": self.smoothed_data_str  # Send smoothed data
         }
-        print("going to send request to scaling")
-        # Send request to backend
-        self.send_request("scaling_encoding", json_data)
+
+        print("🚀 Sending request to backend for Scaling & Encoding...")
+        response = self.send_request("scaling_encoding", json_data)
+
+        if response and "processed_data" in response:
+            processed_data = response["processed_data"]
+
+            if not isinstance(processed_data, dict):
+                print("❌ Error: Processed data is not a valid dictionary.")
+                messagebox.showerror("Error", "Invalid processed data format received.")
+                return
+            
+            # Ensure all columns have the same length
+            column_lengths = [len(v) for v in processed_data.values()]
+            min_length = min(column_lengths)
+
+            # Trim or pad columns to match the minimum length
+            cleaned_data = {k: v[:min_length] for k, v in processed_data.items()}
+
+            # Convert to DataFrame
+            self.scaled_encoded_data = pd.DataFrame(cleaned_data)
+
+            print("✅ Scaled & Encoded Data received:")
+            print(self.scaled_encoded_data)
+
+            # Show preview of the scaled and encoded data
+            self.preview_scaled_encoded_data()
+
+        else:
+            print("❌ Error: No processed data received from backend.")
+            messagebox.showerror("Error", "Failed to retrieve scaled and encoded data.")
+
+
+
+    def preview_scaled_encoded_data(self):
+        """Opens a new popup window to display the scaled and encoded data."""
+        if not hasattr(self, "scaled_encoded_data") or self.scaled_encoded_data.empty:
+            messagebox.showerror("Error", "No scaled and encoded data available!")
+            return
+
+        # Create a new popup window
+        preview_window = ctk.CTkToplevel(self)
+        preview_window.title("Scaled and Encoded Data Preview")
+        preview_window.geometry("900x500")
+        preview_window.grab_set()
+
+        # Create a frame for the Treeview
+        frame = tk.Frame(preview_window)
+        frame.pack(fill="both", expand=True)
+
+        # Treeview (table) widget
+        tree = ttk.Treeview(frame, columns=list(self.scaled_encoded_data.columns), show="headings")
+
+        # Add column headers
+        for col in self.scaled_encoded_data.columns:
+            tree.heading(col, text=col)
+            tree.column(col, width=150)  # Adjust column width
+
+        # Insert rows (limit to first 50 rows to avoid UI lag)
+        for index, row in self.scaled_encoded_data.head(50).iterrows():
+            tree.insert("", "end", values=list(row))
+
+        # Add vertical scrollbar
+        v_scrollbar = ttk.Scrollbar(frame, orient="vertical", command=tree.yview)
+        tree.configure(yscroll=v_scrollbar.set)
+
+        # Add horizontal scrollbar
+        h_scrollbar = ttk.Scrollbar(frame, orient="horizontal", command=tree.xview)
+        tree.configure(xscroll=h_scrollbar.set)
+
+        # Pack elements
+        tree.pack(side="top", fill="both", expand=True)
+        v_scrollbar.pack(side="right", fill="y")
+        h_scrollbar.pack(side="bottom", fill="x")
+
+        print("✅ Scaled & Encoded Data preview displayed successfully!")
+
+    
+    def update_dropdown(self, selected_columns):
+        """Update the dropdown with selected columns and dynamically set the callback function."""
+        if hasattr(self, "dropdown"):
+            self.dropdown.destroy()  # Remove the old dropdown
+
+        # Determine the current process
+        current_segment = self.segmented_frame.get()
+
+        # Set appropriate callback function for dropdown
+        if current_segment == "Outlier Detection":
+            command = lambda col: self.plot_boxplot(col, cleaned=True)
+
+        elif current_segment == "Interpolation":
+            command = lambda col: self.plot_line_graph(
+                column_name=col,
+                original_data=self.data[col],  # Ensure Pandas Series
+                processed_data=self.interpolated_data[col],  # Ensure Pandas Series
+                title="Interpolated Data"
+            ) if col in self.interpolated_data.columns else None
+
+        elif current_segment == "Smoothing":
+            command = lambda col: self.plot_line_graph(
+                column_name=col,
+                original_data=self.data[col],  # Ensure Pandas Series
+                processed_data=self.smoothed_data[col],  # Ensure Pandas Series
+                title="Smoothed Data"
+            ) if col in self.smoothed_data.columns else None
+
+        elif current_segment == "Scaling & Encoding":
+            self.preview_scaled_encoded_data()  # Show preview for Scaling & Encoding
+            return  # No need to update dropdown
+
+        else:
+            command = lambda col: self.plot_boxplot(col)
+
+        # Create the updated dropdown with correct command
+        self.dropdown = ctk.CTkComboBox(
+            self.graph_frame,
+            values=selected_columns,
+            command=command,  # Dynamic function assignment
+            width=280,
+            justify="center"
+        )
+        self.dropdown.grid(row=0, column=0, padx=10, pady=20, sticky="n")
+        self.dropdown.set(selected_columns[0] if selected_columns else "Select Column")
+
+   
+
+    def export_data(self):
+        """Exports the processed data based on the latest completed step."""
+        if self.segment_completion.get("Scaling & Encoding", False):
+            data_to_export = self.scaled_encoded_data
+            message = None  # No message box for final export
+        elif self.segment_completion.get("Smoothing", False):
+            data_to_export = self.smoothed_data
+            message = "Only Smoothed data available for export."
+        elif self.segment_completion.get("Interpolation", False):
+            data_to_export = self.interpolated_data
+            message = "Only Interpolated data available for export."
+        elif self.segment_completion.get("Outlier Detection", False):
+            data_to_export = self.cleaned_data
+            message = "Only Outlier Cleaned data available for export."
+        else:
+            messagebox.showerror("Error", "No processed data available for export!")
+            return
+
+        # ✅ Show message box before file dialog
+        if message:
+            messagebox.showinfo("Export Data", message)
+
+        # ✅ Open file dialog after message box
+        file_path = filedialog.asksaveasfilename(defaultextension=".csv",
+                                                filetypes=[("CSV files", "*.csv"), ("All Files", "*.*")],
+                                                title="Save Processed Data")
+
+        if file_path:
+            data_to_export.to_csv(file_path, index=False)
+            messagebox.showinfo("Success", "Data successfully exported!")
+
+
+    def open_send_popup(self):
+        """Opens a popup for selecting the destination page after Scaling & Encoding is completed."""
+        if not hasattr(self, "scaled_encoded_data"):
+            messagebox.showerror("Error", "Scaling & Encoding must be completed before sending the file.")
+            return
+
+        # Create Popup Window
+        popup = ctk.CTkToplevel(self)
+        popup.title("Select Destination")
+        popup.geometry("400x200")
+        popup.grab_set()
+
+        ctk.CTkLabel(popup, text="Choose the Process :", font=("Inter", 14, "bold")).pack(pady=20)
+
+        # Dropdown Menu
+        process_var = ctk.StringVar(value="Regression & Classification")  # Default Value
+        process_dropdown = ctk.CTkComboBox(popup, values=["Regression & Classification", "AI Model"], variable=process_var ,width=250)
+        process_dropdown.pack(pady=10)
+
+        def send_file():
+            """Handles file sending based on the selected process."""
+            selected_process = process_var.get()
+            popup.destroy()  # Close popup
+
+            # Navigate to the respective page with the file argument
+            if selected_process == "Regression & Classification":
+                self.parent.show_page("RegressionClassificationPage", file_data=self.scaled_encoded_data,file_name="Preprocessed_Data")
+            else:
+                self.parent.show_page("AIModelPage", file_data=self.scaled_encoded_data,file_name="Preprocessed_Data")
+
+        ctk.CTkButton(popup, text="Proceed", command=send_file).pack(pady=10)
+
+    def update_buttons_visibility(self):
+    
+        # ✅ Ensure Export Button is only created & visible after Outlier Detection is submitted
+        if self.segment_completion.get("Outlier Detection", False):
+            self.add_export_send_buttons()  # ✅ Call button creation only after Outlier Detection
+
+            # ✅ Show Export button after Outlier Detection is completed
+        if hasattr(self, "cleaned_data"):
+            self.export_button.grid()
+            self.compare_button.grid()  # ✅ Compare button visible after outlier detection
+
+        # ✅ Show Export button after Interpolation is completed
+        if hasattr(self, "interpolated_data"):
+            self.export_button.grid()
+            self.compare_button.grid()
+
+        # ✅ Show Export button after Smoothing is completed
+        if hasattr(self, "smoothed_data"):
+            self.export_button.grid()
+            self.compare_button.grid()
+
+        # ✅ Show Export button after Scaling & Encoding is completed and replace Compare with Send
+        if hasattr(self, "scaled_encoded_data"):
+            self.export_button.grid()
+            self.compare_button.grid_remove()  # ✅ Hide Compare Button after Scaling & Encoding
+            self.send_button.grid()  # ✅ Show Send Button
+
+
+    def add_export_send_buttons(self):
+        """Adds Export, Compare, and Send buttons to the main UI at the bottom-right corner below the right frame."""
+        
+        # ✅ Ensure button frame is added below the right frame
+        self.button_frame = ctk.CTkFrame(self, fg_color="transparent")  
+        self.button_frame.grid(row=2, column=1, padx=10, pady=10, sticky="se")  # Bottom-right below right frame
+
+        # ✅ Export Button (Initially Hidden)
+        self.export_button = ctk.CTkButton(
+            self.button_frame, text="Export", fg_color="transparent", border_width=2, border_color="black",
+            text_color="black", command=self.export_data
+        )
+        self.export_button.grid(row=0, column=0, pady=5, padx=10, sticky="ew")
+        self.export_button.grid_remove()  # Initially hidden
+
+        # ✅ Compare Button (Initially Hidden, shown after Outlier Detection)
+        self.compare_button = ctk.CTkButton(
+            self.button_frame, text="Compare", fg_color="transparent", border_width=2, border_color="black",
+            text_color="black", command=self.open_comparison_popup
+        )
+        self.compare_button.grid(row=0, column=1, pady=5, padx=10, sticky="ew")
+        self.compare_button.grid_remove()  # Initially hidden
+
+                # ✅ Send Button (Initially Hidden, shown after Scaling & Encoding)
+        self.send_button = ctk.CTkButton(
+            self.button_frame, text="Send", fg_color="transparent", border_width=2, border_color="black",
+            text_color="black", command=self.open_send_popup
+        )
+        self.send_button.grid(row=0, column=1, pady=5, padx=10, sticky="ew")
+        self.send_button.grid_remove()  # Initially hidden
+
+    def open_comparison_popup(self):
+        """Opens a popup window for comparing different stages of data processing."""
+        
+        # Create Popup Window
+        self.compare_popup = ctk.CTkToplevel(self)
+        self.compare_popup.title("Compare Data")
+        self.compare_popup.geometry("900x500")
+        self.compare_popup.grab_set()
+
+        # Create Two Frames (Left & Right)
+        left_frame = ctk.CTkFrame(self.compare_popup, fg_color="#E0E0E0", corner_radius=10)
+        left_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
+
+        right_frame = ctk.CTkFrame(self.compare_popup, fg_color="#E0E0E0", corner_radius=10)
+        right_frame.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
+
+        # ✅ Dropdown for Selecting Graph or Data
+        self.compare_type = ctk.StringVar(value="Graph")
+        compare_dropdown = ctk.CTkComboBox(
+            right_frame, values=["Graph", "Data"], variable=self.compare_type, width=150
+        )
+        compare_dropdown.grid(row=0, column=1, padx=10, pady=10, sticky="e")
+
+        # ✅ Left Data Selection Dropdown
+        left_options = ["Raw Data"]
+        #if hasattr(self, "cleaned_data"): left_options.append("Outlier Cleaned Data")
+        if hasattr(self, "interpolated_data"): left_options.append("Outlier Cleaned Data")
+        if hasattr(self, "smoothed_data"): left_options.append("Interpolated Data")
+
+        self.left_selection = ctk.StringVar(value=left_options[0])
+        left_dropdown = ctk.CTkComboBox(
+            left_frame, values=left_options, variable=self.left_selection, width=200
+        )
+        left_dropdown.grid(row=0, column=0, padx=10, pady=10, sticky="w")
+
+        # ✅ Right Data Selection Dropdown
+        right_options = []
+        if hasattr(self, "cleaned_data"): right_options.append("Outlier Cleaned Data")
+        if hasattr(self, "interpolated_data"): (right_options.append("Interpolated Data") , right_options.remove("Outlier Cleaned Data"))
+        if hasattr(self, "smoothed_data"): right_options.append("Smoothed Data"), right_options.remove("Interpolated Data")
+
+        self.right_selection = ctk.StringVar(value=right_options[0] if right_options else "")
+        right_dropdown = ctk.CTkComboBox(
+            right_frame, values=right_options, variable=self.right_selection, width=200
+        )
+        right_dropdown.grid(row=0, column=0, padx=10, pady=10, sticky="w")
+
+        # ✅ Column Selection Dropdown
+        self.column_selection = ctk.StringVar(value=self.selected_columns[0])
+        column_dropdown = ctk.CTkComboBox(
+            self.compare_popup, values=self.selected_columns, variable=self.column_selection, width=200
+        )
+        column_dropdown.grid(row=1, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
+
+            # ✅ Compare Button (Triggers Graph/Data Display)
+        compare_button = ctk.CTkButton(
+            right_frame, text="Compare", command=self.update_comparison_view, 
+            fg_color="transparent", border_width=2, border_color="black", text_color="black"
+        )
+        compare_button.grid(row=0, column=2, pady=10, sticky="ew")
+
+    def show_comparison_data(self, left_data, right_data, column_name):
+        """Displays a side-by-side comparison of selected datasets in a table format, highlighting differences."""
+        
+        # Get the corresponding DataFrames
+        left_df = self.get_data_by_name(left_data)
+        right_df = self.get_data_by_name(right_data)
+
+        if left_df is None or right_df is None:
+            messagebox.showerror("Error", "Invalid Data Selection!")
+            return
+
+        # Extract the selected column
+        if column_name not in left_df.columns or column_name not in right_df.columns:
+            messagebox.showerror("Error", f"Column '{column_name}' not found in selected datasets!")
+            return
+
+        left_values = left_df[column_name].astype(str).tolist()  # Convert to list for comparison
+        right_values = right_df[column_name].astype(str).tolist()
+
+        # ✅ Create Comparison Popup Window
+        compare_table_popup = ctk.CTkToplevel(self)
+        compare_table_popup.title("Data Comparison")
+        compare_table_popup.geometry("900x500")
+        compare_table_popup.grab_set()
+
+        # ✅ Create a frame to hold the Treeview (Table)
+        frame = tk.Frame(compare_table_popup)
+        frame.pack(fill="both", expand=True)
+
+        # ✅ Treeview Widget for Side-by-Side Data Comparison
+        tree = ttk.Treeview(frame, columns=("Index", "Left Data", "Right Data"), show="headings")
+
+        # ✅ Add column headers
+        tree.heading("Index", text="Index", anchor="center")
+        tree.heading("Left Data", text=f"{left_data} ({column_name})", anchor="center")
+        tree.heading("Right Data", text=f"{right_data} ({column_name})", anchor="center")
+
+        tree.column("Index", width=50, anchor="center")
+        tree.column("Left Data", width=200, anchor="center")
+        tree.column("Right Data", width=200, anchor="center")
+
+        # ✅ Insert rows with differences highlighted
+        for i in range(min(len(left_values), len(right_values))):
+            left_value = left_values[i]
+            right_value = right_values[i]
+
+            # Highlight changes in red
+            tag = "changed" if left_value != right_value else ""
+
+            tree.insert("", "end", values=(i, left_value, right_value), tags=(tag,))
+
+        # ✅ Define a tag for changed values (Red color)
+        tree.tag_configure("changed", background="lightcoral")
+
+        # ✅ Add Scrollbars
+        v_scrollbar = ttk.Scrollbar(frame, orient="vertical", command=tree.yview)
+        h_scrollbar = ttk.Scrollbar(frame, orient="horizontal", command=tree.xview)
+        tree.configure(yscroll=v_scrollbar.set, xscroll=h_scrollbar.set)
+
+        # ✅ Pack elements
+        tree.pack(side="top", fill="both", expand=True)
+        v_scrollbar.pack(side="right", fill="y")
+        h_scrollbar.pack(side="bottom", fill="x")
+
+
+
+    def update_comparison_view(self):
+        
+        """Updates the comparison popup based on user selections."""
+        compare_type = self.compare_type.get()
+        left_data = self.left_selection.get()
+        right_data = self.right_selection.get()
+        column_name = self.column_selection.get()
+
+        if compare_type == "Graph":
+            self.plot_comparison_graph(left_data, right_data, column_name)
+        else:
+            self.show_comparison_data(left_data, right_data, column_name)
+
+    def plot_comparison_graph(self, left_data, right_data, column_name):
+        """Generates comparison graphs for selected datasets."""
+        
+        # Retrieve the corresponding DataFrames
+        left_df = self.get_data_by_name(left_data)
+        right_df = self.get_data_by_name(right_data)
+
+        if left_df is None or right_df is None:
+            messagebox.showerror("Error", "Invalid Data Selection!")
+            return
+
+        # Ensure column exists in both datasets
+        if column_name not in left_df.columns or column_name not in right_df.columns:
+            messagebox.showerror("Error", f"Column '{column_name}' not found in selected datasets!")
+            return
+
+        # ✅ Clear previous widgets in the compare popup
+        for widget in self.compare_popup.winfo_children():
+            if isinstance(widget, tk.Canvas):  
+                widget.destroy()
+
+        # ✅ Create Matplotlib Figure with Two Subplots (Side-by-Side)
+        fig, axes = plt.subplots(1, 2, figsize=(10, 4))  # 2 side-by-side plots
+        fig.patch.set_facecolor("#E0E0E0")  # Match UI Theme
+
+        # ✅ Left Graph
+        if left_data in ["Raw Data", "Outlier Cleaned Data"]:
+            axes[0].boxplot(left_df[column_name], vert=False, patch_artist=True, 
+                            boxprops=dict(facecolor='lightblue', edgecolor='black'),
+                            medianprops=dict(color='red'))
+            axes[0].set_title(f"{left_data} - Box Plot", fontsize=11)
+        else:
+            axes[0].plot(left_df[column_name], color="blue", label=left_data)
+            axes[0].set_title(f"{left_data} - Line Graph", fontsize=11)
+
+        # ✅ Right Graph
+        if right_data in ["Raw Data", "Outlier Cleaned Data"]:
+            axes[1].boxplot(right_df[column_name], vert=False, patch_artist=True, 
+                            boxprops=dict(facecolor='lightcoral', edgecolor='black'),
+                            medianprops=dict(color='red'))
+            axes[1].set_title(f"{right_data} - Box Plot", fontsize=11)
+        else:
+            axes[1].plot(right_df[column_name], color="red", label=right_data)
+            axes[1].set_title(f"{right_data} - Line Graph", fontsize=11)
+
+        # ✅ Improve Layout
+        for ax in axes:
+            ax.grid(True, linestyle="--", alpha=0.5)
+
+        # ✅ Embed the Matplotlib Figure inside Tkinter Frame
+        canvas = FigureCanvasTkAgg(fig, master=self.compare_popup)
+        canvas_widget = canvas.get_tk_widget()
+        canvas_widget.grid(row=2, column=0, columnspan=2, pady=10, sticky="nsew")
+        canvas.draw()
+
+    def get_data_by_name(self, name):
+        """Returns the corresponding DataFrame for the given name."""
+        if name == "Raw Data":
+            return self.data
+        elif name == "Outlier Cleaned Data":
+            return self.cleaned_data
+        elif name == "Interpolated Data":
+            return self.interpolated_data
+        elif name == "Smoothed Data":
+            return self.smoothed_data
+        return None
+
+
+
