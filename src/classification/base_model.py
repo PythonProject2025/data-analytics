@@ -8,7 +8,7 @@ from sklearn.metrics import (
 )
 import matplotlib.pyplot as plt
 import numpy as np
-from data_object_final import data_object
+from models.data_object_class import DataObject
 
 outputs = {
     'accuracy': None,  # Accuracy of the model
@@ -20,12 +20,11 @@ outputs = {
 class ClassifierClass:
 
 
-    def __init__(self, data_train, data_test, target_train, target_test, target_labels):
+    def __init__(self, data_train, data_test, target_train, target_test):
         self.data_train = data_train
         self.data_test = data_test
         self.target_train = target_train
         self.target_test = target_test
-        self.target_labels = target_labels
 
     def set_model(self, model):
         self.current_model = model
@@ -45,7 +44,7 @@ class ClassifierClass:
         outputs['report'] = report
         outputs['cm'] = cm
         outputs['mse'] = mse
-
+        data_object = DataObject()
         data_object.outputs["Classification"][model] = {
             "accuracy": accuracy,
             "mse": mse,
@@ -72,7 +71,7 @@ class ClassifierClass:
 """
     def display_confusion_matrix(self, cm):
         cm_percent = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis] * 100
-        disp = ConfusionMatrixDisplay(confusion_matrix=cm_percent, display_labels=self.target_labels)
+        disp = ConfusionMatrixDisplay(confusion_matrix=cm_percent, display_labels=self.target_labels) remove target_labels
         disp.plot(cmap="Blues", values_format=".1f")
         for text in disp.text_.flatten():
             text.set_text(text.get_text() + '%')

@@ -1,12 +1,12 @@
 # File: models/knn_model.py
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import GridSearchCV
-from base_model import ClassifierClass
+from classification.base_model import ClassifierClass
 from models.data_object_class import DataObject
 
 class KNNModel(ClassifierClass):
-    def __init__(self, data_train, data_test, target_train, target_test, target_labels):
-        super().__init__(data_train, data_test, target_train, target_test, target_labels)
+    def __init__(self, data_train, data_test, target_train, target_test):
+        super().__init__(data_train, data_test, target_train, target_test)
         self.param_grid = {'n_neighbors': [3, 5, 7], 'weights': ['uniform', 'distance'], 'p': [1, 2]}
         self.model = None
 

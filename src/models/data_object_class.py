@@ -84,11 +84,12 @@ class DataObject:
         }
 
         self.regression = {
+            "Selected Model":{},
             "Model_Selection": {
-                "Linear_Regression": {},
-                "Polynomial_Regression": {"polynomial_degree": []}, #5,7,8,2,9(only single digit integer upto comma seperated 5 values)
-                "Ridge_Regression": {"polynomial_degree_ridge": [], "alpha_values_ridge": []},#alpha float(limit4digits) 0-1 upto 5 values
-                "Lasso_Regression": {"polynomial_degree_lasso": [], "alpha_values_lasso": []}
+                "Linear Regression": {},
+                "Polynomial Regression": {"polynomial_degree": []}, #5,7,8,2,9(only single digit integer upto comma seperated 5 values)
+                "Ridge Regression": {"polynomial_degree_ridge": [], "alpha_values_ridge": []},#alpha float(limit4digits) 0-1 upto 5 values
+                "Lasso Regression": {"polynomial_degree_lasso": [], "alpha_values_lasso": []}
             }
         }
 

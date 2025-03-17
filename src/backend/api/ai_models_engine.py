@@ -1,7 +1,7 @@
 import sys
 import os
 import numpy as np
-from requests import Response
+from rest_framework.response import Response
 from rest_framework.views import APIView
 # Now you can import from models
 from ai_model.models.ann import ArtificialNeuralNetwork
@@ -17,7 +17,6 @@ class  AIModelAPIView (APIView):
         data_dict = request.data.get("dataobject", {})
         if "dataobject" in data_dict:  
             data_dict = data_dict["dataobject"]
-        
         # Create an instance of DataObject
         data_object = DataObject()
         data_object.data_filtering = data_dict.get("data_filtering", {})
@@ -31,7 +30,7 @@ class  AIModelAPIView (APIView):
 
     def extract_hyperparameters(self, data_object, model_name):
         """Extracts user-selected hyperparameters while ensuring valid defaults from ai_model."""
-        params = data_object.ai_model.get(model_name, {})
+        params = data_object.data_filtering["Outlier Detection"]
 
         if not params:
             print(f"Warning: No parameters found for {model_name}, using defaults.")
@@ -56,13 +55,24 @@ class  AIModelAPIView (APIView):
         
         # Extract hyperparameters
         model_params = self.extract_hyperparameters(data_object, selected_model)
-
-        # Extract dataset & Convert to NumPy arrays
+        print(model_params)
         try:
-            X_train = np.array(data_object.data_filtering["Train-Test Split"]["split_data"]["x_train"])
-            X_test = np.array(data_object.data_filtering["Train-Test Split"]["split_data"]["x_test"])
-            y_train = np.array(data_object.data_filtering["Train-Test Split"]["split_data"]["y_train"])
-            y_test = np.array(data_object.data_filtering["Train-Test Split"]["split_data"]["y_test"])
+            split_data = data_object.data_filtering["Train-Test Split"]["split_data"]
+
+            # ✅ Ensure all keys exist before conversion
+            if not all(k in split_data for k in ["X_train", "X_test", "y_train", "y_test"]):
+                return {"error": "Missing one or more training/testing data in DataObject!"}
+
+            # ✅ Convert lists (from JSON) back to NumPy arrays
+            X_train = np.array([list(d.values()) for d in split_data["X_train"]]) if split_data["X_train"] else None
+            X_test = np.array([list(d.values()) for d in split_data["X_test"]]) if split_data["X_test"] else None
+            y_train = np.array(split_data["y_train"]) if split_data["y_train"] else None
+            y_test = np.array(split_data["y_test"]) if split_data["y_test"] else None
+
+            # ✅ Check if data is valid before proceeding
+            if any(val is None or (isinstance(val, np.ndarray) and val.size == 0) for val in [X_train, X_test, y_train, y_test]):
+                return {"error": "Some train-test data is empty or invalid!"}
+            print(X_train)
         except KeyError:
             return {"error": "Missing training/testing data in DataObject!"}
 
@@ -71,17 +81,17 @@ class  AIModelAPIView (APIView):
 
         print(f"Debugging Data Before Training:")
         print(f"X_train Shape: {X_train.shape}, y_train Shape: {y_train.shape}")
-
+        print(data_object.ai_model["RandomForest"]["n_estimators"])
         # Initialize only the selected model
         model=None
-        if selected_model == "RandomForest":
-            model = RandomForest(problem_type="classification", options=model_params)
+        if selected_model == "Random Forest":
+            model = RandomForest(problem_type="classification", options=data_object.ai_model["RandomForest"])
         elif selected_model == "CatBoost":
-            model = Catboost(problem_type="classification", options=model_params)
-        elif selected_model == "ArtificialNeuralNetwork":
-            model = ArtificialNeuralNetwork(problem_type="classification", options=model_params)
+            model = Catboost(problem_type="classification", options=data_object.ai_model["CatBoost"])
+        elif selected_model == "ANN":
+            model = ArtificialNeuralNetwork(problem_type="classification", options=data_object.ai_model["ANN"])
         elif selected_model == "XGBoost":
-            model = XGBoost(problem_type="regression", options=model_params)
+            model = XGBoost(problem_type="regression", options=data_object.ai_model["XGBoost"])
         else:
             return {"error": f"Selected model '{selected_model}' is not recognized!"}
 
@@ -115,9 +125,13 @@ class  AIModelAPIView (APIView):
                 "MSE": results.get("MSE", 0.0),
                 "R2": results.get("R2", 0.0)
             }
-            return {
-                "message": f"Regression completed for {selected_model}",
-                "results": data_object.outputs["AI_Regression"][selected_model]
-            }
+        print("ai working successfully")
+        response_data = {
+            "MAE": data_object.outputs["AI_Regression"][selected_model]["MAE"],
+            "MSE": data_object.outputs["AI_Regression"][selected_model]["MSE"],
+            "R2": data_object.outputs["AI_Regression"][selected_model]["R2"]
+        }
+        print(response_data)
+        return response_data
 
     

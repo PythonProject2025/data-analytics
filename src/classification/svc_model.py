@@ -1,12 +1,12 @@
 # File: models/svc_model.py
 from sklearn.svm import SVC
 from sklearn.model_selection import GridSearchCV
-from base_model import ClassifierClass
+from classification.base_model import ClassifierClass
 from models.data_object_class import DataObject
 
 class SVCModel(ClassifierClass):
-    def __init__(self, data_train, data_test, target_train, target_test, target_labels):
-        super().__init__(data_train, data_test, target_train, target_test, target_labels)
+    def __init__(self, data_train, data_test, target_train, target_test):
+        super().__init__(data_train, data_test, target_train, target_test)
         self.param_grid = {'C': [0.1, 1, 10], 'kernel': ['linear', 'rbf'], 'gamma': ['scale', 'auto']}
         self.model = None
 

@@ -1,6 +1,7 @@
 import customtkinter as ctk
 from tkinter import Button, PhotoImage, Toplevel,messagebox
 
+import pandas as pd
 import requests
 from src.models.data_object_class import DataObject
 from src.assets_management import assets_manage, load_image
@@ -240,16 +241,27 @@ class AImodelPage(ctk.CTkFrame):
         """Submit button action with printing respective slider values."""
         selected_model = self.segmented_frame.get()  # Get the currently selected model
         print(f"Submitting model: {selected_model}")
+        
+        dataobject = DataObject()
+        # Store the preprocessed data from file_data
+        if self.file_data is not None:
+            split_data = self.file_data  # Assuming file_data contains the split dataset
+            for key, value in split_data.items():
+                if isinstance(value, pd.DataFrame):
+                    dataobject.data_filtering["Train-Test Split"]["split_data"][key] = value.to_dict(orient="records")
+                elif isinstance(value, pd.Series):
+                    dataobject.data_filtering["Train-Test Split"]["split_data"][key] = value.tolist()  # Convert to list
 
-        # Retrieve slider values for the selected model
+            print(dataobject.data_filtering["Train-Test Split"]["split_data"]["X_train"])
+            print(dataobject.data_filtering["Train-Test Split"]["split_data"]["X_test"])
+            # Retrieve slider values for the selected model
         if selected_model == "Random Forest":
-            dataobject = DataObject()
-            print(self.sliders["RandomForest"]["n_estimators"].get())
+        
             dataobject.ai_model["Selected Model"]= selected_model
-            dataobject.ai_model["RandomForest"]["n_estimators"] = float(self.sliders["RandomForest"]["n_estimators"].get())
-            dataobject.ai_model["RandomForest"]["max_depth"] = float(self.sliders["RandomForest"]["max_depth"].get())
-            dataobject.ai_model["RandomForest"]["min_samples_split"]= float(self.sliders["RandomForest"]["min_samples_split"].get())
-            dataobject.ai_model["RandomForest"]["min_samples_leaf"]= float(self.sliders["RandomForest"]["min_samples_leaf"].get())
+            dataobject.ai_model["RandomForest"]["n_estimators"] = int(round(self.sliders["RandomForest"]["n_estimators"].get()))
+            dataobject.ai_model["RandomForest"]["max_depth"] = int(round(self.sliders["RandomForest"]["max_depth"].get()))
+            dataobject.ai_model["RandomForest"]["min_samples_split"]= int(round(self.sliders["RandomForest"]["min_samples_split"].get()))
+            dataobject.ai_model["RandomForest"]["min_samples_leaf"]= int(round(self.sliders["RandomForest"]["min_samples_leaf"].get()))
             
             print (float(self.sliders["RandomForest"]["n_estimators"].get()))
             print(float(self.sliders["RandomForest"]["max_depth"].get()))
@@ -258,12 +270,11 @@ class AImodelPage(ctk.CTkFrame):
 
             # Convert DataObject to JSON
             json_data = {"dataobject": dataobject.to_dict()}
-            print(json_data)
             # Send request
             self.send_request(json_data)
             
         elif selected_model == "CatBoost":
-            dataobject = DataObject()
+            
             dataobject.ai_model["Selected Model"]= selected_model
             dataobject.ai_model["CatBoost"]["n_estimators"] = float(self.sliders["CatBoost"]["n_estimators"].get())
             dataobject.ai_model["CatBoost"]["learning_rate"] = float(self.sliders["CatBoost"]["learning_rate"].get())
@@ -278,7 +289,6 @@ class AImodelPage(ctk.CTkFrame):
             
         elif selected_model == "ANN":
             
-            dataobject = DataObject()
             dataobject.ai_model["Selected Model"]= selected_model
             dataobject.ai_model["ArtificialNeuralNetwork"]["layer_number"] = float(self.sliders["ANN"]["Layer_number"].get())
             dataobject.ai_model["ArtificialNeuralNetwork"]["units"] = float(self.sliders["ANN"]["Units"].get())
@@ -296,10 +306,10 @@ class AImodelPage(ctk.CTkFrame):
         elif selected_model == "XGBoost":
             
             dataobject.ai_model["Selected Model"] = selected_model
-            dataobject.ai_model["XGBoost"]["n_estimators"] = float(self.sliders["XGBoost"]["n_estimators"].get())
-            dataobject.ai_model["XGBoost"]["learning_rate"] = float(self.sliders["XGBoost"]["learning_rate"].get())
-            dataobject.ai_model["XGBoost"]["min_split_loss"]= float(self.sliders["XGBoost"]["min_split_loss"].get())
-            dataobject.ai_model["XGBoost"]["max_depth"]= float(self.sliders["XGBoost"]["max_depth"].get())
+            dataobject.ai_model["XGBoost"]["n_estimators"] = int(round(self.sliders["XGBoost"]["n_estimators"].get()))
+            dataobject.ai_model["XGBoost"]["learning_rate"] = int(round(self.sliders["XGBoost"]["learning_rate"].get()))
+            dataobject.ai_model["XGBoost"]["min_split_loss"]= int(round(self.sliders["XGBoost"]["min_split_loss"].get()))
+            dataobject.ai_model["XGBoost"]["max_depth"]= int(round(self.sliders["XGBoost"]["max_depth"].get()))
             
             # Convert DataObject to JSON
             json_data = {"dataobject": dataobject.to_dict()}
