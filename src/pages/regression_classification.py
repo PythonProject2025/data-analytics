@@ -1,5 +1,8 @@
 import customtkinter as ctk
 from tkinter import Button, PhotoImage, Toplevel,messagebox
+
+import pandas as pd
+import requests
 from src.models.data_object_class import DataObject
 from src.assets_management import assets_manage, load_image
 import re
@@ -283,29 +286,42 @@ class RegressionClassificationpage(ctk.CTkFrame):
         current_segment = self.segmented_frame.get()
 
         print(f"\n--- {current_segment} Submission ---")
+        
+        # Store the preprocessed data from file_data
+        if self.file_data is not None:
+            split_data = self.file_data  # Assuming file_data contains the split dataset
+            for key, value in split_data.items():
+                if isinstance(value, pd.DataFrame):
+                    dataobject.data_filtering["Train-Test Split"]["split_data"][key] = value.to_dict(orient="records")
+                elif isinstance(value, pd.Series):
+                    dataobject.data_filtering["Train-Test Split"]["split_data"][key] = value.tolist()  # Convert to list
 
         if current_segment == "Regression":
             model = self.regression_radio_var.get()
             print(f"Selected Regression Model: {model}")
-
+            dataobject.regression["Selected Model"]=model
             errors = []
-
-
+            
+            
             if model == "Polynomial Regression":
 
-                 polynomial_degree = self.textboxes["Polynomial Degree"].get()
+                polynomial_degree = self.textboxes["Polynomial Degree"].get()
                  
-                 if not re.fullmatch(r"^(\d{1})(,\d{1}){0,4}$", polynomial_degree):
+                if not re.fullmatch(r"^(\d{1})(,\d{1}){0,4}$", polynomial_degree):
                     errors.append("Polynomial Degree: Enter up to 5 single-digit numbers (0-9) separated by commas.")
-                 if errors:
+                if errors:
                     messagebox.showerror("Input Error", "\n".join(errors))
-                 else:
+                else:
                      polynomial_degree_list = [int(x) for x in polynomial_degree.split(",")]
                      print(f"Polynomial Degree: {self.textboxes['Polynomial Degree'].get()}")
 
                      print(polynomial_degree_list)
-                     dataobject.regression["Polynomial_Regression"]["polynomial_degree"]=polynomial_degree_list
-                     
+                     dataobject.regression["Model_Selection"]["Polynomial Regression"]["polynomial_degree"]=polynomial_degree_list
+                # Convert DataObject to JSON
+                json_data = {"dataobject": dataobject.to_dict()}
+                print(json_data)
+                # Send request
+                self.send_request_regression(json_data)
 
 
             elif model == "Ridge Regression":
@@ -323,11 +339,16 @@ class RegressionClassificationpage(ctk.CTkFrame):
                     polynomial_degree_ridge_list = [int(x) for x in polynomial_degree.split(",")]
                     alpha_values_ridge_list = [float(x) for x in alpha_value.split(",")]
                     print(alpha_values_ridge_list )
-                    dataobject.regression["Ridge_Regression"]["polynomial_degree_ridge"]=polynomial_degree_ridge_list
-                    dataobject.regression["Ridge_Regression"]["alpha_values_ridge"]=alpha_values_ridge_list
+                    dataobject.regression["Model_Selection"]["Ridge Regression"]["polynomial_degree_ridge"]=polynomial_degree_ridge_list
+                    dataobject.regression["Model_Selection"]["Ridge Regression"]["alpha_values_ridge"]=alpha_values_ridge_list
                     print(polynomial_degree_ridge_list)
                     print(f"Polynomial Degree (Ridge): {self.textboxes['Polynomial Degree (Ridge)'].get()}")
                     print(f"Alpha Values (Ridge): {self.textboxes['Alpha Values (Ridge)'].get()}")
+                # Convert DataObject to JSON
+                json_data = {"dataobject": dataobject.to_dict()}
+                print(json_data)
+                # Send request
+                self.send_request_regression(json_data)
 
             elif model == "Lasso Regression":
 
@@ -349,8 +370,13 @@ class RegressionClassificationpage(ctk.CTkFrame):
                     print(f"Polynomial Degree (Lasso): {self.textboxes['Polynomial Degree (Lasso)'].get()}")
                     print(f"Alpha Values (Lasso): {self.textboxes['Alpha Values (Lasso)'].get()}")
 
-                    dataobject.regression["Lasso_Regression"]["polynomial_degree_lasso"]=polynomial_degree_ridge_list
-                    dataobject.regression["Lasso_Regression"]["alpha_values_lasso"]=alpha_values_ridge_list
+                    dataobject.regression["Model_Selection"]["Lasso Regression"]["polynomial_degree_lasso"]=polynomial_degree_ridge_list
+                    dataobject.regression["Model_Selection"]["Lasso Regression"]["alpha_values_lasso"]=alpha_values_ridge_list
+                # Convert DataObject to JSON
+                json_data = {"dataobject": dataobject.to_dict()}
+                print(json_data)
+                # Send request
+                self.send_request_regression(json_data)
 
             print("\nSubmission Successful!\n")
 
@@ -358,12 +384,17 @@ class RegressionClassificationpage(ctk.CTkFrame):
         elif current_segment == "Classification":
              model = self.classification_radio_var.get()
              print(f"Selected Classification Model: {model}")
-
+             dataobject.classification["Model_Selection"]= model
              if model == "RandomForest":
-                print(f"n_estimators: {self.sliders['n_estimators'].get()}")
+                print(f"n_estimators: {self.sliders["n_estimators"].get()}")
                 print(f"max_depth: {self.sliders['max_depth'].get()}")
                 dataobject.classification["RandomForest"]['n_estimators']= self.sliders['n_estimators'].get()
                 dataobject.classification["RandomForest"]['max_depth']=self.sliders['max_depth'].get()
+                # Convert DataObject to JSON
+                json_data = {"dataobject": dataobject.to_dict()}
+                print(json_data)
+                # Send request
+                self.send_request_classification(json_data)
 
              elif model == "SVC":
                 print(f"C: {self.sliders['C'].get()}")
@@ -372,13 +403,22 @@ class RegressionClassificationpage(ctk.CTkFrame):
                 dataobject.classification["SVC"]['C']= self.sliders['C'].get()
                 dataobject.classification["SVC"]['Kernel']=self.dropdowns['Kernel'].get()
                 dataobject.classification["SVC"]['Gamma']=self.dropdowns['Gamma'].get()
-
+                # Convert DataObject to JSON
+                json_data = {"dataobject": dataobject.to_dict()}
+                print(json_data)
+                # Send request
+                self.send_request_classification(json_data)
 
              elif model == "KNN":
                 print(f"n_neighbors: {self.sliders['n_neighbors'].get()}")
                 print(f"Weights: {self.dropdowns['Weights'].get()}")
                 dataobject.classification["KNN"]['n_neighbors']= self.sliders['n_neighbors'].get()
                 dataobject.classification["KNN"]['Weights']=self.dropdowns['Weights'].get()
+                # Convert DataObject to JSON
+                json_data = {"dataobject": dataobject.to_dict()}
+                print(json_data)
+                # Send request
+                self.send_request_classification(json_data)
 
         print("\nSubmission Successful!\n")
 
@@ -425,3 +465,47 @@ class RegressionClassificationpage(ctk.CTkFrame):
         h_scrollbar.pack(side="bottom", fill="x")
 
         print("✅ Processed Data preview displayed successfully!")
+        
+    def send_request_regression(self, json_data):
+        """Send the request to the Django backend and return the response."""
+        print("sending to backend")
+        try:
+           
+            response = requests.post(
+                    "http://127.0.0.1:8000/api/regression/",
+                    json=json_data
+            )
+ 
+            if response.status_code == 200:
+                    response_data = response.json()
+                    print(response_data)
+                    
+            else:
+                    messagebox.showerror(
+                        "Error", response.json().get('error', 'File upload failed.')
+                    )
+        except Exception as e:
+                messagebox.showerror("Error", str(e))
+                
+        
+    def send_request_classification(self, json_data):
+            
+        """Send the request to the Django backend and return the response."""
+        print("sending to backend")
+        try:
+           
+            response = requests.post(
+                    "http://127.0.0.1:8000/api/classification/",
+                    json=json_data
+            )
+ 
+            if response.status_code == 200:
+                    response_data = response.json()
+                    print(response_data)
+                    
+            else:
+                    messagebox.showerror(
+                        "Error", response.json().get('error', 'File upload failed.')
+                    )
+        except Exception as e:
+                messagebox.showerror("Error", str(e))

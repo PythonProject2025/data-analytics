@@ -1,12 +1,12 @@
 # File: models/random_forest_model.py
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV
-from base_model import ClassifierClass
+from classification.base_model import ClassifierClass
 from models.data_object_class import DataObject
 
 class RandomForestModel(ClassifierClass):
-    def __init__(self, data_train, data_test, target_train, target_test, target_labels):
-        super().__init__(data_train, data_test, target_train, target_test, target_labels)
+    def __init__(self, data_train, data_test, target_train, target_test ):
+        super().__init__(data_train, data_test, target_train, target_test)
         self.param_grid = {'n_estimators': [50, 100, 150], 'max_depth': [5, 10, 20]}
         self.model = None
 

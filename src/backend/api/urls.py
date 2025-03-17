@@ -18,6 +18,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from backend.api.ai_models_engine import AIModelAPIView
+from backend.api.classification_engine import ClassificationAPIView
 from backend.api.data_preprocessing_engine import DataFilteringFileAPIView, InterpolationAPIView, SmoothingAPIView
 from backend.api.image_processing_engine import ImageProcessingAPIView
 from backend.api.regression_engine import RegressionAPIView
@@ -30,5 +31,6 @@ urlpatterns = [
     path('scaling_encoding/', ScalingEncodingAPIView.as_view(), name='datafiltering_file'),
     path('regression/', RegressionAPIView.as_view(), name='regression_file'),
     path('ai_model/', AIModelAPIView.as_view(), name='regression_file'),
-    path('imageprocessing/', ImageProcessingAPIView.as_view(), name='imageprocessing')
+    path('imageprocessing/', ImageProcessingAPIView.as_view(), name='imageprocessing'),
+    path('classification/',ClassificationAPIView.as_view(), name='classification_file')
 ]

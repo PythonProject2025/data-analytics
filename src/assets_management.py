@@ -3,7 +3,7 @@ from pathlib import Path
 from PIL import Image
 import customtkinter as ctk
 
-ASSETS_PATH = Path("C:\\Python project\\restructured_customtkinter_application\\src\\assets")  # Update ASSETS_PATH to be relative to src
+ASSETS_PATH = Path("C:\\Python project\\data-analytics\\src\\assets")  # Update ASSETS_PATH to be relative to src
 
 def assets_manage(path: str):
     return ASSETS_PATH / Path(path)
