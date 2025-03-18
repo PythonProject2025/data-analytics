@@ -3,14 +3,33 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
 
 class EncodeAndScaling:
+    """
+    A class for encoding categorical features, scaling numerical features, 
+    and splitting datasets for machine learning preprocessing.
+
+    Attributes:
+    data (pd.DataFrame): The input dataset to be processed.
+    """
     def __init__(self, data):
         """
         Initializes the EncodeAndScaling class with a dataset.
-        :param data: Pandas DataFrame containing the dataset.
+        
+        Parameters:
+            data (pd.DataFrame): The dataset containing features and target columns.
         """
+
         self.data = data  # Store dataset
 
     def encode_categorical_features(self, feature_data):
+        """
+        Encodes categorical features using One-Hot Encoding.
+
+        Parameters:
+            feature_data (pd.DataFrame): The feature dataset containing categorical columns.
+
+        Returns:
+            pd.DataFrame: The dataset with categorical features encoded as numerical values.
+        """
         print("Encoding Data starts")
         # One-Hot Encoding for categorical columns
         encoded_data = pd.get_dummies(feature_data)
@@ -21,18 +40,39 @@ class EncodeAndScaling:
 
 
     def scale_numerical_features(self, encoded_data):
+        """
+        Scales numerical features using Min-Max Scaling.
+
+        Parameters:
+            encoded_data (pd.DataFrame): The dataset with encoded categorical features.
+
+        Returns:
+            pd.DataFrame: The dataset with numerical features scaled to a range of [0,1].
+        """
         # Apply MinMax Scaling
         scaler = MinMaxScaler()
         scaled_data = pd.DataFrame(scaler.fit_transform(encoded_data), columns=encoded_data.columns)
         return scaled_data
     
-    def train_test_split(self, processed_data, target_column, test_size, random_state):
+    def train_test_split(self, processed_data, target_column, test_size=0.2, random_state=42):
         """
         Splits the processed dataset into training and testing sets.
-        :param processed_data: The encoded and scaled dataset.
-        :param test_size: Proportion of dataset to use as the test set (default 20%).
-        :param random_state: Random seed for reproducibility.
-        :return: Training and testing datasets.
+        
+        Parameters:
+            processed_data (pd.DataFrame): The encoded and scaled dataset.
+            target_column (str): The name of the target column.
+            test_size (float, optional): Proportion of dataset to use as the test set (default is 0.2).
+            random_state (int, optional): Random seed for reproducibility (default is 42).
+
+        Returns:
+            tuple: 
+                - X_train (pd.DataFrame): Training feature dataset.
+                - X_test (pd.DataFrame): Testing feature dataset.
+                - y_train (pd.Series): Training target dataset.
+                - y_test (pd.Series): Testing target dataset.
+
+        Raises:
+            KeyError: If the target column is not found in the dataset.
         """
         # Debugging print statements
         print("Columns in processed_data before splitting:", processed_data.columns.tolist())
@@ -61,7 +101,25 @@ class EncodeAndScaling:
     def preprocess(self,data_object):
         """
         Runs encoding, scaling, and train-test splitting on the dataset.
+        
+        Parameters:
+            data_object (dict): A dictionary containing preprocessing parameters:
+                - "test_size" (float): The proportion of data used for testing.
+                - "random_state" (int): The random state for reproducibility.
+                - "target_column" (str or list): The target column name(s).
+
+        Returns:
+            dict: A dictionary containing:
+                - "X_train": Processed training feature dataset.
+                - "X_test": Processed testing feature dataset.
+                - "y_train": Processed training target dataset.
+                - "y_test": Processed testing target dataset.
+
+        Raises:
+            ValueError: If multiple target columns are provided instead of one.
+            ValueError: If the target column is not found in the dataset.
         """
+        
         test_size = data_object["test_size"]
         random_state = data_object["random_state"]
         target_column = data_object["target_column"]
@@ -72,13 +130,19 @@ class EncodeAndScaling:
                 target_column = target_column[0]  # Convert list with one item to a string
             else:
                 raise ValueError(f"Expected a single target column, but got multiple: {target_column}")
+            
+        #Identify & Remove Date/Datetime Columns
+        date_cols = list(self.data.select_dtypes(include=['datetime64']).columns)
+        
+        # Ensure we only remove date/datetime columns, not categorical text
+        if 'date' in self.data.columns and 'date' not in date_cols:
+            date_cols.append('date')
 
         # Debugging: Check the target column type
         print("Target column (after conversion):", target_column, type(target_column))
 
 
         # Debugging prints
-        
         print("Target column:", target_column)
         print("Data Columns:", self.data.columns)
         print("Checking if target column exists:", target_column in self.data.columns)
@@ -94,23 +158,29 @@ class EncodeAndScaling:
         # Separate the dataset into features and target variable
         target_data = self.data[target_column]
         print("Target Data is processed" , target_data)
-        feature_data = self.data.drop(target_column, axis=1)
+        if date_cols:
+            date_data = self.data[date_cols]
+            feature_data = self.data.drop(columns=date_cols + [target_column], axis=1)
+        else:
+            date_data = None
+            feature_data = self.data.drop(columns=[target_column], axis=1)
         print("Feature Data is processed" , feature_data)
 
         encoded_data = self.encode_categorical_features(feature_data) # Explicitly define encoded_data
         print("Encoded Data is processed" , encoded_data)
         scaled_data = self.scale_numerical_features(encoded_data)
         print("Scaled Data is processed" , scaled_data)
-        # print("scaled_data type:", type(scaled_data))
-        # print("scaled_data shape:", scaled_data.shape)
-        # print("target_data type:", type(target_data))
-        # print("target_data shape:", target_data.shape)
-        # print("target_data name:", target_data.name)
 
+        #Attach Date/Datetime Columns Back
+        if date_data is not None:
+            scaled_data = pd.concat([date_data.reset_index(drop=True), scaled_data.reset_index(drop=True)], axis=1)
+      
         processed_data = pd.concat([scaled_data, target_data.to_frame()], axis=1) # Explicitly define `processed_data`
         print("Processed Data is processed" , processed_data)
+        
             
         X_train, X_test ,y_train, y_test = self.train_test_split(processed_data, target_column, test_size, random_state)
+        print(type(X_train))
 
         data = {
             "X_train": X_train,

@@ -28,10 +28,10 @@ class ClassificationAPIView (APIView):
             # ✅ Ensure all keys exist before conversion
             if not all(k in split_data for k in ["X_train", "X_test", "y_train", "y_test"]):
                 return {"error": "Missing one or more training/testing data in DataObject!"}
-
+            
             # ✅ Convert lists (from JSON) back to NumPy arrays
-            data_train = np.array([list(d.values()) for d in split_data["X_train"]]) if split_data["X_train"] else None
-            data_test = np.array([list(d.values()) for d in split_data["X_test"]]) if split_data["X_test"] else None
+            data_train =  np.array(split_data["X_train"]) if split_data["X_train"]else None
+            data_test = np.array(split_data["X_test"]) if split_data["X_test"] else None
             target_train = np.array(split_data["y_train"]) if split_data["y_train"] else None
             target_test = np.array(split_data["y_test"]) if split_data["y_test"] else None
 
@@ -63,6 +63,8 @@ class ClassificationAPIView (APIView):
             # Train and evaluate the model
             model.train()
             accuracy, report, cm, mse = model.evaluate(model.model)
+            print("classificiation done")
+            print(accuracy, report, cm, mse)
             response_data = {
             "accuracy": accuracy,
             "cm": cm,

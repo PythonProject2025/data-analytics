@@ -290,6 +290,7 @@ class RegressionClassificationpage(ctk.CTkFrame):
         # Store the preprocessed data from file_data
         if self.file_data is not None:
             split_data = self.file_data  # Assuming file_data contains the split dataset
+            print(type(split_data))
             for key, value in split_data.items():
                 if isinstance(value, pd.DataFrame):
                     dataobject.data_filtering["Train-Test Split"]["split_data"][key] = value.to_dict(orient="records")
@@ -299,11 +300,18 @@ class RegressionClassificationpage(ctk.CTkFrame):
         if current_segment == "Regression":
             model = self.regression_radio_var.get()
             print(f"Selected Regression Model: {model}")
-            dataobject.regression["Selected Model"]=model
+            dataobject.regression["Selected Model"]= model
             errors = []
             
+            if model == "Linear Regression":
+                
+                # Convert DataObject to JSON
+                json_data = {"dataobject": dataobject.to_dict()}
+                print(json_data)
+                # Send request
+                self.send_request_regression(json_data)
             
-            if model == "Polynomial Regression":
+            elif model == "Polynomial Regression":
 
                 polynomial_degree = self.textboxes["Polynomial Degree"].get()
                  
@@ -370,8 +378,8 @@ class RegressionClassificationpage(ctk.CTkFrame):
                     print(f"Polynomial Degree (Lasso): {self.textboxes['Polynomial Degree (Lasso)'].get()}")
                     print(f"Alpha Values (Lasso): {self.textboxes['Alpha Values (Lasso)'].get()}")
 
-                    dataobject.regression["Model_Selection"]["Lasso Regression"]["polynomial_degree_lasso"]=polynomial_degree_ridge_list
-                    dataobject.regression["Model_Selection"]["Lasso Regression"]["alpha_values_lasso"]=alpha_values_ridge_list
+                    dataobject.regression["Model_Selection"]["Lasso Regression"]["polynomial_degree_lasso"]=polynomial_degree_Lasso_list
+                    dataobject.regression["Model_Selection"]["Lasso Regression"]["alpha_values_lasso"]=alpha_values_Lasso_list
                 # Convert DataObject to JSON
                 json_data = {"dataobject": dataobject.to_dict()}
                 print(json_data)

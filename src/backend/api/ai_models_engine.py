@@ -64,8 +64,8 @@ class  AIModelAPIView (APIView):
                 return {"error": "Missing one or more training/testing data in DataObject!"}
 
             # ✅ Convert lists (from JSON) back to NumPy arrays
-            X_train = np.array([list(d.values()) for d in split_data["X_train"]]) if split_data["X_train"] else None
-            X_test = np.array([list(d.values()) for d in split_data["X_test"]]) if split_data["X_test"] else None
+            X_train = np.array(split_data["X_train"]) if split_data["X_train"]else None
+            X_test = np.array(split_data["X_test"]) if split_data["X_test"] else None
             y_train = np.array(split_data["y_train"]) if split_data["y_train"] else None
             y_test = np.array(split_data["y_test"]) if split_data["y_test"] else None
 
@@ -84,12 +84,12 @@ class  AIModelAPIView (APIView):
         print(data_object.ai_model["RandomForest"]["n_estimators"])
         # Initialize only the selected model
         model=None
-        if selected_model == "Random Forest":
+        if selected_model == "RandomForest":
             model = RandomForest(problem_type="classification", options=data_object.ai_model["RandomForest"])
         elif selected_model == "CatBoost":
             model = Catboost(problem_type="classification", options=data_object.ai_model["CatBoost"])
-        elif selected_model == "ANN":
-            model = ArtificialNeuralNetwork(problem_type="classification", options=data_object.ai_model["ANN"])
+        elif selected_model == "ArtificialNeuralNetwork":
+            model = ArtificialNeuralNetwork(problem_type="classification", options=data_object.ai_model["ArtificialNeuralNetwork"])
         elif selected_model == "XGBoost":
             model = XGBoost(problem_type="regression", options=data_object.ai_model["XGBoost"])
         else:
@@ -97,7 +97,7 @@ class  AIModelAPIView (APIView):
 
         # Assign Data
         model.X_train, model.X_test, model.y_train, model.y_test = X_train, X_test, y_train, y_test
-
+        print(model.X_train, model.X_test, model.y_train, model.y_test)
         # Train the model
         model.train()
 
@@ -126,6 +126,7 @@ class  AIModelAPIView (APIView):
                 "R2": results.get("R2", 0.0)
             }
         print("ai working successfully")
+        print(data_object.outputs["AI_Classification"][selected_model])
         response_data = {
             "MAE": data_object.outputs["AI_Regression"][selected_model]["MAE"],
             "MSE": data_object.outputs["AI_Regression"][selected_model]["MSE"],
