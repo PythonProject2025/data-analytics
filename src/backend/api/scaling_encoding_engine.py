@@ -8,7 +8,7 @@ from rest_framework import status
 # Ensure the correct module path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "models")))
 from models.data_object_class import DataObject
-from data_filtering.Scaling_and_Encoding_final import EncodeAndScaling
+from data_filtering.Scaling_Encoding_Train_Test import EncodeAndScaling
 
 class ScalingEncodingAPIView(APIView):
     
@@ -34,15 +34,17 @@ class ScalingEncodingAPIView(APIView):
         )
 
         print("Encoding, Scaling, Train-Test Split completed successfully.")
-        print(data_object.data_filtering["Train-Test Split"]["split_data"])
+        
         split_data = data_object.data_filtering["Train-Test Split"]["split_data"]
+        print(type(split_data))
+        print(type(data_object.data_filtering["Train-Test Split"]["split_data"]["X_train"]))
 
-        # Ensuring all DataFrame values are converted properly
-        for key, value in split_data.items():
-            if isinstance(value, pd.DataFrame):
-                split_data[key] = value.to_dict(orient="records")  # Convert DataFrame to list of dictionaries
-            elif isinstance(value, pd.Series):
-                split_data[key] = value.tolist()  # Convert Series to a list
+        # # Ensuring all DataFrame values are converted properly
+        # for key, value in split_data.items():
+        #     if isinstance(value, pd.DataFrame):
+        #         split_data[key] = value.to_dict(orient="records")  # Convert DataFrame to list of dictionaries
+        #     elif isinstance(value, pd.Series):
+        #         split_data[key] = value.tolist()  # Convert Series to a list
                 
         response_data = {
             "step": "Scaling & Encoding",

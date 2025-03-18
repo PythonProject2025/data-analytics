@@ -128,8 +128,8 @@ class DataFilteringPage(ctk.CTkFrame):
             self.load_csv_columns(self.file_path)
         
         # Initial Boxplot for first column
-        if self.column_name:
-            self.plot_boxplot(self.column_name)
+        # if self.column_name:
+        # self.plot_boxplot(self.column_name)
 
     def create_process_selection_frame(self):
         """Creates the initial process selection frame."""
@@ -408,9 +408,6 @@ class DataFilteringPage(ctk.CTkFrame):
 
         except Exception as e:
             print("Error loading CSV:", str(e))
-
-
-    
 
 
     def change_segment(self, segment_name):
@@ -954,11 +951,20 @@ class DataFilteringPage(ctk.CTkFrame):
                 self.smoothed_data = None
 
     def run_scaling_and_encoding(self):
-        """Runs scaling and encoding and updates the data object."""
+        """Runs scaling and encoding on raw data if filtering is not done, otherwise uses smoothed data."""
         
-        if not hasattr(self, "smoothed_data"):
-            messagebox.showerror("Error", "Smoothed data is missing. Please run Outlier Detection, Interpolation, and Smoothing.")
-            return
+        # Check if smoothed data exists
+        if hasattr(self, "smoothed_data"):
+            print("✅ Using Smoothed Data for Scaling & Encoding")
+            data_str = self.smoothed_data_str  # Use stored JSON string of smoothed data
+        else:
+            print("⚠️ Smoothed Data Not Found. Using Raw Data for Scaling & Encoding")
+            
+            if not hasattr(self, "data"):
+                messagebox.showerror("Error", "No raw data found! Please upload a dataset first.")
+                return
+            
+            data_str = self.data.to_json()  # Convert raw DataFrame to JSON
 
         dataobject = DataObject()
         dataobject.data_filtering["Train-Test Split"]["parameters"]["test_size"] = self.test_size_slider.get()
@@ -966,17 +972,17 @@ class DataFilteringPage(ctk.CTkFrame):
 
         json_data = {
             "dataobject": dataobject.to_dict(),
-            "smoothed_data": self.smoothed_data_str  # Send smoothed data
+            "smoothed_data": data_str  # Send data for scaling and encoding
         }
 
-        print("🚀 Sending request to backend for Scaling & Encoding...")
+        print("Sending request to backend for Scaling & Encoding...")
         response = self.send_request("scaling_encoding", json_data)
 
         if response and "processed_data" in response:
             processed_data = response["processed_data"]
 
             if not isinstance(processed_data, dict):
-                print("❌ Error: Processed data is not a valid dictionary.")
+                print("Error: Processed data is not a valid dictionary.")
                 messagebox.showerror("Error", "Invalid processed data format received.")
                 return
             
@@ -985,7 +991,9 @@ class DataFilteringPage(ctk.CTkFrame):
             min_length = min(column_lengths)
 
             # Trim or pad columns to match the minimum length
-            cleaned_data = {k: v[:min_length] for k, v in processed_data.items()}
+            cleaned_data = {k: list(v)[:min_length] for k, v in processed_data.items()}  # ✅ Ensure v is a list
+            
+            print(type(cleaned_data))
 
             # Convert to DataFrame
             self.scaled_encoded_data = pd.DataFrame(cleaned_data)
@@ -1013,7 +1021,7 @@ class DataFilteringPage(ctk.CTkFrame):
         preview_window.title("Scaled and Encoded Data Preview")
         preview_window.geometry("900x500")
         preview_window.grab_set()
-
+    
         # Create a frame for the Treeview
         frame = tk.Frame(preview_window)
         frame.pack(fill="both", expand=True)
@@ -1161,7 +1169,7 @@ class DataFilteringPage(ctk.CTkFrame):
     def update_buttons_visibility(self):
     
         # ✅ Ensure Export Button is only created & visible after Outlier Detection is submitted
-        if self.segment_completion.get("Outlier Detection", False):
+        if self.segment_completion.get("Outlier Detection", False) or self.segment_completion.get("Scaling & Encoding", False):
             self.add_export_send_buttons()  # ✅ Call button creation only after Outlier Detection
 
             # ✅ Show Export button after Outlier Detection is completed
@@ -1184,6 +1192,7 @@ class DataFilteringPage(ctk.CTkFrame):
             self.export_button.grid()
             self.compare_button.grid_remove()  # ✅ Hide Compare Button after Scaling & Encoding
             self.send_button.grid()  # ✅ Show Send Button
+
 
 
     def add_export_send_buttons(self):
@@ -1423,6 +1432,3 @@ class DataFilteringPage(ctk.CTkFrame):
         elif name == "Smoothed Data":
             return self.smoothed_data
         return None
-
-
-

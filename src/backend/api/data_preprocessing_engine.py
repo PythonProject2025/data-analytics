@@ -12,7 +12,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "models"
 from data_filtering.Outlier_final import OutlierDetection
 from data_filtering.Smoothing_final import SmoothingMethods
 from data_filtering.Spline_Interpolation_final import SplineInterpolator
-from data_filtering.Scaling_and_Encoding_final import EncodeAndScaling
+from data_filtering.Scaling_Encoding_Train_Test import EncodeAndScaling
 from models.data_object_class import DataObject
 
 class DataFilteringFileAPIView(APIView):
@@ -35,7 +35,7 @@ class DataFilteringFileAPIView(APIView):
         )
 
         print("Outlier Detection completed successfully.")
-        print(data_object.outputs["Data Processing"]["Outlier Detection"])
+        #print(data_object.outputs["Data Processing"]["Outlier Detection"])
 
         # Convert DataFrame to JSON for response
         response_data = {
@@ -55,7 +55,7 @@ class DataFilteringFileAPIView(APIView):
         # Extract selected method from DataObject
         method_name = data_object["Method"]
         column_names = data_object["Parameters"]["column_names"]
-        print(method_name,column_names)
+        #print(method_name,column_names)
         # Initialize Outlier Detection with dataset
         detector = OutlierDetection(dataset)
         original_size = dataset.shape  # Store original dataset size
@@ -102,8 +102,8 @@ class InterpolationAPIView(APIView):
         # Step 2: Interpolation
         data_object.outputs["Data Processing"]["Interpolation"] = self.run_interpolation(cleaned_outlier_data)
 
-        print("Interpolation completed successfully.")
-        print(data_object.outputs["Data Processing"]["Interpolation"])
+        #print("Interpolation completed successfully.")
+        #print(data_object.outputs["Data Processing"]["Interpolation"])
 
         response_data = {
             "step": "Interpolation",
@@ -147,7 +147,7 @@ class SmoothingAPIView(APIView):
             interpolated_data = pd.read_json(io.StringIO(interpolated_data_json))
         except ValueError as e:
             return Response({"error": f"Invalid JSON format: {str(e)}"}, status=status.HTTP_400_BAD_REQUEST)
-        print("reached smoothing backend")
+        #print("reached smoothing backend")
         # Step 3: Smoothing
         data_object.outputs["Data Processing"]["Smoothing"] = self.run_smoothing(
             interpolated_data, data_object.data_filtering["Smoothing"]
@@ -155,8 +155,8 @@ class SmoothingAPIView(APIView):
         
         smoothing_result = data_object.outputs["Data Processing"]["Smoothing"]
 
-        print("Smoothing completed successfully.")
-        print(smoothing_result)
+        #print("Smoothing completed successfully.")
+        #print(smoothing_result)
 
         # Convert the smoothed data to JSON format for response
         if "smoothed_data" in smoothing_result:
