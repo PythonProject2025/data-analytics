@@ -6,6 +6,7 @@ from visualization_trial import regression_plot, residual_plot, polynomial_plot,
 import matplotlib.pyplot as plt
 import numpy as np
 
+
 def main():
     
 # Configuration
@@ -77,14 +78,14 @@ def main():
     x_label = "Datum" 
     y_label = "pH-Wert"
     
-    dataobj.outputs['Regression']['Linear_Regression']['graph_params']['x_label'] = x_label # Given by User, Type: String
-    dataobj.outputs['Regression']['Linear_Regression']['graph_params']['y_label'] = y_label # Given by User, Type: String
+    dataobj.outputs['Regression']['Polynomial_Regression']['graph_params']['x_label'] = x_label # Given by User, Type: String
+    dataobj.outputs['Regression']['Polynomial_Regression']['graph_params']['y_label'] = y_label # Given by User, Type: String
     
     polynomial_plot(dataobj.data_filtering['Train-Test Split']['split_data']['x_test'][x_label], 
                     dataobj.data_filtering['Train-Test Split']['split_data']['y_test'], 
                     dataobj.outputs['Regression']['Polynomial_Regression']['graph_params']['y_pred'], 
-                    dataobj.outputs['Regression']['Linear_Regression']['graph_params']['x_label'], 
-                    dataobj.outputs['Regression']['Linear_Regression']['graph_params']['y_label'], 
+                    dataobj.outputs['Regression']['Polynomial_Regression']['graph_params']['x_label'], 
+                    dataobj.outputs['Regression']['Polynomial_Regression']['graph_params']['y_label'], 
                     regression_models.best_params_poly['polynomial_features__degree'])
     
 # --------------------------------------------------- Ridge Regression ----------------------------------------------------------
