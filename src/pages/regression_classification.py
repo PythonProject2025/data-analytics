@@ -310,6 +310,23 @@ class RegressionClassificationpage(ctk.CTkFrame):
                 print(json_data)
                 # Send request
                 self.send_request_regression(json_data)
+                
+            # # Response data
+            #     response_data = response.json()
+                
+            # # Extracting values from response_data
+            #     r2_score_linear = response_data["r2_score_linear"]
+            #     y_pred  = response_data["y_pred"]
+            #     x_data  = response_data["x_data"]     # x_label is given by User
+            #     y_test  = response_data["y_test"]
+            #     x_label = response_data["x_label"]
+            #     y_label = response_data["y_label"] 
+                
+            # # Regression Plot
+            #     self.regression_plot(x_data,y_test,x_label,y_label,ax=axs[0])
+                
+            # # Residual Plot
+            #     self.residual_plot(y_test,y_pred,ax=axs[1])                
             
             elif model == "Polynomial Regression":
 
@@ -331,6 +348,20 @@ class RegressionClassificationpage(ctk.CTkFrame):
                 # Send request
                 self.send_request_regression(json_data)
 
+            # # Response data
+            #     response_data = response.json()
+                
+            # # Extracting values from response_data
+            #     r2_score_polynomial = response_data["r2_score_polynomial"]
+            #     y_pred = response_data["y_pred"]
+            #     best_polynomial_degree = response_data["best_polynomial_degree"]
+            #     x_data = response_data["x_data"]
+            #     y_test = response_data["y_test"]
+            #     x_label = response_data["x_label"]
+            #     y_label = response_data["y_label"]
+                
+            # # Polynomial fit plot
+            #     self.polynomial_plot(x_data,y_test,y_pred,x_label,y_label,best_polynomial_degree)
 
             elif model == "Ridge Regression":
 
@@ -357,7 +388,20 @@ class RegressionClassificationpage(ctk.CTkFrame):
                 print(json_data)
                 # Send request
                 self.send_request_regression(json_data)
-
+                
+            # # Response Data
+            #     response_data = response.json()
+                
+            # # Extracting values from response_data
+            #     r2_score_ridge = response_data["r2_score_ridge"]
+            #     best_degree_ridge = response_data["best_degree_ridge"]
+            #     best_alpha_ridge = response_data["best_alpha_ridge"]
+            #     results_ridge = response_data["results_ridge"]
+            #     Ridge_Regression = response_data["Ridge_Regressions"]
+                
+            # # Ridge Regression Plot
+            #     self.ridge_plot(results_ridge,Ridge_Regression)                
+                
             elif model == "Lasso Regression":
 
                 polynomial_degree = self.textboxes["Polynomial Degree (Lasso)"].get()
@@ -385,6 +429,19 @@ class RegressionClassificationpage(ctk.CTkFrame):
                 print(json_data)
                 # Send request
                 self.send_request_regression(json_data)
+                
+            # # Response Data
+            #     response_data = response.json()
+                
+            # # Extracting values from response_data
+            #     r2_score_lasso = response_data["r2_score_lasso"]
+            #     best_degree_lasso = response_data["best_degree_lasso"]
+            #     best_alpha_lasso = response_data["best_alpha_lasso"]
+            #     results_lasso = response_data["results_lasso"]
+            #     Lasso_Regression = response_data["Lasso_Regressions"]
+                
+            # # Lasso Regression Plot
+            #     self.lasso_plot(results_lasso,Lasso_Regression)     
 
             print("\nSubmission Successful!\n")
 
