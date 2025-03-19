@@ -3,12 +3,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
     
-def regression_plot(x, y, x_label, y_label, data, ax=None):
+def regression_plot(x, y, x_label, y_label, data=None, ax=None):
     if ax is None:
         ax = plt.gca()
         plt.figure(figsize=(10, 6), dpi=600)  # Adjust size and set DPI
     sns.regplot(
-        x=x, y=y, data=data, ax=ax,
+        x=x, y=y, data=None, ax=ax,
         scatter_kws={"s": 60, "alpha": 0.8},  # Customize scatter points
         line_kws={"color": "crimson", "lw": 2},  # Customize regression line
     )
@@ -85,12 +85,17 @@ def polynomial_plot(x_scatter, y_scatter, y_poly, x_label, y_label, degree):
     plt.tight_layout()
     plt.show()    
 
-def ridge_plot(data):
+def ridge_plot(results_ridge,best_params):
     # Extract the relevant results
-    results = data.results_ridge
-    best_degree_mask = (results['param_polynomial_features__degree'] == data.best_degree_ridge)
-    alphas = results['param_ridge_regression__alpha'][best_degree_mask]
-    mean_scores = results['mean_test_score'][best_degree_mask]
+#    results = data.results_ridge
+#    best_degree_mask = (results['param_polynomial_features__degree'] == data.best_degree_ridge)
+#    alphas = results['param_ridge_regression__alpha'][best_degree_mask]
+#    mean_scores = results['mean_test_score'][best_degree_mask]
+
+#    results = data.results_ridge
+    best_degree_mask = (results_ridge['param_polynomial_features__degree'] == best_params['best_degree_ridge'])
+    alphas = results_ridge['param_ridge_regression__alpha'][best_degree_mask]
+    mean_scores = results_ridge['mean_test_score'][best_degree_mask]
 
     # Set the figure size and style
     plt.figure(figsize=(10, 6), dpi=120)
@@ -100,7 +105,7 @@ def ridge_plot(data):
     sns.lineplot(
     x=alphas, y=mean_scores,
     marker='o', linestyle='-', color='#1f77b4',  # Line color and marker style
-    label=f'Best Degree = {data.best_degree_ridge}\nBest Alpha = {data.best_params_ridge["ridge_regression__alpha"]}', 
+    label=f'Best Degree = {best_params["best_degree_ridge"]}\nBest Alpha = {best_params["best_alpha_ridge"]}', 
     linewidth=2.5, markersize=8
 )
     
@@ -108,6 +113,9 @@ def ridge_plot(data):
     plt.xlabel('Alpha (Regularization Strength)', fontsize=14, weight='bold', labelpad=15)
     plt.ylabel('Cross-Validation Score (R2 Score)', fontsize=14, weight='bold', labelpad=15)
     plt.title('Alpha vs Model Performance (Ridge Regression)', fontsize=16, weight='bold', pad=20)
+    
+    plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
+    plt.gca().yaxis.get_offset_text().set_visible(False)
     
     # Customize the legend
     plt.legend(
@@ -128,12 +136,16 @@ def ridge_plot(data):
     plt.tight_layout()
     plt.show()
     
-def lasso_plot(data):
+def lasso_plot(results_lasso,best_params):
     # Extract the relevant results
-    results = data.results_lasso
-    best_degree_mask = (results['param_polynomial_features__degree'] == data.best_degree_lasso)
-    alphas = results['param_lasso_regression__alpha'][best_degree_mask]
-    mean_scores = results['mean_test_score'][best_degree_mask]
+#    results = data.results_lasso
+#    best_degree_mask = (results['param_polynomial_features__degree'] == data.best_degree_lasso)
+#    alphas = results['param_lasso_regression__alpha'][best_degree_mask]
+#    mean_scores = results['mean_test_score'][best_degree_mask]
+
+    best_degree_mask = (results_lasso['param_polynomial_features__degree'] == best_params['best_degree_lasso'])
+    alphas = results_lasso['param_lasso_regression__alpha'][best_degree_mask]
+    mean_scores = results_lasso['mean_test_score'][best_degree_mask]
 
     # Set the figure size and style
     plt.figure(figsize=(10, 6), dpi=120)
@@ -143,7 +155,7 @@ def lasso_plot(data):
     sns.lineplot(
         x=alphas, y=mean_scores,
         marker='o', linestyle='-', color='#e74c3c',  # Line color and marker style
-        label=f'Best Degree = {data.best_degree_lasso}\nBest Alpha = {data.best_params_lasso["lasso_regression__alpha"]}', 
+        label=f'Best Degree = {best_params["best_degree_lasso"]}\nBest Alpha = {best_params["best_alpha_lasso"]}', 
         linewidth=2.5, markersize=8
     )
     
@@ -151,6 +163,9 @@ def lasso_plot(data):
     plt.xlabel('Alpha (Regularization Strength)', fontsize=14, weight='bold', labelpad=15)
     plt.ylabel('Cross-Validation Score (R2 Score)', fontsize=14, weight='bold', labelpad=15)
     plt.title('Alpha vs Model Performance (Lasso Regression)', fontsize=16, weight='bold', pad=20)
+    
+    plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
+    plt.gca().yaxis.get_offset_text().set_visible(False)
     
     # Customize the legend to remove the line
     plt.legend(

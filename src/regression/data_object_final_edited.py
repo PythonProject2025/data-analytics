@@ -166,7 +166,8 @@ class DataObject:
                     "best_alpha_ridge": 0.0,
                     "r2_score_ridge": 0.0,
                     "graph_params": {
-                        "regression_models": None
+                        #"regression_models": None,
+                        "results_ridge": None
                     }
                 },
                 "Lasso_Regression": {
@@ -174,7 +175,8 @@ class DataObject:
                     "best_alpha_lasso": 0.0,
                     "r2_score_lasso": 0.0,
                     "graph_params": {
-                        "regression_models": None
+                        #"regression_models": None,
+                        "results_lasso": None
                     }
                 }
             },
