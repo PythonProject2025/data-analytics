@@ -39,12 +39,12 @@ class ScalingEncodingAPIView(APIView):
         print(type(split_data))
         print(type(data_object.data_filtering["Train-Test Split"]["split_data"]["X_train"]))
 
-        # # Ensuring all DataFrame values are converted properly
-        # for key, value in split_data.items():
-        #     if isinstance(value, pd.DataFrame):
-        #         split_data[key] = value.to_dict(orient="records")  # Convert DataFrame to list of dictionaries
-        #     elif isinstance(value, pd.Series):
-        #         split_data[key] = value.tolist()  # Convert Series to a list
+        # Ensuring all DataFrame values are converted properly
+        for key, value in split_data.items():
+            if isinstance(value, pd.DataFrame):
+                split_data[key] = value.to_dict(orient="records")  # Convert DataFrame to list of dictionaries
+            elif isinstance(value, pd.Series):
+                split_data[key] = value.tolist()  # Convert Series to a list
                 
         response_data = {
             "step": "Scaling & Encoding",

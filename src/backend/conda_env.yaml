@@ -1,0 +1,24 @@
+name: data_analytics_env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - django
+  - djangorestframework
+  - sqlite
+  - requests
+  - numpy
+  - pandas
+  - scikit-learn
+  - matplotlib
+  - seaborn
+  - catboost
+  - xgboost
+  - flask
+  - pip
+  - pip:
+      - pyinstaller
+      - tensorflow
+      - keras
+      - customtkinter

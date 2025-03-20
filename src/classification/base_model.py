@@ -8,7 +8,7 @@ from sklearn.metrics import (
 )
 import matplotlib.pyplot as plt
 import numpy as np
-from models.data_object_class import DataObject
+#from data_object_final import data_object
 
 outputs = {
     'accuracy': None,  # Accuracy of the model
@@ -25,6 +25,7 @@ class ClassifierClass:
         self.data_test = data_test
         self.target_train = target_train
         self.target_test = target_test
+        #self.target_labels = target_labels
 
     def set_model(self, model):
         self.current_model = model
@@ -44,21 +45,22 @@ class ClassifierClass:
         outputs['report'] = report
         outputs['cm'] = cm
         outputs['mse'] = mse
-        data_object = DataObject()
+        """
         data_object.outputs["Classification"][model] = {
             "accuracy": accuracy,
             "mse": mse,
             "cm": cm.tolist()  # Convert to list for JSON serialization
         }
-
+        """
+        """
         # Print all classification outputs
         print("Classification Outputs:")
         for model, metrics in data_object.outputs["Classification"].items():
             print(f"\nModel: {model}")
             for metric, value in metrics.items():
                 print(f"{metric}: {value}")
-        
         """
+        
         # Print classification outputs
         print("Model Accuracy:", accuracy)
         print("\nClassification Report:\n", report)
@@ -67,11 +69,11 @@ class ClassifierClass:
         print(f"Mean Squared Error: {mse:.4f}")
 
         return accuracy, report, cm, mse
-        """
+        
 """
     def display_confusion_matrix(self, cm):
         cm_percent = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis] * 100
-        disp = ConfusionMatrixDisplay(confusion_matrix=cm_percent, display_labels=self.target_labels) remove target_labels
+        disp = ConfusionMatrixDisplay(confusion_matrix=cm_percent, display_labels=self.target_labels)
         disp.plot(cmap="Blues", values_format=".1f")
         for text in disp.text_.flatten():
             text.set_text(text.get_text() + '%')

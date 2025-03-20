@@ -13,9 +13,7 @@ class ClassificationAPIView (APIView):
     def post(self, request):
         
         data_dict = request.data.get("dataobject", {})
-        if "dataobject" in data_dict:  
-            data_dict = data_dict["dataobject"]
-
+        print(data_dict.get("classification", {}))
         if not data_dict:
             return Response({"error": "Invalid request, 'dataobject' missing"}, status=status.HTTP_400_BAD_REQUEST)
         
@@ -29,15 +27,15 @@ class ClassificationAPIView (APIView):
             if not all(k in split_data for k in ["X_train", "X_test", "y_train", "y_test"]):
                 return {"error": "Missing one or more training/testing data in DataObject!"}
             
-            # ✅ Convert lists (from JSON) back to NumPy arrays
-            data_train =  np.array(split_data["X_train"]) if split_data["X_train"]else None
-            data_test = np.array(split_data["X_test"]) if split_data["X_test"] else None
-            target_train = np.array(split_data["y_train"]) if split_data["y_train"] else None
-            target_test = np.array(split_data["y_test"]) if split_data["y_test"] else None
-
-            # ✅ Check if data is valid before proceeding
-            if any(val is None or (isinstance(val, np.ndarray) and val.size == 0) for val in [data_train, data_test, target_train, target_test]):
-                return {"error": "Some train-test data is empty or invalid!"}
+            X_train_list = data_object.data_filtering["Train-Test Split"]["split_data"]["X_train"]
+            X_test_list = data_object.data_filtering["Train-Test Split"]["split_data"]["X_test"]
+            y_train_list = data_object.data_filtering["Train-Test Split"]["split_data"]["y_train"]
+            y_test_list = data_object.data_filtering["Train-Test Split"]["split_data"]["y_test"]
+  
+            data_train = pd.DataFrame(X_train_list)
+            data_test=  pd.DataFrame(X_test_list)
+            target_train= pd.DataFrame(y_train_list)
+            target_test= pd.DataFrame(y_test_list)
             print(data_train)
         except KeyError:
             return {"error": "Missing training/testing data in DataObject!"}
@@ -52,11 +50,16 @@ class ClassificationAPIView (APIView):
         # Create and use the selected model
         try:
             if selected_model == "RandomForest":
-                model = RandomForestModel(data_train, data_test, target_train, target_test)
+                n_estimators=data_object.classification["RandomForest"]["n_estimators"]
+                max_depth=data_object.classification["RandomForest"]["max_depth"]
+                model = RandomForestModel(data_train, data_test, target_train, target_test,n_estimators,max_depth)
             elif selected_model == "SVC":
-                model = SVCModel(data_train, data_test, target_train, target_test)
+                C= data_object.classification["SVC"]["C"]
+                model = SVCModel(data_train, data_test, target_train, target_test,C)
             elif selected_model == "KNN":
-                model = KNNModel(data_train, data_test, target_train, target_test)
+                n_neighbours=data_object.classification["KNN"]["n_neighbours"]
+                p=data_object.classification["KNN"]["p"]
+                model = KNNModel(data_train, data_test, target_train, target_test,n_neighbours,p)
             else:
                 raise ValueError("Invalid model name entered.")
 
@@ -75,3 +78,4 @@ class ClassificationAPIView (APIView):
 
         except ValueError as e:
             print(e)
+            
