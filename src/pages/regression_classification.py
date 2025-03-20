@@ -1,6 +1,9 @@
+
 import customtkinter as ctk
 from tkinter import Button, PhotoImage, Toplevel,messagebox
-
+import numpy as np
+import seaborn as sns
+from matplotlib import pyplot as plt
 import pandas as pd
 import requests
 from src.models.data_object_class import DataObject
@@ -351,17 +354,17 @@ class RegressionClassificationpage(ctk.CTkFrame):
             # # Response data
             #     response_data = response.json()
                 
-            # # Extracting values from response_data
-            #     r2_score_polynomial = response_data["r2_score_polynomial"]
-            #     y_pred = response_data["y_pred"]
-            #     best_polynomial_degree = response_data["best_polynomial_degree"]
-            #     x_data = response_data["x_data"]
-            #     y_test = response_data["y_test"]
-            #     x_label = response_data["x_label"]
-            #     y_label = response_data["y_label"]
+            # Extracting values from response_data
+                # r2_score_polynomial = response_data["r2_score_polynomial"]
+                # y_pred = response_data["y_pred"]
+                # best_polynomial_degree = response_data["best_polynomial_degree"]
+                # x_data = response_data["x_data"]
+                # y_test = response_data["y_test"]
+                # x_label = response_data["x_label"]
+                # y_label = response_data["y_label"]
                 
-            # # Polynomial fit plot
-            #     self.polynomial_plot(x_data,y_test,y_pred,x_label,y_label,best_polynomial_degree)
+            # Polynomial fit plot
+                # self.polynomial_plot(x_data,y_test,y_pred,x_label,y_label,best_polynomial_degree)
 
             elif model == "Ridge Regression":
 
@@ -392,7 +395,7 @@ class RegressionClassificationpage(ctk.CTkFrame):
             # # Response Data
             #     response_data = response.json()
                 
-            # # Extracting values from response_data
+            # Extracting values from response_data
             #     r2_score_ridge = response_data["r2_score_ridge"]
             #     best_degree_ridge = response_data["best_degree_ridge"]
             #     best_alpha_ridge = response_data["best_alpha_ridge"]
@@ -451,10 +454,9 @@ class RegressionClassificationpage(ctk.CTkFrame):
              print(f"Selected Classification Model: {model}")
              dataobject.classification["Model_Selection"]= model
              if model == "RandomForest":
-                print(f"n_estimators: {self.sliders["n_estimators"].get()}")
-                print(f"max_depth: {self.sliders['max_depth'].get()}")
-                dataobject.classification["RandomForest"]['n_estimators']= self.sliders['n_estimators'].get()
-                dataobject.classification["RandomForest"]['max_depth']=self.sliders['max_depth'].get()
+                 
+                dataobject.classification["RandomForest"]["n_estimators"]= int(self.sliders['n_estimators'].get())
+                dataobject.classification["RandomForest"]["max_depth"]=int(self.sliders['max_depth'].get())
                 # Convert DataObject to JSON
                 json_data = {"dataobject": dataobject.to_dict()}
                 print(json_data)
@@ -462,12 +464,10 @@ class RegressionClassificationpage(ctk.CTkFrame):
                 self.send_request_classification(json_data)
 
              elif model == "SVC":
-                print(f"C: {self.sliders['C'].get()}")
-                print(f"Kernel: {self.dropdowns['Kernel'].get()}")
-                print(f"Gamma: {self.dropdowns['Gamma'].get()}")
-                dataobject.classification["SVC"]['C']= self.sliders['C'].get()
-                dataobject.classification["SVC"]['Kernel']=self.dropdowns['Kernel'].get()
-                dataobject.classification["SVC"]['Gamma']=self.dropdowns['Gamma'].get()
+                dataobject.classification["SVC"]["C"]= float(self.sliders['C'].get())
+                dataobject.classification["SVC"]["kernel"]= self.dropdowns['Kernel'].get()
+                dataobject.classification["SVC"]["gamma"]= self.dropdowns['Gamma'].get()
+                dataobject.classification["SVC"]["kernel"]
                 # Convert DataObject to JSON
                 json_data = {"dataobject": dataobject.to_dict()}
                 print(json_data)
@@ -475,10 +475,13 @@ class RegressionClassificationpage(ctk.CTkFrame):
                 self.send_request_classification(json_data)
 
              elif model == "KNN":
-                print(f"n_neighbors: {self.sliders['n_neighbors'].get()}")
-                print(f"Weights: {self.dropdowns['Weights'].get()}")
-                dataobject.classification["KNN"]['n_neighbors']= self.sliders['n_neighbors'].get()
-                dataobject.classification["KNN"]['Weights']=self.dropdowns['Weights'].get()
+                print(f"n_neighbors: {self.sliders["n_neighbors"].get()}")
+                print(f"Weights: {self.dropdowns["Weights"].get()}")
+                print(f"n_neighbors: {self.sliders["P"].get()}")
+                dataobject.classification["KNN"]["n_neighbours"]= int(self.sliders['n_neighbors'].get())
+                dataobject.classification["KNN"]["weights"]=self.dropdowns['Weights'].get()
+                dataobject.classification["KNN"]["p"]=int(self.sliders['P'].get())
+                print(dataobject.classification["KNN"]["weights"])
                 # Convert DataObject to JSON
                 json_data = {"dataobject": dataobject.to_dict()}
                 print(json_data)
@@ -545,6 +548,62 @@ class RegressionClassificationpage(ctk.CTkFrame):
                     response_data = response.json()
                     print(response_data)
                     
+                    # Check if Lasso Regression data is present
+                    if "Lasso_Regression" in response_data:
+                        print("🔹 Processing Lasso Regression Results...")
+                        # Extracting values for Lasso Regression
+                        r2_score_lasso = response_data["r2_score_lasso"]
+                        best_degree_lasso = response_data["best_degree_lasso"]
+                        best_alpha_lasso = response_data["best_alpha_lasso"]
+                        results_lasso = response_data["results_lasso"]
+                        Lasso_Regression = response_data["Lasso_Regression"]
+
+                        # Generate Lasso Regression Plot
+                        self.lasso_plot(results_lasso, Lasso_Regression)
+
+                    # Check if Ridge Regression data is present
+                    elif "Ridge_Regression" in response_data:
+                        print("🔹 Processing Ridge Regression Results...")
+                        # Extracting values for Ridge Regression
+                        r2_score_ridge = response_data["r2_score_ridge"]
+                        best_degree_ridge = response_data["best_degree_ridge"]
+                        best_alpha_ridge = response_data["best_alpha_ridge"]
+                        results_ridge = response_data["results_ridge"]
+                        Ridge_Regression = response_data["Ridge_Regression"]
+
+                        # Generate Ridge Regression Plot
+                        self.ridge_plot(results_ridge, Ridge_Regression)  
+                        
+                    elif "best_polynomial_degree" in response_data:
+                        print("🔹 Processing Polynomial Regression Results...")
+                        r2_score_polynomial = response_data["r2_score_polynomial"]
+                        y_pred = response_data["y_pred"]
+                        best_polynomial_degree = response_data["best_polynomial_degree"]
+                        x_data = response_data["x_data"]
+                        y_test = response_data["y_test"]
+                        x_label = response_data["x_label"]
+                        y_label = response_data["y_label"]
+                        
+                    # Polynomial fit plot
+                        self.polynomial_plot(x_data,y_test,y_pred,x_label,y_label,best_polynomial_degree)
+                        
+                    elif "r2_score_linear" in response_data:
+                        # Extracting values from response_data
+                        r2_score_linear = response_data["r2_score_linear"]
+                        y_pred  = response_data["y_pred"]
+                        x_data  = response_data["x_data"]  # x_label is given by User
+                        y_test  = response_data["y_test"]
+                        x_label = response_data["x_label"]
+                        y_label = response_data["y_label"] 
+                        
+                        fig, axs = plt.subplots(1, 2, figsize=(12, 5))
+                        
+                    # Regression Plot
+                        self.regression_plot(x_data,y_test,x_label,y_label,ax=axs[0])
+                        
+                    # Residual Plot
+                        self.residual_plot(y_test,y_pred,ax=axs[1]) 
+                    
             else:
                     messagebox.showerror(
                         "Error", response.json().get('error', 'File upload failed.')
@@ -574,3 +633,231 @@ class RegressionClassificationpage(ctk.CTkFrame):
                     )
         except Exception as e:
                 messagebox.showerror("Error", str(e))
+
+    #lasso plotting
+    def lasso_plot(self,results_lasso,best_params):
+    # Extract the relevant results
+    #    results = data.results_lasso
+    #    best_degree_mask = (results['param_polynomial_features__degree'] == data.best_degree_lasso)
+    #    alphas = results['param_lasso_regression__alpha'][best_degree_mask]
+    #    mean_scores = results['mean_test_score'][best_degree_mask]
+
+        best_degree_mask = (np.array(results_lasso['param_polynomial_features__degree']) == best_params['best_degree_lasso'])
+        alphas = list(np.array(results_lasso['param_lasso_regression__alpha'])[best_degree_mask])
+        mean_scores = list(np.array(results_lasso['mean_test_score'])[best_degree_mask])
+        
+        print("Best Degree:", best_params['best_degree_lasso'])
+        print("Alphas:", alphas)
+        print("Mean Scores:", mean_scores)
+
+        # Set the figure size and style
+        plt.figure(figsize=(10, 6), dpi=120)
+        sns.set_theme(style="whitegrid")  # Clean background with gridlines
+        
+        # Plot the lineplot
+        sns.lineplot(
+            x=alphas, y=mean_scores,
+            marker='o', linestyle='-', color='#e74c3c',  # Line color and marker style
+            label=f'Best Degree = {best_params["best_degree_lasso"]}\nBest Alpha = {best_params["best_alpha_lasso"]}', 
+            linewidth=2.5, markersize=8
+        )
+        
+        # Add labels and title with improved styling
+        plt.xlabel('Alpha (Regularization Strength)', fontsize=14, weight='bold', labelpad=15)
+        plt.ylabel('Cross-Validation Score (R2 Score)', fontsize=14, weight='bold', labelpad=15)
+        plt.title('Alpha vs Model Performance (Lasso Regression)', fontsize=16, weight='bold', pad=20)
+        
+        plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
+        plt.gca().yaxis.get_offset_text().set_visible(False)
+        
+        # Customize the legend to remove the line
+        plt.legend(
+            fontsize=12, loc='upper left', frameon=True, fancybox=True, shadow=True, borderpad=1, handlelength=0
+        )
+        
+        # Add gridlines and customize tick params
+        plt.grid(which='major', linestyle='--', linewidth=0.7, color='gray', alpha=0.7)
+        plt.minorticks_on()
+        plt.tick_params(
+            which='both', direction='in', length=6, width=1, colors='black', grid_alpha=0.5
+        )
+        
+        # Remove top and right spines for a clean look
+        sns.despine(top=True, right=True)
+        
+        # Ensure the plot looks neat with tight layout
+        plt.tight_layout()
+        plt.show()
+    
+    def ridge_plot(self,results_ridge,best_params):
+        # Extract the relevant results
+    #    results = data.results_ridge
+    #    best_degree_mask = (results['param_polynomial_features__degree'] == data.best_degree_ridge)
+    #    alphas = results['param_ridge_regression__alpha'][best_degree_mask]
+    #    mean_scores = results['mean_test_score'][best_degree_mask]
+
+    #    results = data.results_ridge
+        best_degree_mask = (np.array(results_ridge['param_polynomial_features__degree']) == best_params['best_degree_ridge'])
+        alphas = np.array(results_ridge['param_ridge_regression__alpha'])[best_degree_mask]
+        mean_scores = np.array(results_ridge['mean_test_score'])[best_degree_mask]
+        # Set the figure size and style
+        plt.figure(figsize=(10, 6), dpi=120)
+        sns.set_theme(style="whitegrid")  # Clean background with gridlines
+        
+        # Plot the lineplot
+        sns.lineplot(
+        x=alphas, y=mean_scores,
+        marker='o', linestyle='-', color='#1f77b4',  # Line color and marker style
+        label=f'Best Degree = {best_params["best_degree_ridge"]}\nBest Alpha = {best_params["best_alpha_ridge"]}', 
+        linewidth=2.5, markersize=8
+    )
+        
+        # Add labels and title with improved styling
+        plt.xlabel('Alpha (Regularization Strength)', fontsize=14, weight='bold', labelpad=15)
+        plt.ylabel('Cross-Validation Score (R2 Score)', fontsize=14, weight='bold', labelpad=15)
+        plt.title('Alpha vs Model Performance (Ridge Regression)', fontsize=16, weight='bold', pad=20)
+        
+        plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
+        plt.gca().yaxis.get_offset_text().set_visible(False)
+        
+        # Customize the legend
+        plt.legend(
+            fontsize=12, loc='center right', frameon=True, fancybox=True, shadow=True, borderpad=1
+        )
+        
+        # Add gridlines and customize tick params
+        plt.grid(which='major', linestyle='--', linewidth=0.7, color='gray', alpha=0.7)
+        plt.minorticks_on()
+        plt.tick_params(
+            which='both', direction='in', length=6, width=1, colors='black', grid_alpha=0.5
+        )
+        
+        # Remove top and right spines for a clean look
+        sns.despine(top=True, right=True)
+        
+        # Ensure the plot looks neat with tight layout
+        plt.tight_layout()
+        plt.show()
+        
+    def polynomial_plot(self, x_scatter, y_scatter, y_poly, x_label, y_label, degree):
+        """Generates and displays the Polynomial Regression plot."""
+        try:
+            if isinstance(y_scatter, dict):
+                print("⚠️ Converting y_scatter dictionary to a list...")
+                y_scatter = np.array(list(y_scatter.values()))
+
+            x_scatter = np.array(x_scatter).flatten() if not isinstance(x_scatter, np.ndarray) else x_scatter.flatten()
+            y_scatter = np.array(y_scatter).flatten() if not isinstance(y_scatter, np.ndarray) else y_scatter.flatten()
+            y_poly = np.array(y_poly).flatten() if not isinstance(y_poly, np.ndarray) else y_poly.flatten()
+
+            # ✅ Debug prints
+            print("✅ Processed Polynomial Plot Data:")
+            print("X Scatter:", x_scatter[:5])  # Print first 5 values
+            print("Y Scatter:", y_scatter[:5])
+            print("Y Poly:", y_poly[:5])
+
+            # Set figure size and seaborn style
+            plt.figure(figsize=(12, 7), dpi=120)
+            sns.set_theme(style="ticks")
+
+            # Scatter plot for actual data
+            sns.scatterplot(
+                x=x_scatter, y=y_scatter,
+                color='#1f77b4',
+                label='Actual Data', s=100, alpha=0.9,
+                edgecolor='black', linewidth=0.7
+            )
+
+            # Line plot for polynomial regression
+            sns.lineplot(
+                x=x_scatter, y=y_poly,
+                color='#ff5733',
+                label='Polynomial Regression Line',
+                linewidth=2.5
+            )
+
+            # Add labels and title with better styling
+            plt.xlabel(x_label, fontsize=14, weight='semibold', labelpad=12)
+            plt.ylabel(y_label, fontsize=14, weight='semibold', labelpad=12)
+            plt.title(
+                f'Polynomial Regression Fit (Degree: {degree})', fontsize=16, weight='bold', pad=20, loc='center',
+                color='#333333'
+            )
+
+            # Legend styling - fixed at lower left corner
+            plt.legend(
+                fontsize=12, loc='lower left', frameon=True, shadow=False,
+                fancybox=True, borderpad=1, framealpha=0.9
+            )
+
+            # Customize the grid and spines
+            plt.grid(
+                which='major', linestyle='--', linewidth=0.6, color='gray', alpha=0.7
+            )
+            plt.minorticks_on()
+            plt.tick_params(
+                which='both', direction='in', length=6, width=1, colors='black',
+                grid_alpha=0.5
+            )
+            sns.despine(top=True, right=True)
+
+            # Tight layout for better spacing
+            plt.tight_layout()
+            plt.show()
+
+        except Exception as e:
+            print("❌ ERROR in polynomial_plot:", str(e))
+            messagebox.showerror("Plot Error", str(e))
+            
+    def regression_plot(self,x, y, x_label, y_label, data=None, ax=None):
+        if isinstance(x, dict):  
+            x = np.array(list(x.values()))  # Convert dictionary to array
+        elif isinstance(x, list):
+            x = np.array(x)  # Convert list to NumPy array
+
+        if isinstance(y, dict):  
+            y = np.array(list(y.values()))
+        elif isinstance(y, list):
+            y = np.array(y)
+        if ax is None:
+            ax = plt.gca()
+            plt.figure(figsize=(10, 6), dpi=600)  # Adjust size and set DPI
+        sns.regplot(
+            x=x, y=y, data=None, ax=ax,
+            scatter_kws={"s": 60, "alpha": 0.8},  # Customize scatter points
+            line_kws={"color": "crimson", "lw": 2},  # Customize regression line
+        )
+        for patch in ax.collections:
+            patch.set_alpha(0.5)  # Darkens the shaded portion
+        ax.set_xlabel(x_label, fontsize=12, weight='bold')
+        ax.set_ylabel(y_label, fontsize=12, weight='bold')
+        ax.set_title('Linear Regression Fit', fontsize=14, weight='bold') 
+        ax.grid(True, which='both', linestyle='--', linewidth=0.5, alpha=0.7)
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)    
+        plt.show()
+        
+    def residual_plot(self,x, y, ax=None):
+        
+        if isinstance(x, dict):  
+            x = np.array(list(x.values()))  
+        elif isinstance(x, list):
+            x = np.array(x)  
+
+        if isinstance(y, dict):  
+            y = np.array(list(y.values()))
+        elif isinstance(y, list):
+            y = np.array(y)
+        if ax is None:
+            ax = plt.gca()
+            plt.figure(figsize=(10, 6), dpi=600)  # Adjust size and set DPI
+        sns.residplot(
+            x=x, y=y, scatter_kws={"s": 60, "alpha": 0.8}, ax=ax,
+            color="teal"
+        )
+        ax.set_title('Residual Plot', fontsize=14, weight='bold')
+        ax.set_xlabel('Predicted Values', fontsize=12, weight='bold')
+        ax.grid(True, which='both', linestyle='--', linewidth=0.5, alpha=0.7)
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+        plt.show()

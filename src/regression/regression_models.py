@@ -17,27 +17,27 @@ class RegressionModels:
         Train a Linear Regression model.
         """
         self.model = LinearRegression()
-        self.model.fit(dataobj['split_data']['x_train'], dataobj['split_data']['y_train'])
+        self.model.fit(dataobj['split_data']['X_train'], dataobj['split_data']['y_train'])
         return self.model
     
-    def train_polynomial_regression(self, dataobj, param_grid=None, cv=5): # x_train, y_train
-       
+    def train_polynomial_regression(self, dataobj, param_grid=None, cv=3): # x_train, y_train
+        print(type(dataobj['split_data']['X_train']))
         estimator = Pipeline([("polynomial_features", PolynomialFeatures()),("linear_regression", LinearRegression())])
         grid_search = GridSearchCV(estimator=estimator, param_grid=param_grid, cv=cv, scoring="r2")
-        grid_search.fit(dataobj['split_data']['x_train'], dataobj['split_data']['y_train'])
+        grid_search.fit(dataobj['split_data']['X_train'], dataobj['split_data']['y_train'])
         self.model = grid_search.best_estimator_
         self.best_params_poly = grid_search.best_params_
 
         return self.model
 
-    def train_ridge(self, dataobj, param_grid=None, cv=5): # x_train, y_train
+    def train_ridge(self, dataobj, param_grid=None, cv=3): # x_train, y_train
                 
         ridge_pipeline = Pipeline([
         ("polynomial_features", PolynomialFeatures()),
         ("ridge_regression", Ridge())
         ])
         grid_search = GridSearchCV(estimator=ridge_pipeline, param_grid=param_grid, cv=cv, scoring="r2")
-        grid_search.fit(dataobj['split_data']['x_train'], dataobj['split_data']['y_train'])
+        grid_search.fit(dataobj['split_data']['X_train'], dataobj['split_data']['y_train'])
         self.model = grid_search.best_estimator_
         self.best_params_ridge = grid_search.best_params_
         self.results_ridge = grid_search.cv_results_
@@ -45,7 +45,7 @@ class RegressionModels:
 
         return self.model
 
-    def train_lasso(self, dataobj, param_grid=None, cv=5): # x_train, y_train
+    def train_lasso(self, dataobj, param_grid=None, cv=3): # x_train, y_train
             
         lasso_pipeline = Pipeline([
         ("polynomial_features", PolynomialFeatures()),
@@ -53,7 +53,7 @@ class RegressionModels:
         ])    
         
         grid_search = GridSearchCV(estimator=lasso_pipeline, param_grid=param_grid, cv=cv, scoring="r2")
-        grid_search.fit(dataobj['split_data']['x_train'], dataobj['split_data']['y_train'])
+        grid_search.fit(dataobj['split_data']['X_train'], dataobj['split_data']['y_train'])
         self.model = grid_search.best_estimator_
         self.best_params_lasso = grid_search.best_params_
         self.results_lasso = grid_search.cv_results_

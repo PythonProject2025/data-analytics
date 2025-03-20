@@ -1,4 +1,4 @@
-class data_object:
+class data_object1:
     """Unified data model for managing raw data, user selections, and processed results."""
     def __init__(self):
         

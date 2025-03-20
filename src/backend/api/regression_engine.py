@@ -44,32 +44,40 @@ class RegressionAPIView(APIView):
             # ✅ Check if data is valid before proceeding
             if any(val is None or (isinstance(val, np.ndarray) and val.size == 0) for val in [X_train, X_test, y_train, y_test]):
                 return {"error": "Some train-test data is empty or invalid!"}
-            #print(X_train)
+            print(X_train)
         except KeyError:
             return {"error": "Missing training/testing data in DataObject!"}
 
         # Extract regression model selection
         regression_models = RegressionModels()
         model_type = data_object.regression["Selected Model"]
+        
+# Linear Regression        
+        
         if model_type == "Linear Regression":
-            # Linear Regression
-            model = regression_models.train_linear_regression(data_object.data_filtering['Train-Test Split']) # 1st change x_train, y_train 
-            r2, y_pred = metrics.evaluate_model(model, data_object.data_filtering['Train-Test Split'])  # 2nd change x_test, y_test 
+            
+            model = regression_models.train_linear_regression(data_object.data_filtering['Train-Test Split']) 
+            r2, y_pred = metrics.evaluate_model(model, data_object.data_filtering['Train-Test Split'])   
             data_object.outputs['Regression']['Linear_Regression']['r2_score_linear'] = r2
             data_object.outputs['Regression']['Linear_Regression']['graph_params']['y_pred'] = y_pred
             print("Linear regression successfull")
-            print(data_object.outputs['Regression']['Linear_Regression'])
             response_data={
                 "r2_score_linear": data_object.outputs['Regression']['Linear_Regression']['r2_score_linear'],
-                "y_pred": data_object.outputs['Regression']['Linear_Regression']['graph_params']['y_pred']
+                "y_pred":  data_object.outputs['Regression']['Linear_Regression']['graph_params']['y_pred'],
+                "x_data":  data_object.data_filtering['Train-Test Split']['split_data']['X_test']['Safety_high'],     # x_label is given by User
+                "y_test":  data_object.data_filtering['Train-Test Split']['split_data']['y_test'],
+                "x_label": data_object.outputs['Regression']['Linear_Regression']['graph_params']['x_label'],
+                "y_label": data_object.outputs['Regression']['Linear_Regression']['graph_params']['y_label']         
             }
     
-        # Polynomial Regression
-        elif model_type == "Polynomial Regression":             
+# Polynomial Regression
+
+        elif model_type == "Polynomial Regression":   
+                      
             param_grid = {'polynomial_features__degree': data_object.regression['Model_Selection']['Polynomial Regression']['polynomial_degree']}
-            model = regression_models.train_polynomial_regression(data_object.data_filtering['Train-Test Split'], param_grid=param_grid) # 1st change x_train,y_train 
-            #print(f"Best HyperParameter(Polynomial) ==> Degree: {regression_models.best_params_poly['polynomial_features__degree']}")
-            r2, y_pred = metrics.evaluate_model(model, data_object.data_filtering['Train-Test Split']) # 2nd change x_test, y_test 
+            
+            model = regression_models.train_polynomial_regression(data_object.data_filtering['Train-Test Split'], param_grid=param_grid) 
+            r2, y_pred = metrics.evaluate_model(model, data_object.data_filtering['Train-Test Split']) 
             data_object.outputs['Regression']['Polynomial_Regression']['r2_score_polynomial'] = r2
             data_object.outputs['Regression']['Polynomial_Regression']['graph_params']['y_pred'] = y_pred
             data_object.outputs['Regression']['Polynomial_Regression']['best_polynomial_degree'] = regression_models.best_params_poly['polynomial_features__degree']
@@ -81,59 +89,68 @@ class RegressionAPIView(APIView):
             response_data = {
                 "r2_score_polynomial": data_object.outputs['Regression']['Polynomial_Regression']['r2_score_polynomial'],
                 "y_pred": data_object.outputs['Regression']['Polynomial_Regression']['graph_params']['y_pred'],
-                "best_polynomial_degree": data_object.outputs['Regression']['Polynomial_Regression']['best_polynomial_degree']
+                "best_polynomial_degree": data_object.outputs['Regression']['Polynomial_Regression']['best_polynomial_degree'],
+                "x_data":  data_object.data_filtering['Train-Test Split']['split_data']['X_test']['Safety_high'],  # x_label is given by User
+                "y_test":  data_object.data_filtering['Train-Test Split']['split_data']['y_test'],
+                "x_label": data_object.outputs['Regression']['Polynomial_Regression']['graph_params']['x_label'],
+                "y_label": data_object.outputs['Regression']['Polynomial_Regression']['graph_params']['y_label']           
             }
         #    polynomial_plot(x_test["Datum"], y_test, y_pred, "Datum", "pH-Wert", regression_models.best_params_poly['polynomial_features__degree']) ==>  How labels will be handeled and which group will handle it?
+
+# Ridge Regression
         
         elif model_type == "Ridge Regression":     
-            # Ridge Regression   
+            print("entering ridge regression")
             param_grid = {
                 'polynomial_features__degree': data_object.regression['Model_Selection']['Ridge Regression']['polynomial_degree_ridge'],
                 'ridge_regression__alpha': data_object.regression['Model_Selection']['Ridge Regression']['alpha_values_ridge']
             }
-            model = regression_models.train_ridge(data_object.data_filtering['Train-Test Split'], param_grid=param_grid) # 1st change x_train,y_train 
-            print("Best HyperParameters(Ridge) ==> alpha:", regression_models.best_params_ridge['ridge_regression__alpha'],
-               ", Polynomial Degree:", regression_models.best_params_ridge['polynomial_features__degree'])
-            r2, y_pred = metrics.evaluate_model(model, data_object.data_filtering['Train-Test Split']) # 2nd change x_test, y_test 
+            
+            model = regression_models.train_ridge(data_object.data_filtering['Train-Test Split'], param_grid=param_grid) 
+            r2, y_pred = metrics.evaluate_model(model, data_object.data_filtering['Train-Test Split'])  
             data_object.outputs['Regression']['Ridge_Regression']['r2_score_ridge'] = r2
             data_object.outputs['Regression']['Ridge_Regression']['best_degree_ridge'] = regression_models.best_params_ridge['polynomial_features__degree']
             data_object.outputs['Regression']['Ridge_Regression']['best_alpha_ridge'] = regression_models.best_params_ridge['ridge_regression__alpha']
-        #    print(f"R2 Score (Ridge Regression): {r2}") Remove Later
-            data_object.outputs['Regression']['Ridge_Regression']['graph_params']['regression_models'] = regression_models
-            print(type(regression_models))
+            data_object.outputs['Regression']['Ridge_Regression']['graph_params']['results_ridge'] = regression_models.results_ridge        # Add "results_ridge" in DataObject File
+            
             print("Ridge regression completed successfully")
-            print(data_object.outputs['Regression']['Ridge_Regression'])
+            
             response_data = {
                 "r2_score_ridge": data_object.outputs['Regression']['Ridge_Regression']['r2_score_ridge'],
                 "best_degree_ridge": data_object.outputs['Regression']['Ridge_Regression']['best_degree_ridge'],
                 "best_alpha_ridge": data_object.outputs['Regression']['Ridge_Regression']['best_alpha_ridge'],
-                "regression_models": data_object.outputs['Regression']['Ridge_Regression']['graph_params']['regression_models']
+                "results_ridge": data_object.outputs['Regression']['Ridge_Regression']['graph_params']['results_ridge'],   # Add "results_ridge" in DataObject File
+                "Ridge_Regression": data_object.outputs['Regression']['Ridge_Regression']
             }
         #    ridge_plot(regression_models)
+
+# Lasso Regression
         
         elif model_type == "Lasso Regression": 
-            # Lasso Regression
+
             param_grid = {
                 'polynomial_features__degree': data_object.regression['Model_Selection']['Lasso Regression']['polynomial_degree_lasso'],
                 'lasso_regression__alpha': data_object.regression['Model_Selection']['Lasso Regression']['alpha_values_lasso']
             }
-            model = regression_models.train_lasso(data_object.data_filtering['Train-Test Split'], param_grid=param_grid) # 1st change x_train,y_train 
-        #    print("Best HyperParameters(Lasso) ==> alpha:", regression_models.best_params_lasso['lasso_regression__alpha'],
-        #        ", Polynomial Degree:", regression_models.best_params_lasso['polynomial_features__degree'])
-            r2, y_pred = metrics.evaluate_model(model, data_object.data_filtering['Train-Test Split']) # 2nd change x_test, y_test
+            
+            model = regression_models.train_lasso(data_object.data_filtering['Train-Test Split'], param_grid=param_grid) 
+            r2, y_pred = metrics.evaluate_model(model, data_object.data_filtering['Train-Test Split'])
+            
             data_object.outputs['Regression']['Lasso_Regression']['r2_score_lasso'] = r2
             data_object.outputs['Regression']['Lasso_Regression']['best_degree_lasso'] = regression_models.best_params_lasso['polynomial_features__degree']
             data_object.outputs['Regression']['Lasso_Regression']['best_alpha_lasso'] = regression_models.best_params_lasso['lasso_regression__alpha']
-        #    print(f"R2 Score (Lasso Regression): {r2}")
-            data_object.outputs['Regression']['Lasso_Regression']['graph_params']['regression_models'] = regression_models
-            print("LAsooo completed")
-            print(data_object.outputs['Regression']['Lasso_Regression'])
-        #    lasso_plot(regression_models)
+            data_object.outputs['Regression']['Lasso_Regression']['graph_params']['results_lasso'] = regression_models.results_lasso        # Add "results_lasso" in DataObject File
+            
+            print("Lasso completed")
+
             response_data = {
                 "r2_score_lasso": data_object.outputs['Regression']['Lasso_Regression']['r2_score_lasso'],
                 "best_degree_lasso": data_object.outputs['Regression']['Lasso_Regression']['best_degree_lasso'],
                 "best_alpha_lasso": data_object.outputs['Regression']['Lasso_Regression']['best_alpha_lasso'],
-                "regression_models": data_object.outputs['Regression']['Lasso_Regression']['graph_params']['regression_models']
+                "results_lasso": data_object.outputs['Regression']['Lasso_Regression']['graph_params']['results_lasso'],     # Add "results_lasso" in DataObject File
+                "Lasso_Regression": data_object.outputs['Regression']['Lasso_Regression']
             }
+            
+            #    lasso_plot(regression_models)
         
         return Response(response_data, status=status.HTTP_200_OK)

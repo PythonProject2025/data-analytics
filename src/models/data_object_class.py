@@ -33,7 +33,7 @@ class DataObject:
                 "parameters": {
                     "test_size": None,
                     "random_state": None,
-                    "target_column": "Usage_kWh"
+                    "target_column": "Doors"
                 },
                 "split_data": {"X_train": None, 
                                "X_test": None, 
@@ -78,9 +78,18 @@ class DataObject:
         self.classification = {
             "Inputs": {"x_train": None, "x_test": None, "y_train": None, "y_test": None,"y_label":None},
             "Model_Selection": {"RandomForest": {}, "SVC": {}, "KNN": {}},
-            "RandomForest": {"n_estimators": {50, 100, 150}, "max_depth": {5, 10, 20}},
-            "SVC": {"C": {0.1, 1, 10}, "kernel": {"min": 0.01, "max": 0.1, "default": 0.03}, "max_depth": {'linear', 'rbf'}, "gamma": {'scale', 'auto'}},
-            "KNN": {"n_neighbours": {3, 5, 7}, "weights": {'uniform', 'distance'}, "p": {1, 2}}
+            "RandomForest": {"n_estimators": {50, 100, 150},
+                             "max_depth": {5, 10, 20}
+                             },
+            "SVC": {"C": {0.1, 1, 10},
+                    "kernel":"linear", 
+                    "max_depth": {"min": 0.01, "max": 0.1, "default": 0.03},
+                    "gamma": "auto"
+                    },
+            "KNN": {"n_neighbours": {3, 5, 7},
+                    "weights": "distance",
+                    "p": {1, 2}
+                    }
         }
 
         self.regression = {
@@ -171,7 +180,8 @@ class DataObject:
                     "best_alpha_ridge": 0.0,
                     "r2_score_ridge": 0.0,
                     "graph_params": {
-                        "regression_models": None
+                        "regression_models": None,
+                        "results_ridge": None  
                     }
                 },
                 "Lasso_Regression": {
@@ -179,7 +189,8 @@ class DataObject:
                     "best_alpha_lasso": 0.0,
                     "r2_score_lasso": 0.0,
                     "graph_params": {
-                        "regression_models": None
+                        "regression_models": None,
+                        "results_lasso": None
                     }
                 }
             },
