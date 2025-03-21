@@ -14,20 +14,46 @@ from matplotlib.backend_bases import MouseEvent
 from matplotlib.backends.backend_tkagg import NavigationToolbar2Tk
 import json
 import matplotlib.patches as patches
+import matplotlib.dates as mdates
+from tkinter import Toplevel, Label
 
 
 
 
 class DataFilteringPage(ctk.CTkFrame):
-    def __init__(self, parent,file_path,file_name=" "):
+    def __init__(self, parent,file_path=None,file_name=None,data=None,**page_state):
         super().__init__(parent, corner_radius=0)
 
         self.parent = parent
-        self.file_name = file_name
+        self.file_name = file_name or "No file Uploaded"
+        print(self.file_name)
         self.file_path=file_path
+        print("Filepath=",file_path)
         self.current_segment_index = 0
         window_height = self.winfo_screenheight()  # Get the total screen height
         right_frame_height = int(0.8 * window_height)  # 60% of the screen height
+
+        #       # ✅ Restore Previous Page State
+        # self.current_segment_index = page_state.get("current_segment_index", 0)
+        # self.visible_segments = page_state.get("visible_segments", ["Select Filter Process"])
+        # self.selected_columns = page_state.get("selected_columns", [])
+        # self.radio_var_value = page_state.get("radio_var_value", "Isolation Forest")
+        # self.slider_value = page_state.get("slider_value", 0.00)
+        # self.segment_completion = page_state.get("segment_completion", {
+        #     "Select Filter Process": False,
+        #     "Outlier Detection": False,
+        #     "Interpolation": False,
+        #     "Smoothing": False,
+        #     "Scaling & Encoding": False
+        # })
+        # self.cleaned_data_str = page_state.get("cleaned_data_str", None)
+        # self.interpolated_data_str = page_state.get("interpolated_data_str", None)
+        # self.smoothed_data_str = page_state.get("smoothed_data_str", None)
+        # self.last_selected_column = page_state.get("last_selected_column", self.selected_columns[0] if self.selected_columns else None)
+
+        
+
+
 
         self.segment_completion = {
                                     "Select Filter Process": False,
@@ -37,9 +63,25 @@ class DataFilteringPage(ctk.CTkFrame):
                                     "Scaling & Encoding": False
                                   }
         self.visible_segments = ["Select Filter Process"]
-        self.data = pd.read_csv(self.file_path)  # Load CSV data
-        self.column_names = list(self.data.columns)[1:]  # Exclude first column (Date)
-        self.column_name = self.column_names[0] if self.column_names else None
+
+        if self.file_path:
+            try:
+                self.data = pd.read_csv(self.file_path)  # Load CSV data
+                self.column_names = list(self.data.columns)[1:]  # Exclude first column (Date)
+                self.column_name = self.column_names[0] if self.column_names else None
+
+               
+
+            except Exception as e:
+                print(f"Error loading CSV: {e}")
+                self.data = pd.DataFrame() 
+        else:
+            self.data = pd.DataFrame()  # ✅ If no file, use empty DataFrame
+            self.column_names = []
+            self.column_name = None
+
+
+
 
 
 
@@ -47,7 +89,7 @@ class DataFilteringPage(ctk.CTkFrame):
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=8)  
         self.grid_columnconfigure(1, weight=2)  
-
+               
          # Left Side Frame
         self.left_frame = ctk.CTkFrame(self, fg_color="transparent")
         self.left_frame.grid(row=0, column=0, sticky="nsew", padx=50, pady=10)
@@ -63,7 +105,7 @@ class DataFilteringPage(ctk.CTkFrame):
                                   text_color="blue", cursor="hand2")
         self.preview_label.place(relx=0.9, rely=0.5, anchor="center")  # Adjusted position
         self.preview_label.bind("<Button-1>", lambda event: self.preview_csv())
-        self.cancel_button = ctk.CTkButton(self.left_frame, text="X", width=30, height=25, command=lambda: parent.show_page("file_upload"))
+        self.cancel_button = ctk.CTkButton(self.left_frame, text="X", width=30, height=25, command=lambda:self.cancel_file())
         self.cancel_button.grid(row=0, column=1, padx=10, pady=10)
 
         # Second Frame (Dropdown & Graph Display) - Increased Size
@@ -119,17 +161,29 @@ class DataFilteringPage(ctk.CTkFrame):
         self.submit_button.grid(row=2, column=0, pady=10)
 
         #self.add_export_send_buttons()
-
-        # Show default segment
         self.current_segment = None
         self.change_segment("Select Filter Process")
+
+
+        
+         
+
 
         if self.file_path:  
             self.load_csv_columns(self.file_path)
         
-        # Initial Boxplot for first column
-        # if self.column_name:
-        # self.plot_boxplot(self.column_name)
+        #Initial Boxplot for first column
+        if self.column_name:
+            self.plot_boxplot(self.column_name)
+
+    
+
+
+    
+    
+  
+
+
 
     def create_process_selection_frame(self):
         """Creates the initial process selection frame."""
@@ -211,7 +265,7 @@ class DataFilteringPage(ctk.CTkFrame):
         create_info_button(radio_frame, "Information about options")
         self.interpolation_radio_var = ctk.StringVar(value="Spline")
         ctk.CTkRadioButton(radio_frame, text="Spline", variable=self.interpolation_radio_var, value="Spline").grid(row=1, column=0, padx=30, pady=5, sticky="w")
-        ctk.CTkRadioButton(radio_frame, text="Kriging", variable=self.interpolation_radio_var, value="Kriging").grid(row=2, column=0, padx=30, pady=5, sticky="w")
+        #ctk.CTkRadioButton(radio_frame, text="Kriging", variable=self.interpolation_radio_var, value="Kriging").grid(row=2, column=0, padx=30, pady=5, sticky="w")
         return frame
 
     def create_smoothing_frame(self):
@@ -257,7 +311,7 @@ class DataFilteringPage(ctk.CTkFrame):
         tes_frame =ctk.CTkFrame(frame, fg_color="#D1D1D1")
         tes_frame.grid(row=1, column=0, padx=10, pady=0, sticky="ew")
         tes_frame.grid_remove()  # Hidden initially
-
+        
         # TES Parameters with Grid Layout
         def add_tes_parameter(parent, label_text, widget_type="slider", from_=0, to=1, row_index=0):
             param_frame = ctk.CTkFrame(parent, fg_color="#E0E0E0", corner_radius=10)
@@ -355,6 +409,15 @@ class DataFilteringPage(ctk.CTkFrame):
         self.random_state_slider.set(42)
         self.random_state_slider.grid(row=2, column=0, padx=10, sticky="ew")
 
+        self.scaling_scroll_frame = ctk.CTkScrollableFrame(frame, fg_color="#D1D1D1", corner_radius=10, label_text="Target Column Column")
+        self.scaling_scroll_frame.grid(row=2, column=0, padx=10, pady=15, sticky="nsew")
+
+        self.scaling_column_checkboxes = {}  # Store checkboxes
+        self.scaling_column_var = {}  # Store checkbox variables
+        self.selected_scaling_column = None  # Track selected column
+
+
+
         return frame
 
 
@@ -404,10 +467,52 @@ class DataFilteringPage(ctk.CTkFrame):
                 checkbox = ctk.CTkCheckBox(self.scroll_frame, text=col)
                 checkbox.grid(sticky="w", padx=5, pady=2)
 
+             # ✅ Call for Scaling & Encoding (NEW)
+            if hasattr(self, "scaling_scroll_frame"):  
+                self.load_scaling_columns(column_names) 
+
+
+
+                
+
           
 
         except Exception as e:
             print("Error loading CSV:", str(e))
+
+
+    def load_scaling_columns(self, column_names):
+        """Loads column checkboxes for Scaling & Encoding and ensures only one selection."""
+        if not hasattr(self, "scaling_scroll_frame"):
+            return  # ✅ Exit if Scaling UI is not created yet
+
+        for widget in self.scaling_scroll_frame.winfo_children():
+            widget.destroy()  # Clear previous checkboxes
+
+        ctk.CTkLabel(self.scaling_scroll_frame, text="Column for Scaling & Encoding",
+                    font=("Inter", 12, "bold"), fg_color="#A0A0A0").pack(pady=5)
+
+        for col in column_names:
+            var = ctk.BooleanVar()
+            checkbox = ctk.CTkCheckBox(self.scaling_scroll_frame, text=col, variable=var,
+                                    command=lambda c=col, v=var: self.handle_scaling_column_selection(c, v))
+            checkbox.pack(anchor="w", padx=5, pady=2)
+            self.scaling_column_checkboxes[col] = checkbox
+            self.scaling_column_var[col] = var
+
+    def handle_scaling_column_selection(self, column, var):
+        """Ensures only one column is selected for Scaling & Encoding."""
+        if var.get():  # If user checks this checkbox
+            if self.selected_scaling_column and self.selected_scaling_column != column:
+                # ❌ Uncheck previous selection
+                self.scaling_column_var[self.selected_scaling_column].set(False)
+                self.scaling_column_checkboxes[self.selected_scaling_column].deselect()
+                messagebox.showwarning("Selection Error", "You can select only one column for Scaling & Encoding.")
+
+            # ✅ Update selected column
+            self.selected_scaling_column = column
+        else:
+            self.selected_scaling_column = None  
 
 
     def change_segment(self, segment_name):
@@ -428,7 +533,10 @@ class DataFilteringPage(ctk.CTkFrame):
         # ✅ Show correct frame when Scaling & Encoding is selected directly
         if segment_name == "Scaling & Encoding":
             self.current_segment = self.create_scaling_encoding_frame()
-            self.segmented_frame.configure(values=["Scaling & Encoding"])  # Only show this tab
+            self.segmented_frame.configure(values=["Scaling & Encoding"])
+            
+            if hasattr(self, "scaling_scroll_frame") and hasattr(self, "data"):
+                self.load_scaling_columns(self.data.columns[1:])  # Send column names  # Only show this tab
         else:
             self.current_segment = self.segments[segment_name]
             self.segmented_frame.configure(values=self.visible_segments)  # Maintain available tabs
@@ -495,6 +603,10 @@ class DataFilteringPage(ctk.CTkFrame):
             print("\n--- Scaling & Encoding Parameters ---")
             print(f"Test Size: {self.test_size_slider.get()}")
             print(f"Random State: {self.random_state_slider.get()}")
+            print (self.selected_scaling_column)
+
+            if hasattr(self, "scaling_scroll_frame") and hasattr(self, "data"):
+                self.load_scaling_columns(self.data.columns[1:])  # Ensure columns are loaded
             self.run_scaling_and_encoding()
 
         # ✅ Remove Filtering Segments After Smoothing Completion
@@ -619,30 +731,42 @@ class DataFilteringPage(ctk.CTkFrame):
         
 
 
-    def plot_boxplot(self, column_name,cleaned=False):
-        """Generates and embeds an interactive boxplot with UI enhancements."""
-        if cleaned and hasattr(self, "cleaned_data")and isinstance(self.cleaned_data, pd.DataFrame):
-            plot_data = self.cleaned_data
-            print("ommala")  # Use cleaned data from response
-        else:
-            plot_data = self.data  # Use raw CSV data
+    def plot_boxplot(self, column_name, cleaned=False):
 
+        """Generates and embeds an interactive boxplot with UI enhancements, including a toolbar."""
+        
+        # Select dataset (Raw or Cleaned)
+        if cleaned and hasattr(self, "cleaned_data") and isinstance(self.cleaned_data, pd.DataFrame):
+            plot_data = self.cleaned_data
+            print("▶ Using Cleaned Data")
+        else:
+            plot_data = self.data
+            print("▶ Using Raw Data")
+
+        # Debugging: Print Data Types
+        print("▶ Data Types:")
+        print(plot_data.dtypes)
+
+        # Ensure column exists
         if column_name not in plot_data.columns:
+            print(f"❌ Column '{column_name}' not found in dataset!")
             return
 
-        # Clear previous widgets in the graph display area
+        # Convert data to numeric (for cleaned data)
+        if cleaned:
+            plot_data = plot_data.apply(pd.to_numeric, errors='coerce')
+
+        # Clear previous widgets
         for widget in self.graph_display.winfo_children():
             widget.destroy()
 
-  
-
         # Create Matplotlib figure
-        fig, ax = plt.subplots(figsize=(7, 4))  # Slightly larger size
-        fig.patch.set_facecolor("#E0E0E0")  # Match UI theme
+        fig, ax = plt.subplots(figsize=(7, 4))
+        fig.patch.set_facecolor("#E0E0E0")
         ax.set_facecolor("#E0E0E0")
 
-        # Generate Boxplot with Better Formatting
-        box = ax.boxplot(plot_data[column_name], vert=False, patch_artist=True, widths=0.6,
+        # Generate Boxplot with Formatting
+        box = ax.boxplot(plot_data[column_name].dropna(), vert=False, patch_artist=True, widths=0.6,
                         boxprops=dict(facecolor='lightblue', edgecolor='black', linewidth=1.2),
                         medianprops=dict(color='red', linewidth=1.5),
                         whiskerprops=dict(color='black', linewidth=1.2, linestyle="--"))
@@ -653,121 +777,107 @@ class DataFilteringPage(ctk.CTkFrame):
         ax.tick_params(axis="x", labelsize=10)
         ax.grid(color='gray', linestyle='--', linewidth=0.5, alpha=0.7)
 
-        # Enable Zooming and Panning with Scroll Wheel
-        def on_scroll(event):
-            """Handles zooming on mouse scroll."""
-            base_scale = 1.1
-            scale_factor = base_scale if event.step > 0 else 1 / base_scale
-
-            xlim = ax.get_xlim()
-            x_range = (xlim[1] - xlim[0]) * scale_factor
-            ax.set_xlim([xlim[0] + x_range * 0.1, xlim[1] - x_range * 0.1])
-            fig.canvas.draw()
-
-        # Show data values on hover
-        tooltip = ax.annotate("", xy=(0, 0), xytext=(15, 15),
-                            textcoords="offset points",
-                            bbox=dict(boxstyle="round,pad=0.3", fc="lightgray", ec="black", lw=1),
-                            arrowprops=dict(arrowstyle="->", connectionstyle="arc3,rad=0.2"),
-                            fontsize=9, visible=False)
-
-        def on_hover(event):
-            """Displays value tooltips when hovering over the boxplot."""
-            if event.inaxes == ax:
-                for i, line in enumerate(box["medians"]):
-                    if line.contains(event)[0]:
-                        value = plot_data[column_name].median()
-                        tooltip.set_text(f"Median: {value:.2f}")
-                        tooltip.set_position((event.xdata, event.ydata))
-                        tooltip.set_visible(True)
-                        fig.canvas.draw_idle()
-                        return
-            tooltip.set_visible(False)
-            fig.canvas.draw_idle()
-
-        # Connect the scroll and hover events
-        fig.canvas.mpl_connect("scroll_event", on_scroll)
-        fig.canvas.mpl_connect("motion_notify_event", on_hover)
-
         # Embed Matplotlib Figure inside Tkinter Frame
         canvas = FigureCanvasTkAgg(fig, master=self.graph_display)
         canvas_widget = canvas.get_tk_widget()
         canvas_widget.pack(fill="both", expand=True)
 
-        # Add Toolbar for Navigation (Zoom, Pan, Save)
-        toolbar_frame = ctk.CTkFrame(self.graph_display, fg_color="#E0E0E0")  # Match toolbar bg color
+        # ✅ Add Navigation Toolbar with Zoom, Pan, Save, Reset
+        toolbar_frame = ctk.CTkFrame(self.graph_display, fg_color="#E0E0E0")
         toolbar_frame.pack(side="top", fill="x")
 
         toolbar = NavigationToolbar2Tk(canvas, toolbar_frame)
         toolbar.config(background="#E0E0E0")  # Set toolbar background
+
+        # ✅ Ensure toolbar buttons match theme
         for child in toolbar.winfo_children():
-            child.config(bg="#E0E0E0")  # Change toolbar button backgrounds
+            child.config(bg="#E0E0E0")  
 
         toolbar.update()
 
         # Render the plot
         canvas.draw()
 
+
+
+
     def plot_line_graph(self, column_name, original_data, processed_data, title):
         """
-        Plots a line graph for original and processed data (interpolation or smoothing).
-        
-        Parameters:
-            column_name (str): The name of the column to plot.
-            original_data (pd.Series or np.ndarray): The original data.
-            processed_data (pd.Series or np.ndarray): The processed data (interpolated or smoothed).
-            title (str): The title of the plot.
+        Plots a line graph for original and processed data with:
+        ✅ Proper Date/Time Formatting on X-axis
+        ✅ Toolbar for Zoom, Pan, Save
+        ✅ Interactive Hover Tooltip (Shows Box with Value)
         """
-        # Ensure data is a Pandas Series to prevent errors
+
+        # ✅ Step 1: Identify and Convert the Date/Time Column
+        if isinstance(self.data, pd.DataFrame):
+            date_column = self.data.iloc[:, 0]  # Assume first column is Date/Time
+        else:
+            date_column = original_data.index  # Use index if no explicit Date column
+
+        # ✅ Step 2: Convert Date/Time to Proper Format
+        try:
+            date_column = pd.to_datetime(date_column, errors='coerce', dayfirst=True)
+
+            if date_column.isna().sum() > 0:
+                print("⚠️ Some dates could not be parsed, retrying with alternative formats...")
+                date_column = pd.to_datetime(date_column, errors='coerce', format="%d/%m/%Y %H:%M", dayfirst=True)
+
+            if date_column.isna().sum() > 0:
+                print("❌ Date conversion failed for some values. Using index instead.")
+                date_column = original_data.index  
+        except Exception as e:
+            print(f"⚠️ Date conversion error: {e}, using index instead.")
+            date_column = original_data.index  
+
+        # ✅ Step 3: Ensure Data is Pandas Series
         if isinstance(original_data, np.ndarray):
-            original_data = pd.Series(original_data, name=column_name)
+            original_data = pd.Series(original_data, name=column_name, index=date_column)
 
         if isinstance(processed_data, np.ndarray):
-            processed_data = pd.Series(processed_data, name=column_name)
+            processed_data = pd.Series(processed_data, name=column_name, index=date_column)
 
-        # Clear previous widgets in the graph display area
+        # ✅ Step 4: Clear previous widgets in the graph display area
         for widget in self.graph_display.winfo_children():
             widget.destroy()
 
-        # Create Matplotlib figure
-        fig, ax = plt.subplots(figsize=(7, 4))  # Slightly larger size
-        fig.patch.set_facecolor("#E0E0E0")  # Match UI theme
+        # ✅ Step 5: Create Matplotlib figure
+        fig, ax = plt.subplots(figsize=(8, 4))
+        fig.patch.set_facecolor("#E0E0E0")  
         ax.set_facecolor("#E0E0E0")
 
-        # Plot original data
-        ax.plot(original_data.index, original_data, color="blue", label="Original Data")
+        # ✅ Step 6: Plot original and processed data with Date/Time on X-axis
+        line1, = ax.plot(date_column, original_data, color="blue", label="Original Data", linestyle='dashed')
+        line2, = ax.plot(date_column, processed_data, color="red", label=title, linewidth=1.5)
 
-        # Plot processed data
-        ax.plot(processed_data.index, processed_data, color="red", label=title)
+        # ✅ Step 7: Format X-axis for Date/Time
+        ax.xaxis.set_major_formatter(mdates.DateFormatter("%d-%m-%Y %H:%M"))
+        ax.xaxis.set_major_locator(mdates.AutoDateLocator())
+        plt.xticks(rotation=45)
 
-        # Improve readability
+        # ✅ Step 8: Improve readability
         ax.set_title(f"{title} for {column_name}", fontsize=13, fontweight="bold")
-        ax.set_xlabel("Index", fontsize=11)
+        ax.set_xlabel("Timestamp", fontsize=11)
         ax.set_ylabel(column_name, fontsize=11)
         ax.legend()
         ax.grid(color='gray', linestyle='--', linewidth=0.5, alpha=0.7)
 
-        # Embed Matplotlib Figure inside Tkinter Frame
+        # ✅ Step 9: Embed Matplotlib Figure inside Tkinter Frame
         canvas = FigureCanvasTkAgg(fig, master=self.graph_display)
         canvas_widget = canvas.get_tk_widget()
         canvas_widget.pack(fill="both", expand=True)
 
-        # Add Toolbar for Navigation (Zoom, Pan, Save)
-        toolbar_frame = ctk.CTkFrame(self.graph_display, fg_color="#E0E0E0")  # Match toolbar bg color
+        # ✅ Step 10: Add Toolbar for Navigation (Zoom, Pan, Save)
+        toolbar_frame = ctk.CTkFrame(self.graph_display, fg_color="#E0E0E0")
         toolbar_frame.pack(side="top", fill="x")
 
         toolbar = NavigationToolbar2Tk(canvas, toolbar_frame)
-        toolbar.config(background="#E0E0E0")  # Set toolbar background
+        toolbar.config(background="#E0E0E0")
         for child in toolbar.winfo_children():
-            child.config(bg="#E0E0E0")  # Change toolbar button backgrounds
+            child.config(bg="#E0E0E0")
 
         toolbar.update()
-
-        # Render the plot
         canvas.draw()
-
-
-
 
 
     def send_request(self, process_name, json_data):
@@ -969,6 +1079,7 @@ class DataFilteringPage(ctk.CTkFrame):
         dataobject = DataObject()
         dataobject.data_filtering["Train-Test Split"]["parameters"]["test_size"] = self.test_size_slider.get()
         dataobject.data_filtering["Train-Test Split"]["parameters"]["random_state"] = int(round(self.random_state_slider.get()))
+        dataobject.data_filtering["Train-Test Split"]["parameters"]["target_column"] = self.selected_scaling_column
 
         json_data = {
             "dataobject": dataobject.to_dict(),
@@ -1160,9 +1271,17 @@ class DataFilteringPage(ctk.CTkFrame):
 
             # Navigate to the respective page with the file argument
             if selected_process == "Regression & Classification":
-                self.parent.show_page("RegressionClassificationPage", file_data=self.scaled_encoded_data,file_name="Preprocessed_Data")
+                target_page = "RegressionClassificationPage"
             else:
-                self.parent.show_page("AIModelPage", file_data=self.scaled_encoded_data,file_name="Preprocessed_Data")
+                target_page = "AIModelPage"
+
+                        # ✅ Store file path, file name, and data before switching pages
+            self.parent.file_paths[target_page] = self.file_path  # Store the file path for the next page
+            self.parent.file_names[target_page] = "Preprocessed Data"  # Store the file name
+            self.parent.page_data[target_page] = self.scaled_encoded_data  # Store processed data
+
+            # ✅ Navigate to the correct page with updated values
+            self.parent.show_page(target_page)
 
         ctk.CTkButton(popup, text="Proceed", command=send_file).pack(pady=10)
 
@@ -1432,3 +1551,23 @@ class DataFilteringPage(ctk.CTkFrame):
         elif name == "Smoothed Data":
             return self.smoothed_data
         return None
+    
+    def cancel_file(self):
+        """Handles file cancellation and resets only this page."""
+        
+        page_name = self.__class__.__name__  # Get the page's class name
+
+        self.parent.file_paths[page_name] = None  # ✅ Reset file path for this page
+        self.parent.file_names[page_name] = None  # ✅ Reset file name for this page
+        self.parent.page_data[page_name] = None   # ✅ Reset data for this page
+
+        # ✅ Remove the sidebar button for this page only
+        self.parent.update_sidebar_buttons(page_name, action="remove")
+
+        # ✅ Reset this page instance so it opens fresh on next upload
+        if hasattr(self.parent, f"{page_name}_instance"):
+            delattr(self.parent, f"{page_name}_instance")
+
+        # ✅ Go back to file upload page
+        self.parent.show_page("file_upload")
+

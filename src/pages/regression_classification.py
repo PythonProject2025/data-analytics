@@ -1,4 +1,3 @@
-
 import customtkinter as ctk
 from tkinter import Button, PhotoImage, Toplevel,messagebox
 import numpy as np
@@ -13,13 +12,14 @@ import tkinter as tk
 from tkinter import ttk
 
 
-class RegressionClassificationpage(ctk.CTkFrame):
-    def __init__(self, parent, file_data=None, file_name=None, *args, **kwargs):
+class RegressionClassificationPage(ctk.CTkFrame):
+    def __init__(self, parent,file_path=None,file_name=None,data=None,**page_state):
         super().__init__(parent, corner_radius=0)
 
         self.parent=parent
-        self.file_data=file_data
+        self.file_data=data
         self.file_name = file_name
+        print(self.file_name)
 
          # ✅ Check if data is available
         if self.file_data is not None:
@@ -49,7 +49,7 @@ class RegressionClassificationpage(ctk.CTkFrame):
                                   text_color="blue", cursor="hand2")
         self.preview_label.place(relx=0.9, rely=0.5, anchor="center")  # Adjusted position
         self.preview_label.bind("<Button-1>", lambda event: self.preview_data())
-        self.cancel_button = ctk.CTkButton(self.left_frame, text="X", width=30, height=25, command=lambda: parent.show_page("file_upload"))
+        self.cancel_button = ctk.CTkButton(self.left_frame, text="X", width=30, height=25, command=lambda: self.cancel_file())
         self.cancel_button.grid(row=0, column=1, padx=10, pady=10)
 
         # Second Frame (Dropdown & Graph Display) - Increased Size
@@ -310,26 +310,8 @@ class RegressionClassificationpage(ctk.CTkFrame):
                 
                 # Convert DataObject to JSON
                 json_data = {"dataobject": dataobject.to_dict()}
-                print(json_data)
                 # Send request
                 self.send_request_regression(json_data)
-                
-            # # Response data
-            #     response_data = response.json()
-                
-            # # Extracting values from response_data
-            #     r2_score_linear = response_data["r2_score_linear"]
-            #     y_pred  = response_data["y_pred"]
-            #     x_data  = response_data["x_data"]     # x_label is given by User
-            #     y_test  = response_data["y_test"]
-            #     x_label = response_data["x_label"]
-            #     y_label = response_data["y_label"] 
-                
-            # # Regression Plot
-            #     self.regression_plot(x_data,y_test,x_label,y_label,ax=axs[0])
-                
-            # # Residual Plot
-            #     self.residual_plot(y_test,y_pred,ax=axs[1])                
             
             elif model == "Polynomial Regression":
 
@@ -347,24 +329,9 @@ class RegressionClassificationpage(ctk.CTkFrame):
                      dataobject.regression["Model_Selection"]["Polynomial Regression"]["polynomial_degree"]=polynomial_degree_list
                 # Convert DataObject to JSON
                 json_data = {"dataobject": dataobject.to_dict()}
-                print(json_data)
                 # Send request
                 self.send_request_regression(json_data)
 
-            # # Response data
-            #     response_data = response.json()
-                
-            # Extracting values from response_data
-                # r2_score_polynomial = response_data["r2_score_polynomial"]
-                # y_pred = response_data["y_pred"]
-                # best_polynomial_degree = response_data["best_polynomial_degree"]
-                # x_data = response_data["x_data"]
-                # y_test = response_data["y_test"]
-                # x_label = response_data["x_label"]
-                # y_label = response_data["y_label"]
-                
-            # Polynomial fit plot
-                # self.polynomial_plot(x_data,y_test,y_pred,x_label,y_label,best_polynomial_degree)
 
             elif model == "Ridge Regression":
 
@@ -388,23 +355,9 @@ class RegressionClassificationpage(ctk.CTkFrame):
                     print(f"Alpha Values (Ridge): {self.textboxes['Alpha Values (Ridge)'].get()}")
                 # Convert DataObject to JSON
                 json_data = {"dataobject": dataobject.to_dict()}
-                print(json_data)
                 # Send request
                 self.send_request_regression(json_data)
-                
-            # # Response Data
-            #     response_data = response.json()
-                
-            # Extracting values from response_data
-            #     r2_score_ridge = response_data["r2_score_ridge"]
-            #     best_degree_ridge = response_data["best_degree_ridge"]
-            #     best_alpha_ridge = response_data["best_alpha_ridge"]
-            #     results_ridge = response_data["results_ridge"]
-            #     Ridge_Regression = response_data["Ridge_Regressions"]
-                
-            # # Ridge Regression Plot
-            #     self.ridge_plot(results_ridge,Ridge_Regression)                
-                
+
             elif model == "Lasso Regression":
 
                 polynomial_degree = self.textboxes["Polynomial Degree (Lasso)"].get()
@@ -429,22 +382,8 @@ class RegressionClassificationpage(ctk.CTkFrame):
                     dataobject.regression["Model_Selection"]["Lasso Regression"]["alpha_values_lasso"]=alpha_values_Lasso_list
                 # Convert DataObject to JSON
                 json_data = {"dataobject": dataobject.to_dict()}
-                print(json_data)
                 # Send request
                 self.send_request_regression(json_data)
-                
-            # # Response Data
-            #     response_data = response.json()
-                
-            # # Extracting values from response_data
-            #     r2_score_lasso = response_data["r2_score_lasso"]
-            #     best_degree_lasso = response_data["best_degree_lasso"]
-            #     best_alpha_lasso = response_data["best_alpha_lasso"]
-            #     results_lasso = response_data["results_lasso"]
-            #     Lasso_Regression = response_data["Lasso_Regressions"]
-                
-            # # Lasso Regression Plot
-            #     self.lasso_plot(results_lasso,Lasso_Regression)     
 
             print("\nSubmission Successful!\n")
 
@@ -481,7 +420,7 @@ class RegressionClassificationpage(ctk.CTkFrame):
                 dataobject.classification["KNN"]["n_neighbours"]= int(self.sliders['n_neighbors'].get())
                 dataobject.classification["KNN"]["weights"]=self.dropdowns['Weights'].get()
                 dataobject.classification["KNN"]["p"]=int(self.sliders['P'].get())
-                print(dataobject.classification["KNN"]["weights"])
+                print(dataobject.classification["KNN"]["weights"])               
                 # Convert DataObject to JSON
                 json_data = {"dataobject": dataobject.to_dict()}
                 print(json_data)
@@ -547,7 +486,6 @@ class RegressionClassificationpage(ctk.CTkFrame):
             if response.status_code == 200:
                     response_data = response.json()
                     print(response_data)
-                    
                     # Check if Lasso Regression data is present
                     if "Lasso_Regression" in response_data:
                         print("🔹 Processing Lasso Regression Results...")
@@ -603,7 +541,6 @@ class RegressionClassificationpage(ctk.CTkFrame):
                         
                     # Residual Plot
                         self.residual_plot(y_test,y_pred,ax=axs[1]) 
-                    
             else:
                     messagebox.showerror(
                         "Error", response.json().get('error', 'File upload failed.')
@@ -633,9 +570,29 @@ class RegressionClassificationpage(ctk.CTkFrame):
                     )
         except Exception as e:
                 messagebox.showerror("Error", str(e))
+    
+    def cancel_file(self):
+        """Handles file cancellation and resets only this page."""
+        
+        page_name = self.__class__.__name__  # Get the page's class name
 
+        self.parent.file_paths[page_name] = None  # ✅ Reset file path for this page
+        self.parent.file_names[page_name] = None  # ✅ Reset file name for this page
+        self.parent.page_data[page_name] = None   # ✅ Reset data for this page
+
+        # ✅ Remove the sidebar button for this page only
+        self.parent.update_sidebar_buttons(page_name, action="remove")
+
+        # ✅ Reset this page instance so it opens fresh on next upload
+        if hasattr(self.parent, f"{page_name}_instance"):
+            delattr(self.parent, f"{page_name}_instance")
+
+        # ✅ Go back to file upload page
+        self.parent.show_page("file_upload")
+        
     #lasso plotting
     def lasso_plot(self,results_lasso,best_params):
+        plt.close('all')
     # Extract the relevant results
     #    results = data.results_lasso
     #    best_degree_mask = (results['param_polynomial_features__degree'] == data.best_degree_lasso)
@@ -690,6 +647,7 @@ class RegressionClassificationpage(ctk.CTkFrame):
         plt.show()
     
     def ridge_plot(self,results_ridge,best_params):
+        plt.close('all')
         # Extract the relevant results
     #    results = data.results_ridge
     #    best_degree_mask = (results['param_polynomial_features__degree'] == data.best_degree_ridge)
@@ -740,6 +698,7 @@ class RegressionClassificationpage(ctk.CTkFrame):
         plt.show()
         
     def polynomial_plot(self, x_scatter, y_scatter, y_poly, x_label, y_label, degree):
+        plt.close('all')
         """Generates and displays the Polynomial Regression plot."""
         try:
             if isinstance(y_scatter, dict):
@@ -810,6 +769,7 @@ class RegressionClassificationpage(ctk.CTkFrame):
             messagebox.showerror("Plot Error", str(e))
             
     def regression_plot(self,x, y, x_label, y_label, data=None, ax=None):
+        plt.close('all')
         if isinstance(x, dict):  
             x = np.array(list(x.values()))  # Convert dictionary to array
         elif isinstance(x, list):
@@ -838,7 +798,7 @@ class RegressionClassificationpage(ctk.CTkFrame):
         plt.show()
         
     def residual_plot(self,x, y, ax=None):
-        
+        plt.close('all')
         if isinstance(x, dict):  
             x = np.array(list(x.values()))  
         elif isinstance(x, list):

@@ -9,12 +9,12 @@ import tkinter as tk
 from tkinter import ttk
 
 
-class AImodelPage(ctk.CTkFrame):
-    def __init__(self, parent, file_data=None, file_name=None, *args, **kwargs):
+class AIModelPage(ctk.CTkFrame):
+    def __init__(self, parent,file_path=None,file_name=None,data=None,**page_state):
         super().__init__(parent, corner_radius=0)
 
         self.parent=parent
-        self.file_data=file_data
+        self.file_data=data
         self.file_name = file_name
         right_frame_height = int(0.8 * self.winfo_screenheight())
         self.sliders = {}
@@ -41,7 +41,7 @@ class AImodelPage(ctk.CTkFrame):
                                   text_color="blue", cursor="hand2")
         self.preview_label.place(relx=0.9, rely=0.5, anchor="center")  # Adjusted position
         self.preview_label.bind("<Button-1>", lambda event: self.preview_data())
-        self.cancel_button = ctk.CTkButton(self.left_frame, text="X", width=30, height=25, command=lambda: parent.show_page("file_upload"))
+        self.cancel_button = ctk.CTkButton(self.left_frame, text="X", width=30, height=25, command=lambda: self.cancel_file())
         self.cancel_button.grid(row=0, column=1, padx=10, pady=10)
 
         # Second Frame (Dropdown & Graph Display) - Increased Size
@@ -395,3 +395,22 @@ class AImodelPage(ctk.CTkFrame):
                     )
         except Exception as e:
                 messagebox.showerror("Error", str(e))
+
+    def cancel_file(self):
+        """Handles file cancellation and resets only this page."""
+        
+        page_name = self.__class__.__name__  # Get the page's class name
+
+        self.parent.file_paths[page_name] = None  # ✅ Reset file path for this page
+        self.parent.file_names[page_name] = None  # ✅ Reset file name for this page
+        self.parent.page_data[page_name] = None   # ✅ Reset data for this page
+
+        # ✅ Remove the sidebar button for this page only
+        self.parent.update_sidebar_buttons(page_name, action="remove")
+
+        # ✅ Reset this page instance so it opens fresh on next upload
+        if hasattr(self.parent, f"{page_name}_instance"):
+            delattr(self.parent, f"{page_name}_instance")
+
+        # ✅ Go back to file upload page
+        self.parent.show_page("file_upload")

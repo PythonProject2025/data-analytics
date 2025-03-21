@@ -11,29 +11,12 @@ from PIL import Image, ImageTk
 from tensorflow.keras.callbacks import Callback
 
 
-class TrainingLogger(Callback):
-    """Custom callback to capture training logs."""
-    def __init__(self, log_display):
-        super().__init__()
-        self.log_display = log_display  # Reference to the CTkTextbox widget
-        self.logs = []  # Store logs
-
-    def on_epoch_end(self, epoch, logs=None):
-        """Called at the end of each epoch."""
-        if logs is None:
-            logs = {}
-        log_entry = f"Epoch {epoch + 1}: Loss = {logs.get('loss', 'N/A')}, Accuracy = {logs.get('accuracy', 'N/A')}"
-        self.logs.append(log_entry)
-        self.log_display.insert(ctk.END, log_entry + "\n")  # Update the UI
-        self.log_display.see(ctk.END)  # Scroll to the end
-
-
 class ImageProcessingPage(ctk.CTkFrame):
-    def __init__(self, parent,file_path,file_name=" ",):
+    def __init__(self, parent,file_path=None,file_name=None,data=None,**page_state):
         super().__init__(parent, corner_radius=0)
 
         right_frame_height = int(0.8 * self.winfo_screenheight())
-
+        self.parent = parent
         self.file_name = file_name
         self.file_path = file_path
         self.uploaded_image_path = None
@@ -55,7 +38,7 @@ class ImageProcessingPage(ctk.CTkFrame):
         self.left_frame.grid_rowconfigure(0, weight=0)
         self.label = ctk.CTkLabel(self.label_frame, text=self.file_name, font=("Inter", 16, "bold"))
         self.label.place(relx=0.5, rely=0.5, anchor="center")
-        self.cancel_button = ctk.CTkButton(self.left_frame, text="X", width=30, height=25, command=lambda: parent.show_page("file_upload"))
+        self.cancel_button = ctk.CTkButton(self.left_frame, text="X", width=30, height=25, command=lambda: self.cancel_file())
         self.cancel_button.grid(row=0, column=1, padx=10, pady=10)
 
         # Second Frame (Dropdown & Graph Display) - Increased Size
@@ -301,8 +284,6 @@ class ImageProcessingPage(ctk.CTkFrame):
             json_data = {"dataobject": dataobject.to_dict()}
 
             try:
-                # Initialize the logger
-                logger = TrainingLogger(self.log_display)
 
                 response = requests.post(
                     'http://127.0.0.1:8000/api/imageprocessing/',
@@ -314,6 +295,8 @@ class ImageProcessingPage(ctk.CTkFrame):
                     
                     # Extract confusion matrix data
                     cm_data= response_data["confusionMatrix"]
+                    test_loss =response_data["testLoss"]
+                    test_accuracy=response_data["testAccuracy"]
                     
                     if cm_data:
                         self.plot_confusion_matrix(cm_data)  # Call plotting function
@@ -354,6 +337,25 @@ class ImageProcessingPage(ctk.CTkFrame):
         canvas_widget = canvas.get_tk_widget()
         canvas_widget.pack(fill='both', expand=True)
         canvas.draw()
+
+    def cancel_file(self):
+        """Handles file cancellation and resets only this page."""
+        
+        page_name = self.__class__.__name__  # Get the page's class name
+
+        self.parent.file_paths[page_name] = None  # ✅ Reset file path for this page
+        self.parent.file_names[page_name] = None  # ✅ Reset file name for this page
+        self.parent.page_data[page_name] = None   # ✅ Reset data for this page
+
+        # ✅ Remove the sidebar button for this page only
+        self.parent.update_sidebar_buttons(page_name, action="remove")
+
+        # ✅ Reset this page instance so it opens fresh on next upload
+        if hasattr(self.parent, f"{page_name}_instance"):
+            delattr(self.parent, f"{page_name}_instance")
+
+        # ✅ Go back to file upload page
+        self.parent.show_page("file_upload")
 
 
 
