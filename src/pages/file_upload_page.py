@@ -49,13 +49,25 @@ class FileUploadPage(ctk.CTkFrame):
         self.upload_button.grid(row=1, column=0, padx=40, pady=20)  # Adjusted placement inside the frame
 
     def upload_file(self):
-        """Handles file upload and navigates accordingly."""
-        file_path = filedialog.askopenfilename(filetypes=[("CSV Files", "*.csv"), ("ZIP Files", "*.zip")])
-        if file_path:
-            self.file_path = file_path
+        """Handles file upload and assigns the correct page based on file type."""
+        
+        file_path = filedialog.askopenfilename(filetypes=[("CSV Files", "*.csv"), ("Zip Files", "*.Zip")])
 
-            file_name = os.path.basename(file_path)  # Extract only the file name
-            if file_path.endswith(".csv"):
-                self.app.show_page("Process_selection",file_path,file_name)
-            elif file_path.endswith(".zip"):
-                self.app.show_page("ImageProcessingPage",file_path,file_name)
+        if not file_path:
+            return  # ✅ No file selected, do nothing
+
+        file_name = file_path.split("/")[-1]  # Extract file name
+
+        # ✅ Determine which page should handle the file
+        if file_path.endswith(".csv"):
+            target_page = "DataFilteringPage"
+        else:
+            target_page = "ImageProcessingPage"
+
+        # ✅ Store the file path & name for the correct page
+        self.app.file_paths[target_page] = file_path
+        self.app.file_names[target_page] = file_name
+        self.app.page_data[target_page] = None  # Reset previous data
+
+        # ✅ Open the target page with the new file
+        self.app.show_page(target_page)

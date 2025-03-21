@@ -33,7 +33,7 @@ class DataObject:
                 "parameters": {
                     "test_size": None,
                     "random_state": None,
-                    "target_column": "Doors"
+                    "target_column": None
                 },
                 "split_data": {"X_train": None, 
                                "X_test": None, 
