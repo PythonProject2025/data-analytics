@@ -1,6 +1,7 @@
 import sys
 import os
 import numpy as np
+import pandas as pd
 from rest_framework.response import Response
 from rest_framework.views import APIView
 # Now you can import from models
@@ -58,21 +59,18 @@ class  AIModelAPIView (APIView):
         print(model_params)
         try:
             split_data = data_object.data_filtering["Train-Test Split"]["split_data"]
-
-            # ✅ Ensure all keys exist before conversion
             if not all(k in split_data for k in ["X_train", "X_test", "y_train", "y_test"]):
                 return {"error": "Missing one or more training/testing data in DataObject!"}
-
-            # ✅ Convert lists (from JSON) back to NumPy arrays
-            X_train = np.array(split_data["X_train"]) if split_data["X_train"]else None
-            X_test = np.array(split_data["X_test"]) if split_data["X_test"] else None
+            # ✅ Convert X_train and X_test using DataFrame to handle dicts
+            X_train = pd.DataFrame(split_data["X_train"]).values if split_data["X_train"] else None
+            X_test = pd.DataFrame(split_data["X_test"]).values if split_data["X_test"] else None
+            # ✅ Convert labels directly to arrays
             y_train = np.array(split_data["y_train"]) if split_data["y_train"] else None
             y_test = np.array(split_data["y_test"]) if split_data["y_test"] else None
-
-            # ✅ Check if data is valid before proceeding
-            if any(val is None or (isinstance(val, np.ndarray) and val.size == 0) for val in [X_train, X_test, y_train, y_test]):
+            
+            if any(val is None or (isinstance(val, np.ndarray) and val.size == 0)
+                   for val in [X_train, X_test, y_train, y_test]):
                 return {"error": "Some train-test data is empty or invalid!"}
-            print(X_train)
         except KeyError:
             return {"error": "Missing training/testing data in DataObject!"}
 
@@ -96,13 +94,13 @@ class  AIModelAPIView (APIView):
             return {"error": f"Selected model '{selected_model}' is not recognized!"}
 
         # Assign Data
-        model.X_train, model.X_test, model.y_train, model.y_test = X_train, X_test, y_train, y_test
-        print(model.X_train, model.X_test, model.y_train, model.y_test)
+        # model.X_train, model.X_test, model.y_train, model.y_test = X_train, X_test, y_train, y_test
+        # print(model.X_train, model.X_test, model.y_train, model.y_test)
         # Train the model
-        model.train()
+        model.train(X_train, y_train)
 
         # Evaluate the model
-        results = model.evaluate()
+        results = model.evaluate(X_test, y_test)
         
         if results is None:
             print(f"Warning: Model {selected_model} returned None during evaluation.")
@@ -126,7 +124,6 @@ class  AIModelAPIView (APIView):
                 "R2": results.get("R2", 0.0)
             }
         print("ai working successfully")
-        print(data_object.outputs["AI_Classification"][selected_model])
         response_data = {
             "MAE": data_object.outputs["AI_Regression"][selected_model]["MAE"],
             "MSE": data_object.outputs["AI_Regression"][selected_model]["MSE"],

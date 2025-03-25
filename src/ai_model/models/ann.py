@@ -1,8 +1,9 @@
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from sklearn.metrics import accuracy_score, confusion_matrix
+from models.data_object_class import DataObject
 from .base import BaseModel # Importing the BaseModel class from the same package
-
+dataObj = DataObject()
 class ArtificialNeuralNetwork(BaseModel):
     """
     Class representing an Artificial Neural Network (ANN) model.
@@ -85,16 +86,20 @@ class ArtificialNeuralNetwork(BaseModel):
         except Exception as e:
             print(f"Unexpected error during ANN initialization: {e}")
 
-    def train(self):
+    def train(self, X_train, y_train):
         """
         Trains the ANN model using the provided training data.
         """    
         try:
+            # self.X_train=dataObj["split_data"]["X_train"]
+            # self.y_train=dataObj["split_data"]["y_train"]
+            self.X_train = X_train
+            self.y_train = y_train      
             if self.X_train is None or self.y_train is None:
                 raise ValueError("Error: Training data is missing. Ensure data is loaded and split correctly.")
 
             self.model_history = self.model.fit(
-                x=self.X_train, y=self.y_train,  # Training data
+                x=X_train, y=y_train,  # Training data
                 batch_size=self.batch_size,  # Number of samples per training step
                 epochs=self.epochs  # Number of training iterations
             )
@@ -136,7 +141,7 @@ class ArtificialNeuralNetwork(BaseModel):
         except Exception as e:
             print(f"Error loading weights: {e}")
 
-    def evaluate(self):
+    def evaluate(self, X_test, y_test):
         """
         Evaluates the trained model on the test set.
 
@@ -148,6 +153,10 @@ class ArtificialNeuralNetwork(BaseModel):
             - Confusion matrix showing classification performance.
         """
         try:
+            self.X_test = X_test
+            self.y_test = y_test            
+            self.X_test=dataObj.data_filtering["Train-Test Split"]["split_data"]["X_test"]
+            self.y_test=dataObj.data_filtering["Train-Test Split"]["split_data"]["y_test"]             
             if self.X_test is None or self.y_test is None:
                 raise ValueError("Error: Test data is missing. Ensure data is loaded and split correctly.")
 

@@ -1,5 +1,6 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
+from models.data_object_class import DataObject
 from sklearn.metrics import (
     mean_squared_error, 
     mean_absolute_error, 
@@ -9,7 +10,7 @@ from sklearn.metrics import (
 )
 import matplotlib.pyplot as plt
 import seaborn as sns
-
+dataObj = DataObject()
 class BaseModel:
     """
     Base class for all models that centralizes hyperparameter validation 
@@ -114,42 +115,50 @@ class BaseModel:
         self.problem_type = problem_type
         self.X_train, self.X_test, self.y_train, self.y_test = None, None, None, None
 
-    def split_data(self, data, target_column, test_size=0.2):
-        """
-        Splits the given dataset into training and testing sets.
+    # def split_data(self, data, target_column, test_size=0.2):
+    #     """
+    #     Splits the given dataset into training and testing sets.
 
-        Parameters:
-        -----------
-        data : pd.DataFrame
-            The dataset containing features and target values.
-        target_column : str
-            The column name of the target variable.
-        test_size : float
-            The proportion of data to be used for testing.
-        """
-        try:
-            X = data.drop(columns=[target_column])  # Features
-            y = data[target_column]  # Target variable
-            self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(
-                X, y, test_size=test_size, random_state=42
-            )
-        except KeyError:
-            print(f"Error: Column '{target_column}' not found in dataset.")
-        except Exception as e:
-            print(f"Unexpected error in data splitting: {e}")
+    #     Parameters:
+    #     -----------
+    #     data : pd.DataFrame
+    #         The dataset containing features and target values.
+    #     target_column : str
+    #         The column name of the target variable.
+    #     test_size : float
+    #         The proportion of data to be used for testing.
+    #     """
+    #     try:
+    #         target_column = dataObj["parameters"]["target_column"]
+    #         test_size = dataObj["parameters"]["test_size"]
+    #         random_state = dataObj["parameters"]["random_state"]            
+    #         X = data.drop(columns=[target_column])  # Features
+    #         y = data[target_column]  # Target variable
+    #         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(
+    #             X, y, test_size=test_size, random_state=42
+    #         )
+    #     except KeyError:
+    #         print(f"Error: Column '{target_column}' not found in dataset.")
+    #     except Exception as e:
+    #         print(f"Unexpected error in data splitting: {e}")
 
-    def train(self):
+    def train(self, X_train, y_train):
         """
         Trains the model using the training data.
         """       
         try:
+            self.X_train = X_train
+            self.y_train = y_train
+            # self.y_train=self.y_train.values.reshape(-1,1)
+            # self.X_train=dataObj["split_data"]["X_train"]
+            # self.y_train=dataObj["y_train"]            
             if self.X_train is None or self.y_train is None:
                 raise ValueError("Training data is missing. Ensure data is loaded and split correctly.")
-            self.model.fit(self.X_train, self.y_train)
+            self.model.fit(self.X_train,self.y_train)
         except Exception as e:
             print(f"Error during model training: {e}")
 
-    def evaluate(self):
+    def evaluate(self, X_test, y_test):
         """
         Evaluates the trained model on the test data.
 
@@ -159,10 +168,16 @@ class BaseModel:
             A dictionary containing evaluation metrics (accuracy for classification, error metrics for regression).
         """        
         try:
+            # self.X_test=dataObj["split_data"]["X_test"]
+            # self.y_test=dataObj["split_data"]["y_test"]
+            self.X_test = X_test
+            self.y_test = y_test
             self.predictions = self.model.predict(self.X_test)
             if self.problem_type == "classification":
                 self.accuracy = accuracy_score(self.y_test, self.predictions)
                 self.conf_matrix = confusion_matrix(self.y_test, self.predictions)
+                print(self.accuracy)
+                print(self.conf_matrix)
                 return {"Accuracy": self.accuracy, "Confusion Matrix": self.conf_matrix.tolist()}
             elif self.problem_type == "regression":
                 mae = mean_absolute_error(self.y_test, self.predictions)
