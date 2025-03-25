@@ -20,6 +20,9 @@ class RegressionClassificationPage(ctk.CTkFrame):
         self.file_data=data
         self.file_name = file_name
         print(self.file_name)
+        self.sliders = {}
+        self.dropdowns = {}
+        self.textboxes = {}
 
          # ✅ Check if data is available
         if self.file_data is not None:
@@ -62,10 +65,7 @@ class RegressionClassificationPage(ctk.CTkFrame):
         self.graph_frame.grid_rowconfigure(1, weight=4)  # Allow graph display to expand
         self.graph_frame.grid_columnconfigure(0, weight=1)
 
-        # Dropdown ComboBox (Centered)
-        self.dropdown = ctk.CTkComboBox(self.graph_frame, values=["Option 1", "Option 2", "Option 3"])
-        self.dropdown.grid(row=0, column=0, padx=10, pady=10, sticky="n")  # `sticky="n"` keeps it at the top
-
+       
         # Graph Display Area (Expanded)
         self.graph_display = ctk.CTkFrame(self.graph_frame, fg_color="#D1D1D1", height=250, corner_radius=10)  # Increased Size
         self.graph_display.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")  # Expands to fill space
@@ -102,9 +102,7 @@ class RegressionClassificationPage(ctk.CTkFrame):
         self.current_segment = None
         self.change_segment("Regression")
 
-        self.sliders = {}
-        self.dropdowns = {}
-        self.textboxes = {}
+  
 
 
     def create_regression_frame(self):
@@ -129,8 +127,13 @@ class RegressionClassificationPage(ctk.CTkFrame):
         self.regression_options_frame = ctk.CTkFrame(frame, fg_color="transparent")
         self.regression_options_frame.grid(row=1, column=0, padx=10, pady=15, sticky="new")
         
+           
+        self.toggle_regression_options()
 
         return frame
+
+
+    
 
     def create_classification_frame(self):
         """Creates the Classification segment frame with dynamic parameters."""
@@ -152,6 +155,10 @@ class RegressionClassificationPage(ctk.CTkFrame):
         self.classification_options_frame = ctk.CTkFrame(frame, fg_color="transparent")
         self.classification_options_frame.grid(row=1, column=0, padx=10, pady=15, sticky="new")
 
+        self.toggle_classification_options()
+
+
+
         return frame
 
     def toggle_regression_options(self):
@@ -159,8 +166,16 @@ class RegressionClassificationPage(ctk.CTkFrame):
         model = self.regression_radio_var.get()
         self.clear_frame(self.regression_options_frame)
 
+           
+
+            # ✅ Show X_Label only for Linear & Polynomial Regression
+        if model == "Linear Regression" :
+            self.create_textbox(self.regression_options_frame, "X_Label", "xlabel")
+           
         if model == "Polynomial Regression":
             self.create_textbox(self.regression_options_frame, "Polynomial Degree","polynomial")
+            self.create_textbox(self.regression_options_frame, "X_Label", "xlabel")
+        
 
         elif model == "Ridge Regression":
             self.create_textbox(self.regression_options_frame, "Polynomial Degree (Ridge)", "polynomial")
@@ -245,11 +260,12 @@ class RegressionClassificationPage(ctk.CTkFrame):
 
     def create_textbox(self, parent, label_text, mode):
         """
-        Creates a labeled textbox for different parameter types with validation upon submission.
+        Creates a labeled textbox with validation.
         
         mode:
             - "polynomial": Allows 1-5 single-digit numbers (0-9), separated by commas.
             - "alpha": Allows 1-5 float values (0-1) with at least 4 decimal places, separated by commas.
+            - "xlabel": Allows only strings and special characters (No numbers allowed).
         """
         frame = ctk.CTkFrame(parent, fg_color="#D1D1D1", corner_radius=10)
         frame.grid(row=len(parent.winfo_children()), column=0, padx=10, pady=10, sticky="nsew")
@@ -259,13 +275,24 @@ class RegressionClassificationPage(ctk.CTkFrame):
 
         self.create_info_button(frame, f"Information about {label_text}")
 
-        entry_var = ctk.StringVar()
+        entry_var = tk.StringVar()
         entry = ctk.CTkEntry(frame, textvariable=entry_var)
         entry.grid(row=1, column=0, padx=10, pady=5, sticky="ew")
+
+        # ✅ Add Validation
+        if mode == "xlabel":
+            entry.bind("<KeyRelease>", self.validate_x_label)
 
         self.textboxes[label_text] = entry_var  # Store reference for validation on submit
 
 
+    def validate_x_label(self, event):
+        """Ensures X_Label only contains strings and special characters (No numbers)."""
+        self.X_Label_data = self.textboxes["X_Label"].get()
+
+        if any(char.isdigit() for char in self.X_Label_data):
+            self.textboxes["X_Label"].set(re.sub(r'\d+', '', self.X_Label_data))  # Remove numbers
+            messagebox.showwarning("Invalid Input", "X_Label cannot contain numbers!")
 
 
     def show_info_dialog(self, text):
@@ -427,7 +454,12 @@ class RegressionClassificationPage(ctk.CTkFrame):
                 # Send request
                 self.send_request_classification(json_data)
 
+
+        if hasattr(self, "submit_button"):
+            self.submit_button.configure(state="disabled")  # Hide the submit button
+
         print("\nSubmission Successful!\n")
+       
 
     def preview_data(self):
         """Opens a new popup window to display the scaled and encoded data."""
@@ -486,6 +518,7 @@ class RegressionClassificationPage(ctk.CTkFrame):
             if response.status_code == 200:
                     response_data = response.json()
                     print(response_data)
+                    self.display_regression_results(response_data)
                     # Check if Lasso Regression data is present
                     if "Lasso_Regression" in response_data:
                         print("🔹 Processing Lasso Regression Results...")
@@ -517,19 +550,19 @@ class RegressionClassificationPage(ctk.CTkFrame):
                         r2_score_polynomial = response_data["r2_score_polynomial"]
                         y_pred = response_data["y_pred"]
                         best_polynomial_degree = response_data["best_polynomial_degree"]
-                        x_data = response_data["x_data"]
+                        #x_data = response_data["x_data"]
                         y_test = response_data["y_test"]
                         x_label = response_data["x_label"]
                         y_label = response_data["y_label"]
                         
                     # Polynomial fit plot
-                        self.polynomial_plot(x_data,y_test,y_pred,x_label,y_label,best_polynomial_degree)
+                        self.polynomial_plot(self.X_Label_data,y_test,y_pred,x_label,y_label,best_polynomial_degree)
                         
                     elif "r2_score_linear" in response_data:
                         # Extracting values from response_data
                         r2_score_linear = response_data["r2_score_linear"]
                         y_pred  = response_data["y_pred"]
-                        x_data  = response_data["x_data"]  # x_label is given by User
+                        #x_data  = response_data["x_data"]  # x_label is given by User
                         y_test  = response_data["y_test"]
                         x_label = response_data["x_label"]
                         y_label = response_data["y_label"] 
@@ -537,7 +570,7 @@ class RegressionClassificationPage(ctk.CTkFrame):
                         fig, axs = plt.subplots(1, 2, figsize=(12, 5))
                         
                     # Regression Plot
-                        self.regression_plot(x_data,y_test,x_label,y_label,ax=axs[0])
+                        self.regression_plot(self.X_Label_data,y_test,x_label,y_label,ax=axs[0])
                         
                     # Residual Plot
                         self.residual_plot(y_test,y_pred,ax=axs[1]) 
@@ -547,6 +580,51 @@ class RegressionClassificationPage(ctk.CTkFrame):
                     )
         except Exception as e:
                 messagebox.showerror("Error", str(e))
+
+    def display_regression_results(self, response_data):
+        """Displays regression results dynamically based on the selected model above the graph frame."""
+        
+        # ✅ Clear Previous Results if Any
+        for widget in self.graph_frame.winfo_children():
+            if isinstance(widget, ctk.CTkLabel):
+                widget.destroy()
+
+        # ✅ Extract Regression Results Based on the Model
+        result_text = ""
+        
+        if "r2_score_lasso" in response_data:
+            result_text = (
+                f"R2 Score: {float(response_data['r2_score_lasso']):.4f}\n"
+                f"Best Polynomial Degree: {response_data['best_degree_lasso']}\n"
+                f"Best Alpha: {float(response_data['best_alpha_lasso']):.4f}"
+            )
+
+        elif "r2_score_ridge" in response_data:
+            result_text = (
+                f"R2 Score: {float(response_data['r2_score_ridge']):.4f}\n"
+                f"Best Polynomial Degree: {response_data['best_degree_ridge']}\n"
+                f"Best Alpha: {float(response_data['best_alpha_ridge']):.4f}"
+            )
+
+        elif "best_polynomial_degree" in response_data:
+            result_text = (
+                f"R2 Score: {float(response_data['r2_score_polynomial']):.4f}\n"
+                f"Best Polynomial Degree: {response_data['best_polynomial_degree']}"
+            )
+
+        elif "r2_score_linear" in response_data:
+            result_text = f"R2 Score: {float(response_data['r2_score_linear']):.4f}"
+
+
+        # ✅ Display Results as a Label Above Graph
+        if result_text:
+            result_label = ctk.CTkLabel(
+                self.graph_frame, text=result_text, 
+                font=("Inter", 15, "bold"), fg_color="#D1D1D1", text_color="black",
+                height=50, width=500, corner_radius=8, padx=5, pady=5
+            )
+            result_label.grid(row=0, column=0, padx=10, pady=5, sticky="new")  # Placed above graph display
+
                 
         
     def send_request_classification(self, json_data):

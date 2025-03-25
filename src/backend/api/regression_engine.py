@@ -64,7 +64,7 @@ class RegressionAPIView(APIView):
             response_data={
                 "r2_score_linear": data_object.outputs['Regression']['Linear_Regression']['r2_score_linear'],
                 "y_pred":  data_object.outputs['Regression']['Linear_Regression']['graph_params']['y_pred'],
-                "x_data":  data_object.data_filtering['Train-Test Split']['split_data']['X_test']['Safety_high'],     # x_label is given by User
+                #"x_data":  data_object.data_filtering['Train-Test Split']['split_data']['X_test']['Safety_high'],     # x_label is given by User
                 "y_test":  data_object.data_filtering['Train-Test Split']['split_data']['y_test'],
                 "x_label": data_object.outputs['Regression']['Linear_Regression']['graph_params']['x_label'],
                 "y_label": data_object.outputs['Regression']['Linear_Regression']['graph_params']['y_label']         
@@ -90,7 +90,7 @@ class RegressionAPIView(APIView):
                 "r2_score_polynomial": data_object.outputs['Regression']['Polynomial_Regression']['r2_score_polynomial'],
                 "y_pred": data_object.outputs['Regression']['Polynomial_Regression']['graph_params']['y_pred'],
                 "best_polynomial_degree": data_object.outputs['Regression']['Polynomial_Regression']['best_polynomial_degree'],
-                "x_data":  data_object.data_filtering['Train-Test Split']['split_data']['X_test']['Safety_high'],  # x_label is given by User
+                #"x_data":  data_object.data_filtering['Train-Test Split']['split_data']['X_test']['Safety_high'],  # x_label is given by User
                 "y_test":  data_object.data_filtering['Train-Test Split']['split_data']['y_test'],
                 "x_label": data_object.outputs['Regression']['Polynomial_Regression']['graph_params']['x_label'],
                 "y_label": data_object.outputs['Regression']['Polynomial_Regression']['graph_params']['y_label']           
