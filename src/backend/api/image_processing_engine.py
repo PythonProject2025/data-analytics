@@ -28,7 +28,10 @@ class  ImageProcessingAPIView (APIView):
         dataObj = DataObject()
         dataObj.image_processing = data_dict.get("image_processing", {})
         print("Corrected DataObject:", dataObj.image_processing)
-        
+        # if dataObj.image_processing["image_path"]:
+        #     print(dataObj.image_processing["model"])
+        #     image_pred = self.handle_image_prediction(dataObj)
+        #     print("Prediction from uploaded image:", image_pred)
         if not dataObj.image_processing["fileio"]["zipFilePath"]:
             return Response({"error": "Missing zipFilePath in request"}, status=status.HTTP_400_BAD_REQUEST)
         
@@ -84,10 +87,37 @@ class  ImageProcessingAPIView (APIView):
         print(dataObj.outputs["Image_Processing"]["confusionMatrix"])
         evaluator.get_confusion_matrix(dataObj.image_processing["splits"], pred_tuple = y_predicted_tuple)
         print(dataObj.outputs["Image_Processing"]["testLoss"], dataObj.outputs["Image_Processing"]["testAccuracy"])
+        
+        img = data_loader.load_image(dataObj.image_processing)
+        pred = testing.make_predictions(img)
+        dataObj.outputs["Image_Processing"]["image_predictions"] = testing.get_predicted_result(pred)
+    
         response_data = {
             "testLoss": dataObj.outputs["Image_Processing"]["testLoss"],
             "testAccuracy": dataObj.outputs["Image_Processing"]["testAccuracy"],
-            "confusionMatrix": dataObj.outputs["Image_Processing"]["confusionMatrix"]
+            "confusionMatrix": dataObj.outputs["Image_Processing"]["confusionMatrix"],
+            "image_predictions": dataObj.outputs["Image_Processing"]["image_predictions"]
         }
-
+        print(response_data)
         return Response(response_data, status=status.HTTP_200_OK)
+    
+    # def handle_image_prediction(self, dataObj):
+    #     try:
+    #         data_loader = DataLoadingAndPreprocessing()
+    #         img = data_loader.load_image(dataObj.image_processing)
+
+    #         model = dataObj.image_processing.get("model")
+    #         splits = dataObj.image_processing.get("splits")
+    #         label_dict = dataObj.image_processing.get("label_dict")
+
+    #         testing = Testing(model, splits)
+    #         testing.set_label_dict(label_dict)
+
+    #         pred = testing.make_predictions(img)
+    #         dataObj.outputs["Image_Processing"]["image_predictions"] = testing.get_predicted_result(pred)
+    #         return dataObj.outputs["Image_Processing"]["image_predictions"]
+
+    #     except Exception as e:
+    #         print("Error in handle_image_prediction:", e)
+    #         return None
+

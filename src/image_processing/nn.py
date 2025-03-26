@@ -3,18 +3,34 @@ from tensorflow.keras import layers
 
 # Neural Network Class
 class NeuralNetwork:
+    """
+      A class to create and manage a Convolutional Neural Network (CNN) model using TensorFlow and Keras.
+      """
     def __init__(self):
+        """
+               Initializes the NeuralNetwork class.
+
+               Attributes:
+               ----------
+               model : keras.Sequential or None
+                   Stores the CNN model. Initially set to None.
+        """
         self.model = None
 
     @classmethod
     def create_cnn_model(cls, dataObj):
         """
         Create a Convolutional Neural Network (CNN) model with configurable optimizer, loss function, and activation functions.
- 
+         The model consists of:
+         - Two convolutional layers with ReLU activation.
+         - Two max-pooling layers.
+         - A fully connected dense layer with 128 neurons and ReLU activation.
+         - An output layer with 10 neurons and softmax activation for multi-class classification.
+
         Args:
-            optimizer (str): Optimizer to compile the model (e.g., 'adam', 'sgd').
-            activation_function (str): Activation function for hidden layers (e.g., 'relu', 'tanh').
-            output_activation (str): Activation function for the output layer (e.g., 'softmax', 'sigmoid').
+            dataObj (dict): Data dictionary containing:
+              - optimizer (str): Optimizer to compile the model (e.g., 'adam', 'RMSPROP' & 'adamax').
+              - activation_function (str): Activation function for hidden layers (e.g., 'relu', 'sigmoid').
        
         Returns:
             model: A compiled CNN model.

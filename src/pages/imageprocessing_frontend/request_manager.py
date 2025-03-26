@@ -13,9 +13,25 @@ class ImageRequestManager:
 
         if active_tab == "Image Processing":
             self._handle_image_processing_submission()
+            # dataobject = DataObject()
 
-        elif active_tab == "Image Train":
-            print("Image Train Submitted")
+            # # Store the image path in the data object
+            # dataobject.image_processing["image_path"] = self.context.uploaded_image_path
+
+            # # For now: just print it
+            # print("Image Path Stored in DataObject:", dataobject.image_processing["image_path"])
+            
+            # json_data = {"dataobject": dataobject.to_dict()}
+
+            # try:
+            #     response = requests.post('http://127.0.0.1:8000/api/imageprocessing/', json=json_data)
+            #     if response.status_code == 200:
+            #         response_data = response.json()
+            #         print(response_data)
+            #     else:
+            #         messagebox.showerror("Error", response.json().get('error', 'File upload failed.'))
+            # except Exception as e:
+            #     messagebox.showerror("Error", str(e))
 
     def _handle_image_processing_submission(self):
         print("Image Processing Submitted")
@@ -41,6 +57,7 @@ class ImageRequestManager:
         dataobject.image_processing["training_params"]["epochs"] = epochs
         dataobject.image_processing["train_test_split"]["test_size"] = test_size
         dataobject.image_processing["train_test_split"]["random_state"] = random_state
+        dataobject.image_processing["image_path"] = self.context.uploaded_image_path
 
         json_data = {"dataobject": dataobject.to_dict()}
 

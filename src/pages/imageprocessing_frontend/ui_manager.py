@@ -22,7 +22,7 @@ class ImageUIManager:
         self.context.current_segment = None
 
     def initialize_segment(self, segment_name):
-        frame = self.create_segment_frame() if segment_name == "Image Processing" else self.create_image_train_frame()
+        frame = self.create_segment_frame() 
         self.segments[segment_name] = frame
         self.change_segment(segment_name)
 
@@ -74,13 +74,9 @@ class ImageUIManager:
             parent=self._frame_with_label(frame, 4, "Random State", INFO_TEXT_IM["image_processing_frame"]["Random State"]),
             label_text="Random State", min_val=0, max_val=100, default_val=42, steps=100
         )
-
-        return frame
-
-
-    def create_image_train_frame(self):
-        frame = ctk.CTkFrame(self.context.segment_container, fg_color=self.color_secondary, corner_radius=10)
-        frame.grid_columnconfigure(0, weight=1)
+        
+        # frame = ctk.CTkFrame(self.context.segment_container, fg_color=self.color_secondary, corner_radius=10)
+        # frame.grid_columnconfigure(0, weight=1)
 
         self.context.upload_button = ctk.CTkButton(
             frame, text="Upload Image", image=self.context.upload_button_image, command=self.upload_image
@@ -94,8 +90,28 @@ class ImageUIManager:
             frame, text="Preview Image", command=self.preview_image, state="disabled"
         )
         self.context.preview_button.grid(row=2, column=0, padx=10, pady=10)
-
+        
         return frame
+
+
+    # def create_image_train_frame(self):
+    #     frame = ctk.CTkFrame(self.context.segment_container, fg_color=self.color_secondary, corner_radius=10)
+    #     frame.grid_columnconfigure(0, weight=1)
+
+    #     self.context.upload_button = ctk.CTkButton(
+    #         frame, text="Upload Image", image=self.context.upload_button_image, command=self.upload_image
+    #     )
+    #     self.context.upload_button.grid(row=0, column=0, padx=10, pady=10)
+
+    #     self.context.image_label = ctk.CTkLabel(frame, text="No file uploaded", font=self.font_normal)
+    #     self.context.image_label.grid(row=1, column=0, padx=10, pady=5)
+
+    #     self.context.preview_button = ctk.CTkButton(
+    #         frame, text="Preview Image", command=self.preview_image, state="disabled"
+    #     )
+    #     self.context.preview_button.grid(row=2, column=0, padx=10, pady=10)
+
+    #     return frame
 
     def upload_image(self):
         file_path = filedialog.askopenfilename(filetypes=[("Image Files", "*.png;*.jpg;*.jpeg")])

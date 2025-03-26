@@ -45,32 +45,33 @@ class DataObject:
 
         # AI Model Configuration
         self.ai_model = {
+            "problem_type" :{},
             "Selected Model":{},
             "RandomForest": {
-                "n_estimators": {"min": 10, "max": 500, "default": 200},
-                "max_depth": {"min": 3, "max": 50, "default": 20},
-                "min_samples_split": {"min": 4, "max": 10, "default": 5},
-                "min_samples_leaf": {"min": 1, "max": 10, "default": 1}
+                "n_estimators": 0, # {"min": 10, "max": 500, "default": 200},
+                "max_depth": 0, #{"min": 3, "max": 50, "default": 20},
+                "min_samples_split": 0, #{"min": 4, "max": 10, "default": 5},
+                "min_samples_leaf": 0 #{"min": 1, "max": 10, "default": 1}
             },
             "CatBoost": {
-                "n_estimators": {"min": 100, "max": 1000, "default": 500},
-                "learning_rate": {"min": 0.01, "max": 0.1, "default": 0.03},
-                "max_depth": {"min": 4, "max": 10, "default": 6},
-                "reg_lambda": {"min": 1, "max": 10, "default": 3}
+                "n_estimators": 0, #{"min": 100, "max": 1000, "default": 500},
+                "learning_rate": 0, #{"min": 0.01, "max": 0.1, "default": 0.03},
+                "max_depth": 0, #{"min": 4, "max": 10, "default": 6},
+                "reg_lambda": 0, #{"min": 1, "max": 10, "default": 3}
             },
             "ArtificialNeuralNetwork": {
-                "layer_number": {"min": 1, "max": 6, "default": 3},
-                "units": {"min": 1, "max": 256, "default": [128, 64, 4]},
-                "activation": {"allowed": ["relu", "sigmoid", "tanh", "softmax"], "default": ["relu", "relu", "softmax"]},
-                "optimizer": {"allowed": ["adam", "sgd", "rmsprop"], "default": "adam"},
-                "batch_size": {"min": 16, "max": 128, "default": 30},
-                "epochs": {"min": 10, "max": 300, "default": 100}
+                "layer_number": 0 , #{"min": 1, "max": 6, "default": 3},
+                "units": 0, #{"min": 1, "max": 256, "default": [128, 64, 4]},
+                "activation": None, #{"allowed": ["relu", "sigmoid", "tanh", "softmax"], "default": ["relu", "relu", "softmax"]},
+                "optimizer": None, #{"allowed": ["adam", "sgd", "rmsprop"], "default": "adam"},
+                "batch_size": 0, #{"min": 16, "max": 128, "default": 30},
+                "epochs": 0, # {"min": 10, "max": 300, "default": 100}
             },
             "XGBoost": {
-                "n_estimators": {"min": 100, "max": 1000, "default": 200},
-                "learning_rate": {"min": 0.01, "max": 0.3, "default": 0.3},
-                "min_split_loss": {"min": 3, "max": 10, "default": 10},
-                "max_depth": {"min": 0, "max": 10, "default": 6}
+                "n_estimators": 0, #{"min": 100, "max": 1000, "default": 200},
+                "learning_rate": 0 ,# {"min": 0.01, "max": 0.3, "default": 0.3},
+                "min_split_loss": 0 ,#{"min": 3, "max": 10, "default": 10},
+                "max_depth": 0, #{"min": 0, "max": 10, "default": 6}
             }
         }
 
@@ -113,7 +114,8 @@ class DataObject:
                                  "random_state": 42}, # input
             "label_dict": {},
             "model": None,
-            "splits": None
+            "splits": None,
+            "image_path":None
         }
         
         self.preprocessed = {
@@ -245,6 +247,10 @@ class DataObject:
                     "title": "",
                     "unique_labels": [],
                     "tick_marks": []       
+                },
+                "image_predictions": {
+                    "predicted_label": 0,
+                    "predicted_prob": 0.0
                 }
             },
             "Graph Params": {"x_data": None, "y_test": None, "x_label": "", "y_label": "", "y_pred": None}

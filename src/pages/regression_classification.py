@@ -5,10 +5,12 @@ import seaborn as sns
 from matplotlib import pyplot as plt
 import pandas as pd
 import requests
+from sklearn.metrics import ConfusionMatrixDisplay
 from src.models.data_object_class import DataObject
 from src.assets_management import assets_manage, load_image
 import re
 import tkinter as tk
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from tkinter import ttk
 
 
@@ -441,9 +443,6 @@ class RegressionClassificationPage(ctk.CTkFrame):
                 self.send_request_classification(json_data)
 
              elif model == "KNN":
-                print(f"n_neighbors: {self.sliders["n_neighbors"].get()}")
-                print(f"Weights: {self.dropdowns["Weights"].get()}")
-                print(f"n_neighbors: {self.sliders["P"].get()}")
                 dataobject.classification["KNN"]["n_neighbours"]= int(self.sliders['n_neighbors'].get())
                 dataobject.classification["KNN"]["weights"]=self.dropdowns['Weights'].get()
                 dataobject.classification["KNN"]["p"]=int(self.sliders['P'].get())
@@ -641,7 +640,13 @@ class RegressionClassificationPage(ctk.CTkFrame):
             if response.status_code == 200:
                     response_data = response.json()
                     print(response_data)
-                    
+                    cm_data = response_data.get("cm")
+                    if cm_data:
+                        self.display_confusion_matrix(cm_data)
+                        print("Response received successfully")
+                    else:
+                        messagebox.showerror("Error", "Confusion Matrix data not received.")
+                     
             else:
                     messagebox.showerror(
                         "Error", response.json().get('error', 'File upload failed.')
@@ -898,4 +903,15 @@ class RegressionClassificationPage(ctk.CTkFrame):
         ax.grid(True, which='both', linestyle='--', linewidth=0.5, alpha=0.7)
         ax.spines["top"].set_visible(False)
         ax.spines["right"].set_visible(False)
+        plt.show()
+    
+    def display_confusion_matrix(self, cm):
+        print("reached plotting code")
+        cm = np.array(cm)  # ✅ Ensure cm is a NumPy array
+        cm_percent = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis] * 100
+        disp = ConfusionMatrixDisplay(confusion_matrix=cm_percent)
+        disp.plot(cmap="Blues", values_format=".1f")
+        for text in disp.text_.flatten():
+            text.set_text(text.get_text() + '%')
+        plt.title("Confusion Matrix (%)")
         plt.show()
