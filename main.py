@@ -8,7 +8,7 @@ from src.pages.process_selection_page import ProcessSelectionPage
 from src.pages.datafiltering_frontend.data_filtering_page import DataFilteringPage
 from src.pages.help_page import HelpPage
 from src.pages.imageprocessing_frontend.image_processing_page import ImageProcessingPage
-from src.pages.aimodel_page import AIModelPage
+from src.pages.aimodel_frontend.aimodel_page import AIModelPage
 from src.pages.regression_classification import RegressionClassificationPage
 
 

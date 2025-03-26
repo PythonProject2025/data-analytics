@@ -49,7 +49,10 @@ class  AIModelAPIView (APIView):
         """Runs only the selected AI model based on user input."""
         
         # Get the selected model from DataObject
-        selected_model = data_object.ai_model["Selected Model"]
+        # selected_model = data_object.ai_model["Selected Model"]
+        selected_model = data_object.ai_model.get("Selected Model")
+        problem_type = data_object.ai_model.get("problem_type")
+
         
         if not selected_model:
             return {"error": "No model selected! Please select a model to run."}
@@ -79,17 +82,29 @@ class  AIModelAPIView (APIView):
 
         print(f"Debugging Data Before Training:")
         print(f"X_train Shape: {X_train.shape}, y_train Shape: {y_train.shape}")
-        print(data_object.ai_model["RandomForest"]["n_estimators"])
+        # print(data_object.ai_model["RandomForest"]["n_estimators"])
         # Initialize only the selected model
-        model=None
+        # model=None
+        # if selected_model == "RandomForest":
+        #     model = RandomForest(problem_type="classification", options=data_object.ai_model["RandomForest"])
+        # elif selected_model == "CatBoost":
+        #     model = Catboost(problem_type="classification", options=data_object.ai_model["CatBoost"])
+        # elif selected_model == "ArtificialNeuralNetwork":
+        #     model = ArtificialNeuralNetwork(problem_type="classification", options=data_object.ai_model["ArtificialNeuralNetwork"])
+        # elif selected_model == "XGBoost":
+        #     model = XGBoost(problem_type="regression", options=data_object.ai_model["XGBoost"])
+        # else:
+        #     return {"error": f"Selected model '{selected_model}' is not recognized!"}
+        
+        model = None
         if selected_model == "RandomForest":
-            model = RandomForest(problem_type="classification", options=data_object.ai_model["RandomForest"])
+            model = RandomForest(problem_type=problem_type, options=data_object.ai_model["RandomForest"])
         elif selected_model == "CatBoost":
-            model = Catboost(problem_type="classification", options=data_object.ai_model["CatBoost"])
+            model = Catboost(problem_type=problem_type, options=data_object.ai_model["CatBoost"])
         elif selected_model == "ArtificialNeuralNetwork":
-            model = ArtificialNeuralNetwork(problem_type="classification", options=data_object.ai_model["ArtificialNeuralNetwork"])
+            model = ArtificialNeuralNetwork(problem_type=problem_type, options=data_object.ai_model["ArtificialNeuralNetwork"])
         elif selected_model == "XGBoost":
-            model = XGBoost(problem_type="regression", options=data_object.ai_model["XGBoost"])
+            model = XGBoost(problem_type=problem_type, options=data_object.ai_model["XGBoost"])
         else:
             return {"error": f"Selected model '{selected_model}' is not recognized!"}
 
@@ -106,30 +121,51 @@ class  AIModelAPIView (APIView):
             print(f"Warning: Model {selected_model} returned None during evaluation.")
             return {"error": f"Model {selected_model} failed during evaluation."}
 
-        # Store results in DataObject under respective category
-        if selected_model in ["RandomForest", "CatBoost", "ArtificialNeuralNetwork"]:  # Classification models
+        # # Store results in DataObject under respective category
+        # if selected_model in ["RandomForest", "CatBoost", "ArtificialNeuralNetwork"]:  # Classification models
+        #     data_object.outputs["AI_Classification"][selected_model] = {
+        #         "Accuracy": results.get("Accuracy", 0.0),
+        #         "Confusion Matrix": results.get("Confusion Matrix", [])
+        #     }
+        #     return {
+        #         "message": f"Classification completed for {selected_model}",
+        #         "results": data_object.outputs["AI_Classification"][selected_model]
+        #     }
+        
+        # elif selected_model == "XGBoost":  # Regression model
+        #     data_object.outputs["AI_Regression"][selected_model] = {
+        #         "MAE": results.get("MAE", 0.0),
+        #         "MSE": results.get("MSE", 0.0),
+        #         "R2": results.get("R2", 0.0)
+        #     }
+        # print("ai working successfully")
+        # print(data_object.outputs["AI_Classification"][selected_model])
+        # response_data = {
+        #     "MAE": data_object.outputs["AI_Regression"][selected_model]["MAE"],
+        #     "MSE": data_object.outputs["AI_Regression"][selected_model]["MSE"],
+        #     "R2": data_object.outputs["AI_Regression"][selected_model]["R2"]
+        # }
+        # print(response_data)
+        # return response_data    
+        
+        if problem_type == "classification":
             data_object.outputs["AI_Classification"][selected_model] = {
                 "Accuracy": results.get("Accuracy", 0.0),
                 "Confusion Matrix": results.get("Confusion Matrix", [])
             }
+            print("Classification results:", data_object.outputs["AI_Classification"][selected_model])
             return {
                 "message": f"Classification completed for {selected_model}",
                 "results": data_object.outputs["AI_Classification"][selected_model]
             }
-        
-        elif selected_model == "XGBoost":  # Regression model
+        elif problem_type == "regression":
             data_object.outputs["AI_Regression"][selected_model] = {
                 "MAE": results.get("MAE", 0.0),
                 "MSE": results.get("MSE", 0.0),
                 "R2": results.get("R2", 0.0)
             }
-        print("ai working successfully")
-        response_data = {
-            "MAE": data_object.outputs["AI_Regression"][selected_model]["MAE"],
-            "MSE": data_object.outputs["AI_Regression"][selected_model]["MSE"],
-            "R2": data_object.outputs["AI_Regression"][selected_model]["R2"]
-        }
-        print(response_data)
-        return response_data
-
-    
+            print("Regression results:", data_object.outputs["AI_Regression"][selected_model])
+            return {
+                "message": f"Regression completed for {selected_model}",
+                "results": data_object.outputs["AI_Regression"][selected_model]
+            }
