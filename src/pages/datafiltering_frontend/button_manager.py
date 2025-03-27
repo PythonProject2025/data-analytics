@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from tkinter import messagebox, filedialog
-
+from src.utils.ui_style_manager import StyleManager
 class ButtonManager:
     def __init__(self, context):
         self.context = context
@@ -11,7 +11,7 @@ class ButtonManager:
 
         self.context.export_button = ctk.CTkButton(
             self.context.button_frame, text="Export", fg_color="transparent",
-            border_width=2, border_color="black", text_color="black",
+            border_width=2, border_color=StyleManager.COLORS.get("Default Mode I"), text_color=StyleManager.COLORS.get("Default Mode I"),
             command=self.export_data
         )
         self.context.export_button.grid(row=0, column=0, pady=5, padx=10, sticky="ew")
@@ -19,7 +19,7 @@ class ButtonManager:
 
         self.context.compare_button = ctk.CTkButton(
             self.context.button_frame, text="Compare", fg_color="transparent",
-            border_width=2, border_color="black", text_color="black",
+            border_width=2, border_color=StyleManager.COLORS.get("Default Mode I"), text_color=StyleManager.COLORS.get("Default Mode I"),
             command=self.open_comparison_popup
         )
         self.context.compare_button.grid(row=0, column=1, pady=5, padx=10, sticky="ew")
@@ -27,7 +27,7 @@ class ButtonManager:
 
         self.context.send_button = ctk.CTkButton(
             self.context.button_frame, text="Send", fg_color="transparent",
-            border_width=2, border_color="black", text_color="black",
+            border_width=2, border_color=StyleManager.COLORS.get("Default Mode I"), text_color=StyleManager.COLORS.get("Default Mode I"),
             command=self.open_send_popup
         )
         self.context.send_button.grid(row=0, column=1, pady=5, padx=10, sticky="ew")

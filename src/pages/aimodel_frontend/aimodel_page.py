@@ -6,7 +6,7 @@ from src.utils.ui_element_manager import UIElementManager
 from src.utils.ui_style_manager import StyleManager
 from src.pages.aimodel_frontend.ui_manager import AIUIManager
 from src.pages.aimodel_frontend.request_manager import AIRequestManager
-from src.assets_management import assets_manage
+from src.assets_management import assets_manage, load_image
 from src.pages.aimodel_frontend.ai_visualization import AIVisualization
 
 class AIModelPage(ctk.CTkFrame):
@@ -31,8 +31,12 @@ class AIModelPage(ctk.CTkFrame):
         }
 
         # Style
-        self.Info_button_image = PhotoImage(file=assets_manage("info_B.png"))
-        self.ui = UIElementManager(info_button_image=self.Info_button_image, parent_widget=self)
+        self.Info_button_image = load_image("info_B.png", size=(16, 16)) 
+        self.ui = UIElementManager(
+        info_icon_light=parent.info_icon_light,
+        info_icon_dark=parent.info_icon_dark,
+        parent_widget=self
+        )
         self.font_normal = StyleManager.get_font("normal")
         self.font_label = StyleManager.get_font("label")
         self.color_secondary = StyleManager.get_color("secondary")
@@ -60,21 +64,21 @@ class AIModelPage(ctk.CTkFrame):
         self.left_frame.grid_columnconfigure(0, weight=2)
         self.left_frame.grid_rowconfigure(1, weight=1)
 
-        self.label_frame = ctk.CTkFrame(self.left_frame, fg_color="#E0E0E0", corner_radius=10, height=50)
+        self.label_frame = ctk.CTkFrame(self.left_frame, fg_color=StyleManager.COLORS.get("Default Mode"), corner_radius=10, height=50)
         self.label_frame.grid(row=0, column=0, padx=10, pady=10, sticky="ew")
 
         self.label = ctk.CTkLabel(self.label_frame, text=self.file_name, font=("Inter", 16, "bold"))
         self.label.place(relx=0.5, rely=0.5, anchor="center")
 
         self.preview_label = ctk.CTkLabel(self.label_frame, text="Preview", font=("Inter", 12, "bold"),
-                                          text_color="blue", cursor="hand2")
+                                          text_color="red", cursor="hand2")
         self.preview_label.place(relx=0.9, rely=0.5, anchor="center")
         self.preview_label.bind("<Button-1>", lambda event: self.preview_data())
 
         self.cancel_button = ctk.CTkButton(self.left_frame, text="X", width=30, height=25, command=self.cancel_file)
         self.cancel_button.grid(row=0, column=1, padx=10, pady=10)
 
-        self.graph_frame = ctk.CTkFrame(self.left_frame, fg_color="#E0E0E0", corner_radius=10, height=350)
+        self.graph_frame = ctk.CTkFrame(self.left_frame, fg_color=StyleManager.COLORS.get("Default Mode"), corner_radius=10, height=350)
         self.graph_frame.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
         self.graph_frame.grid_columnconfigure(0, weight=1)
         self.graph_frame.grid_rowconfigure(0, weight=1)
@@ -84,7 +88,7 @@ class AIModelPage(ctk.CTkFrame):
 
     def _create_right_frame(self):
         right_frame_height = int(0.8 * self.winfo_screenheight())
-        self.right_frame = ctk.CTkScrollableFrame(self, fg_color=StyleManager.get_color("dark_bg"),
+        self.right_frame = ctk.CTkScrollableFrame(self, fg_color=StyleManager.COLORS.get("Default Mode"),
                                                   width=300, height=right_frame_height)
         self.right_frame.grid(row=0, column=1, sticky="en", padx=10, pady=10)
         self.right_frame.grid_columnconfigure(0, weight=1)
@@ -95,7 +99,7 @@ class AIModelPage(ctk.CTkFrame):
         self.segmented_frame.grid(row=0, column=0, padx=10, pady=10)
 
         self.segment_container = ctk.CTkFrame(self.right_frame, fg_color="transparent")
-        self.segment_container.grid(row=1, column=0, sticky="nsew", padx=20, pady=10)
+        self.segment_container.grid(row=1, column=0,  pady=10)
 
         self.submit_button = ctk.CTkButton(self.right_frame, text="Submit", command=self.submit_action)
         self.submit_button.grid(row=2, column=0, pady=10)
