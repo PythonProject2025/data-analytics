@@ -60,12 +60,12 @@ class DataObject:
                 "reg_lambda": 0, #{"min": 1, "max": 10, "default": 3}
             },
             "ArtificialNeuralNetwork": {
-                "layer_number": 0 , #{"min": 1, "max": 6, "default": 3},
-                "units": 0, #{"min": 1, "max": 256, "default": [128, 64, 4]},
-                "activation": None, #{"allowed": ["relu", "sigmoid", "tanh", "softmax"], "default": ["relu", "relu", "softmax"]},
-                "optimizer": None, #{"allowed": ["adam", "sgd", "rmsprop"], "default": "adam"},
-                "batch_size": 0, #{"min": 16, "max": 128, "default": 30},
-                "epochs": 0, # {"min": 10, "max": 300, "default": 100}
+                "Layer Number": 0 , #{"min": 1, "max": 6, "default": 3},
+                "Units": 0, #{"min": 1, "max": 256, "default": [128, 64, 4]},
+                "Activation Function": None, #{"allowed": ["relu", "sigmoid", "tanh", "softmax"], "default": ["relu", "relu", "softmax"]},
+                "Optimizer": None, #{"allowed": ["adam", "sgd", "rmsprop"], "default": "adam"},
+                "Batch Size": 0, #{"min": 16, "max": 128, "default": 30},
+                "Epochs": 0, # {"min": 10, "max": 300, "default": 100}
             },
             "XGBoost": {
                 "n_estimators": 0, #{"min": 100, "max": 1000, "default": 200},
@@ -123,8 +123,7 @@ class DataObject:
                 "Train-Test Split": {"Training Data": "X samples", "Test Data": "Y samples"}
         }
         
-        
-        
+    
         # Outputs for Different Models
         self.outputs = {
             "Data Processing":{

@@ -55,7 +55,11 @@ class ArtificialNeuralNetwork(BaseModel):
             optimizer = validated_options["optimizer"]
             batch_size = validated_options["batch_size"]
             epochs = validated_options["epochs"]
-
+            
+            if isinstance(units, int):
+                units = [units] * layer_number
+            if isinstance(activation, str):
+                activation = [activation] * layer_number
             # Ensure the number of layers matches the number of units and activations
             if len(units) != layer_number or len(activation) != layer_number:
                 raise ValueError("Error: The number of 'units' and 'activation' values must match 'layer_number'.")
@@ -76,6 +80,7 @@ class ArtificialNeuralNetwork(BaseModel):
             
             # Initialize the base class (BaseModel) with the compiled model
             super().__init__(model_instance, problem_type)
+            self.model = model_instance
             
             # Store batch size and epochs for later use in training
             self.batch_size = batch_size
@@ -155,8 +160,7 @@ class ArtificialNeuralNetwork(BaseModel):
         try:
             self.X_test = X_test
             self.y_test = y_test            
-            self.X_test=dataObj.data_filtering["Train-Test Split"]["split_data"]["X_test"]
-            self.y_test=dataObj.data_filtering["Train-Test Split"]["split_data"]["y_test"]             
+             
             if self.X_test is None or self.y_test is None:
                 raise ValueError("Error: Test data is missing. Ensure data is loaded and split correctly.")
 

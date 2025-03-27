@@ -153,19 +153,28 @@ class  AIModelAPIView (APIView):
                 "Accuracy": results.get("Accuracy", 0.0),
                 "Confusion Matrix": results.get("Confusion Matrix", [])
             }
-            print("Classification results:", data_object.outputs["AI_Classification"][selected_model])
-            return {
-                "message": f"Classification completed for {selected_model}",
-                "results": data_object.outputs["AI_Classification"][selected_model]
+
+            response_data = {
+                "Accuracy": data_object.outputs["AI_Classification"][selected_model]["Accuracy"],
+                "Confusion Matrix": data_object.outputs["AI_Classification"][selected_model]["Confusion Matrix"]
             }
+
         elif problem_type == "regression":
             data_object.outputs["AI_Regression"][selected_model] = {
                 "MAE": results.get("MAE", 0.0),
                 "MSE": results.get("MSE", 0.0),
-                "R2": results.get("R2", 0.0)
+                "R2": results.get("R2", 0.0),
+                "y_pred": model.predictions.tolist(),
+                "y_test": y_test.tolist()
             }
-            print("Regression results:", data_object.outputs["AI_Regression"][selected_model])
-            return {
-                "message": f"Regression completed for {selected_model}",
-                "results": data_object.outputs["AI_Regression"][selected_model]
+        
+            response_data = {
+                "MAE": data_object.outputs["AI_Regression"][selected_model]["MAE"],
+                "MSE": data_object.outputs["AI_Regression"][selected_model]["MSE"],
+                "R2": data_object.outputs["AI_Regression"][selected_model]["R2"],
+                "y_pred": data_object.outputs["AI_Regression"][selected_model]["y_pred"],
+                "y_test": data_object.outputs["AI_Regression"][selected_model]["y_test"],
+                "x_label": "Actual",     # Or get from user if available
+                "y_label": "Predicted"
             }
+        return response_data
