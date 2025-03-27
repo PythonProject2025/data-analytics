@@ -240,7 +240,6 @@ class AIModelPage(ctk.CTkFrame):
     def submit_action(self):
         """Submit button action with printing respective slider values."""
         selected_model = self.segmented_frame.get()  # Get the currently selected model
-        print(f"Submitting model: {selected_model}")
         
         dataobject = DataObject()
         # Store the preprocessed data from file_data
@@ -252,8 +251,6 @@ class AIModelPage(ctk.CTkFrame):
                 elif isinstance(value, pd.Series):
                     dataobject.data_filtering["Train-Test Split"]["split_data"][key] = value.tolist()  # Convert to list
 
-            print(dataobject.data_filtering["Train-Test Split"]["split_data"]["X_train"])
-            print(dataobject.data_filtering["Train-Test Split"]["split_data"]["X_test"])
             # Retrieve slider values for the selected model
         if selected_model == "RandomForest":
         
@@ -263,10 +260,6 @@ class AIModelPage(ctk.CTkFrame):
             dataobject.ai_model["RandomForest"]["min_samples_split"]= int(round(self.sliders["RandomForest"]["min_samples_split"].get()))
             dataobject.ai_model["RandomForest"]["min_samples_leaf"]= int(round(self.sliders["RandomForest"]["min_samples_leaf"].get()))
             
-            print (float(self.sliders["RandomForest"]["n_estimators"].get()))
-            print(float(self.sliders["RandomForest"]["max_depth"].get()))
-            print(float(self.sliders["RandomForest"]["min_samples_split"].get()))
-            print(float(self.sliders["RandomForest"]["min_samples_leaf"].get()))
 
             # Convert DataObject to JSON
             json_data = {"dataobject": dataobject.to_dict()}
@@ -283,7 +276,6 @@ class AIModelPage(ctk.CTkFrame):
             
             # Convert DataObject to JSON
             json_data = {"dataobject": dataobject.to_dict()}
-            print(json_data)
             # Send request
             self.send_request(json_data)
             
@@ -299,7 +291,6 @@ class AIModelPage(ctk.CTkFrame):
             
             # Convert DataObject to JSON
             json_data = {"dataobject": dataobject.to_dict()}
-            print(json_data)
             # Send request
             self.send_request(json_data)
 
@@ -313,7 +304,6 @@ class AIModelPage(ctk.CTkFrame):
             
             # Convert DataObject to JSON
             json_data = {"dataobject": dataobject.to_dict()}
-            print(json_data)
             # Send request
             self.send_request(json_data)
 
@@ -338,42 +328,40 @@ class AIModelPage(ctk.CTkFrame):
             messagebox.showerror("Error", "No processed data available for preview!")
             return
 
-        # ✅ Create a new popup window
+        #  Create a new popup window
         preview_window = ctk.CTkToplevel(self)
         preview_window.title("Processed Data Preview")
         preview_window.geometry("900x500")
         preview_window.grab_set()
 
-        # ✅ Create a frame for the Treeview
+        #  Create a frame for the Treeview
         frame = tk.Frame(preview_window)
         frame.pack(fill="both", expand=True)
 
-        # ✅ Treeview (Table) widget
+        #  Treeview (Table) widget
         tree = ttk.Treeview(frame, columns=list(self.file_data.columns), show="headings")
 
-        # ✅ Add column headers
+        #  Add column headers
         for col in self.file_data.columns:
             tree.heading(col, text=col)
             tree.column(col, width=150)  # Adjust column width
 
-        # ✅ Insert rows (limit to first 50 rows to avoid UI lag)
+        #  Insert rows (limit to first 50 rows to avoid UI lag)
         for index, row in self.file_data.head(50).iterrows():
             tree.insert("", "end", values=list(row))
 
-        # ✅ Add vertical scrollbar
+        #  Add vertical scrollbar
         v_scrollbar = ttk.Scrollbar(frame, orient="vertical", command=tree.yview)
         tree.configure(yscroll=v_scrollbar.set)
 
-        # ✅ Add horizontal scrollbar
+        #  Add horizontal scrollbar
         h_scrollbar = ttk.Scrollbar(frame, orient="horizontal", command=tree.xview)
         tree.configure(xscroll=h_scrollbar.set)
 
-        # ✅ Pack elements
+        #  Pack elements
         tree.pack(side="top", fill="both", expand=True)
         v_scrollbar.pack(side="right", fill="y")
         h_scrollbar.pack(side="bottom", fill="x")
-
-        print("✅ Processed Data preview displayed successfully!")
     
     def send_request(self, json_data):
         """Send the request to the Django backend and return the response."""
@@ -387,7 +375,6 @@ class AIModelPage(ctk.CTkFrame):
  
             if response.status_code == 200:
                     response_data = response.json()
-                    print(response_data)
                     
             else:
                     messagebox.showerror(
