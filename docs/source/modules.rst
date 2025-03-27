@@ -1,5 +1,5 @@
-Modules and Functionalities
-****************************
+.. Modules and Functionalities
+.. ****************************
 
 Data Filtering
 ==============

@@ -16,7 +16,6 @@ from models.data_object_class import DataObject
 
 class  ImageProcessingAPIView (APIView):
     def post(self, request):
-        print("Received request data:", request.data)
         data_dict = request.data.get("dataobject", {})
         if "dataobject" in data_dict:  
             data_dict = data_dict["dataobject"]
@@ -27,11 +26,6 @@ class  ImageProcessingAPIView (APIView):
         # Load extracted data into DataObject
         dataObj = DataObject()
         dataObj.image_processing = data_dict.get("image_processing", {})
-        print("Corrected DataObject:", dataObj.image_processing)
-        # if dataObj.image_processing["image_path"]:
-        #     print(dataObj.image_processing["model"])
-        #     image_pred = self.handle_image_prediction(dataObj)
-        #     print("Prediction from uploaded image:", image_pred)
         if not dataObj.image_processing["fileio"]["zipFilePath"]:
             return Response({"error": "Missing zipFilePath in request"}, status=status.HTTP_400_BAD_REQUEST)
         
@@ -43,7 +37,6 @@ class  ImageProcessingAPIView (APIView):
         
         # Step 1: Data Loading and Preprocessing
         data_loader = DataLoadingAndPreprocessing()
-        print(dataObj.image_processing["fileio"])
         data_loader.data_loader(dataObj.image_processing["fileio"])
 
         # We need to give this to dictionary to the Testing class
@@ -84,9 +77,7 @@ class  ImageProcessingAPIView (APIView):
         dataObj.outputs["Image_Processing"]["confusionMatrix"] = evaluator.get_confusion_matrix(dataObj.image_processing["splits"], 
                                                                                             pred_tuple = y_predicted_tuple)
 
-        print(dataObj.outputs["Image_Processing"]["confusionMatrix"])
         evaluator.get_confusion_matrix(dataObj.image_processing["splits"], pred_tuple = y_predicted_tuple)
-        print(dataObj.outputs["Image_Processing"]["testLoss"], dataObj.outputs["Image_Processing"]["testAccuracy"])
         
         img = data_loader.load_image(dataObj.image_processing)
         pred = testing.make_predictions(img)
@@ -98,26 +89,4 @@ class  ImageProcessingAPIView (APIView):
             "confusionMatrix": dataObj.outputs["Image_Processing"]["confusionMatrix"],
             "image_predictions": dataObj.outputs["Image_Processing"]["image_predictions"]
         }
-        print(response_data)
         return Response(response_data, status=status.HTTP_200_OK)
-    
-    # def handle_image_prediction(self, dataObj):
-    #     try:
-    #         data_loader = DataLoadingAndPreprocessing()
-    #         img = data_loader.load_image(dataObj.image_processing)
-
-    #         model = dataObj.image_processing.get("model")
-    #         splits = dataObj.image_processing.get("splits")
-    #         label_dict = dataObj.image_processing.get("label_dict")
-
-    #         testing = Testing(model, splits)
-    #         testing.set_label_dict(label_dict)
-
-    #         pred = testing.make_predictions(img)
-    #         dataObj.outputs["Image_Processing"]["image_predictions"] = testing.get_predicted_result(pred)
-    #         return dataObj.outputs["Image_Processing"]["image_predictions"]
-
-    #     except Exception as e:
-    #         print("Error in handle_image_prediction:", e)
-    #         return None
-

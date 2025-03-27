@@ -67,7 +67,7 @@ class RegressionClassificationPage(ctk.CTkFrame):
         self.cancel_button = ctk.CTkButton(self.left_frame, text="X", width=30, height=25, command=lambda: self.cancel_file())
         self.cancel_button.grid(row=0, column=1, padx=10, pady=10)
 
-        # Second Frame (Dropdown & Graph Display) - Increased Size
+        # Second Frame (Dropdown & Graph Display)
         self.graph_frame = ctk.CTkFrame(self.left_frame, fg_color=StyleManager.COLORS.get("Default Mode"), corner_radius=10, height=350)  # Increased Height
         self.graph_frame.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
         self.left_frame.grid_rowconfigure(1, weight=1)  # Keep left frame standard but allow graph frame to take space
@@ -176,12 +176,6 @@ class RegressionClassificationPage(ctk.CTkFrame):
         """Updates the Regression options dynamically based on selection."""
         model = self.regression_radio_var.get()
         self.clear_frame(self.regression_options_frame)
-
-           
-
-            #  Show X_Label only for Linear & Polynomial Regression
-        # if model == "Linear Regression" :
-            # self.create_textbox(self.regression_options_frame, "X_Label", "xlabel")
            
         if model == "Polynomial Regression":
             self.create_textbox(self.regression_options_frame, "Polynomial Degree","polynomial")
@@ -433,7 +427,7 @@ class RegressionClassificationPage(ctk.CTkFrame):
                 width=24,  
                 height=24,
                 fg_color="transparent",  # Make button background transparent
-                hover_color="#d3d3d3",  # Optional: subtle hover effect
+                hover_color="#d3d3d3",  # hover effect
                 command=lambda: self.show_info_dialog(text)
             )
             button.grid(row=row, column=column, padx=5, sticky="w")
@@ -442,13 +436,10 @@ class RegressionClassificationPage(ctk.CTkFrame):
         """Handles submission and prints selected model parameters."""
         dataobject = DataObject()
         current_segment = self.segmented_frame.get()
-
-        print(f"\n--- {current_segment} Submission ---")
         
         # Store the preprocessed data from file_data
         if self.file_data is not None:
             split_data = self.file_data  # Assuming file_data contains the split dataset
-            print(type(split_data))
             for key, value in split_data.items():
                 if isinstance(value, pd.DataFrame):
                     dataobject.data_filtering["Train-Test Split"]["split_data"][key] = value.to_dict(orient="records")
@@ -457,7 +448,6 @@ class RegressionClassificationPage(ctk.CTkFrame):
 
         if current_segment == "Regression":
             model = self.regression_radio_var.get()
-            print(f"Selected Regression Model: {model}")
             dataobject.regression["Selected Model"]= model
             errors = []
             
@@ -478,9 +468,6 @@ class RegressionClassificationPage(ctk.CTkFrame):
                     messagebox.showerror("Input Error", "\n".join(errors))
                 else:
                      polynomial_degree_list = [int(x) for x in polynomial_degree.split(",")]
-                     print(f"Polynomial Degree: {self.textboxes['Polynomial Degree'].get()}")
-
-                     print(polynomial_degree_list)
                      dataobject.regression["Model_Selection"]["Polynomial Regression"]["polynomial_degree"]=polynomial_degree_list
                 # Convert DataObject to JSON
                 json_data = {"dataobject": dataobject.to_dict()}
@@ -502,12 +489,8 @@ class RegressionClassificationPage(ctk.CTkFrame):
                 else:
                     polynomial_degree_ridge_list = [int(x) for x in polynomial_degree.split(",")]
                     alpha_values_ridge_list = [float(x) for x in alpha_value.split(",")]
-                    print(alpha_values_ridge_list )
                     dataobject.regression["Model_Selection"]["Ridge Regression"]["polynomial_degree_ridge"]=polynomial_degree_ridge_list
                     dataobject.regression["Model_Selection"]["Ridge Regression"]["alpha_values_ridge"]=alpha_values_ridge_list
-                    print(polynomial_degree_ridge_list)
-                    print(f"Polynomial Degree (Ridge): {self.textboxes['Polynomial Degree (Ridge)'].get()}")
-                    print(f"Alpha Values (Ridge): {self.textboxes['Alpha Values (Ridge)'].get()}")
                 # Convert DataObject to JSON
                 json_data = {"dataobject": dataobject.to_dict()}
                 # Send request
@@ -528,10 +511,6 @@ class RegressionClassificationPage(ctk.CTkFrame):
 
                     polynomial_degree_Lasso_list = [int(x) for x in polynomial_degree.split(",")]
                     alpha_values_Lasso_list = [float(x) for x in alpha_value.split(",")]
-                    print(polynomial_degree_Lasso_list)
-                    print(alpha_values_Lasso_list)
-                    print(f"Polynomial Degree (Lasso): {self.textboxes['Polynomial Degree (Lasso)'].get()}")
-                    print(f"Alpha Values (Lasso): {self.textboxes['Alpha Values (Lasso)'].get()}")
 
                     dataobject.regression["Model_Selection"]["Lasso Regression"]["polynomial_degree_lasso"]=polynomial_degree_Lasso_list
                     dataobject.regression["Model_Selection"]["Lasso Regression"]["alpha_values_lasso"]=alpha_values_Lasso_list
@@ -553,7 +532,6 @@ class RegressionClassificationPage(ctk.CTkFrame):
                 dataobject.classification["RandomForest"]["max_depth"]=int(self.sliders['max_depth'].get())
                 # Convert DataObject to JSON
                 json_data = {"dataobject": dataobject.to_dict()}
-                print(json_data)
                 # Send request
                 self.send_request_classification(json_data)
 
@@ -564,7 +542,6 @@ class RegressionClassificationPage(ctk.CTkFrame):
                 dataobject.classification["SVC"]["kernel"]
                 # Convert DataObject to JSON
                 json_data = {"dataobject": dataobject.to_dict()}
-                print(json_data)
                 # Send request
                 self.send_request_classification(json_data)
 
@@ -575,15 +552,12 @@ class RegressionClassificationPage(ctk.CTkFrame):
                 print(dataobject.classification["KNN"]["weights"])               
                 # Convert DataObject to JSON
                 json_data = {"dataobject": dataobject.to_dict()}
-                print(json_data)
                 # Send request
                 self.send_request_classification(json_data)
 
 
         if hasattr(self, "submit_button"):
             self.submit_button.configure(state="disabled")  # Hide the submit button
-
-        print("\nSubmission Successful!\n")
        
 
     def preview_data(self):
@@ -627,8 +601,6 @@ class RegressionClassificationPage(ctk.CTkFrame):
         tree.pack(side="top", fill="both", expand=True)
         v_scrollbar.pack(side="right", fill="y")
         h_scrollbar.pack(side="bottom", fill="x")
-
-        print(" Processed Data preview displayed successfully!")
         
     def send_request_regression(self, json_data):
         """Send the request to the Django backend and return the response."""
@@ -642,11 +614,9 @@ class RegressionClassificationPage(ctk.CTkFrame):
  
             if response.status_code == 200:
                     response_data = response.json()
-                    print(response_data)
                     self.display_regression_results(response_data)
                     # Check if Lasso Regression data is present
                     if "Lasso_Regression" in response_data:
-                        print("🔹 Processing Lasso Regression Results...")
                         # Extracting values for Lasso Regression
                         r2_score_lasso = response_data["r2_score_lasso"]
                         best_degree_lasso = response_data["best_degree_lasso"]
@@ -659,7 +629,6 @@ class RegressionClassificationPage(ctk.CTkFrame):
 
                     # Check if Ridge Regression data is present
                     elif "Ridge_Regression" in response_data:
-                        print("🔹 Processing Ridge Regression Results...")
                         # Extracting values for Ridge Regression
                         r2_score_ridge = response_data["r2_score_ridge"]
                         best_degree_ridge = response_data["best_degree_ridge"]
@@ -671,7 +640,6 @@ class RegressionClassificationPage(ctk.CTkFrame):
                         self.ridge_plot(results_ridge, Ridge_Regression)  
                         
                     elif "best_polynomial_degree" in response_data:
-                        print("🔹 Processing Polynomial Regression Results...")
                         r2_score_polynomial = response_data["r2_score_polynomial"]
                         y_pred = response_data["y_pred"]
                         best_polynomial_degree = response_data["best_polynomial_degree"]
@@ -782,16 +750,11 @@ class RegressionClassificationPage(ctk.CTkFrame):
 
             if response.status_code == 200:
                 response_data = response.json()
-                print(response_data)
-
-                # ✅ Display classification result metrics
                 self.display_classification_results(response_data)
 
-                # ✅ Display confusion matrix
                 cm_data = response_data.get("cm")
                 if cm_data:
                     self.display_confusion_matrix(cm_data)
-                    print(" Response received and rendered.")
                 else:
                     messagebox.showerror("Error", "Confusion Matrix data not received.")
 
@@ -833,18 +796,14 @@ class RegressionClassificationPage(ctk.CTkFrame):
         
         page_name = self.__class__.__name__  # Get the page's class name
 
-        self.parent.file_paths[page_name] = None  # ✅ Reset file path for this page
-        self.parent.file_names[page_name] = None  # ✅ Reset file name for this page
-        self.parent.page_data[page_name] = None   # ✅ Reset data for this page
-
-        # ✅ Remove the sidebar button for this page only
+        self.parent.file_paths[page_name] = None
+        self.parent.file_names[page_name] = None
+        self.parent.page_data[page_name] = None
         self.parent.update_sidebar_buttons(page_name, action="remove")
 
-        # ✅ Reset this page instance so it opens fresh on next upload
         if hasattr(self.parent, f"{page_name}_instance"):
             delattr(self.parent, f"{page_name}_instance")
 
-        # ✅ Go back to file upload page
         self.parent.show_page("file_upload")
 
     def render_plot_to_frame(self, fig):
@@ -859,19 +818,10 @@ class RegressionClassificationPage(ctk.CTkFrame):
     
     def lasso_plot(self,results_lasso,best_params):
         plt.close('all')
-    # Extract the relevant results
-    #    results = data.results_lasso
-    #    best_degree_mask = (results['param_polynomial_features__degree'] == data.best_degree_lasso)
-    #    alphas = results['param_lasso_regression__alpha'][best_degree_mask]
-    #    mean_scores = results['mean_test_score'][best_degree_mask]
-
+        
         best_degree_mask = (np.array(results_lasso['param_polynomial_features__degree']) == best_params['best_degree_lasso'])
         alphas = list(np.array(results_lasso['param_lasso_regression__alpha'])[best_degree_mask])
         mean_scores = list(np.array(results_lasso['mean_test_score'])[best_degree_mask])
-        
-        print("Best Degree:", best_params['best_degree_lasso'])
-        print("Alphas:", alphas)
-        print("Mean Scores:", mean_scores)
 
         # Set the figure size and style
         fig=plt.figure(figsize=(9, 5), dpi=100)
@@ -922,11 +872,6 @@ class RegressionClassificationPage(ctk.CTkFrame):
     
     def ridge_plot(self,results_ridge,best_params):
         plt.close('all')
-        # Extract the relevant results
-    #    results = data.results_ridge
-    #    best_degree_mask = (results['param_polynomial_features__degree'] == data.best_degree_ridge)
-    #    alphas = results['param_ridge_regression__alpha'][best_degree_mask]
-    #    mean_scores = results['mean_test_score'][best_degree_mask]
 
     #    results = data.results_ridge
         best_degree_mask = (np.array(results_ridge['param_polynomial_features__degree']) == best_params['best_degree_ridge'])
@@ -948,11 +893,6 @@ class RegressionClassificationPage(ctk.CTkFrame):
         plt.xlabel('Alpha (Regularization Strength)', fontsize=14, weight='bold', labelpad=15)
         plt.ylabel('Cross-Validation Score (R2 Score)', fontsize=14, weight='bold', labelpad=8)
         plt.title('Alpha vs Model Performance (Ridge Regression)', fontsize=16, weight='bold', pad=20)
-        
-        # plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
-        # plt.gca().yaxis.get_offset_text().set_visible(False)
-        
-        # Instead, ensure the y-axis is in plain format
         plt.gca().yaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f'{x:.3f}'))
     
         # Set y-axis limits to better reflect the R² range (optional, adjust as needed)
@@ -984,19 +924,15 @@ class RegressionClassificationPage(ctk.CTkFrame):
         """Generates and displays the Polynomial Regression plot."""
         try:
             if isinstance(y_scatter, dict):
-                print("⚠️ Converting y_scatter dictionary to a list...")
                 y_scatter = np.array(list(y_scatter.values()))
 
             x_scatter = np.array(x_scatter).flatten() if not isinstance(x_scatter, np.ndarray) else x_scatter.flatten()
             y_scatter = np.array(y_scatter).flatten() if not isinstance(y_scatter, np.ndarray) else y_scatter.flatten()
             y_poly = np.array(y_poly).flatten() if not isinstance(y_poly, np.ndarray) else y_poly.flatten()
 
-            # ✅ Check lengths of arrays
             if len(x_scatter) != len(y_scatter) or len(x_scatter) != len(y_poly):
-                # If x_scatter is too short, generate a range of indices
                 expected_length = len(y_scatter)
                 if len(x_scatter) == 1:  # If x_scatter is a single value like [0]
-                    print(f"⚠️ x_scatter length ({len(x_scatter)}) does not match y_scatter length ({len(y_scatter)}). Generating x_scatter as range...")
                     x_scatter = np.arange(expected_length)  # e.g., [0, 1, 2, 3, 4]
                 else:
                     raise ValueError(
@@ -1009,12 +945,6 @@ class RegressionClassificationPage(ctk.CTkFrame):
             y_scatter = y_scatter[sorted_indices]
             y_poly = y_poly[sorted_indices]
             
-            #  Debug prints
-            print(" Processed Polynomial Plot Data:")
-            print("X Scatter:", x_scatter[:5])  # Print first 5 values
-            print("Y Scatter:", y_scatter[:5])
-            print("Y Poly:", y_poly[:5])
-
             # Set figure size and seaborn style
             fig=plt.figure(figsize=(10, 5), dpi=120)
             sns.set_theme(style="ticks")
@@ -1069,7 +999,7 @@ class RegressionClassificationPage(ctk.CTkFrame):
             canvas.get_tk_widget().pack(fill="both", expand=True)
 
         except Exception as e:
-            print("❌ ERROR in polynomial_plot:", str(e))
+            print("ERROR in polynomial_plot:", str(e))
             messagebox.showerror("Plot Error", str(e))
             
     def regression_plot(self,x, y, x_label, y_label, data=None, ax=None):
@@ -1102,7 +1032,6 @@ class RegressionClassificationPage(ctk.CTkFrame):
         #plt.show()
         
     def residual_plot(self,x, y, ax=None):
-        #plt.close('all')
         if isinstance(x, dict):  
             x = np.array(list(x.values()))  
         elif isinstance(x, list):

@@ -3,16 +3,26 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-User Document
-==============
+Software User guide
+===================
 
 
 .. toctree::
    :maxdepth: 8
-   :caption: Contents:
+   :caption: Contents
 
    introduction
    Prerequisites
    guide
+
+.. toctree::
+   :maxdepth: 8
+   :caption: UI INTEGRATION
+
    gui
+
+.. toctree::
+   :maxdepth: 8
+   :caption: MODULES AND FUNCTIONS
+
    modules

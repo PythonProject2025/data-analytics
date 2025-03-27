@@ -6,7 +6,7 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'Data Analytics'
+project = 'DataAnalytics'
 copyright = '2025, MAIT24-25'
 author = 'Team GUI'
 release = '1.0'

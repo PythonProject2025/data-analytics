@@ -1,7 +1,7 @@
-Architecture Overview
-*********************
+.. Software Architecture Overview
+.. ******************************
 
-This project presents a modular and user-friendly **Data Analytics Desktop Application** developed using a **Tkinter-based front end** and a **Django-powered back end**. The application facilitates seamless interaction between users and various data processing and machine learning tasks through RESTful API integration.
+.. This project presents a modular and user-friendly **Data Analytics Desktop Application** developed using a **Tkinter-based front end** and a **Django-powered back end**. The application facilitates seamless interaction between users and various data processing and machine learning tasks through RESTful API integration.
 
 Front End: Tkinter GUI
 ~~~~~~~~~~~~~~~~~~~~~~

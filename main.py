@@ -196,11 +196,6 @@ class App(ctk.CTk):
         new_mode = "dark" if current_mode == "Light" else "Light"
         ctk.set_appearance_mode(new_mode)
 
-        # if hasattr(self, "mode_button"):
-            # self.mode_button.configure(
-            #     image=self.mode_image_dark if new_mode == "dark" else self.mode_image_light
-            # )
-
 
 if __name__ == "__main__":
     app = App()

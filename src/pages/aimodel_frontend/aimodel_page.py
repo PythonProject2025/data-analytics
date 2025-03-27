@@ -21,7 +21,7 @@ class AIModelPage(ctk.CTkFrame):
         self.comboboxes = {}
         self.submitted = False
 
-        # UI display → internal segment mapping
+        # internal segment mapping
         self.ui_to_internal = {
             "RandomForest": "RandomForest",
             "CatBoost": "CatBoost",
@@ -30,7 +30,7 @@ class AIModelPage(ctk.CTkFrame):
             "Problem Selection": "Problem Selection",
         }
 
-        # Style
+        # Styling
         self.Info_button_image = load_image("info_B.png", size=(16, 16)) 
         self.ui = UIElementManager(
         info_icon_light=parent.info_icon_light,
@@ -135,7 +135,7 @@ class AIModelPage(ctk.CTkFrame):
             self.change_segment(model_segments[0])
             return
 
-        # Final submission logic from request manager
+        # submission logic from request manager
         self.managers["request"].submit_action()
         self.submit_button.configure(state="disabled")
         self.submitted = True

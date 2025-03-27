@@ -20,8 +20,7 @@ class RegressionAPIView(APIView):
         data_object.regression = data_dict.get("regression", {})
         try:
             split_data=data_object.data_filtering["Train-Test Split"]["split_data"]
-            print(type(split_data))
-            # ✅ Ensure all keys exist before conversion
+            # Ensure all keys exist before conversion
             if not all(k in split_data for k in ["X_train", "X_test", "y_train", "y_test"]):
                 return {"error": "Missing one or more training/testing data in DataObject!"}
 
@@ -40,11 +39,9 @@ class RegressionAPIView(APIView):
             data_object.data_filtering["Train-Test Split"]["split_data"]["X_test"]=X_test
             data_object.data_filtering["Train-Test Split"]["split_data"]["y_train"]=y_train
             data_object.data_filtering["Train-Test Split"]["split_data"]["y_test"]=y_test
-            print(type(data_object.data_filtering["Train-Test Split"]["split_data"]["X_train"]))
-            # ✅ Check if data is valid before proceeding
+            # Check if data is valid before proceeding
             if any(val is None or (isinstance(val, np.ndarray) and val.size == 0) for val in [X_train, X_test, y_train, y_test]):
                 return {"error": "Some train-test data is empty or invalid!"}
-            #print(X_train)
         except KeyError:
             return {"error": "Missing training/testing data in DataObject!"}
 
@@ -60,18 +57,16 @@ class RegressionAPIView(APIView):
             r2, y_pred = metrics.evaluate_model(model, data_object.data_filtering['Train-Test Split'])   
             data_object.outputs['Regression']['Linear_Regression']['r2_score_linear'] = r2
             data_object.outputs['Regression']['Linear_Regression']['graph_params']['y_pred'] = y_pred
-            print("Linear regression successfull")
-            print(data_object.outputs['Regression']['Linear_Regression'])
             response_data={
                 "r2_score_linear": data_object.outputs['Regression']['Linear_Regression']['r2_score_linear'],
                 "y_pred":  data_object.outputs['Regression']['Linear_Regression']['graph_params']['y_pred'],
-                "x_data":  data_object.data_filtering['Train-Test Split']['split_data']['x_test'][x_label],     # x_label is given by User
+                # "x_data":  data_object.data_filtering['Train-Test Split']['split_data']['x_test'][x_label],     # x_label is given by User
                 "y_test":  data_object.data_filtering['Train-Test Split']['split_data']['y_test'],
                 "x_label": data_object.outputs['Regression']['Linear_Regression']['graph_params']['x_label'],
                 "y_label": data_object.outputs['Regression']['Linear_Regression']['graph_params']['y_label']         
             }
     
-# Polynomial Regression
+        # Polynomial Regression
 
         elif model_type == "Polynomial Regression":   
                       
@@ -83,15 +78,11 @@ class RegressionAPIView(APIView):
             data_object.outputs['Regression']['Polynomial_Regression']['graph_params']['y_pred'] = y_pred
             data_object.outputs['Regression']['Polynomial_Regression']['best_polynomial_degree'] = regression_models.best_params_poly['polynomial_features__degree']
             
-            print(f"regression completed successfully")
-            print(data_object.outputs['Regression']['Polynomial_Regression']['r2_score_polynomial'])
-            print(data_object.outputs['Regression']['Polynomial_Regression']['graph_params']['y_pred'])
-            print(data_object.outputs['Regression']['Polynomial_Regression']['best_polynomial_degree'])
             response_data = {
                 "r2_score_polynomial": data_object.outputs['Regression']['Polynomial_Regression']['r2_score_polynomial'],
                 "y_pred": data_object.outputs['Regression']['Polynomial_Regression']['graph_params']['y_pred'],
                 "best_polynomial_degree": data_object.outputs['Regression']['Polynomial_Regression']['best_polynomial_degree'],
-                "x_data":  data_object.data_filtering['Train-Test Split']['split_data']['x_test'][x_label],     # x_label is given by User
+                # "x_data":  data_object.data_filtering['Train-Test Split']['split_data']['x_test'][x_label],     # x_label is given by User
                 "y_test":  data_object.data_filtering['Train-Test Split']['split_data']['y_test'],
                 "x_label": data_object.outputs['Regression']['Polynomial_Regression']['graph_params']['x_label'],
                 "y_label": data_object.outputs['Regression']['Polynomial_Regression']['graph_params']['y_label']           
@@ -114,8 +105,6 @@ class RegressionAPIView(APIView):
             data_object.outputs['Regression']['Ridge_Regression']['best_alpha_ridge'] = regression_models.best_params_ridge['ridge_regression__alpha']
             data_object.outputs['Regression']['Ridge_Regression']['graph_params']['results_ridge'] = regression_models.results_ridge        # Add "results_ridge" in DataObject File
             
-            print("Ridge regression completed successfully")
-            
             response_data = {
                 "r2_score_ridge": data_object.outputs['Regression']['Ridge_Regression']['r2_score_ridge'],
                 "best_degree_ridge": data_object.outputs['Regression']['Ridge_Regression']['best_degree_ridge'],
@@ -123,9 +112,8 @@ class RegressionAPIView(APIView):
                 "results_ridge": data_object.outputs['Regression']['Ridge_Regression']['graph_params']['results_ridge'],   # Add "results_ridge" in DataObject File
                 "Ridge_Regression": data_object.outputs['Regression']['Ridge_Regression']
             }
-        #    ridge_plot(regression_models)
 
-# Lasso Regression
+        # Lasso Regression
         
         elif model_type == "Lasso Regression": 
 
@@ -141,8 +129,6 @@ class RegressionAPIView(APIView):
             data_object.outputs['Regression']['Lasso_Regression']['best_degree_lasso'] = regression_models.best_params_lasso['polynomial_features__degree']
             data_object.outputs['Regression']['Lasso_Regression']['best_alpha_lasso'] = regression_models.best_params_lasso['lasso_regression__alpha']
             data_object.outputs['Regression']['Lasso_Regression']['graph_params']['results_lasso'] = regression_models.results_lasso        # Add "results_lasso" in DataObject File
-            
-            print("Lasso completed")
 
             response_data = {
                 "r2_score_lasso": data_object.outputs['Regression']['Lasso_Regression']['r2_score_lasso'],

@@ -28,17 +28,14 @@ class ScalingEncodingAPIView(APIView):
             smoothed_data = pd.read_json(io.StringIO(smoothed_data_json))
         except ValueError as e:
             return Response({"error": f"Invalid JSON format: {str(e)}"}, status=status.HTTP_400_BAD_REQUEST)
-        # Step 4: Scaling & Encoding
+        # Scaling & Encoding
         data_object.data_filtering["Train-Test Split"]["split_data"] = self.run_encoding_scaling_train_test_split(
             smoothed_data, data_object.data_filtering["Train-Test Split"]
         )
 
-        print("Encoding, Scaling, Train-Test Split completed successfully.")
         
         split_data = data_object.data_filtering["Train-Test Split"]["split_data"]
-        print(type(split_data))
-        print(type(data_object.data_filtering["Train-Test Split"]["split_data"]["X_train"]))
-
+        
         # Ensuring all DataFrame values are converted properly
         for key, value in split_data.items():
             if isinstance(value, pd.DataFrame):

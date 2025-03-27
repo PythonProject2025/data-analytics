@@ -79,12 +79,12 @@ class AIUIManager:
         frame = ctk.CTkFrame(self.context.segment_container, fg_color=self.color_secondary, corner_radius=10)
         frame.grid_columnconfigure(0, weight=1)
 
-        self._create_slider_frame(frame, model, "layer_number", 1, 6, 3, 0)
-        self._create_slider_frame(frame, model, "units", 1, 256, 128, 1)
+        self._create_slider_with_label(frame, model, "layer_number", 1, 6, 3, 0)
+        self._create_slider_with_label(frame, model, "units", 1, 256, 128, 1)
         self._create_combobox(frame, model, "activation", ["relu", "sigmoid", "tanh", "softmax"], "relu", 2)
         self._create_combobox(frame, model, "optimizer", ["adam", "sgd", "rmsprop"], "adam", 3)
-        self._create_slider_frame(frame, model, "batch_size", 16, 128, 30, 4)
-        self._create_slider_frame(frame, model, "epochs", 10, 300, 100, 5)
+        self._create_slider_with_label(frame, model, "batch_size", 16, 128, 30, 4)
+        self._create_slider_with_label(frame, model, "epochs", 10, 300, 100, 5)
 
         return frame
 

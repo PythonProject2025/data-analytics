@@ -17,9 +17,6 @@ class DataFilteringPage(ctk.CTkFrame):
     def __init__(self, parent,file_path=None,file_name=None,data=None,**page_state):
         super().__init__(parent, corner_radius=0)
 
-
-       
-
         self.font_normal = StyleManager.get_font("normal")
         self.font_label = StyleManager.get_font("label")
         self.color_secondary = StyleManager.get_color("secondary")
@@ -46,12 +43,10 @@ class DataFilteringPage(ctk.CTkFrame):
         
 
         self.file_name = file_name or "No file Uploaded"
-        print(self.file_name)
         self.file_path=file_path
-        print("Filepath=",file_path)
         self.current_segment_index = 0
         window_height = self.winfo_screenheight()  # Get the total screen height
-        right_frame_height = int(0.8 * window_height)  # 60% of the screen height
+        right_frame_height = int(0.8 * window_height)
 
         self.segment_completion = {
                                     "Select Filter Process": False,
@@ -71,7 +66,6 @@ class DataFilteringPage(ctk.CTkFrame):
                
 
             except Exception as e:
-                print(f"Error loading CSV: {e}")
                 self.data = pd.DataFrame() 
         else:
             self.data = pd.DataFrame()  #  If no file, use empty DataFrame
@@ -102,7 +96,7 @@ class DataFilteringPage(ctk.CTkFrame):
         self.cancel_button = ctk.CTkButton(self.left_frame, text="X", width=30, height=25, command=lambda:self.cancel_file())
         self.cancel_button.grid(row=0, column=1, padx=10, pady=10)
 
-        # Second Frame (Dropdown & Graph Display) - Increased Size
+        # Second Frame (Dropdown & Graph Display)
         self.graph_frame = ctk.CTkScrollableFrame(self.left_frame, fg_color=StyleManager.COLORS.get("Default Mode"), width = 500, corner_radius=10, height=1050)  # Increased Height
         self.graph_frame.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
         self.left_frame.grid_rowconfigure(1, weight=1)  # Keep left frame standard but allow graph frame to take space
@@ -112,9 +106,7 @@ class DataFilteringPage(ctk.CTkFrame):
         self.graph_frame.grid_rowconfigure(1, weight=4)  # Allow graph display to expands
         self.graph_frame.grid_columnconfigure(0, weight=1)
 
-          # `sticky="n"` keeps it at the top
-
-        # Graph Display Area (Expanded)
+        # Graph Display Area
         self.graph_display = ctk.CTkFrame(self.graph_frame, fg_color=StyleManager.COLORS.get("Default Mode"), height=1000, corner_radius=10)  # Increased Size
         self.graph_display.grid(row=1, column=0, padx=0, pady=10, sticky="nsew")  # Expands to fill space
 
@@ -340,7 +332,6 @@ class DataFilteringPage(ctk.CTkFrame):
             row_offset=0,
             info_text= INFO_TEXT_DF ["scaling_encoding_frame"]["Test Size"]
         )
-        #self.ui.create_info_button(test_size_frame, "Defines the proportion of the dataset used for testing.", row=0, column=1)
 
         # Random State Slider
         random_state_frame = ctk.CTkFrame(frame, fg_color=self.color_accent, corner_radius=10)
@@ -439,7 +430,6 @@ class DataFilteringPage(ctk.CTkFrame):
                 return  #  Stop further execution
 
         self.segment_completion[current_segment] = True  # Mark as completed
-        print(f"{current_segment} completed!")
 
         # Lock the completed segment
         if current_segment in self.segments:
@@ -449,22 +439,16 @@ class DataFilteringPage(ctk.CTkFrame):
 
         # Print parameter values based on segment
         if current_segment == "Outlier Detection":
-            print(self.radio_var.get())
-            print(self.ui.sliders["Contamination Value"].get())
             self.managers["request"].run_outlier_detection()
 
         elif current_segment == "Interpolation":
-            print(self.interpolation_radio_var.get())
             self.managers["request"].run_interpolation()
 
         elif current_segment == "Smoothing":
-            print(self.smoothing_radio_var.get())
-            print(self.sma_slider.get())
             self.managers["request"].run_smoothing()
 
             #  Print TES Parameters if TES is selected
             if self.smoothing_radio_var.get() == "TES":
-                print("\n--- TES Parameters ---")
                 for key, widget in self.tes_params.items():
                     if isinstance(widget, ctk.CTkSlider):
                         print(f"{key}: {widget.get()}")
@@ -472,10 +456,6 @@ class DataFilteringPage(ctk.CTkFrame):
                         print(f"{key}: {widget.get()}")
 
         elif current_segment == "Scaling & Encoding":
-            print("\n--- Scaling & Encoding Parameters ---")
-            # print(f"Test Size: {self.test_size_slider.get()}")
-            # print(f"Random State: {self.random_state_slider.get()}")
-            print (self.selected_scaling_column)
 
             if hasattr(self, "scaling_scroll_frame") and hasattr(self, "data"):
                 self.managers["data"].load_scaling_columns(self.data.columns[1:])  # Ensure columns are loaded
