@@ -157,11 +157,6 @@ class RequestManager:
         dataobject.data_filtering["Train-Test Split"]["parameters"]["random_state"] = int(round(self.context.ui.sliders["Random State"].get()))
         dataobject.data_filtering["Train-Test Split"]["parameters"]["target_column"] = self.context.selected_scaling_column
 
-
-
-        print(float(self.context.ui.sliders["Test Size"].get()))
-        print(int(round(self.context.ui.sliders["Random State"].get())))
-        
         json_data = {
             "dataobject": dataobject.to_dict(),
             "smoothed_data": data_str

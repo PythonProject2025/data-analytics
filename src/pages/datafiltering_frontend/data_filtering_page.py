@@ -8,7 +8,7 @@ from src.pages.datafiltering_frontend.data_visualization import DataVisualizatio
 from src.pages.datafiltering_frontend.preview_manager import PreviewManager
 import customtkinter as ctk
 from tkinter import Button, PhotoImage,messagebox
-from src.assets_management import assets_manage
+from src.assets_management import assets_manage, load_image
 import pandas as pd
 import threading
 
@@ -18,8 +18,8 @@ class DataFilteringPage(ctk.CTkFrame):
         super().__init__(parent, corner_radius=0)
 
 
-        self.Info_button_image = PhotoImage(file=assets_manage("info_B.png"))
-        self.ui = UIElementManager(info_button_image=self.Info_button_image, parent_widget=self)
+       
+
         self.font_normal = StyleManager.get_font("normal")
         self.font_label = StyleManager.get_font("label")
         self.color_secondary = StyleManager.get_color("secondary")
@@ -27,6 +27,13 @@ class DataFilteringPage(ctk.CTkFrame):
         self.color_transparent = StyleManager.get_color("transparent")
         self.color_info = StyleManager.get_color("info")
         self.parent = parent
+
+        self.Info_button_image = load_image("info_B.png", size=(16, 16))  
+        self.ui = UIElementManager(
+        info_icon_light=parent.info_icon_light,
+        info_icon_dark=parent.info_icon_dark,
+        parent_widget=self
+        )
 
         self.managers = {}  
 
@@ -67,7 +74,7 @@ class DataFilteringPage(ctk.CTkFrame):
                 print(f"Error loading CSV: {e}")
                 self.data = pd.DataFrame() 
         else:
-            self.data = pd.DataFrame()  # ✅ If no file, use empty DataFrame
+            self.data = pd.DataFrame()  #  If no file, use empty DataFrame
             self.column_names = []
             self.column_name = None
 
@@ -83,20 +90,20 @@ class DataFilteringPage(ctk.CTkFrame):
         self.left_frame.grid_columnconfigure(0, weight=2)
 
         # First Frame (Text Box with Cancel Button)
-        self.label_frame = ctk.CTkFrame(self.left_frame, fg_color= StyleManager.COLORS.get("Default Mode"), corner_radius=10,height=50)
+        self.label_frame = ctk.CTkFrame(self.left_frame, fg_color=StyleManager.COLORS.get("Default Mode"), corner_radius=10,height=50)
         self.label_frame.grid(row=0, column=0, padx=10, pady=10, sticky="ew")
         self.left_frame.grid_rowconfigure(0, weight=0)
         self.label = ctk.CTkLabel(self.label_frame, text=self.file_name, font=("Inter", 16, "bold"))
         self.label.place(relx=0.5, rely=0.5, anchor="center")
         self.preview_label = ctk.CTkLabel(self.label_frame, text="Preview", font=("Inter", 12, "bold"),
-                                  text_color="blue", cursor="hand2")
+                                  text_color="red", cursor="hand2")
         self.preview_label.place(relx=0.9, rely=0.5, anchor="center")  # Adjusted position
         self.preview_label.bind("<Button-1>", lambda event:  self.managers["preview"].preview_csv_popup())
         self.cancel_button = ctk.CTkButton(self.left_frame, text="X", width=30, height=25, command=lambda:self.cancel_file())
         self.cancel_button.grid(row=0, column=1, padx=10, pady=10)
 
         # Second Frame (Dropdown & Graph Display) - Increased Size
-        self.graph_frame = ctk.CTkScrollableFrame(self.left_frame, fg_color="#E0E0E0", width = 500, corner_radius=10, height=1050)  # Increased Height
+        self.graph_frame = ctk.CTkScrollableFrame(self.left_frame, fg_color=StyleManager.COLORS.get("Default Mode"), width = 500, corner_radius=10, height=1050)  # Increased Height
         self.graph_frame.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
         self.left_frame.grid_rowconfigure(1, weight=1)  # Keep left frame standard but allow graph frame to take space
 
@@ -108,14 +115,14 @@ class DataFilteringPage(ctk.CTkFrame):
           # `sticky="n"` keeps it at the top
 
         # Graph Display Area (Expanded)
-        self.graph_display = ctk.CTkFrame(self.graph_frame, fg_color="#D1D1D1", height=1000, corner_radius=10)  # Increased Size
+        self.graph_display = ctk.CTkFrame(self.graph_frame, fg_color=StyleManager.COLORS.get("Default Mode"), height=1000, corner_radius=10)  # Increased Size
         self.graph_display.grid(row=1, column=0, padx=0, pady=10, sticky="nsew")  # Expands to fill space
 
 
         self.Info_button_image = PhotoImage(file=assets_manage("info_B.png"))
 
         # Right Side Frame (Segmented Buttons)
-        self.right_frame = ctk.CTkScrollableFrame(self, fg_color="#171821", width=300 , height= right_frame_height)
+        self.right_frame = ctk.CTkScrollableFrame(self, fg_color=StyleManager.COLORS.get("Default Mode"), width=300 , height= right_frame_height)
         self.right_frame.grid(row=0, column=1, sticky="en", padx=10, pady=10)
         self.right_frame.grid_columnconfigure(0, weight=1)
       
@@ -127,7 +134,7 @@ class DataFilteringPage(ctk.CTkFrame):
         self.segmented_frame.set("Outlier Detection")
 
         # Frame that holds all segment contents
-        self.segment_container = ctk.CTkFrame(self.right_frame, fg_color="transparent")
+        self.segment_container = ctk.CTkFrame(self.right_frame, fg_color=StyleManager.COLORS.get("Default Mode"))
         self.segment_container.grid(row=1, column=0, sticky="s", padx=10, pady=10)
 
         # Define ordered segment list
@@ -191,7 +198,7 @@ class DataFilteringPage(ctk.CTkFrame):
             options=["Isolation Forest", "IQR"],
             grid_positions=[(1, 0), (1, 1)],
             info_text= INFO_TEXT_DF ["segment_frame"]["Select Method"],
-            command=lambda: self.toggle_slider(frame,True)
+ 			command=lambda: self.toggle_slider(frame,True)
         )
 
         slider_frame = ctk.CTkFrame(frame, fg_color=self.color_accent, corner_radius=10)
@@ -202,7 +209,7 @@ class DataFilteringPage(ctk.CTkFrame):
             label_text="Contamination Value",
             min_val=0.00,
             max_val=0.50,
-            default_val=0.0,
+            default_val=0.2,
             steps=20,
             row_offset=0,
             info_text= INFO_TEXT_DF ["segment_frame"]["Contamination Value"]
@@ -397,7 +404,7 @@ class DataFilteringPage(ctk.CTkFrame):
         if self.current_segment:
             self.current_segment.grid_forget()
 
-        # ✅ Show correct frame when Scaling & Encoding is selected directly
+        #  Show correct frame when Scaling & Encoding is selected directly
         if segment_name == "Scaling & Encoding":
             self.current_segment = self.create_scaling_encoding_frame()
             self.segmented_frame.configure(values=["Scaling & Encoding"])
@@ -421,7 +428,7 @@ class DataFilteringPage(ctk.CTkFrame):
             self.move_to_next_segment()
             return
         
-         # ✅ Check for column selection if in "Outlier Detection"
+         #  Check for column selection if in "Outlier Detection"
         if current_segment == "Outlier Detection":
             selected_columns = [
                 child.cget("text") for child in self.scroll_frame.winfo_children()
@@ -429,7 +436,7 @@ class DataFilteringPage(ctk.CTkFrame):
             ]
             if not selected_columns:
                 messagebox.showerror("Error", "You must select at least one column before proceeding!")
-                return  # 🚫 Stop further execution
+                return  #  Stop further execution
 
         self.segment_completion[current_segment] = True  # Mark as completed
         print(f"{current_segment} completed!")
@@ -455,7 +462,7 @@ class DataFilteringPage(ctk.CTkFrame):
             print(self.sma_slider.get())
             self.managers["request"].run_smoothing()
 
-            # ✅ Print TES Parameters if TES is selected
+            #  Print TES Parameters if TES is selected
             if self.smoothing_radio_var.get() == "TES":
                 print("\n--- TES Parameters ---")
                 for key, widget in self.tes_params.items():
@@ -474,12 +481,12 @@ class DataFilteringPage(ctk.CTkFrame):
                 self.managers["data"].load_scaling_columns(self.data.columns[1:])  # Ensure columns are loaded
                 self.managers["request"].run_scaling_and_encoding()
 
-        # ✅ Remove Filtering Segments After Smoothing Completion
+        #  Remove Filtering Segments After Smoothing Completion
         if current_segment == "Smoothing":
             self.visible_segments = ["Scaling & Encoding"]
 
-    
-           # ✅ Update button visibility
+
+           #  Update button visibility
         self.managers["button"].update_buttons_visibility()
 
         # Enable the next segment in the segmented frame
@@ -508,11 +515,11 @@ class DataFilteringPage(ctk.CTkFrame):
             self.visible_segments.append("Smoothing")
 
         elif current_segment == "Smoothing":
-            # ✅ Remove previous tabs & show only Scaling & Encoding
+            #  Remove previous tabs & show only Scaling & Encoding
             self.visible_segments = ["Scaling & Encoding"]
 
         elif current_segment == "Scaling & Encoding":
-            # ✅ Hide submit button once Scaling & Encoding is completed
+            #  Hide submit button once Scaling & Encoding is completed
             self.submit_button.configure(state="disabled")
             return
 
@@ -578,16 +585,16 @@ class DataFilteringPage(ctk.CTkFrame):
         
         page_name = self.__class__.__name__  # Get the page's class name
 
-        self.parent.file_paths[page_name] = None  # ✅ Reset file path for this page
-        self.parent.file_names[page_name] = None  # ✅ Reset file name for this page
-        self.parent.page_data[page_name] = None   # ✅ Reset data for this page
+        self.parent.file_paths[page_name] = None  #  Reset file path for this page
+        self.parent.file_names[page_name] = None  #  Reset file name for this page
+        self.parent.page_data[page_name] = None   #  Reset data for this page
 
-        # ✅ Remove the sidebar button for this page only
+        #  Remove the sidebar button for this page only
         self.parent.update_sidebar_buttons(page_name, action="remove")
 
-        # ✅ Reset this page instance so it opens fresh on next upload
+        #  Reset this page instance so it opens fresh on next upload
         if hasattr(self.parent, f"{page_name}_instance"):
             delattr(self.parent, f"{page_name}_instance")
 
-        # ✅ Go back to file upload page
+        #  Go back to file upload page
         self.parent.show_page("file_upload")

@@ -23,10 +23,11 @@ class StyleManager:
     @staticmethod
     def get_color(name):
         color = StyleManager.COLORS.get(name, "#FFFFFF")
-        if isinstance(color, tuple):
-            return color[0] if ctk.get_appearance_mode() == "Light" else color[1]
-        return color
+        # if isinstance(color, tuple):
+        #     return color[0] if ctk.get_appearance_mode() == "Light" else color[1]
+        # return color
 
     @staticmethod
     def get_font(name):
         return StyleManager.FONTS.get(name, ("Inter", 12))
+

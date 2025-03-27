@@ -42,16 +42,18 @@ class AIUIManager:
     def create_problem_selection_frame(self):
         frame = ctk.CTkFrame(self.context.segment_container, fg_color=self.color_secondary, corner_radius=10)
         frame.grid_columnconfigure(0, weight=1)
+        frame.grid(sticky="ew")
 
         radio_frame = ctk.CTkFrame(frame, fg_color=self.color_accent, corner_radius=10)
-        radio_frame.grid(row=1, column=0, padx=30, pady=15, sticky="w")
+        radio_frame.grid(row=0, column=0, padx=10, pady=15, sticky="sew")
 
         self.ui.create_radio_buttons(
             parent=radio_frame,
-            label_text="",
+            label_text="Select Problem Type",
             variable=self.context.problem_var,
             options=["Regression", "Classification"],
-            grid_positions=[(0, 0), (1, 0)]
+            grid_positions=[(1, 0), (2, 0)],
+            info_text=INFO_TEXT_AI["problem_selection"]["type"]
         )
 
         return frame
@@ -98,50 +100,55 @@ class AIUIManager:
         frame = ctk.CTkFrame(self.context.segment_container, fg_color=self.color_secondary, corner_radius=10)
         frame.grid_columnconfigure(0, weight=1)
         for i, (label, min_val, max_val, default_val) in enumerate(sliders):
-            self._create_slider_frame(frame, model_name, label, min_val, max_val, default_val, i)
+            self._create_slider_with_label(frame, model_name, label, min_val, max_val, default_val, i)
         return frame
 
-    def _create_slider_frame(self, parent, model_name, label_text, from_, to, default, row):
-        if model_name not in self.context.sliders:
-            self.context.sliders[model_name] = {}
+    def _create_slider_with_label(self, parent, model, label, min_val, max_val, default_val, row):
+        if model not in self.context.sliders:
+            self.context.sliders[model] = {}
 
-        frame = ctk.CTkFrame(parent, fg_color="#D1D1D1", corner_radius=10)
-        frame.grid(row=row, column=0, padx=10, pady=10, sticky="nsew")
+        frame = ctk.CTkFrame(parent, fg_color=self.color_accent, corner_radius=10)
+        frame.grid(row=row, column=0, padx=10, pady=10, sticky="ew")
         frame.grid_columnconfigure(0, weight=1)
 
-        label = ctk.CTkLabel(frame, text=label_text, font=self.font_label, fg_color=self.color_info)
-        label.grid(row=0, column=0, sticky="nsew")
-        self.ui.create_info_button(frame, INFO_TEXT_AI.get(model_name, {}).get(label_text, "No info"), row=0, column=1)
+        label_widget = ctk.CTkLabel(frame, text=label, font=self.font_label, fg_color=self.color_info)
+        label_widget.grid(row=0, column=0, sticky="w")
+        self.ui.create_info_button(frame, INFO_TEXT_AI.get(model, {}).get(label, "No info"), row=0, column=1)
 
-        value_label = ctk.CTkLabel(frame, text=f"Value: {default}", font=self.font_normal)
-        value_label.grid(row=1, column=0, pady=5)
+        value_label = ctk.CTkLabel(frame, text=f"Value: {default_val:.2f}", font=self.font_normal)
+        value_label.grid(row=1, column=0, pady=5, sticky="w")
 
         def update_value(value):
             val = float(value)
             value_label.configure(text=f"Value: {int(val)}" if val.is_integer() else f"Value: {val:.2f}")
 
-        steps = (to - from_) if isinstance(from_, int) and isinstance(to, int) else 100
+        steps = (max_val - min_val) if isinstance(min_val, int) and isinstance(max_val, int) else 100
 
-        slider = ctk.CTkSlider(frame, from_=from_, to=to, number_of_steps=steps, command=update_value)
-        slider.set(default)
-        slider.grid(row=2, column=0, padx=10, sticky="ew")
+        slider = ctk.CTkSlider(frame, from_=min_val, to=max_val, number_of_steps=steps, command=update_value)
+        slider.set(default_val)
+        slider.grid(row=2, column=0, columnspan=2, padx=10, sticky="ew")
 
-        self.context.sliders[model_name][label_text] = slider
+        self.context.sliders[model][label] = slider
 
-    def _create_combobox(self, parent, model_name, label, options, default, row):
-        if model_name not in self.context.comboboxes:
-            self.context.comboboxes[model_name] = {}
+    def _create_combobox(self, parent, model, label, options, default, row):
+        if model not in self.context.comboboxes:
+            self.context.comboboxes[model] = {}
 
+        combo_frame = ctk.CTkFrame(parent, fg_color=self.color_accent, corner_radius=10)
+        combo_frame.grid(row=row, column=0, padx=10, pady=10, sticky="ew")
+        combo_frame.grid_columnconfigure(0, weight=1)
+
+        label_widget = ctk.CTkLabel(combo_frame, text=label, font=self.font_label, fg_color=self.color_info)
+        label_widget.grid(row=0, column=0, sticky="w")
+        self.ui.create_info_button(combo_frame, INFO_TEXT_AI.get(model, {}).get(label, "No info"), row=0, column=1)
+
+        combo = ctk.CTkComboBox(combo_frame, values=options)
+        combo.set(default)
+        combo.grid(row=1, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
+
+        self.context.comboboxes[model][label] = combo
+
+    def _frame(self, parent, row):
         frame = ctk.CTkFrame(parent, fg_color=self.color_accent, corner_radius=10)
         frame.grid(row=row, column=0, padx=10, pady=10, sticky="nsew")
-        frame.grid_columnconfigure(0, weight=1)
-
-        label_widget = ctk.CTkLabel(frame, text=label, font=self.font_label, fg_color=self.color_info)
-        label_widget.grid(row=0, column=0, sticky="nsew")
-        self.ui.create_info_button(frame, INFO_TEXT_AI.get(model_name, {}).get(label, "No info"), row=0, column=1)
-
-        combobox = ctk.CTkComboBox(frame, values=options)
-        combobox.set(default)
-        combobox.grid(row=1, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
-
-        self.context.comboboxes[model_name][label] = combobox
+        return frame

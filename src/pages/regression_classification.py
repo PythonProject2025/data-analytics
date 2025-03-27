@@ -5,21 +5,29 @@ import seaborn as sns
 from matplotlib import pyplot as plt
 import pandas as pd
 import requests
-from sklearn.metrics import ConfusionMatrixDisplay
 from src.models.data_object_class import DataObject
+from sklearn.metrics import ConfusionMatrixDisplay
 from src.assets_management import assets_manage, load_image
 import re
 import tkinter as tk
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from tkinter import ttk
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from src.utils.ui_element_manager import UIElementManager
+from src.utils.ui_style_manager import StyleManager
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-
 
 class RegressionClassificationPage(ctk.CTkFrame):
     def __init__(self, parent,file_path=None,file_name=None,data=None,**page_state):
         super().__init__(parent, corner_radius=0)
+        self.parent_widget = parent
 
+        self.Info_button_image = load_image("info_B.png", size=(16, 16))  
+        self.ui = UIElementManager(
+        info_icon_light=parent.info_icon_light,
+        info_icon_dark=parent.info_icon_dark,
+        parent_widget=self
+        )
         self.parent=parent
         self.file_data=data
         self.file_name = file_name
@@ -28,9 +36,9 @@ class RegressionClassificationPage(ctk.CTkFrame):
         self.dropdowns = {}
         self.textboxes = {}
 
-         # ✅ Check if data is available
+         # Check if data is available
         if self.file_data is not None:
-            print(f"✅ Received Preprocessed Data: {self.file_name}")
+            print(f" Received Preprocessed Data: {self.file_name}")
             print(self.file_data.head())  # Display first few rows for verification
 
         # Configure grid
@@ -47,20 +55,20 @@ class RegressionClassificationPage(ctk.CTkFrame):
         self.left_frame.grid_columnconfigure(0, weight=2)
 
         # First Frame (Text Box with Cancel Button)
-        self.label_frame = ctk.CTkFrame(self.left_frame, fg_color="#E0E0E0", corner_radius=10,height=50)
+        self.label_frame = ctk.CTkFrame(self.left_frame, fg_color=StyleManager.COLORS.get("Default Mode"), corner_radius=10,height=50)
         self.label_frame.grid(row=0, column=0, padx=10, pady=10, sticky="ew")
         self.left_frame.grid_rowconfigure(0, weight=0)
         self.label = ctk.CTkLabel(self.label_frame, text=self.file_name, font=("Inter", 16, "bold"))
         self.label.place(relx=0.5, rely=0.5, anchor="center")
         self.preview_label = ctk.CTkLabel(self.label_frame, text="Preview", font=("Inter", 12, "bold"),
-                                  text_color="blue", cursor="hand2")
+                                  text_color="red", cursor="hand2")
         self.preview_label.place(relx=0.9, rely=0.5, anchor="center")  # Adjusted position
         self.preview_label.bind("<Button-1>", lambda event: self.preview_data())
         self.cancel_button = ctk.CTkButton(self.left_frame, text="X", width=30, height=25, command=lambda: self.cancel_file())
         self.cancel_button.grid(row=0, column=1, padx=10, pady=10)
 
         # Second Frame (Dropdown & Graph Display) - Increased Size
-        self.graph_frame = ctk.CTkFrame(self.left_frame, fg_color="#E0E0E0", corner_radius=10, height=350)  # Increased Height
+        self.graph_frame = ctk.CTkFrame(self.left_frame, fg_color=StyleManager.COLORS.get("Default Mode"), corner_radius=10, height=350)  # Increased Height
         self.graph_frame.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
         self.left_frame.grid_rowconfigure(1, weight=1)  # Keep left frame standard but allow graph frame to take space
 
@@ -71,14 +79,13 @@ class RegressionClassificationPage(ctk.CTkFrame):
 
        
         # Graph Display Area (Expanded)
-        self.graph_display = ctk.CTkFrame(self.graph_frame, fg_color="#D1D1D1", height=250, corner_radius=10)  # Increased Size
+        self.graph_display = ctk.CTkFrame(self.graph_frame, fg_color=StyleManager.COLORS.get("Default Mode"), height=250, corner_radius=10)  # Increased Size
         self.graph_display.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")  # Expands to fill space
 
 
-        self.Info_button_image = PhotoImage(file=assets_manage("info_B.png"))
-
+        
         # Right Side Frame (Segmented Buttons for AI Model)
-        self.right_frame = ctk.CTkScrollableFrame(self, fg_color="#171821", width=300 , height= right_frame_height)
+        self.right_frame = ctk.CTkScrollableFrame(self, fg_color=StyleManager.COLORS.get("Default Mode"), width=300 , height= right_frame_height)
         self.right_frame.grid(row=0, column=1, sticky="en", padx=10, pady=10)
         self.right_frame.grid_columnconfigure(0, weight=1)
 
@@ -89,7 +96,7 @@ class RegressionClassificationPage(ctk.CTkFrame):
         self.segmented_frame.set("Regression")
 
         # **Container for Segment Content**
-        self.segment_container = ctk.CTkFrame(self.right_frame, fg_color="transparent")
+        self.segment_container = ctk.CTkFrame(self.right_frame, fg_color=StyleManager.COLORS.get("Default Mode"))
         self.segment_container.grid(row=1, column=0, sticky="s", padx=10, pady=10)
 
         # **Create segment frames**
@@ -111,11 +118,11 @@ class RegressionClassificationPage(ctk.CTkFrame):
 
     def create_regression_frame(self):
         """Creates the Regression segment frame with dynamic parameters."""
-        frame = ctk.CTkFrame(self.segment_container, fg_color="#E0E0E0", corner_radius=10)
+        frame = ctk.CTkFrame(self.segment_container, fg_color=StyleManager.COLORS.get("Default Mode"), corner_radius=10)
         frame.grid_columnconfigure(0, weight=1)
 
         # **Regression Model Selection (Radio Buttons)**
-        radio_frame = ctk.CTkFrame(frame, fg_color="#D1D1D1", corner_radius=10)
+        radio_frame = ctk.CTkFrame(frame, fg_color=StyleManager.COLORS.get("accent"), corner_radius=10)
         radio_frame.grid(row=0, column=0, padx=10, pady=15, sticky="new")
 
         self.regression_radio_var = ctk.StringVar(value="Linear Regression")  # Default
@@ -128,7 +135,7 @@ class RegressionClassificationPage(ctk.CTkFrame):
         ctk.CTkRadioButton(radio_frame, text="Lasso Regression", variable=self.regression_radio_var,
                            value="Lasso Regression", command=self.toggle_regression_options).grid(row=3, column=0, padx=10, pady=5, sticky="w")
 
-        self.regression_options_frame = ctk.CTkFrame(frame, fg_color="transparent")
+        self.regression_options_frame = ctk.CTkFrame(frame, fg_color=StyleManager.COLORS.get("accent"))
         self.regression_options_frame.grid(row=1, column=0, padx=10, pady=15, sticky="new")
         
            
@@ -141,11 +148,11 @@ class RegressionClassificationPage(ctk.CTkFrame):
 
     def create_classification_frame(self):
         """Creates the Classification segment frame with dynamic parameters."""
-        frame = ctk.CTkFrame(self.segment_container, fg_color="#E0E0E0", corner_radius=10)
+        frame = ctk.CTkFrame(self.segment_container, fg_color=StyleManager.COLORS.get("Default Mode"), corner_radius=10)
         frame.grid_columnconfigure(0, weight=1)
 
         # **Classification Model Selection (Radio Buttons)**
-        radio_frame = ctk.CTkFrame(frame, fg_color="#D1D1D1", corner_radius=10)
+        radio_frame = ctk.CTkFrame(frame, fg_color=StyleManager.COLORS.get("accent"), corner_radius=10)
         radio_frame.grid(row=0, column=0, padx=10, pady=15, sticky="new")
 
         self.classification_radio_var = ctk.StringVar(value="RandomForest")  # Default
@@ -172,11 +179,13 @@ class RegressionClassificationPage(ctk.CTkFrame):
 
            
 
-      
+            #  Show X_Label only for Linear & Polynomial Regression
+        # if model == "Linear Regression" :
+            # self.create_textbox(self.regression_options_frame, "X_Label", "xlabel")
            
         if model == "Polynomial Regression":
             self.create_textbox(self.regression_options_frame, "Polynomial Degree","polynomial")
-            #self.create_textbox(self.regression_options_frame, "X_Label", "xlabel")
+            # self.create_textbox(self.regression_options_frame, "X_Label", "xlabel")
         
 
         elif model == "Ridge Regression":
@@ -222,70 +231,153 @@ class RegressionClassificationPage(ctk.CTkFrame):
     
 
     def create_slider(self, parent, label_text, min_val, max_val, default):
-        """Creates a labeled slider with info button."""
-        frame = ctk.CTkFrame(parent, fg_color="#D1D1D1", corner_radius=10)
+        """Creates a labeled slider with info button and cleaner layout."""
+
+        # Outer container
+        frame = ctk.CTkFrame(
+            parent,
+            fg_color=StyleManager.COLORS.get("accent"),
+            corner_radius=10
+        )
         frame.grid(row=len(parent.winfo_children()), column=0, padx=10, pady=10, sticky="nsew")
 
-        label = ctk.CTkLabel(frame, text=label_text, font=("Inter", 12, "bold"), fg_color="#A0A0A0")
-        label.grid(row=0, column=0, sticky="nesw")
+        # Label row (label + info icon)
+        label_frame = ctk.CTkFrame(frame, fg_color="transparent")
+        label_frame.grid(row=0, column=0, columnspan=2, sticky="ew", padx=10, pady=(5, 0))
+        label_frame.grid_columnconfigure(0, weight=1)
 
-        self.create_info_button(frame, f"Information about {label_text}")
+        label = ctk.CTkLabel(
+            label_frame,
+            text=label_text,
+            font=StyleManager.get_font("label"),
+            fg_color="transparent",
+            text_color=StyleManager.get_color("Text Color")
+        )
+        label.grid(row=0, column=0, sticky="w")
 
-        value_label = ctk.CTkLabel(frame, text=f"Value: {default}", font=("Inter", 12))
-        value_label.grid(row=1, column=0, pady=5)
+        self.create_info_button(label_frame, f"Information about {label_text}", row=0, column=1)
 
+        # Value label
+        value_label = ctk.CTkLabel(
+            frame,
+            text=f"Value: {default}",
+            font=StyleManager.get_font("normal"),
+            text_color=StyleManager.get_color("Text Color")
+        )
+        value_label.grid(row=1, column=0, padx=10, pady=(5, 0), sticky="w")
+
+        # Slider itself
         def update_value(value):
-            value_label.configure(text=f"Value: {float(value):.0f}" if isinstance(value, float) else f"Value: {int(value)}")
+            formatted = f"{float(value):.0f}" if isinstance(value, float) else f"{int(value)}"
+            value_label.configure(text=f"Value: {formatted}")
 
-        slider = ctk.CTkSlider(frame, from_=min_val, to=max_val, command=update_value)
+        slider = ctk.CTkSlider(
+            frame,
+            from_=min_val,
+            to=max_val,
+            command=update_value,
+            button_color=StyleManager.get_color("primary"),
+            progress_color=StyleManager.get_color("primary")
+        )
         slider.set(default)
-        slider.grid(row=2, column=0, padx=10, sticky="ew")
+        slider.grid(row=2, column=0, padx=10, pady=(5, 10), sticky="ew")
 
-        self.sliders[label_text] = slider  # Store reference
+        self.sliders[label_text] = slider
+
 
     def create_dropdown(self, parent, label_text, options):
-        """Creates a labeled dropdown menu."""
-        frame = ctk.CTkFrame(parent, fg_color="#D1D1D1", corner_radius=10)
+        """Creates a labeled dropdown menu with info button and styled layout."""
+
+        # Outer rounded frame
+        frame = ctk.CTkFrame(
+            parent,
+            fg_color=StyleManager.get_color("accent"),
+            corner_radius=10
+        )
         frame.grid(row=len(parent.winfo_children()), column=0, padx=10, pady=10, sticky="nsew")
 
-        label = ctk.CTkLabel(frame, text=label_text, font=("Inter", 12, "bold"), fg_color="#A0A0A0")
-        label.grid(row=0, column=0, sticky="nesw")
+        # Label row frame: Label + Info Button
+        label_frame = ctk.CTkFrame(frame, fg_color="transparent")
+        label_frame.grid(row=0, column=0, columnspan=2, sticky="ew", padx=10, pady=(5, 0))
+        label_frame.grid_columnconfigure(0, weight=1)
 
-        self.create_info_button(frame, f"Information about {label_text}")
+        label = ctk.CTkLabel(
+            label_frame,
+            text=label_text,
+            font=StyleManager.get_font("label"),
+            text_color=StyleManager.get_color("Text Color"),
+            fg_color="transparent"
+        )
+        label.grid(row=0, column=0, sticky="w")
 
-        combobox = ctk.CTkComboBox(frame, values=options)
+        self.create_info_button(label_frame, f"Information about {label_text}", row=0, column=1)
+
+        # Dropdown (ComboBox)
+        combobox = ctk.CTkComboBox(
+            frame,
+            values=options,
+            fg_color=StyleManager.get_color("secondary"),
+            text_color=StyleManager.get_color("Text Color"),
+            dropdown_fg_color=StyleManager.get_color("secondary"),
+            dropdown_text_color=StyleManager.get_color("Text Color"),
+            font=StyleManager.get_font("normal")
+        )
         combobox.set(options[0])
-        combobox.grid(row=1, column=0, padx=10, pady=5, sticky="ew")
+        combobox.grid(row=1, column=0, padx=10, pady=(5, 10), sticky="ew")
 
         self.dropdowns[label_text] = combobox  # Store reference
+
 
 
     def create_textbox(self, parent, label_text, mode):
         """
         Creates a labeled textbox with validation.
-        
+
         mode:
             - "polynomial": Allows 1-5 single-digit numbers (0-9), separated by commas.
             - "alpha": Allows 1-5 float values (0-1) with at least 4 decimal places, separated by commas.
             - "xlabel": Allows only strings and special characters (No numbers allowed).
         """
-        frame = ctk.CTkFrame(parent, fg_color="#D1D1D1", corner_radius=10)
+        # Outer container with rounded corners
+        frame = ctk.CTkFrame(
+            parent,
+            fg_color=StyleManager.get_color("accent"),
+            corner_radius=10
+        )
         frame.grid(row=len(parent.winfo_children()), column=0, padx=10, pady=10, sticky="nsew")
 
-        label = ctk.CTkLabel(frame, text=label_text, font=("Inter", 12, "bold"), fg_color="#A0A0A0")
-        label.grid(row=0, column=0, sticky="nesw")
+        # Create a nested frame for the label + info icon
+        label_frame = ctk.CTkFrame(frame, fg_color="transparent")
+        label_frame.grid(row=0, column=0, columnspan=2, sticky="ew", padx=10, pady=(5, 0))
+        label_frame.grid_columnconfigure(0, weight=1)
 
-        self.create_info_button(frame, f"Information about {label_text}")
+        # Label
+        label = ctk.CTkLabel(
+            label_frame,
+            text=label_text,
+            font=StyleManager.get_font("label"),
+            fg_color="transparent",
+            text_color=StyleManager.get_color("Text Color")
+        )
+        label.grid(row=0, column=0, sticky="w")
+
+        # Info Button
+        self.create_info_button(label_frame, f"Information about {label_text}", row=0, column=1)
+
+        # Entry wrapper to get clean border radius
+        entry_wrapper = ctk.CTkFrame(frame, fg_color=StyleManager.get_color("accent"), corner_radius=8)
+        entry_wrapper.grid(row=1, column=0, padx=10, pady=5, sticky="ew")
 
         entry_var = tk.StringVar()
-        entry = ctk.CTkEntry(frame, textvariable=entry_var)
-        entry.grid(row=1, column=0, padx=10, pady=5, sticky="ew")
+        entry = ctk.CTkEntry(entry_wrapper, textvariable=entry_var, border_width=0)
+        entry.pack(fill="x", padx=8, pady=6)
 
-        # ✅ Add Validation
+        # Add Validation
         if mode == "xlabel":
             entry.bind("<KeyRelease>", self.validate_x_label)
 
-        self.textboxes[label_text] = entry_var  # Store reference for validation on submit
+        self.textboxes[label_text] = entry_var  # Store for validation on submit
+
 
 
     def validate_x_label(self, event):
@@ -298,19 +390,53 @@ class RegressionClassificationPage(ctk.CTkFrame):
 
 
     def show_info_dialog(self, text):
-        """Displays an information dialog box."""
-        dialog = ctk.CTkToplevel(self)
+        # The popup window
+        dialog = ctk.CTkToplevel(self.parent_widget)
         dialog.title("Information")
-        dialog.geometry("300x150")
+
+        # --- dimensions ---
+        dialog_width = 350
+        dialog_height = 180
+
+        # --- Center the dialog on the screen ---
+        screen_width = dialog.winfo_screenwidth()
+        screen_height = dialog.winfo_screenheight()
+        x = int((screen_width / 2) - (dialog_width / 2))
+        y = int((screen_height / 2) - (dialog_height / 2))
+        dialog.geometry(f"{dialog_width}x{dialog_height}+{x}+{y}")
+
+        # --- Make it modal ---
         dialog.grab_set()
-        ctk.CTkLabel(dialog, text=text, font=("Inter", 12)).pack(pady=20)
-        ctk.CTkButton(dialog, text="OK", command=dialog.destroy).pack()
+
+        # --- Wrapped Label ---
+        ctk.CTkLabel(
+            dialog,
+            text=text,
+            font=self.font_normal,
+            wraplength=300,
+            justify="center"
+        ).pack(padx=20, pady=(20, 10), expand=True)
 
 
-    def create_info_button(self,parent, text):
-            """Creates an inline info button next to the label."""
-            button = Button(parent, text="", image=self.Info_button_image, width=8, height=8, command=lambda: self.show_info_dialog(text))
-            button.grid(row=0, column=1, padx=5, sticky="w") 
+        # --- OK Button ---
+        ctk.CTkButton(
+            dialog,
+            text="OK",
+            command=dialog.destroy
+        ).pack(pady=(0, 20))
+
+    def create_info_button(self, parent, text, row=0, column=1):
+            button = ctk.CTkButton(
+                parent,
+                text="",  
+                image=self.Info_button_image,  # CTkImage
+                width=24,  
+                height=24,
+                fg_color="transparent",  # Make button background transparent
+                hover_color="#d3d3d3",  # Optional: subtle hover effect
+                command=lambda: self.show_info_dialog(text)
+            )
+            button.grid(row=row, column=column, padx=5, sticky="w")
 
     def submit_action(self):
         """Handles submission and prints selected model parameters."""
@@ -515,7 +641,6 @@ class RegressionClassificationPage(ctk.CTkFrame):
             )
  
             if response.status_code == 200:
-                    self.responce_received = True
                     response_data = response.json()
                     print(response_data)
                     self.display_regression_results(response_data)
@@ -554,8 +679,8 @@ class RegressionClassificationPage(ctk.CTkFrame):
                         y_test = response_data["y_test"]
                         x_label = response_data["x_label"]
                         y_label = response_data["y_label"]
-
-                        # Create dummy x-axis if not provided
+                        
+                    # Create dummy x-axis if not provided
                         x_data = np.arange(len(y_test))
                     
                         self.polynomial_plot(x_data, y_test, y_pred, x_label, y_label, best_polynomial_degree)
@@ -1030,4 +1155,3 @@ class RegressionClassificationPage(ctk.CTkFrame):
         canvas = FigureCanvasTkAgg(fig, master= self.graph_display)
         canvas.draw()
         canvas.get_tk_widget().pack(fill="both", expand=True)
-

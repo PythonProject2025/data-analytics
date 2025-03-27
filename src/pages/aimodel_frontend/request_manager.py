@@ -18,8 +18,7 @@ class AIRequestManager:
         backend_model_key = model_map.get(selected_model, selected_model)
 
         dataobject = DataObject()
-        print(f"file_data type: {type(self.context.file_data)}")
-        print(f"file_data content: {self.context.file_data}")
+
         # Step 1: Add preprocessed data
         if self.context.file_data is not None:
             for key, value in self.context.file_data.items():
@@ -65,9 +64,9 @@ class AIRequestManager:
         print(f"   - Payload:")
         for key, val in dataobject.ai_model[backend_model_key].items():
             print(f"     • {key}: {val}")
-            
+
+        # Step 7: Send to backend
         self._send_request({"dataobject": dataobject.to_dict()})
-        print("sending")
         print (dataobject.ai_model)
 
     def _send_request(self, json_data):
