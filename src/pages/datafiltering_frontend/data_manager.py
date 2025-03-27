@@ -2,9 +2,11 @@ import pandas as pd
 import customtkinter as ctk
 from tkinter import messagebox
 
+
 class DataManager:
-    def __init__(self, context):
+    def __init__(self, context,managers):
         self.context = context
+        self.managers= managers
 
     def load_csv_columns(self, file_path):
         try:
@@ -80,16 +82,16 @@ class DataManager:
         current_segment = self.context.segmented_frame.get()
 
         if current_segment == "Outlier Detection":
-            command = lambda col: self.context.plot_boxplot(col, cleaned=True)
+            command = lambda col:  self.managers["visualization"].plot_boxplot(col, cleaned=True)
         elif current_segment == "Interpolation":
-            command = lambda col: self.context.plot_line_graph(
+            command = lambda col:  self.managers["visualization"].plot_line_graph(
                 column_name=col,
                 original_data=self.context.data[col],
                 processed_data=self.context.interpolated_data[col],
                 title="Interpolated Data"
             ) if col in self.context.interpolated_data.columns else None
         elif current_segment == "Smoothing":
-            command = lambda col: self.context.plot_line_graph(
+            command = lambda col:  self.managers["visualization"].plot_line_graph(
                 column_name=col,
                 original_data=self.context.data[col],
                 processed_data=self.context.smoothed_data[col],
@@ -99,7 +101,7 @@ class DataManager:
             self.context.preview_scaled_encoded_data()
             return
         else:
-            command = lambda col: self.context.plot_boxplot(col)
+            command = lambda col:  self.managers["visualization"].plot_boxplot(col)
 
         self.context.dropdown = ctk.CTkComboBox(
             self.context.graph_frame,

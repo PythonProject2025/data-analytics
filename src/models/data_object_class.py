@@ -20,7 +20,7 @@ class DataObject:
                 "parameters": {
                     # If SMA, then only window size otherwise options 
                     # from seasonal periods
-                    "window_size": 15,#(Range: 5-100 ) #TAKE USER INPUT
+                    "window_size": None,#(Range: 5-100 ) #TAKE USER INPUT
                     "seasonal_periods": None,#(Range: 1-12) #TAKE USER INPUT
                     "trend": None,#add/mul/None TAKE USER INPUT
                     "seasonal": None,#add/mul/None TAKE USER INPUT

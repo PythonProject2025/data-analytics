@@ -1,0 +1,1451 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Index &mdash; Data Analytics 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Data Analytics
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#overview-of-the-software">Overview of the software</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#purpose-of-integrating-tkinter-with-django">Purpose of Integrating Tkinter with Django</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#separation-of-concerns">Separation of Concerns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#api-based-communication">API-Based Communication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#enhanced-performance">Enhanced Performance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#scalability-and-extensibility">Scalability and Extensibility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#versatile-file-processing">Versatile File Processing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#frontend-tkinter-based-graphical-user-interface-gui">Frontend: Tkinter-Based Graphical User Interface (GUI)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#file-upload-interface">File Upload Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#automated-navigation-system">Automated Navigation System</a></li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#process-selection-module">Process Selection Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#real-time-processing-updates">Real-Time Processing Updates</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#backend-django-based-api-and-processing-engine">Backend: Django-Based API and Processing Engine</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#data-object-and-api-based-data-exchange">Data Object and API-Based Data Exchange</a></li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#rest-api-for-request-handling">REST API for Request Handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#modular-and-scalable-api-architecture">Modular and Scalable API Architecture</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Prerequisites.html">Installation Prerequisites</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Prerequisites.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Prerequisites.html#environment-setup">Environment Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Prerequisites.html#running-the-application">Running the Application</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide.html">Step-by-Step Usage Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide.html#uploading-a-file-and-selecting-a-module">Uploading a File and Selecting a Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide.html#processing-the-data-and-generating-outputs">Processing the Data and Generating Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide.html#interpreting-results-and-refining-analysis">Interpreting Results and Refining Analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">Architecture Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gui.html#front-end-tkinter-gui">Front End: Tkinter GUI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gui.html#main_sphinx.App"><code class="docutils literal notranslate"><span class="pre">App</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#main_sphinx.App.current_page"><code class="docutils literal notranslate"><span class="pre">App.current_page</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#main_sphinx.App.configure_grid"><code class="docutils literal notranslate"><span class="pre">App.configure_grid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#main_sphinx.App.create_sidebar"><code class="docutils literal notranslate"><span class="pre">App.create_sidebar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#main_sphinx.App.load_assets"><code class="docutils literal notranslate"><span class="pre">App.load_assets()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#main_sphinx.App.load_header_image"><code class="docutils literal notranslate"><span class="pre">App.load_header_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#main_sphinx.App.resize_header_image"><code class="docutils literal notranslate"><span class="pre">App.resize_header_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#main_sphinx.App.show_page"><code class="docutils literal notranslate"><span class="pre">App.show_page()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#main_sphinx.App.toggle_mode"><code class="docutils literal notranslate"><span class="pre">App.toggle_mode()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="gui.html#pages.aimodel_page.AImodelPage"><code class="docutils literal notranslate"><span class="pre">AImodelPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.aimodel_page.AImodelPage.change_segment"><code class="docutils literal notranslate"><span class="pre">AImodelPage.change_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.aimodel_page.AImodelPage.create_ann_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_ann_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.aimodel_page.AImodelPage.create_cb_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_cb_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.aimodel_page.AImodelPage.create_combobox_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_combobox_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.aimodel_page.AImodelPage.create_info_button"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_info_button()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.aimodel_page.AImodelPage.create_rf_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_rf_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.aimodel_page.AImodelPage.create_slider_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_slider_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.aimodel_page.AImodelPage.create_xgb_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_xgb_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.aimodel_page.AImodelPage.get_combobox_value"><code class="docutils literal notranslate"><span class="pre">AImodelPage.get_combobox_value()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.aimodel_page.AImodelPage.get_slider_value"><code class="docutils literal notranslate"><span class="pre">AImodelPage.get_slider_value()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.aimodel_page.AImodelPage.messagebox"><code class="docutils literal notranslate"><span class="pre">AImodelPage.messagebox</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.aimodel_page.AImodelPage.preview_data"><code class="docutils literal notranslate"><span class="pre">AImodelPage.preview_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.aimodel_page.AImodelPage.send_request"><code class="docutils literal notranslate"><span class="pre">AImodelPage.send_request()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.aimodel_page.AImodelPage.show_info_dialog"><code class="docutils literal notranslate"><span class="pre">AImodelPage.show_info_dialog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.aimodel_page.AImodelPage.submit_action"><code class="docutils literal notranslate"><span class="pre">AImodelPage.submit_action()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.add_export_send_buttons"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.add_export_send_buttons()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.change_segment"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.change_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.create_interpolation_frame"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.create_interpolation_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.create_process_selection_frame"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.create_process_selection_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.create_scaling_encoding_frame"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.create_scaling_encoding_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.create_segment_frame"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.create_segment_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.create_smoothing_frame"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.create_smoothing_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.export_data"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.export_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.get_data_by_name"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.get_data_by_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.load_csv_columns"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.load_csv_columns()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.lock_segment"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.lock_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.move_to_next_segment"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.move_to_next_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.open_comparison_popup"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.open_comparison_popup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.open_send_popup"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.open_send_popup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.plot_boxplot"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.plot_boxplot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.plot_comparison_graph"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.plot_comparison_graph()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.plot_line_graph"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.plot_line_graph()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.preview_csv"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.preview_csv()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.preview_scaled_encoded_data"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.preview_scaled_encoded_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.run_interpolation"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.run_interpolation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.run_outlier_detection"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.run_outlier_detection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.run_scaling_and_encoding"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.run_scaling_and_encoding()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.run_smoothing"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.run_smoothing()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.send_request"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.send_request()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.show_comparison_data"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.show_comparison_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.show_info_dialog"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.show_info_dialog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.show_loading_message"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.show_loading_message()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.submit_action"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.submit_action()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.toggle_slider"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.toggle_slider()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.toggle_smoothing_options"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.toggle_smoothing_options()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.update_boxplot"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.update_boxplot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.update_buttons_visibility"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.update_buttons_visibility()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.update_comparison_view"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.update_comparison_view()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.data_filtering_page.DataFilteringPage.update_dropdown"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.update_dropdown()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="gui.html#pages.file_upload_page.FileUploadPage"><code class="docutils literal notranslate"><span class="pre">FileUploadPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.file_upload_page.FileUploadPage.upload_file"><code class="docutils literal notranslate"><span class="pre">FileUploadPage.upload_file()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="gui.html#pages.image_processing_page.ImageProcessingPage"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.image_processing_page.ImageProcessingPage.cancel_file"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.cancel_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.image_processing_page.ImageProcessingPage.change_segment"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.change_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.image_processing_page.ImageProcessingPage.create_image_train_frame"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.create_image_train_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.image_processing_page.ImageProcessingPage.create_segment_frame"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.create_segment_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.image_processing_page.ImageProcessingPage.plot_confusion_matrix"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.plot_confusion_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.image_processing_page.ImageProcessingPage.preview_image"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.preview_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.image_processing_page.ImageProcessingPage.show_info_dialog"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.show_info_dialog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.image_processing_page.ImageProcessingPage.submit_action"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.submit_action()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.image_processing_page.ImageProcessingPage.upload_image"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.upload_image()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="gui.html#pages.process_selection_page.ProcessSelectionPage"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.process_selection_page.ProcessSelectionPage.parent"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage.parent</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.process_selection_page.ProcessSelectionPage.file_path"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage.file_path</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.process_selection_page.ProcessSelectionPage.filename"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage.filename</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.process_selection_page.ProcessSelectionPage.__init__"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.process_selection_page.ProcessSelectionPage.create_buttons"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage.create_buttons()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="gui.html#pages.regression_classification.RegressionClassificationPage"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.regression_classification.RegressionClassificationPage.cancel_file"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.cancel_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.regression_classification.RegressionClassificationPage.change_segment"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.change_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.regression_classification.RegressionClassificationPage.clear_frame"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.clear_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.regression_classification.RegressionClassificationPage.create_classification_frame"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_classification_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.regression_classification.RegressionClassificationPage.create_dropdown"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_dropdown()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.regression_classification.RegressionClassificationPage.create_info_button"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_info_button()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.regression_classification.RegressionClassificationPage.create_regression_frame"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_regression_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.regression_classification.RegressionClassificationPage.create_slider"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_slider()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.regression_classification.RegressionClassificationPage.create_textbox"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_textbox()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.regression_classification.RegressionClassificationPage.lasso_plot"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.lasso_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.regression_classification.RegressionClassificationPage.polynomial_plot"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.polynomial_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.regression_classification.RegressionClassificationPage.preview_data"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.preview_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.regression_classification.RegressionClassificationPage.regression_plot"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.regression_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.regression_classification.RegressionClassificationPage.residual_plot"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.residual_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.regression_classification.RegressionClassificationPage.ridge_plot"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.ridge_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.regression_classification.RegressionClassificationPage.send_request_classification"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.send_request_classification()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.regression_classification.RegressionClassificationPage.send_request_regression"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.send_request_regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.regression_classification.RegressionClassificationPage.show_info_dialog"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.show_info_dialog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.regression_classification.RegressionClassificationPage.submit_action"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.submit_action()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.regression_classification.RegressionClassificationPage.toggle_classification_options"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.toggle_classification_options()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.regression_classification.RegressionClassificationPage.toggle_regression_options"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.toggle_regression_options()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="gui.html#pages.help_page.HelpPage"><code class="docutils literal notranslate"><span class="pre">HelpPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.help_page.HelpPage.None"><code class="docutils literal notranslate"><span class="pre">HelpPage.None</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#pages.help_page.HelpPage.__init__"><code class="docutils literal notranslate"><span class="pre">HelpPage.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gui.html#back-end-django-api">Back End: Django API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gui.html#backend.api.image_processing_engine.ImageProcessingAPIView"><code class="docutils literal notranslate"><span class="pre">ImageProcessingAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#backend.api.image_processing_engine.ImageProcessingAPIView.post"><code class="docutils literal notranslate"><span class="pre">ImageProcessingAPIView.post()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="gui.html#backend.api.data_preprocessing_engine.DataFilteringFileAPIView"><code class="docutils literal notranslate"><span class="pre">DataFilteringFileAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#backend.api.data_preprocessing_engine.DataFilteringFileAPIView.post"><code class="docutils literal notranslate"><span class="pre">DataFilteringFileAPIView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#backend.api.data_preprocessing_engine.DataFilteringFileAPIView.run_outlier_detection"><code class="docutils literal notranslate"><span class="pre">DataFilteringFileAPIView.run_outlier_detection()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="gui.html#backend.api.data_preprocessing_engine.InterpolationAPIView"><code class="docutils literal notranslate"><span class="pre">InterpolationAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#backend.api.data_preprocessing_engine.InterpolationAPIView.post"><code class="docutils literal notranslate"><span class="pre">InterpolationAPIView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#backend.api.data_preprocessing_engine.InterpolationAPIView.run_interpolation"><code class="docutils literal notranslate"><span class="pre">InterpolationAPIView.run_interpolation()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="gui.html#backend.api.data_preprocessing_engine.SmoothingAPIView"><code class="docutils literal notranslate"><span class="pre">SmoothingAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#backend.api.data_preprocessing_engine.SmoothingAPIView.post"><code class="docutils literal notranslate"><span class="pre">SmoothingAPIView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#backend.api.data_preprocessing_engine.SmoothingAPIView.run_smoothing"><code class="docutils literal notranslate"><span class="pre">SmoothingAPIView.run_smoothing()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="gui.html#backend.api.ai_models_engine.AIModelAPIView"><code class="docutils literal notranslate"><span class="pre">AIModelAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#backend.api.ai_models_engine.AIModelAPIView.extract_hyperparameters"><code class="docutils literal notranslate"><span class="pre">AIModelAPIView.extract_hyperparameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#backend.api.ai_models_engine.AIModelAPIView.post"><code class="docutils literal notranslate"><span class="pre">AIModelAPIView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#backend.api.ai_models_engine.AIModelAPIView.run_selected_model"><code class="docutils literal notranslate"><span class="pre">AIModelAPIView.run_selected_model()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="gui.html#backend.api.scaling_encoding_engine.ScalingEncodingAPIView"><code class="docutils literal notranslate"><span class="pre">ScalingEncodingAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#backend.api.scaling_encoding_engine.ScalingEncodingAPIView.post"><code class="docutils literal notranslate"><span class="pre">ScalingEncodingAPIView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#backend.api.scaling_encoding_engine.ScalingEncodingAPIView.run_encoding_scaling_train_test_split"><code class="docutils literal notranslate"><span class="pre">ScalingEncodingAPIView.run_encoding_scaling_train_test_split()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="gui.html#backend.api.regression_engine.RegressionAPIView"><code class="docutils literal notranslate"><span class="pre">RegressionAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#backend.api.regression_engine.RegressionAPIView.post"><code class="docutils literal notranslate"><span class="pre">RegressionAPIView.post()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="gui.html#backend.api.classification_engine.ClassificationAPIView"><code class="docutils literal notranslate"><span class="pre">ClassificationAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="gui.html#backend.api.classification_engine.ClassificationAPIView.post"><code class="docutils literal notranslate"><span class="pre">ClassificationAPIView.post()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Modules and Functionalities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#module-data_filtering.Outlier_final">Data Filtering</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#data_filtering.Outlier_final.OutlierDetection"><code class="docutils literal notranslate"><span class="pre">OutlierDetection</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#data_filtering.Outlier_final.OutlierDetection.detect_outliers_iqr"><code class="docutils literal notranslate"><span class="pre">OutlierDetection.detect_outliers_iqr()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#data_filtering.Outlier_final.OutlierDetection.detect_outliers_isolation_forest"><code class="docutils literal notranslate"><span class="pre">OutlierDetection.detect_outliers_isolation_forest()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#data_filtering.Outlier_final.OutlierDetection.is_numeric_columns"><code class="docutils literal notranslate"><span class="pre">OutlierDetection.is_numeric_columns()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#data_filtering.Smoothing_final.SmoothingMethods"><code class="docutils literal notranslate"><span class="pre">SmoothingMethods</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#data_filtering.Smoothing_final.SmoothingMethods.apply_tes"><code class="docutils literal notranslate"><span class="pre">SmoothingMethods.apply_tes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#data_filtering.Smoothing_final.SmoothingMethods.calculate_sma"><code class="docutils literal notranslate"><span class="pre">SmoothingMethods.calculate_sma()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#data_filtering.Spline_Interpolation_final.SplineInterpolator"><code class="docutils literal notranslate"><span class="pre">SplineInterpolator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#data_filtering.Spline_Interpolation_final.SplineInterpolator.check_column_validity"><code class="docutils literal notranslate"><span class="pre">SplineInterpolator.check_column_validity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#data_filtering.Spline_Interpolation_final.SplineInterpolator.fill_missing_values"><code class="docutils literal notranslate"><span class="pre">SplineInterpolator.fill_missing_values()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling"><code class="docutils literal notranslate"><span class="pre">EncodeAndScaling</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling.encode_categorical_features"><code class="docutils literal notranslate"><span class="pre">EncodeAndScaling.encode_categorical_features()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling.preprocess"><code class="docutils literal notranslate"><span class="pre">EncodeAndScaling.preprocess()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling.scale_numerical_features"><code class="docutils literal notranslate"><span class="pre">EncodeAndScaling.scale_numerical_features()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling.train_test_split"><code class="docutils literal notranslate"><span class="pre">EncodeAndScaling.train_test_split()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#module-regression.regression_models">Regression</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#regression.regression_models.RegressionModels"><code class="docutils literal notranslate"><span class="pre">RegressionModels</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#regression.regression_models.RegressionModels.model"><code class="docutils literal notranslate"><span class="pre">RegressionModels.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#regression.regression_models.RegressionModels.best_params"><code class="docutils literal notranslate"><span class="pre">RegressionModels.best_params</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#regression.regression_models.RegressionModels.train_linear_regression"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_linear_regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#regression.regression_models.RegressionModels.train_polynomial_regression"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_polynomial_regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#regression.regression_models.RegressionModels.train_ridge"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_ridge()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#regression.regression_models.RegressionModels.train_lasso"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_lasso()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id0"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_lasso()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id1"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_linear_regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id3"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_polynomial_regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id5"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_ridge()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#module-classification.base_model">Classification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#classification.base_model.ClassifierClass"><code class="docutils literal notranslate"><span class="pre">ClassifierClass</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#classification.base_model.ClassifierClass.data_train"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.data_train</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#classification.base_model.ClassifierClass.data_test"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.data_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#classification.base_model.ClassifierClass.target_train"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.target_train</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#classification.base_model.ClassifierClass.target_test"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.target_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#classification.base_model.ClassifierClass.target_labels"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.target_labels</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#classification.base_model.ClassifierClass.display_confusion_matrix"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.display_confusion_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#classification.base_model.ClassifierClass.evaluate"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#classification.base_model.ClassifierClass.set_model"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.set_model()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#classification.knn_model.KNNModel"><code class="docutils literal notranslate"><span class="pre">KNNModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#classification.knn_model.KNNModel.train"><code class="docutils literal notranslate"><span class="pre">KNNModel.train()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#classification.random_forest_model.RandomForestModel"><code class="docutils literal notranslate"><span class="pre">RandomForestModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#classification.random_forest_model.RandomForestModel.train"><code class="docutils literal notranslate"><span class="pre">RandomForestModel.train()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#classification.svc_model.SVCModel"><code class="docutils literal notranslate"><span class="pre">SVCModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#classification.svc_model.SVCModel.train"><code class="docutils literal notranslate"><span class="pre">SVCModel.train()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#module-ai_model.ann">AI Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#ai_model.ann.ArtificialNeuralNetwork"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.ann.ArtificialNeuralNetwork.model"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.ann.ArtificialNeuralNetwork.problem_type"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.problem_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.ann.ArtificialNeuralNetwork.batch_size"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.batch_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.ann.ArtificialNeuralNetwork.epochs"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.epochs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.ann.ArtificialNeuralNetwork.evaluate"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.ann.ArtificialNeuralNetwork.load_weights"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.load_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.ann.ArtificialNeuralNetwork.save_weights"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.save_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.ann.ArtificialNeuralNetwork.train"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.train()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#ai_model.base.BaseModel"><code class="docutils literal notranslate"><span class="pre">BaseModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.base.BaseModel.HYPERPARAMETER_RANGES"><code class="docutils literal notranslate"><span class="pre">BaseModel.HYPERPARAMETER_RANGES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.base.BaseModel.model"><code class="docutils literal notranslate"><span class="pre">BaseModel.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.base.BaseModel.problem_type"><code class="docutils literal notranslate"><span class="pre">BaseModel.problem_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.base.BaseModel.X_train"><code class="docutils literal notranslate"><span class="pre">BaseModel.X_train</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.base.BaseModel.X_test"><code class="docutils literal notranslate"><span class="pre">BaseModel.X_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.base.BaseModel.y_train"><code class="docutils literal notranslate"><span class="pre">BaseModel.y_train</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.base.BaseModel.y_test"><code class="docutils literal notranslate"><span class="pre">BaseModel.y_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id7"><code class="docutils literal notranslate"><span class="pre">BaseModel.HYPERPARAMETER_RANGES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.base.BaseModel.validate_options"><code class="docutils literal notranslate"><span class="pre">BaseModel.validate_options()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#ai_model.catboost_model.Catboost"><code class="docutils literal notranslate"><span class="pre">Catboost</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.catboost_model.Catboost.problem_type"><code class="docutils literal notranslate"><span class="pre">Catboost.problem_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.catboost_model.Catboost.options"><code class="docutils literal notranslate"><span class="pre">Catboost.options</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#ai_model.xgboost_model.XGBoost"><code class="docutils literal notranslate"><span class="pre">XGBoost</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#ai_model.random_forest.RandomForest"><code class="docutils literal notranslate"><span class="pre">RandomForest</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#module-image_processing.dataloader">Image Processing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.image_size"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.image_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.data"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.data</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.labels"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.labels</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.label_dict"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.label_dict</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.images"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.images</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.data_loader"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.data_loader()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.get_label_dict"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.get_label_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.encode_labels"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.encode_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.create_labels"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.create_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.unzip_folder"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.unzip_folder()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.normalize_dataset"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.normalize_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.split_dataset"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.split_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id8"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.create_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id9"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.data_loader()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id10"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.encode_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id11"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.get_label_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id12"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.normalize_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id13"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.split_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id14"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.unzip_folder()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#image_processing.evaluator.Evaluation"><code class="docutils literal notranslate"><span class="pre">Evaluation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.evaluator.Evaluation.evaluate_model"><code class="docutils literal notranslate"><span class="pre">Evaluation.evaluate_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.evaluator.Evaluation.get_confusion_matrix"><code class="docutils literal notranslate"><span class="pre">Evaluation.get_confusion_matrix()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#image_processing.nn.NeuralNetwork"><code class="docutils literal notranslate"><span class="pre">NeuralNetwork</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.nn.NeuralNetwork.create_cnn_model"><code class="docutils literal notranslate"><span class="pre">NeuralNetwork.create_cnn_model()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#image_processing.test.Testing"><code class="docutils literal notranslate"><span class="pre">Testing</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.test.Testing.model"><code class="docutils literal notranslate"><span class="pre">Testing.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.test.Testing.X_test"><code class="docutils literal notranslate"><span class="pre">Testing.X_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.test.Testing.y_test"><code class="docutils literal notranslate"><span class="pre">Testing.y_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.test.Testing.label_dict"><code class="docutils literal notranslate"><span class="pre">Testing.label_dict</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.test.Testing.set_label_dict"><code class="docutils literal notranslate"><span class="pre">Testing.set_label_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.test.Testing.make_predictions"><code class="docutils literal notranslate"><span class="pre">Testing.make_predictions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.test.Testing.plot_image"><code class="docutils literal notranslate"><span class="pre">Testing.plot_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.test.Testing.get_predicted_tuple"><code class="docutils literal notranslate"><span class="pre">Testing.get_predicted_tuple()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id17"><code class="docutils literal notranslate"><span class="pre">Testing.get_predicted_tuple()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id18"><code class="docutils literal notranslate"><span class="pre">Testing.make_predictions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id19"><code class="docutils literal notranslate"><span class="pre">Testing.plot_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id20"><code class="docutils literal notranslate"><span class="pre">Testing.set_label_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#image_processing.train.Training"><code class="docutils literal notranslate"><span class="pre">Training</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.train.Training.train_nn"><code class="docutils literal notranslate"><span class="pre">Training.train_nn()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Data Analytics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Index</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#_"><strong>_</strong></a>
+ | <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#K"><strong>K</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
+ | <a href="#V"><strong>V</strong></a>
+ | <a href="#X"><strong>X</strong></a>
+ | <a href="#Y"><strong>Y</strong></a>
+ 
+</div>
+<h2 id="_">_</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="gui.html#pages.help_page.HelpPage.__init__">__init__() (pages.help_page.HelpPage method)</a>
+
+      <ul>
+        <li><a href="gui.html#pages.process_selection_page.ProcessSelectionPage.__init__">(pages.process_selection_page.ProcessSelectionPage method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.add_export_send_buttons">add_export_send_buttons() (pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+      <li>
+    ai_model.ann
+
+      <ul>
+        <li><a href="modules.html#module-ai_model.ann">module</a>
+</li>
+      </ul></li>
+      <li>
+    ai_model.base
+
+      <ul>
+        <li><a href="modules.html#module-ai_model.base">module</a>
+</li>
+      </ul></li>
+      <li>
+    ai_model.catboost_model
+
+      <ul>
+        <li><a href="modules.html#module-ai_model.catboost_model">module</a>
+</li>
+      </ul></li>
+      <li>
+    ai_model.random_forest
+
+      <ul>
+        <li><a href="modules.html#module-ai_model.random_forest">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    ai_model.xgboost_model
+
+      <ul>
+        <li><a href="modules.html#module-ai_model.xgboost_model">module</a>
+</li>
+      </ul></li>
+      <li><a href="gui.html#backend.api.ai_models_engine.AIModelAPIView">AIModelAPIView (class in backend.api.ai_models_engine)</a>
+</li>
+      <li><a href="gui.html#pages.aimodel_page.AImodelPage">AImodelPage (class in pages.aimodel_page)</a>
+</li>
+      <li><a href="gui.html#main_sphinx.App">App (class in main_sphinx)</a>
+</li>
+      <li><a href="modules.html#data_filtering.Smoothing_final.SmoothingMethods.apply_tes">apply_tes() (data_filtering.Smoothing_final.SmoothingMethods method)</a>
+</li>
+      <li><a href="modules.html#ai_model.ann.ArtificialNeuralNetwork">ArtificialNeuralNetwork (class in ai_model.ann)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    backend.api.ai_models_engine
+
+      <ul>
+        <li><a href="gui.html#module-backend.api.ai_models_engine">module</a>
+</li>
+      </ul></li>
+      <li>
+    backend.api.classification_engine
+
+      <ul>
+        <li><a href="gui.html#module-backend.api.classification_engine">module</a>
+</li>
+      </ul></li>
+      <li>
+    backend.api.data_preprocessing_engine
+
+      <ul>
+        <li><a href="gui.html#module-backend.api.data_preprocessing_engine">module</a>
+</li>
+      </ul></li>
+      <li>
+    backend.api.image_processing_engine
+
+      <ul>
+        <li><a href="gui.html#module-backend.api.image_processing_engine">module</a>
+</li>
+      </ul></li>
+      <li>
+    backend.api.regression_engine
+
+      <ul>
+        <li><a href="gui.html#module-backend.api.regression_engine">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    backend.api.scaling_encoding_engine
+
+      <ul>
+        <li><a href="gui.html#module-backend.api.scaling_encoding_engine">module</a>
+</li>
+      </ul></li>
+      <li><a href="modules.html#ai_model.base.BaseModel">BaseModel (class in ai_model.base)</a>
+</li>
+      <li><a href="modules.html#ai_model.ann.ArtificialNeuralNetwork.batch_size">batch_size (ai_model.ann.ArtificialNeuralNetwork attribute)</a>
+</li>
+      <li><a href="modules.html#regression.regression_models.RegressionModels.self.best_degree_lasso">best_degree_lasso (regression.regression_models.RegressionModels.self attribute)</a>
+</li>
+      <li><a href="modules.html#regression.regression_models.RegressionModels.self.best_degree_ridge">best_degree_ridge (regression.regression_models.RegressionModels.self attribute)</a>
+</li>
+      <li><a href="modules.html#regression.regression_models.RegressionModels.best_params">best_params (regression.regression_models.RegressionModels attribute)</a>
+</li>
+      <li><a href="modules.html#regression.regression_models.RegressionModels.self.best_params_lasso">best_params_lasso (regression.regression_models.RegressionModels.self attribute)</a>
+</li>
+      <li><a href="modules.html#regression.regression_models.RegressionModels.self.best_params_poly">best_params_poly (regression.regression_models.RegressionModels.self attribute)</a>
+</li>
+      <li><a href="modules.html#regression.regression_models.RegressionModels.self.best_params_ridge">best_params_ridge (regression.regression_models.RegressionModels.self attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules.html#data_filtering.Smoothing_final.SmoothingMethods.calculate_sma">calculate_sma() (data_filtering.Smoothing_final.SmoothingMethods method)</a>
+</li>
+      <li><a href="gui.html#pages.image_processing_page.ImageProcessingPage.cancel_file">cancel_file() (pages.image_processing_page.ImageProcessingPage method)</a>
+
+      <ul>
+        <li><a href="gui.html#pages.regression_classification.RegressionClassificationPage.cancel_file">(pages.regression_classification.RegressionClassificationPage method)</a>
+</li>
+      </ul></li>
+      <li><a href="modules.html#ai_model.catboost_model.Catboost">Catboost (class in ai_model.catboost_model)</a>
+</li>
+      <li><a href="gui.html#pages.aimodel_page.AImodelPage.change_segment">change_segment() (pages.aimodel_page.AImodelPage method)</a>
+
+      <ul>
+        <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.change_segment">(pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+        <li><a href="gui.html#pages.image_processing_page.ImageProcessingPage.change_segment">(pages.image_processing_page.ImageProcessingPage method)</a>
+</li>
+        <li><a href="gui.html#pages.regression_classification.RegressionClassificationPage.change_segment">(pages.regression_classification.RegressionClassificationPage method)</a>
+</li>
+      </ul></li>
+      <li><a href="modules.html#data_filtering.Spline_Interpolation_final.SplineInterpolator.check_column_validity">check_column_validity() (data_filtering.Spline_Interpolation_final.SplineInterpolator method)</a>
+</li>
+      <li>
+    classification.base_model
+
+      <ul>
+        <li><a href="modules.html#module-classification.base_model">module</a>
+</li>
+      </ul></li>
+      <li>
+    classification.knn_model
+
+      <ul>
+        <li><a href="modules.html#module-classification.knn_model">module</a>
+</li>
+      </ul></li>
+      <li>
+    classification.random_forest_model
+
+      <ul>
+        <li><a href="modules.html#module-classification.random_forest_model">module</a>
+</li>
+      </ul></li>
+      <li>
+    classification.svc_model
+
+      <ul>
+        <li><a href="modules.html#module-classification.svc_model">module</a>
+</li>
+      </ul></li>
+      <li><a href="gui.html#backend.api.classification_engine.ClassificationAPIView">ClassificationAPIView (class in backend.api.classification_engine)</a>
+</li>
+      <li><a href="modules.html#classification.base_model.ClassifierClass">ClassifierClass (class in classification.base_model)</a>
+</li>
+      <li><a href="gui.html#pages.regression_classification.RegressionClassificationPage.clear_frame">clear_frame() (pages.regression_classification.RegressionClassificationPage method)</a>
+</li>
+      <li><a href="gui.html#main_sphinx.App.configure_grid">configure_grid() (main_sphinx.App method)</a>
+</li>
+      <li><a href="gui.html#pages.aimodel_page.AImodelPage.create_ann_frame">create_ann_frame() (pages.aimodel_page.AImodelPage method)</a>
+</li>
+      <li><a href="gui.html#pages.process_selection_page.ProcessSelectionPage.create_buttons">create_buttons() (pages.process_selection_page.ProcessSelectionPage method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="gui.html#pages.aimodel_page.AImodelPage.create_cb_frame">create_cb_frame() (pages.aimodel_page.AImodelPage method)</a>
+</li>
+      <li><a href="gui.html#pages.regression_classification.RegressionClassificationPage.create_classification_frame">create_classification_frame() (pages.regression_classification.RegressionClassificationPage method)</a>
+</li>
+      <li><a href="modules.html#image_processing.nn.NeuralNetwork.create_cnn_model">create_cnn_model() (image_processing.nn.NeuralNetwork class method)</a>
+</li>
+      <li><a href="gui.html#pages.aimodel_page.AImodelPage.create_combobox_frame">create_combobox_frame() (pages.aimodel_page.AImodelPage method)</a>
+</li>
+      <li><a href="gui.html#pages.regression_classification.RegressionClassificationPage.create_dropdown">create_dropdown() (pages.regression_classification.RegressionClassificationPage method)</a>
+</li>
+      <li><a href="gui.html#pages.image_processing_page.ImageProcessingPage.create_image_train_frame">create_image_train_frame() (pages.image_processing_page.ImageProcessingPage method)</a>
+</li>
+      <li><a href="gui.html#pages.aimodel_page.AImodelPage.create_info_button">create_info_button() (pages.aimodel_page.AImodelPage method)</a>
+
+      <ul>
+        <li><a href="gui.html#pages.regression_classification.RegressionClassificationPage.create_info_button">(pages.regression_classification.RegressionClassificationPage method)</a>
+</li>
+      </ul></li>
+      <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.create_interpolation_frame">create_interpolation_frame() (pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+      <li><a href="modules.html#id8">create_labels() (image_processing.dataloader.DataLoadingAndPreprocessing method)</a>, <a href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.create_labels">[1]</a>
+</li>
+      <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.create_process_selection_frame">create_process_selection_frame() (pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+      <li><a href="gui.html#pages.regression_classification.RegressionClassificationPage.create_regression_frame">create_regression_frame() (pages.regression_classification.RegressionClassificationPage method)</a>
+</li>
+      <li><a href="gui.html#pages.aimodel_page.AImodelPage.create_rf_frame">create_rf_frame() (pages.aimodel_page.AImodelPage method)</a>
+</li>
+      <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.create_scaling_encoding_frame">create_scaling_encoding_frame() (pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+      <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.create_segment_frame">create_segment_frame() (pages.data_filtering_page.DataFilteringPage method)</a>
+
+      <ul>
+        <li><a href="gui.html#pages.image_processing_page.ImageProcessingPage.create_segment_frame">(pages.image_processing_page.ImageProcessingPage method)</a>
+</li>
+      </ul></li>
+      <li><a href="gui.html#main_sphinx.App.create_sidebar">create_sidebar() (main_sphinx.App method)</a>
+</li>
+      <li><a href="gui.html#pages.regression_classification.RegressionClassificationPage.create_slider">create_slider() (pages.regression_classification.RegressionClassificationPage method)</a>
+</li>
+      <li><a href="gui.html#pages.aimodel_page.AImodelPage.create_slider_frame">create_slider_frame() (pages.aimodel_page.AImodelPage method)</a>
+</li>
+      <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.create_smoothing_frame">create_smoothing_frame() (pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+      <li><a href="gui.html#pages.regression_classification.RegressionClassificationPage.create_textbox">create_textbox() (pages.regression_classification.RegressionClassificationPage method)</a>
+</li>
+      <li><a href="gui.html#pages.aimodel_page.AImodelPage.create_xgb_frame">create_xgb_frame() (pages.aimodel_page.AImodelPage method)</a>
+</li>
+      <li><a href="gui.html#main_sphinx.App.current_page">current_page (main_sphinx.App attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.data">data (image_processing.dataloader.DataLoadingAndPreprocessing attribute)</a>
+</li>
+      <li>
+    data_filtering.Outlier_final
+
+      <ul>
+        <li><a href="modules.html#module-data_filtering.Outlier_final">module</a>
+</li>
+      </ul></li>
+      <li>
+    data_filtering.Scaling_and_Encoding_final
+
+      <ul>
+        <li><a href="modules.html#module-data_filtering.Scaling_and_Encoding_final">module</a>
+</li>
+      </ul></li>
+      <li>
+    data_filtering.Smoothing_final
+
+      <ul>
+        <li><a href="modules.html#module-data_filtering.Smoothing_final">module</a>
+</li>
+      </ul></li>
+      <li>
+    data_filtering.Spline_Interpolation_final
+
+      <ul>
+        <li><a href="modules.html#module-data_filtering.Spline_Interpolation_final">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules.html#id9">data_loader() (image_processing.dataloader.DataLoadingAndPreprocessing method)</a>, <a href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.data_loader">[1]</a>
+</li>
+      <li><a href="modules.html#classification.base_model.ClassifierClass.data_test">data_test (classification.base_model.ClassifierClass attribute)</a>
+</li>
+      <li><a href="modules.html#classification.base_model.ClassifierClass.data_train">data_train (classification.base_model.ClassifierClass attribute)</a>
+</li>
+      <li><a href="gui.html#backend.api.data_preprocessing_engine.DataFilteringFileAPIView">DataFilteringFileAPIView (class in backend.api.data_preprocessing_engine)</a>
+</li>
+      <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage">DataFilteringPage (class in pages.data_filtering_page)</a>
+</li>
+      <li><a href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing">DataLoadingAndPreprocessing (class in image_processing.dataloader)</a>
+</li>
+      <li><a href="modules.html#data_filtering.Outlier_final.OutlierDetection.detect_outliers_iqr">detect_outliers_iqr() (data_filtering.Outlier_final.OutlierDetection method)</a>
+</li>
+      <li><a href="modules.html#data_filtering.Outlier_final.OutlierDetection.detect_outliers_isolation_forest">detect_outliers_isolation_forest() (data_filtering.Outlier_final.OutlierDetection method)</a>
+</li>
+      <li><a href="modules.html#classification.base_model.ClassifierClass.display_confusion_matrix">display_confusion_matrix() (classification.base_model.ClassifierClass method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling.encode_categorical_features">encode_categorical_features() (data_filtering.Scaling_and_Encoding_final.EncodeAndScaling method)</a>
+</li>
+      <li><a href="modules.html#id10">encode_labels() (image_processing.dataloader.DataLoadingAndPreprocessing method)</a>, <a href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.encode_labels">[1]</a>
+</li>
+      <li><a href="modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling">EncodeAndScaling (class in data_filtering.Scaling_and_Encoding_final)</a>
+</li>
+      <li><a href="modules.html#ai_model.ann.ArtificialNeuralNetwork.epochs">epochs (ai_model.ann.ArtificialNeuralNetwork attribute)</a>
+</li>
+      <li><a href="modules.html#ai_model.ann.ArtificialNeuralNetwork.evaluate">evaluate() (ai_model.ann.ArtificialNeuralNetwork method)</a>
+
+      <ul>
+        <li><a href="modules.html#classification.base_model.ClassifierClass.evaluate">(classification.base_model.ClassifierClass method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules.html#image_processing.evaluator.Evaluation.evaluate_model">evaluate_model() (image_processing.evaluator.Evaluation method)</a>
+</li>
+      <li><a href="modules.html#image_processing.evaluator.Evaluation">Evaluation (class in image_processing.evaluator)</a>
+</li>
+      <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.export_data">export_data() (pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+      <li><a href="gui.html#backend.api.ai_models_engine.AIModelAPIView.extract_hyperparameters">extract_hyperparameters() (backend.api.ai_models_engine.AIModelAPIView method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="gui.html#pages.process_selection_page.ProcessSelectionPage.file_path">file_path (pages.process_selection_page.ProcessSelectionPage attribute)</a>
+</li>
+      <li><a href="gui.html#pages.process_selection_page.ProcessSelectionPage.filename">filename (pages.process_selection_page.ProcessSelectionPage attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="gui.html#pages.file_upload_page.FileUploadPage">FileUploadPage (class in pages.file_upload_page)</a>
+</li>
+      <li><a href="modules.html#data_filtering.Spline_Interpolation_final.SplineInterpolator.fill_missing_values">fill_missing_values() (data_filtering.Spline_Interpolation_final.SplineInterpolator method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="gui.html#pages.aimodel_page.AImodelPage.get_combobox_value">get_combobox_value() (pages.aimodel_page.AImodelPage method)</a>
+</li>
+      <li><a href="modules.html#image_processing.evaluator.Evaluation.get_confusion_matrix">get_confusion_matrix() (image_processing.evaluator.Evaluation method)</a>
+</li>
+      <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.get_data_by_name">get_data_by_name() (pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules.html#id11">get_label_dict() (image_processing.dataloader.DataLoadingAndPreprocessing method)</a>, <a href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.get_label_dict">[1]</a>
+</li>
+      <li><a href="modules.html#id17">get_predicted_tuple() (image_processing.test.Testing method)</a>, <a href="modules.html#image_processing.test.Testing.get_predicted_tuple">[1]</a>
+</li>
+      <li><a href="gui.html#pages.aimodel_page.AImodelPage.get_slider_value">get_slider_value() (pages.aimodel_page.AImodelPage method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="gui.html#pages.help_page.HelpPage">HelpPage (class in pages.help_page)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules.html#ai_model.base.BaseModel.HYPERPARAMETER_RANGES">HYPERPARAMETER_RANGES (ai_model.base.BaseModel attribute)</a>, <a href="modules.html#id7">[1]</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    image_processing.dataloader
+
+      <ul>
+        <li><a href="modules.html#module-image_processing.dataloader">module</a>
+</li>
+      </ul></li>
+      <li>
+    image_processing.evaluator
+
+      <ul>
+        <li><a href="modules.html#module-image_processing.evaluator">module</a>
+</li>
+      </ul></li>
+      <li>
+    image_processing.nn
+
+      <ul>
+        <li><a href="modules.html#module-image_processing.nn">module</a>
+</li>
+      </ul></li>
+      <li>
+    image_processing.test
+
+      <ul>
+        <li><a href="modules.html#module-image_processing.test">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    image_processing.train
+
+      <ul>
+        <li><a href="modules.html#module-image_processing.train">module</a>
+</li>
+      </ul></li>
+      <li><a href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.image_size">image_size (image_processing.dataloader.DataLoadingAndPreprocessing attribute)</a>
+</li>
+      <li><a href="gui.html#backend.api.image_processing_engine.ImageProcessingAPIView">ImageProcessingAPIView (class in backend.api.image_processing_engine)</a>
+</li>
+      <li><a href="gui.html#pages.image_processing_page.ImageProcessingPage">ImageProcessingPage (class in pages.image_processing_page)</a>
+</li>
+      <li><a href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.images">images (image_processing.dataloader.DataLoadingAndPreprocessing attribute)</a>
+</li>
+      <li><a href="gui.html#backend.api.data_preprocessing_engine.InterpolationAPIView">InterpolationAPIView (class in backend.api.data_preprocessing_engine)</a>
+</li>
+      <li><a href="modules.html#data_filtering.Outlier_final.OutlierDetection.is_numeric_columns">is_numeric_columns() (data_filtering.Outlier_final.OutlierDetection method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="K">K</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules.html#classification.knn_model.KNNModel">KNNModel (class in classification.knn_model)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.label_dict">label_dict (image_processing.dataloader.DataLoadingAndPreprocessing attribute)</a>
+
+      <ul>
+        <li><a href="modules.html#image_processing.test.Testing.label_dict">(image_processing.test.Testing attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.labels">labels (image_processing.dataloader.DataLoadingAndPreprocessing attribute)</a>
+</li>
+      <li><a href="gui.html#pages.regression_classification.RegressionClassificationPage.lasso_plot">lasso_plot() (pages.regression_classification.RegressionClassificationPage method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="gui.html#main_sphinx.App.load_assets">load_assets() (main_sphinx.App method)</a>
+</li>
+      <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.load_csv_columns">load_csv_columns() (pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+      <li><a href="gui.html#main_sphinx.App.load_header_image">load_header_image() (main_sphinx.App method)</a>
+</li>
+      <li><a href="modules.html#ai_model.ann.ArtificialNeuralNetwork.load_weights">load_weights() (ai_model.ann.ArtificialNeuralNetwork method)</a>
+</li>
+      <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.lock_segment">lock_segment() (pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    main_sphinx
+
+      <ul>
+        <li><a href="gui.html#module-main_sphinx">module</a>
+</li>
+      </ul></li>
+      <li><a href="modules.html#id18">make_predictions() (image_processing.test.Testing method)</a>, <a href="modules.html#image_processing.test.Testing.make_predictions">[1]</a>
+</li>
+      <li><a href="gui.html#pages.aimodel_page.AImodelPage.messagebox">messagebox (pages.aimodel_page.AImodelPage attribute)</a>
+</li>
+      <li><a href="modules.html#ai_model.ann.ArtificialNeuralNetwork.model">model (ai_model.ann.ArtificialNeuralNetwork attribute)</a>
+
+      <ul>
+        <li><a href="modules.html#ai_model.base.BaseModel.model">(ai_model.base.BaseModel attribute)</a>
+</li>
+        <li><a href="modules.html#image_processing.test.Testing.model">(image_processing.test.Testing attribute)</a>
+</li>
+        <li><a href="modules.html#regression.regression_models.RegressionModels.model">(regression.regression_models.RegressionModels attribute)</a>
+</li>
+        <li><a href="modules.html#id2">(regression.regression_models.RegressionModels.self attribute)</a>, <a href="modules.html#id4">[1]</a>, <a href="modules.html#id6">[2]</a>, <a href="modules.html#regression.regression_models.RegressionModels.self.model">[3]</a>
+</li>
+      </ul></li>
+      <li>
+    module
+
+      <ul>
+        <li><a href="modules.html#module-ai_model.ann">ai_model.ann</a>
+</li>
+        <li><a href="modules.html#module-ai_model.base">ai_model.base</a>
+</li>
+        <li><a href="modules.html#module-ai_model.catboost_model">ai_model.catboost_model</a>
+</li>
+        <li><a href="modules.html#module-ai_model.random_forest">ai_model.random_forest</a>
+</li>
+        <li><a href="modules.html#module-ai_model.xgboost_model">ai_model.xgboost_model</a>
+</li>
+        <li><a href="gui.html#module-backend.api.ai_models_engine">backend.api.ai_models_engine</a>
+</li>
+        <li><a href="gui.html#module-backend.api.classification_engine">backend.api.classification_engine</a>
+</li>
+        <li><a href="gui.html#module-backend.api.data_preprocessing_engine">backend.api.data_preprocessing_engine</a>
+</li>
+        <li><a href="gui.html#module-backend.api.image_processing_engine">backend.api.image_processing_engine</a>
+</li>
+        <li><a href="gui.html#module-backend.api.regression_engine">backend.api.regression_engine</a>
+</li>
+        <li><a href="gui.html#module-backend.api.scaling_encoding_engine">backend.api.scaling_encoding_engine</a>
+</li>
+        <li><a href="modules.html#module-classification.base_model">classification.base_model</a>
+</li>
+        <li><a href="modules.html#module-classification.knn_model">classification.knn_model</a>
+</li>
+        <li><a href="modules.html#module-classification.random_forest_model">classification.random_forest_model</a>
+</li>
+        <li><a href="modules.html#module-classification.svc_model">classification.svc_model</a>
+</li>
+        <li><a href="modules.html#module-data_filtering.Outlier_final">data_filtering.Outlier_final</a>
+</li>
+        <li><a href="modules.html#module-data_filtering.Scaling_and_Encoding_final">data_filtering.Scaling_and_Encoding_final</a>
+</li>
+        <li><a href="modules.html#module-data_filtering.Smoothing_final">data_filtering.Smoothing_final</a>
+</li>
+        <li><a href="modules.html#module-data_filtering.Spline_Interpolation_final">data_filtering.Spline_Interpolation_final</a>
+</li>
+        <li><a href="modules.html#module-image_processing.dataloader">image_processing.dataloader</a>
+</li>
+        <li><a href="modules.html#module-image_processing.evaluator">image_processing.evaluator</a>
+</li>
+        <li><a href="modules.html#module-image_processing.nn">image_processing.nn</a>
+</li>
+        <li><a href="modules.html#module-image_processing.test">image_processing.test</a>
+</li>
+        <li><a href="modules.html#module-image_processing.train">image_processing.train</a>
+</li>
+        <li><a href="gui.html#module-main_sphinx">main_sphinx</a>
+</li>
+        <li><a href="gui.html#module-pages.aimodel_page">pages.aimodel_page</a>
+</li>
+        <li><a href="gui.html#module-pages.data_filtering_page">pages.data_filtering_page</a>
+</li>
+        <li><a href="gui.html#module-pages.file_upload_page">pages.file_upload_page</a>
+</li>
+        <li><a href="gui.html#module-pages.help_page">pages.help_page</a>
+</li>
+        <li><a href="gui.html#module-pages.image_processing_page">pages.image_processing_page</a>
+</li>
+        <li><a href="gui.html#module-pages.process_selection_page">pages.process_selection_page</a>
+</li>
+        <li><a href="gui.html#module-pages.regression_classification">pages.regression_classification</a>
+</li>
+        <li><a href="modules.html#module-regression.regression_models">regression.regression_models</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.move_to_next_segment">move_to_next_segment() (pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules.html#image_processing.nn.NeuralNetwork">NeuralNetwork (class in image_processing.nn)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="gui.html#pages.help_page.HelpPage.None">None (pages.help_page.HelpPage attribute)</a>
+</li>
+      <li><a href="modules.html#id12">normalize_dataset() (image_processing.dataloader.DataLoadingAndPreprocessing method)</a>, <a href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.normalize_dataset">[1]</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.open_comparison_popup">open_comparison_popup() (pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+      <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.open_send_popup">open_send_popup() (pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules.html#ai_model.catboost_model.Catboost.options">options (ai_model.catboost_model.Catboost attribute)</a>
+</li>
+      <li><a href="modules.html#data_filtering.Outlier_final.OutlierDetection">OutlierDetection (class in data_filtering.Outlier_final)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    pages.aimodel_page
+
+      <ul>
+        <li><a href="gui.html#module-pages.aimodel_page">module</a>
+</li>
+      </ul></li>
+      <li>
+    pages.data_filtering_page
+
+      <ul>
+        <li><a href="gui.html#module-pages.data_filtering_page">module</a>
+</li>
+      </ul></li>
+      <li>
+    pages.file_upload_page
+
+      <ul>
+        <li><a href="gui.html#module-pages.file_upload_page">module</a>
+</li>
+      </ul></li>
+      <li>
+    pages.help_page
+
+      <ul>
+        <li><a href="gui.html#module-pages.help_page">module</a>
+</li>
+      </ul></li>
+      <li>
+    pages.image_processing_page
+
+      <ul>
+        <li><a href="gui.html#module-pages.image_processing_page">module</a>
+</li>
+      </ul></li>
+      <li>
+    pages.process_selection_page
+
+      <ul>
+        <li><a href="gui.html#module-pages.process_selection_page">module</a>
+</li>
+      </ul></li>
+      <li>
+    pages.regression_classification
+
+      <ul>
+        <li><a href="gui.html#module-pages.regression_classification">module</a>
+</li>
+      </ul></li>
+      <li><a href="gui.html#pages.process_selection_page.ProcessSelectionPage.parent">parent (pages.process_selection_page.ProcessSelectionPage attribute)</a>
+</li>
+      <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.plot_boxplot">plot_boxplot() (pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+      <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.plot_comparison_graph">plot_comparison_graph() (pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+      <li><a href="gui.html#pages.image_processing_page.ImageProcessingPage.plot_confusion_matrix">plot_confusion_matrix() (pages.image_processing_page.ImageProcessingPage method)</a>
+</li>
+      <li><a href="modules.html#id19">plot_image() (image_processing.test.Testing method)</a>, <a href="modules.html#image_processing.test.Testing.plot_image">[1]</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.plot_line_graph">plot_line_graph() (pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+      <li><a href="gui.html#pages.regression_classification.RegressionClassificationPage.polynomial_plot">polynomial_plot() (pages.regression_classification.RegressionClassificationPage method)</a>
+</li>
+      <li><a href="gui.html#backend.api.ai_models_engine.AIModelAPIView.post">post() (backend.api.ai_models_engine.AIModelAPIView method)</a>
+
+      <ul>
+        <li><a href="gui.html#backend.api.classification_engine.ClassificationAPIView.post">(backend.api.classification_engine.ClassificationAPIView method)</a>
+</li>
+        <li><a href="gui.html#backend.api.data_preprocessing_engine.DataFilteringFileAPIView.post">(backend.api.data_preprocessing_engine.DataFilteringFileAPIView method)</a>
+</li>
+        <li><a href="gui.html#backend.api.data_preprocessing_engine.InterpolationAPIView.post">(backend.api.data_preprocessing_engine.InterpolationAPIView method)</a>
+</li>
+        <li><a href="gui.html#backend.api.data_preprocessing_engine.SmoothingAPIView.post">(backend.api.data_preprocessing_engine.SmoothingAPIView method)</a>
+</li>
+        <li><a href="gui.html#backend.api.image_processing_engine.ImageProcessingAPIView.post">(backend.api.image_processing_engine.ImageProcessingAPIView method)</a>
+</li>
+        <li><a href="gui.html#backend.api.regression_engine.RegressionAPIView.post">(backend.api.regression_engine.RegressionAPIView method)</a>
+</li>
+        <li><a href="gui.html#backend.api.scaling_encoding_engine.ScalingEncodingAPIView.post">(backend.api.scaling_encoding_engine.ScalingEncodingAPIView method)</a>
+</li>
+      </ul></li>
+      <li><a href="modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling.preprocess">preprocess() (data_filtering.Scaling_and_Encoding_final.EncodeAndScaling method)</a>
+</li>
+      <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.preview_csv">preview_csv() (pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+      <li><a href="gui.html#pages.aimodel_page.AImodelPage.preview_data">preview_data() (pages.aimodel_page.AImodelPage method)</a>
+
+      <ul>
+        <li><a href="gui.html#pages.regression_classification.RegressionClassificationPage.preview_data">(pages.regression_classification.RegressionClassificationPage method)</a>
+</li>
+      </ul></li>
+      <li><a href="gui.html#pages.image_processing_page.ImageProcessingPage.preview_image">preview_image() (pages.image_processing_page.ImageProcessingPage method)</a>
+</li>
+      <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.preview_scaled_encoded_data">preview_scaled_encoded_data() (pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+      <li><a href="modules.html#ai_model.ann.ArtificialNeuralNetwork.problem_type">problem_type (ai_model.ann.ArtificialNeuralNetwork attribute)</a>
+
+      <ul>
+        <li><a href="modules.html#ai_model.base.BaseModel.problem_type">(ai_model.base.BaseModel attribute)</a>
+</li>
+        <li><a href="modules.html#ai_model.catboost_model.Catboost.problem_type">(ai_model.catboost_model.Catboost attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="gui.html#pages.process_selection_page.ProcessSelectionPage">ProcessSelectionPage (class in pages.process_selection_page)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules.html#ai_model.random_forest.RandomForest">RandomForest (class in ai_model.random_forest)</a>
+</li>
+      <li><a href="modules.html#classification.random_forest_model.RandomForestModel">RandomForestModel (class in classification.random_forest_model)</a>
+</li>
+      <li>
+    regression.regression_models
+
+      <ul>
+        <li><a href="modules.html#module-regression.regression_models">module</a>
+</li>
+      </ul></li>
+      <li><a href="gui.html#pages.regression_classification.RegressionClassificationPage.regression_plot">regression_plot() (pages.regression_classification.RegressionClassificationPage method)</a>
+</li>
+      <li><a href="gui.html#backend.api.regression_engine.RegressionAPIView">RegressionAPIView (class in backend.api.regression_engine)</a>
+</li>
+      <li><a href="gui.html#pages.regression_classification.RegressionClassificationPage">RegressionClassificationPage (class in pages.regression_classification)</a>
+</li>
+      <li><a href="modules.html#regression.regression_models.RegressionModels">RegressionModels (class in regression.regression_models)</a>
+</li>
+      <li><a href="gui.html#pages.regression_classification.RegressionClassificationPage.residual_plot">residual_plot() (pages.regression_classification.RegressionClassificationPage method)</a>
+</li>
+      <li><a href="gui.html#main_sphinx.App.resize_header_image">resize_header_image() (main_sphinx.App method)</a>
+</li>
+      <li><a href="modules.html#regression.regression_models.RegressionModels.self.results_lasso">results_lasso (regression.regression_models.RegressionModels.self attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules.html#regression.regression_models.RegressionModels.self.results_ridge">results_ridge (regression.regression_models.RegressionModels.self attribute)</a>
+</li>
+      <li><a href="gui.html#pages.regression_classification.RegressionClassificationPage.ridge_plot">ridge_plot() (pages.regression_classification.RegressionClassificationPage method)</a>
+</li>
+      <li><a href="gui.html#backend.api.scaling_encoding_engine.ScalingEncodingAPIView.run_encoding_scaling_train_test_split">run_encoding_scaling_train_test_split() (backend.api.scaling_encoding_engine.ScalingEncodingAPIView method)</a>
+</li>
+      <li><a href="gui.html#backend.api.data_preprocessing_engine.InterpolationAPIView.run_interpolation">run_interpolation() (backend.api.data_preprocessing_engine.InterpolationAPIView method)</a>
+
+      <ul>
+        <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.run_interpolation">(pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+      </ul></li>
+      <li><a href="gui.html#backend.api.data_preprocessing_engine.DataFilteringFileAPIView.run_outlier_detection">run_outlier_detection() (backend.api.data_preprocessing_engine.DataFilteringFileAPIView method)</a>
+
+      <ul>
+        <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.run_outlier_detection">(pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+      </ul></li>
+      <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.run_scaling_and_encoding">run_scaling_and_encoding() (pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+      <li><a href="gui.html#backend.api.ai_models_engine.AIModelAPIView.run_selected_model">run_selected_model() (backend.api.ai_models_engine.AIModelAPIView method)</a>
+</li>
+      <li><a href="gui.html#backend.api.data_preprocessing_engine.SmoothingAPIView.run_smoothing">run_smoothing() (backend.api.data_preprocessing_engine.SmoothingAPIView method)</a>
+
+      <ul>
+        <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.run_smoothing">(pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules.html#ai_model.ann.ArtificialNeuralNetwork.save_weights">save_weights() (ai_model.ann.ArtificialNeuralNetwork method)</a>
+</li>
+      <li><a href="modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling.scale_numerical_features">scale_numerical_features() (data_filtering.Scaling_and_Encoding_final.EncodeAndScaling method)</a>
+</li>
+      <li><a href="gui.html#backend.api.scaling_encoding_engine.ScalingEncodingAPIView">ScalingEncodingAPIView (class in backend.api.scaling_encoding_engine)</a>
+</li>
+      <li><a href="gui.html#pages.aimodel_page.AImodelPage.send_request">send_request() (pages.aimodel_page.AImodelPage method)</a>
+
+      <ul>
+        <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.send_request">(pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+      </ul></li>
+      <li><a href="gui.html#pages.regression_classification.RegressionClassificationPage.send_request_classification">send_request_classification() (pages.regression_classification.RegressionClassificationPage method)</a>
+</li>
+      <li><a href="gui.html#pages.regression_classification.RegressionClassificationPage.send_request_regression">send_request_regression() (pages.regression_classification.RegressionClassificationPage method)</a>
+</li>
+      <li><a href="modules.html#id20">set_label_dict() (image_processing.test.Testing method)</a>, <a href="modules.html#image_processing.test.Testing.set_label_dict">[1]</a>
+</li>
+      <li><a href="modules.html#classification.base_model.ClassifierClass.set_model">set_model() (classification.base_model.ClassifierClass method)</a>
+</li>
+      <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.show_comparison_data">show_comparison_data() (pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+      <li><a href="gui.html#pages.aimodel_page.AImodelPage.show_info_dialog">show_info_dialog() (pages.aimodel_page.AImodelPage method)</a>
+
+      <ul>
+        <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.show_info_dialog">(pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+        <li><a href="gui.html#pages.image_processing_page.ImageProcessingPage.show_info_dialog">(pages.image_processing_page.ImageProcessingPage method)</a>
+</li>
+        <li><a href="gui.html#pages.regression_classification.RegressionClassificationPage.show_info_dialog">(pages.regression_classification.RegressionClassificationPage method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.show_loading_message">show_loading_message() (pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+      <li><a href="gui.html#main_sphinx.App.show_page">show_page() (main_sphinx.App method)</a>
+</li>
+      <li><a href="gui.html#backend.api.data_preprocessing_engine.SmoothingAPIView">SmoothingAPIView (class in backend.api.data_preprocessing_engine)</a>
+</li>
+      <li><a href="modules.html#data_filtering.Smoothing_final.SmoothingMethods">SmoothingMethods (class in data_filtering.Smoothing_final)</a>
+</li>
+      <li><a href="modules.html#data_filtering.Spline_Interpolation_final.SplineInterpolator">SplineInterpolator (class in data_filtering.Spline_Interpolation_final)</a>
+</li>
+      <li><a href="modules.html#id13">split_dataset() (image_processing.dataloader.DataLoadingAndPreprocessing method)</a>, <a href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.split_dataset">[1]</a>
+</li>
+      <li><a href="gui.html#pages.aimodel_page.AImodelPage.submit_action">submit_action() (pages.aimodel_page.AImodelPage method)</a>
+
+      <ul>
+        <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.submit_action">(pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+        <li><a href="gui.html#pages.image_processing_page.ImageProcessingPage.submit_action">(pages.image_processing_page.ImageProcessingPage method)</a>
+</li>
+        <li><a href="gui.html#pages.regression_classification.RegressionClassificationPage.submit_action">(pages.regression_classification.RegressionClassificationPage method)</a>
+</li>
+      </ul></li>
+      <li><a href="modules.html#classification.svc_model.SVCModel">SVCModel (class in classification.svc_model)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules.html#classification.base_model.ClassifierClass.target_labels">target_labels (classification.base_model.ClassifierClass attribute)</a>
+</li>
+      <li><a href="modules.html#classification.base_model.ClassifierClass.target_test">target_test (classification.base_model.ClassifierClass attribute)</a>
+</li>
+      <li><a href="modules.html#classification.base_model.ClassifierClass.target_train">target_train (classification.base_model.ClassifierClass attribute)</a>
+</li>
+      <li><a href="modules.html#image_processing.test.Testing">Testing (class in image_processing.test)</a>
+</li>
+      <li><a href="gui.html#pages.regression_classification.RegressionClassificationPage.toggle_classification_options">toggle_classification_options() (pages.regression_classification.RegressionClassificationPage method)</a>
+</li>
+      <li><a href="gui.html#main_sphinx.App.toggle_mode">toggle_mode() (main_sphinx.App method)</a>
+</li>
+      <li><a href="gui.html#pages.regression_classification.RegressionClassificationPage.toggle_regression_options">toggle_regression_options() (pages.regression_classification.RegressionClassificationPage method)</a>
+</li>
+      <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.toggle_slider">toggle_slider() (pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+      <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.toggle_smoothing_options">toggle_smoothing_options() (pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+      <li><a href="modules.html#ai_model.ann.ArtificialNeuralNetwork.train">train() (ai_model.ann.ArtificialNeuralNetwork method)</a>
+
+      <ul>
+        <li><a href="modules.html#classification.knn_model.KNNModel.train">(classification.knn_model.KNNModel method)</a>
+</li>
+        <li><a href="modules.html#classification.random_forest_model.RandomForestModel.train">(classification.random_forest_model.RandomForestModel method)</a>
+</li>
+        <li><a href="modules.html#classification.svc_model.SVCModel.train">(classification.svc_model.SVCModel method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules.html#id0">train_lasso() (regression.regression_models.RegressionModels method)</a>, <a href="modules.html#regression.regression_models.RegressionModels.train_lasso">[1]</a>
+</li>
+      <li><a href="modules.html#id1">train_linear_regression() (regression.regression_models.RegressionModels method)</a>, <a href="modules.html#regression.regression_models.RegressionModels.train_linear_regression">[1]</a>
+</li>
+      <li><a href="modules.html#image_processing.train.Training.train_nn">train_nn() (image_processing.train.Training method)</a>
+</li>
+      <li><a href="modules.html#id3">train_polynomial_regression() (regression.regression_models.RegressionModels method)</a>, <a href="modules.html#regression.regression_models.RegressionModels.train_polynomial_regression">[1]</a>
+</li>
+      <li><a href="modules.html#id5">train_ridge() (regression.regression_models.RegressionModels method)</a>, <a href="modules.html#regression.regression_models.RegressionModels.train_ridge">[1]</a>
+</li>
+      <li><a href="modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling.train_test_split">train_test_split() (data_filtering.Scaling_and_Encoding_final.EncodeAndScaling method)</a>
+</li>
+      <li><a href="modules.html#image_processing.train.Training">Training (class in image_processing.train)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules.html#id14">unzip_folder() (image_processing.dataloader.DataLoadingAndPreprocessing method)</a>, <a href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.unzip_folder">[1]</a>
+</li>
+      <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.update_boxplot">update_boxplot() (pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+      <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.update_buttons_visibility">update_buttons_visibility() (pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.update_comparison_view">update_comparison_view() (pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+      <li><a href="gui.html#pages.data_filtering_page.DataFilteringPage.update_dropdown">update_dropdown() (pages.data_filtering_page.DataFilteringPage method)</a>
+</li>
+      <li><a href="gui.html#pages.file_upload_page.FileUploadPage.upload_file">upload_file() (pages.file_upload_page.FileUploadPage method)</a>
+</li>
+      <li><a href="gui.html#pages.image_processing_page.ImageProcessingPage.upload_image">upload_image() (pages.image_processing_page.ImageProcessingPage method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules.html#ai_model.base.BaseModel.validate_options">validate_options() (ai_model.base.BaseModel static method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="X">X</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules.html#ai_model.base.BaseModel.X_test">X_test (ai_model.base.BaseModel attribute)</a>
+
+      <ul>
+        <li><a href="modules.html#image_processing.test.Testing.X_test">(image_processing.test.Testing attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules.html#ai_model.base.BaseModel.X_train">X_train (ai_model.base.BaseModel attribute)</a>
+</li>
+      <li><a href="modules.html#ai_model.xgboost_model.XGBoost">XGBoost (class in ai_model.xgboost_model)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Y">Y</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules.html#ai_model.base.BaseModel.y_test">y_test (ai_model.base.BaseModel attribute)</a>
+
+      <ul>
+        <li><a href="modules.html#image_processing.test.Testing.y_test">(image_processing.test.Testing attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules.html#ai_model.base.BaseModel.y_train">y_train (ai_model.base.BaseModel attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, MAIT24-25.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

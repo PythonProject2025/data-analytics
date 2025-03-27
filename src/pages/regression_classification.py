@@ -12,6 +12,8 @@ import re
 import tkinter as tk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from tkinter import ttk
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 
 class RegressionClassificationPage(ctk.CTkFrame):
@@ -170,13 +172,11 @@ class RegressionClassificationPage(ctk.CTkFrame):
 
            
 
-            # ✅ Show X_Label only for Linear & Polynomial Regression
-        if model == "Linear Regression" :
-            self.create_textbox(self.regression_options_frame, "X_Label", "xlabel")
+      
            
         if model == "Polynomial Regression":
             self.create_textbox(self.regression_options_frame, "Polynomial Degree","polynomial")
-            self.create_textbox(self.regression_options_frame, "X_Label", "xlabel")
+            #self.create_textbox(self.regression_options_frame, "X_Label", "xlabel")
         
 
         elif model == "Ridge Regression":
@@ -467,42 +467,42 @@ class RegressionClassificationPage(ctk.CTkFrame):
             messagebox.showerror("Error", "No processed data available for preview!")
             return
 
-        # ✅ Create a new popup window
+        #  Create a new popup window
         preview_window = ctk.CTkToplevel(self)
         preview_window.title("Processed Data Preview")
         preview_window.geometry("900x500")
         preview_window.grab_set()
 
-        # ✅ Create a frame for the Treeview
+        #  Create a frame for the Treeview
         frame = tk.Frame(preview_window)
         frame.pack(fill="both", expand=True)
 
-        # ✅ Treeview (Table) widget
+        #  Treeview (Table) widget
         tree = ttk.Treeview(frame, columns=list(self.file_data.columns), show="headings")
 
-        # ✅ Add column headers
+        #  Add column headers
         for col in self.file_data.columns:
             tree.heading(col, text=col)
             tree.column(col, width=150)  # Adjust column width
 
-        # ✅ Insert rows (limit to first 50 rows to avoid UI lag)
+        #  Insert rows (limit to first 50 rows to avoid UI lag)
         for index, row in self.file_data.head(50).iterrows():
             tree.insert("", "end", values=list(row))
 
-        # ✅ Add vertical scrollbar
+        #  Add vertical scrollbar
         v_scrollbar = ttk.Scrollbar(frame, orient="vertical", command=tree.yview)
         tree.configure(yscroll=v_scrollbar.set)
 
-        # ✅ Add horizontal scrollbar
+        #  Add horizontal scrollbar
         h_scrollbar = ttk.Scrollbar(frame, orient="horizontal", command=tree.xview)
         tree.configure(xscroll=h_scrollbar.set)
 
-        # ✅ Pack elements
+        #  Pack elements
         tree.pack(side="top", fill="both", expand=True)
         v_scrollbar.pack(side="right", fill="y")
         h_scrollbar.pack(side="bottom", fill="x")
 
-        print("✅ Processed Data preview displayed successfully!")
+        print(" Processed Data preview displayed successfully!")
         
     def send_request_regression(self, json_data):
         """Send the request to the Django backend and return the response."""
@@ -515,6 +515,7 @@ class RegressionClassificationPage(ctk.CTkFrame):
             )
  
             if response.status_code == 200:
+                    self.responce_received = True
                     response_data = response.json()
                     print(response_data)
                     self.display_regression_results(response_data)
@@ -553,26 +554,44 @@ class RegressionClassificationPage(ctk.CTkFrame):
                         y_test = response_data["y_test"]
                         x_label = response_data["x_label"]
                         y_label = response_data["y_label"]
-                        
-                    # Polynomial fit plot
-                        self.polynomial_plot(self.X_Label_data,y_test,y_pred,x_label,y_label,best_polynomial_degree)
-                        
+
+                        # Create dummy x-axis if not provided
+                        x_data = np.arange(len(y_test))
+                    
+                        self.polynomial_plot(x_data, y_test, y_pred, x_label, y_label, best_polynomial_degree)
                     elif "r2_score_linear" in response_data:
-                        # Extracting values from response_data
+                        # Extract values
                         r2_score_linear = response_data["r2_score_linear"]
-                        y_pred  = response_data["y_pred"]
-                        #x_data  = response_data["x_data"]  # x_label is given by User
-                        y_test  = response_data["y_test"]
+                        y_pred = response_data["y_pred"]
+                        y_test = response_data["y_test"]
                         x_label = response_data["x_label"]
-                        y_label = response_data["y_label"] 
-                        
-                        fig, axs = plt.subplots(1, 2, figsize=(12, 5))
-                        
-                    # Regression Plot
-                        self.regression_plot(self.X_Label_data,y_test,x_label,y_label,ax=axs[0])
-                        
-                    # Residual Plot
-                        self.residual_plot(y_test,y_pred,ax=axs[1]) 
+                        y_label = response_data["y_label"]
+
+                        #  Create a Tkinter Toplevel window
+                        popup = ctk.CTkToplevel(self)
+                        popup.title("Linear Regression & Residual Plot")
+                        popup.geometry("1000x500")
+                        popup.grab_set()
+
+                        #  Create the matplotlib figure with 2 subplots
+                        from matplotlib.figure import Figure
+                        from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
+                        fig = Figure(figsize=(12, 5), dpi=100)
+                        ax1 = fig.add_subplot(121)
+                        ax2 = fig.add_subplot(122)
+
+                        #  Call your existing functions, passing subplot axes
+                        self.regression_plot(y_test, y_pred, x_label, y_label, ax=ax1)
+                        self.residual_plot(y_test, y_pred, ax=ax2)
+
+                        #  Embed the figure in the popup window
+                        canvas = FigureCanvasTkAgg(fig, master=popup)
+                        canvas.draw()
+                        canvas.get_tk_widget().pack(fill="both", expand=True)
+
+
+                   
             else:
                     messagebox.showerror(
                         "Error", response.json().get('error', 'File upload failed.')
@@ -583,12 +602,12 @@ class RegressionClassificationPage(ctk.CTkFrame):
     def display_regression_results(self, response_data):
         """Displays regression results dynamically based on the selected model above the graph frame."""
         
-        # ✅ Clear Previous Results if Any
+        #  Clear Previous Results if Any
         for widget in self.graph_frame.winfo_children():
             if isinstance(widget, ctk.CTkLabel):
                 widget.destroy()
 
-        # ✅ Extract Regression Results Based on the Model
+        #  Extract Regression Results Based on the Model
         result_text = ""
         
         if "r2_score_lasso" in response_data:
@@ -615,7 +634,7 @@ class RegressionClassificationPage(ctk.CTkFrame):
             result_text = f"R2 Score: {float(response_data['r2_score_linear']):.4f}"
 
 
-        # ✅ Display Results as a Label Above Graph
+        # Display Results as a Label Above Graph
         if result_text:
             result_label = ctk.CTkLabel(
                 self.graph_frame, text=result_text, 
@@ -627,33 +646,63 @@ class RegressionClassificationPage(ctk.CTkFrame):
                 
         
     def send_request_classification(self, json_data):
-            
-        """Send the request to the Django backend and return the response."""
-        print("sending to backend")
+        """Send the request to the Django backend and render confusion matrix and metrics."""
+     
+
         try:
-           
             response = requests.post(
-                    "http://127.0.0.1:8000/api/classification/",
-                    json=json_data
+                "http://127.0.0.1:8000/api/classification/",
+                json=json_data
             )
- 
+
             if response.status_code == 200:
-                    response_data = response.json()
-                    print(response_data)
-                    cm_data = response_data.get("cm")
-                    if cm_data:
-                        self.display_confusion_matrix(cm_data)
-                        print("Response received successfully")
-                    else:
-                        messagebox.showerror("Error", "Confusion Matrix data not received.")
-                     
+                response_data = response.json()
+                print(response_data)
+
+                # ✅ Display classification result metrics
+                self.display_classification_results(response_data)
+
+                # ✅ Display confusion matrix
+                cm_data = response_data.get("cm")
+                if cm_data:
+                    self.display_confusion_matrix(cm_data)
+                    print(" Response received and rendered.")
+                else:
+                    messagebox.showerror("Error", "Confusion Matrix data not received.")
+
             else:
-                    messagebox.showerror(
-                        "Error", response.json().get('error', 'File upload failed.')
-                    )
+                messagebox.showerror(
+                    "Error", response.json().get('error', 'Classification request failed.')
+                )
+
         except Exception as e:
-                messagebox.showerror("Error", str(e))
-    
+            messagebox.showerror("Error", str(e))
+
+    def display_classification_results(self, response_data):
+        """Displays classification results (accuracy, MSE) above the graph frame."""
+        
+        # Clear previous result labels
+        for widget in self.graph_frame.winfo_children():
+            if isinstance(widget, ctk.CTkLabel):
+                widget.destroy()
+
+        result_text = ""
+
+        if "accuracy" in response_data and "mse" in response_data:
+            result_text = (
+                f"Accuracy: {float(response_data['accuracy']):.4f}\n"
+                f"MSE: {float(response_data['mse']):.4f}"
+            )
+
+        if result_text:
+            result_label = ctk.CTkLabel(
+                self.graph_frame, text=result_text,
+                font=("Inter", 15, "bold"), fg_color="#D1D1D1", text_color="black",
+                height=50, width=500, corner_radius=8, padx=5, pady=5
+            )
+            result_label.grid(row=0, column=0, padx=10, pady=5, sticky="new")
+
+
     def cancel_file(self):
         """Handles file cancellation and resets only this page."""
         
@@ -672,8 +721,17 @@ class RegressionClassificationPage(ctk.CTkFrame):
 
         # ✅ Go back to file upload page
         self.parent.show_page("file_upload")
+
+    def render_plot_to_frame(self, fig):
+            for widget in self.graph_display.winfo_children():
+                widget.destroy()
+
+            canvas = FigureCanvasTkAgg(fig, master=self.graph_display)
+            canvas.draw()
+            canvas.get_tk_widget().pack(fill="both", expand=True)
         
-    #lasso plotting
+    
+    
     def lasso_plot(self,results_lasso,best_params):
         plt.close('all')
     # Extract the relevant results
@@ -691,7 +749,7 @@ class RegressionClassificationPage(ctk.CTkFrame):
         print("Mean Scores:", mean_scores)
 
         # Set the figure size and style
-        plt.figure(figsize=(10, 6), dpi=120)
+        fig=plt.figure(figsize=(9, 5), dpi=100)
         sns.set_theme(style="whitegrid")  # Clean background with gridlines
         
         # Plot the lineplot
@@ -707,12 +765,18 @@ class RegressionClassificationPage(ctk.CTkFrame):
         plt.ylabel('Cross-Validation Score (R2 Score)', fontsize=14, weight='bold', labelpad=15)
         plt.title('Alpha vs Model Performance (Lasso Regression)', fontsize=16, weight='bold', pad=20)
         
-        plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
-        plt.gca().yaxis.get_offset_text().set_visible(False)
+        #plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
+        #plt.gca().yaxis.get_offset_text().set_visible(False)
+        
+        # Instead, ensure the y-axis is in plain format
+        plt.gca().yaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f'{x:.3f}'))
+    
+        # Set y-axis limits to better reflect the R² range (optional, adjust as needed)
+        plt.ylim(min(mean_scores) - 0.01, max(mean_scores) + 0.01)  # Add some padding
         
         # Customize the legend to remove the line
         plt.legend(
-            fontsize=12, loc='upper left', frameon=True, fancybox=True, shadow=True, borderpad=1, handlelength=0
+            fontsize=12, loc='upper right', frameon=True, fancybox=True, shadow=True, borderpad=1, handlelength=0
         )
         
         # Add gridlines and customize tick params
@@ -727,7 +791,9 @@ class RegressionClassificationPage(ctk.CTkFrame):
         
         # Ensure the plot looks neat with tight layout
         plt.tight_layout()
-        plt.show()
+        canvas = FigureCanvasTkAgg(fig, master= self.graph_display)
+        canvas.draw()
+        canvas.get_tk_widget().pack(fill="both", expand=True)
     
     def ridge_plot(self,results_ridge,best_params):
         plt.close('all')
@@ -742,7 +808,7 @@ class RegressionClassificationPage(ctk.CTkFrame):
         alphas = np.array(results_ridge['param_ridge_regression__alpha'])[best_degree_mask]
         mean_scores = np.array(results_ridge['mean_test_score'])[best_degree_mask]
         # Set the figure size and style
-        plt.figure(figsize=(10, 6), dpi=120)
+        fig=plt.figure(figsize=(9, 5), dpi=120)
         sns.set_theme(style="whitegrid")  # Clean background with gridlines
         
         # Plot the lineplot
@@ -755,15 +821,21 @@ class RegressionClassificationPage(ctk.CTkFrame):
         
         # Add labels and title with improved styling
         plt.xlabel('Alpha (Regularization Strength)', fontsize=14, weight='bold', labelpad=15)
-        plt.ylabel('Cross-Validation Score (R2 Score)', fontsize=14, weight='bold', labelpad=15)
+        plt.ylabel('Cross-Validation Score (R2 Score)', fontsize=14, weight='bold', labelpad=8)
         plt.title('Alpha vs Model Performance (Ridge Regression)', fontsize=16, weight='bold', pad=20)
         
-        plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
-        plt.gca().yaxis.get_offset_text().set_visible(False)
+        # plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
+        # plt.gca().yaxis.get_offset_text().set_visible(False)
+        
+        # Instead, ensure the y-axis is in plain format
+        plt.gca().yaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f'{x:.3f}'))
+    
+        # Set y-axis limits to better reflect the R² range (optional, adjust as needed)
+        plt.ylim(min(mean_scores) - 0.01, max(mean_scores) + 0.01)  # Add some padding
         
         # Customize the legend
         plt.legend(
-            fontsize=12, loc='center right', frameon=True, fancybox=True, shadow=True, borderpad=1
+            fontsize=12, loc='upper right', frameon=True, fancybox=True, shadow=True, borderpad=1
         )
         
         # Add gridlines and customize tick params
@@ -778,7 +850,9 @@ class RegressionClassificationPage(ctk.CTkFrame):
         
         # Ensure the plot looks neat with tight layout
         plt.tight_layout()
-        plt.show()
+        canvas = FigureCanvasTkAgg(fig, master= self.graph_display)
+        canvas.draw()
+        canvas.get_tk_widget().pack(fill="both", expand=True)
         
     def polynomial_plot(self, x_scatter, y_scatter, y_poly, x_label, y_label, degree):
         plt.close('all')
@@ -792,22 +866,40 @@ class RegressionClassificationPage(ctk.CTkFrame):
             y_scatter = np.array(y_scatter).flatten() if not isinstance(y_scatter, np.ndarray) else y_scatter.flatten()
             y_poly = np.array(y_poly).flatten() if not isinstance(y_poly, np.ndarray) else y_poly.flatten()
 
-            # ✅ Debug prints
-            print("✅ Processed Polynomial Plot Data:")
+            # ✅ Check lengths of arrays
+            if len(x_scatter) != len(y_scatter) or len(x_scatter) != len(y_poly):
+                # If x_scatter is too short, generate a range of indices
+                expected_length = len(y_scatter)
+                if len(x_scatter) == 1:  # If x_scatter is a single value like [0]
+                    print(f"⚠️ x_scatter length ({len(x_scatter)}) does not match y_scatter length ({len(y_scatter)}). Generating x_scatter as range...")
+                    x_scatter = np.arange(expected_length)  # e.g., [0, 1, 2, 3, 4]
+                else:
+                    raise ValueError(
+                        f"Array length mismatch: x_scatter ({len(x_scatter)}), y_scatter ({len(y_scatter)}), y_poly ({len(y_poly)}). All arrays must be the same length."
+                    )
+            
+            #  Sort the data by x_scatter to ensure a smooth line plot
+            sorted_indices = np.argsort(x_scatter)
+            x_scatter = x_scatter[sorted_indices]
+            y_scatter = y_scatter[sorted_indices]
+            y_poly = y_poly[sorted_indices]
+            
+            #  Debug prints
+            print(" Processed Polynomial Plot Data:")
             print("X Scatter:", x_scatter[:5])  # Print first 5 values
             print("Y Scatter:", y_scatter[:5])
             print("Y Poly:", y_poly[:5])
 
             # Set figure size and seaborn style
-            plt.figure(figsize=(12, 7), dpi=120)
+            fig=plt.figure(figsize=(10, 5), dpi=120)
             sns.set_theme(style="ticks")
 
             # Scatter plot for actual data
             sns.scatterplot(
                 x=x_scatter, y=y_scatter,
                 color='#1f77b4',
-                label='Actual Data', s=100, alpha=0.9,
-                edgecolor='black', linewidth=0.7
+                label='Actual Data', s=50, alpha=0.5,
+                edgecolor='black', linewidth=0.3
             )
 
             # Line plot for polynomial regression
@@ -815,7 +907,7 @@ class RegressionClassificationPage(ctk.CTkFrame):
                 x=x_scatter, y=y_poly,
                 color='#ff5733',
                 label='Polynomial Regression Line',
-                linewidth=2.5
+                linewidth=2.5, alpha=0.7
             )
 
             # Add labels and title with better styling
@@ -845,14 +937,18 @@ class RegressionClassificationPage(ctk.CTkFrame):
 
             # Tight layout for better spacing
             plt.tight_layout()
-            plt.show()
+            
+            #  Embed in the Tkinter frame
+            canvas = FigureCanvasTkAgg(fig, master= self.graph_display)
+            canvas.draw()
+            canvas.get_tk_widget().pack(fill="both", expand=True)
 
         except Exception as e:
             print("❌ ERROR in polynomial_plot:", str(e))
             messagebox.showerror("Plot Error", str(e))
             
     def regression_plot(self,x, y, x_label, y_label, data=None, ax=None):
-        plt.close('all')
+       # plt.close('all')
         if isinstance(x, dict):  
             x = np.array(list(x.values()))  # Convert dictionary to array
         elif isinstance(x, list):
@@ -878,10 +974,10 @@ class RegressionClassificationPage(ctk.CTkFrame):
         ax.grid(True, which='both', linestyle='--', linewidth=0.5, alpha=0.7)
         ax.spines["top"].set_visible(False)
         ax.spines["right"].set_visible(False)    
-        plt.show()
+        #plt.show()
         
     def residual_plot(self,x, y, ax=None):
-        plt.close('all')
+        #plt.close('all')
         if isinstance(x, dict):  
             x = np.array(list(x.values()))  
         elif isinstance(x, list):
@@ -893,7 +989,7 @@ class RegressionClassificationPage(ctk.CTkFrame):
             y = np.array(y)
         if ax is None:
             ax = plt.gca()
-            plt.figure(figsize=(10, 6), dpi=600)  # Adjust size and set DPI
+            fig =plt.figure(figsize=(10, 6), dpi=600)  # Adjust size and set DPI
         sns.residplot(
             x=x, y=y, scatter_kws={"s": 60, "alpha": 0.8}, ax=ax,
             color="teal"
@@ -903,15 +999,35 @@ class RegressionClassificationPage(ctk.CTkFrame):
         ax.grid(True, which='both', linestyle='--', linewidth=0.5, alpha=0.7)
         ax.spines["top"].set_visible(False)
         ax.spines["right"].set_visible(False)
-        plt.show()
+        #plt.show()
     
     def display_confusion_matrix(self, cm):
-        print("reached plotting code")
-        cm = np.array(cm)  # ✅ Ensure cm is a NumPy array
+        
+        
+        #  Clear previous plots inside graph_display
+        for widget in self.graph_display.winfo_children():
+            widget.destroy()
+
+        #  Compute percent matrix
+        cm = np.array(cm)
         cm_percent = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis] * 100
+
+        #  Create a matplotlib Figure
+        fig = Figure(figsize=(4, 5), dpi=100)
+        ax = fig.add_subplot(111)
+
+        #  Plot the matrix
         disp = ConfusionMatrixDisplay(confusion_matrix=cm_percent)
-        disp.plot(cmap="Blues", values_format=".1f")
+        disp.plot(cmap="Blues", values_format=".1f", ax=ax, colorbar=False)
+
+        #  Add percent signs to annotations
         for text in disp.text_.flatten():
             text.set_text(text.get_text() + '%')
-        plt.title("Confusion Matrix (%)")
-        plt.show()
+
+        ax.set_title("Confusion Matrix (%)")
+
+        #  Embed in the Tkinter frame
+        canvas = FigureCanvasTkAgg(fig, master= self.graph_display)
+        canvas.draw()
+        canvas.get_tk_widget().pack(fill="both", expand=True)
+

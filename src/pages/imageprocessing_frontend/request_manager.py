@@ -36,9 +36,9 @@ class ImageRequestManager:
     def _handle_image_processing_submission(self):
         print("Image Processing Submitted")
 
-        if "Image Train" not in self.context.segments:
-            self.context.segmented_frame.configure(values=["Image Processing", "Image Train"])
-            self.context.managers["ui"].initialize_segment("Image Train")
+        # if "Image Train" not in self.context.segments:
+        #     self.context.segmented_frame.configure(values=["Image Processing", "Image Train"])
+        #     self.context.managers["ui"].initialize_segment("Image Train")
 
         # Extract parameters from context
         activation_function = self.context.radio_var.get()

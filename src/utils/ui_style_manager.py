@@ -1,11 +1,17 @@
+import customtkinter as ctk
+
+
 class StyleManager:
     COLORS = {
-        "primary": "#2C72EA",
-        "secondary": "#E0E0E0",
-        "accent": "#D1D1D1",
-        "transparent": "transparent",
+        "primary": "#3C506A",
+        "secondary": ("#E0E0E0", "#2A2A2A"),
+        "accent": ("#CDCDCD", "#676767"),
+        "transparent": "#F5EFE6",
         "info": "#A0A0A0",
-        "dark_bg": "#171821"
+        "dark_bg": "#171821",
+        "Text Color": "#FFFFFF",
+        "Default Mode": ("#E0E0E0", "#2A2A2A"),
+        "Default Mode I": ("#2A2A2A","#E0E0E0")
     }
 
     FONTS = {
@@ -16,9 +22,11 @@ class StyleManager:
 
     @staticmethod
     def get_color(name):
-        return StyleManager.COLORS.get(name, "#FFFFFF")
+        color = StyleManager.COLORS.get(name, "#FFFFFF")
+        if isinstance(color, tuple):
+            return color[0] if ctk.get_appearance_mode() == "Light" else color[1]
+        return color
 
     @staticmethod
     def get_font(name):
         return StyleManager.FONTS.get(name, ("Inter", 12))
-

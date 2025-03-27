@@ -89,6 +89,7 @@ def polynomial_plot(x_scatter, y_scatter, y_poly, x_label, y_label, degree):
     plt.show()    
 
 #  ridge plotting
+
 def ridge_plot(data):
     # Extract the relevant results
     results = data.results_ridge
@@ -113,9 +114,15 @@ def ridge_plot(data):
     plt.ylabel('Cross-Validation Score (R2 Score)', fontsize=14, weight='bold', labelpad=15)
     plt.title('Alpha vs Model Performance (Ridge Regression)', fontsize=16, weight='bold', pad=20)
     
+
+    plt.gca().yaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f'{x:.3f}'))
+    
+    # Set y-axis limits to better reflect the R² range (optional, adjust as needed)
+    plt.ylim(min(mean_scores) - 0.01, max(mean_scores) + 0.01)  # Add some padding
+    
     # Customize the legend
     plt.legend(
-        fontsize=12, loc='center right', frameon=True, fancybox=True, shadow=True, borderpad=1
+        fontsize=12, loc='upper right', frameon=True, fancybox=True, shadow=True, borderpad=1
     )
     
     # Add gridlines and customize tick params
@@ -133,6 +140,7 @@ def ridge_plot(data):
     plt.show()
     
 #lasso plotting
+
 def lasso_plot(data):
     # Extract the relevant results
     results = data.results_lasso
@@ -157,9 +165,15 @@ def lasso_plot(data):
     plt.ylabel('Cross-Validation Score (R2 Score)', fontsize=14, weight='bold', labelpad=15)
     plt.title('Alpha vs Model Performance (Lasso Regression)', fontsize=16, weight='bold', pad=20)
     
+   
+    plt.gca().yaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f'{x:.3f}'))
+    
+    # Set y-axis limits to better reflect the R² range (optional, adjust as needed)
+    plt.ylim(min(mean_scores) - 0.01, max(mean_scores) + 0.01)  # Add some padding
+    
     # Customize the legend to remove the line
     plt.legend(
-        fontsize=12, loc='upper left', frameon=True, fancybox=True, shadow=True, borderpad=1, handlelength=0
+        fontsize=12, loc='upper right', frameon=True, fancybox=True, shadow=True, borderpad=1, handlelength=0
     )
     
     # Add gridlines and customize tick params

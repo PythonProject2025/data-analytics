@@ -1,0 +1,1873 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Architecture Overview &mdash; Data Analytics 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Modules and Functionalities" href="modules.html" />
+    <link rel="prev" title="Step-by-Step Usage Guide" href="guide.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Data Analytics
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#overview-of-the-software">Overview of the software</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#purpose-of-integrating-tkinter-with-django">Purpose of Integrating Tkinter with Django</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#separation-of-concerns">Separation of Concerns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#api-based-communication">API-Based Communication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#enhanced-performance">Enhanced Performance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#scalability-and-extensibility">Scalability and Extensibility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#versatile-file-processing">Versatile File Processing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#frontend-tkinter-based-graphical-user-interface-gui">Frontend: Tkinter-Based Graphical User Interface (GUI)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#file-upload-interface">File Upload Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#automated-navigation-system">Automated Navigation System</a></li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#process-selection-module">Process Selection Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#real-time-processing-updates">Real-Time Processing Updates</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#backend-django-based-api-and-processing-engine">Backend: Django-Based API and Processing Engine</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#data-object-and-api-based-data-exchange">Data Object and API-Based Data Exchange</a></li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#rest-api-for-request-handling">REST API for Request Handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#modular-and-scalable-api-architecture">Modular and Scalable API Architecture</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Prerequisites.html">Installation Prerequisites</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Prerequisites.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Prerequisites.html#environment-setup">Environment Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Prerequisites.html#running-the-application">Running the Application</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide.html">Step-by-Step Usage Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide.html#uploading-a-file-and-selecting-a-module">Uploading a File and Selecting a Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide.html#processing-the-data-and-generating-outputs">Processing the Data and Generating Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide.html#interpreting-results-and-refining-analysis">Interpreting Results and Refining Analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Architecture Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#front-end-tkinter-gui">Front End: Tkinter GUI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#main_sphinx.App"><code class="docutils literal notranslate"><span class="pre">App</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#main_sphinx.App.current_page"><code class="docutils literal notranslate"><span class="pre">App.current_page</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main_sphinx.App.configure_grid"><code class="docutils literal notranslate"><span class="pre">App.configure_grid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main_sphinx.App.create_sidebar"><code class="docutils literal notranslate"><span class="pre">App.create_sidebar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main_sphinx.App.load_assets"><code class="docutils literal notranslate"><span class="pre">App.load_assets()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main_sphinx.App.load_header_image"><code class="docutils literal notranslate"><span class="pre">App.load_header_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main_sphinx.App.resize_header_image"><code class="docutils literal notranslate"><span class="pre">App.resize_header_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main_sphinx.App.show_page"><code class="docutils literal notranslate"><span class="pre">App.show_page()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main_sphinx.App.toggle_mode"><code class="docutils literal notranslate"><span class="pre">App.toggle_mode()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pages.aimodel_page.AImodelPage"><code class="docutils literal notranslate"><span class="pre">AImodelPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pages.aimodel_page.AImodelPage.change_segment"><code class="docutils literal notranslate"><span class="pre">AImodelPage.change_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.aimodel_page.AImodelPage.create_ann_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_ann_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.aimodel_page.AImodelPage.create_cb_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_cb_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.aimodel_page.AImodelPage.create_combobox_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_combobox_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.aimodel_page.AImodelPage.create_info_button"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_info_button()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.aimodel_page.AImodelPage.create_rf_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_rf_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.aimodel_page.AImodelPage.create_slider_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_slider_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.aimodel_page.AImodelPage.create_xgb_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_xgb_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.aimodel_page.AImodelPage.get_combobox_value"><code class="docutils literal notranslate"><span class="pre">AImodelPage.get_combobox_value()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.aimodel_page.AImodelPage.get_slider_value"><code class="docutils literal notranslate"><span class="pre">AImodelPage.get_slider_value()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.aimodel_page.AImodelPage.messagebox"><code class="docutils literal notranslate"><span class="pre">AImodelPage.messagebox</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.aimodel_page.AImodelPage.preview_data"><code class="docutils literal notranslate"><span class="pre">AImodelPage.preview_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.aimodel_page.AImodelPage.send_request"><code class="docutils literal notranslate"><span class="pre">AImodelPage.send_request()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.aimodel_page.AImodelPage.show_info_dialog"><code class="docutils literal notranslate"><span class="pre">AImodelPage.show_info_dialog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.aimodel_page.AImodelPage.submit_action"><code class="docutils literal notranslate"><span class="pre">AImodelPage.submit_action()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.add_export_send_buttons"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.add_export_send_buttons()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.change_segment"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.change_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.create_interpolation_frame"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.create_interpolation_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.create_process_selection_frame"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.create_process_selection_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.create_scaling_encoding_frame"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.create_scaling_encoding_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.create_segment_frame"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.create_segment_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.create_smoothing_frame"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.create_smoothing_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.export_data"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.export_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.get_data_by_name"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.get_data_by_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.load_csv_columns"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.load_csv_columns()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.lock_segment"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.lock_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.move_to_next_segment"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.move_to_next_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.open_comparison_popup"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.open_comparison_popup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.open_send_popup"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.open_send_popup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.plot_boxplot"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.plot_boxplot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.plot_comparison_graph"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.plot_comparison_graph()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.plot_line_graph"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.plot_line_graph()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.preview_csv"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.preview_csv()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.preview_scaled_encoded_data"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.preview_scaled_encoded_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.run_interpolation"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.run_interpolation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.run_outlier_detection"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.run_outlier_detection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.run_scaling_and_encoding"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.run_scaling_and_encoding()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.run_smoothing"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.run_smoothing()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.send_request"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.send_request()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.show_comparison_data"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.show_comparison_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.show_info_dialog"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.show_info_dialog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.show_loading_message"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.show_loading_message()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.submit_action"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.submit_action()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.toggle_slider"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.toggle_slider()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.toggle_smoothing_options"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.toggle_smoothing_options()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.update_boxplot"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.update_boxplot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.update_buttons_visibility"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.update_buttons_visibility()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.update_comparison_view"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.update_comparison_view()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.data_filtering_page.DataFilteringPage.update_dropdown"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.update_dropdown()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pages.file_upload_page.FileUploadPage"><code class="docutils literal notranslate"><span class="pre">FileUploadPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pages.file_upload_page.FileUploadPage.upload_file"><code class="docutils literal notranslate"><span class="pre">FileUploadPage.upload_file()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pages.image_processing_page.ImageProcessingPage"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pages.image_processing_page.ImageProcessingPage.cancel_file"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.cancel_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.image_processing_page.ImageProcessingPage.change_segment"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.change_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.image_processing_page.ImageProcessingPage.create_image_train_frame"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.create_image_train_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.image_processing_page.ImageProcessingPage.create_segment_frame"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.create_segment_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.image_processing_page.ImageProcessingPage.plot_confusion_matrix"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.plot_confusion_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.image_processing_page.ImageProcessingPage.preview_image"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.preview_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.image_processing_page.ImageProcessingPage.show_info_dialog"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.show_info_dialog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.image_processing_page.ImageProcessingPage.submit_action"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.submit_action()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.image_processing_page.ImageProcessingPage.upload_image"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.upload_image()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pages.process_selection_page.ProcessSelectionPage"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pages.process_selection_page.ProcessSelectionPage.parent"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage.parent</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.process_selection_page.ProcessSelectionPage.file_path"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage.file_path</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.process_selection_page.ProcessSelectionPage.filename"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage.filename</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.process_selection_page.ProcessSelectionPage.__init__"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.process_selection_page.ProcessSelectionPage.create_buttons"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage.create_buttons()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pages.regression_classification.RegressionClassificationPage"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pages.regression_classification.RegressionClassificationPage.cancel_file"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.cancel_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.regression_classification.RegressionClassificationPage.change_segment"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.change_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.regression_classification.RegressionClassificationPage.clear_frame"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.clear_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.regression_classification.RegressionClassificationPage.create_classification_frame"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_classification_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.regression_classification.RegressionClassificationPage.create_dropdown"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_dropdown()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.regression_classification.RegressionClassificationPage.create_info_button"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_info_button()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.regression_classification.RegressionClassificationPage.create_regression_frame"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_regression_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.regression_classification.RegressionClassificationPage.create_slider"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_slider()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.regression_classification.RegressionClassificationPage.create_textbox"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_textbox()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.regression_classification.RegressionClassificationPage.lasso_plot"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.lasso_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.regression_classification.RegressionClassificationPage.polynomial_plot"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.polynomial_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.regression_classification.RegressionClassificationPage.preview_data"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.preview_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.regression_classification.RegressionClassificationPage.regression_plot"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.regression_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.regression_classification.RegressionClassificationPage.residual_plot"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.residual_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.regression_classification.RegressionClassificationPage.ridge_plot"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.ridge_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.regression_classification.RegressionClassificationPage.send_request_classification"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.send_request_classification()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.regression_classification.RegressionClassificationPage.send_request_regression"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.send_request_regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.regression_classification.RegressionClassificationPage.show_info_dialog"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.show_info_dialog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.regression_classification.RegressionClassificationPage.submit_action"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.submit_action()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.regression_classification.RegressionClassificationPage.toggle_classification_options"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.toggle_classification_options()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.regression_classification.RegressionClassificationPage.toggle_regression_options"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.toggle_regression_options()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pages.help_page.HelpPage"><code class="docutils literal notranslate"><span class="pre">HelpPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pages.help_page.HelpPage.None"><code class="docutils literal notranslate"><span class="pre">HelpPage.None</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pages.help_page.HelpPage.__init__"><code class="docutils literal notranslate"><span class="pre">HelpPage.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#back-end-django-api">Back End: Django API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#backend.api.image_processing_engine.ImageProcessingAPIView"><code class="docutils literal notranslate"><span class="pre">ImageProcessingAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#backend.api.image_processing_engine.ImageProcessingAPIView.post"><code class="docutils literal notranslate"><span class="pre">ImageProcessingAPIView.post()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#backend.api.data_preprocessing_engine.DataFilteringFileAPIView"><code class="docutils literal notranslate"><span class="pre">DataFilteringFileAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#backend.api.data_preprocessing_engine.DataFilteringFileAPIView.post"><code class="docutils literal notranslate"><span class="pre">DataFilteringFileAPIView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#backend.api.data_preprocessing_engine.DataFilteringFileAPIView.run_outlier_detection"><code class="docutils literal notranslate"><span class="pre">DataFilteringFileAPIView.run_outlier_detection()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#backend.api.data_preprocessing_engine.InterpolationAPIView"><code class="docutils literal notranslate"><span class="pre">InterpolationAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#backend.api.data_preprocessing_engine.InterpolationAPIView.post"><code class="docutils literal notranslate"><span class="pre">InterpolationAPIView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#backend.api.data_preprocessing_engine.InterpolationAPIView.run_interpolation"><code class="docutils literal notranslate"><span class="pre">InterpolationAPIView.run_interpolation()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#backend.api.data_preprocessing_engine.SmoothingAPIView"><code class="docutils literal notranslate"><span class="pre">SmoothingAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#backend.api.data_preprocessing_engine.SmoothingAPIView.post"><code class="docutils literal notranslate"><span class="pre">SmoothingAPIView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#backend.api.data_preprocessing_engine.SmoothingAPIView.run_smoothing"><code class="docutils literal notranslate"><span class="pre">SmoothingAPIView.run_smoothing()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#backend.api.ai_models_engine.AIModelAPIView"><code class="docutils literal notranslate"><span class="pre">AIModelAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#backend.api.ai_models_engine.AIModelAPIView.extract_hyperparameters"><code class="docutils literal notranslate"><span class="pre">AIModelAPIView.extract_hyperparameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#backend.api.ai_models_engine.AIModelAPIView.post"><code class="docutils literal notranslate"><span class="pre">AIModelAPIView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#backend.api.ai_models_engine.AIModelAPIView.run_selected_model"><code class="docutils literal notranslate"><span class="pre">AIModelAPIView.run_selected_model()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#backend.api.scaling_encoding_engine.ScalingEncodingAPIView"><code class="docutils literal notranslate"><span class="pre">ScalingEncodingAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#backend.api.scaling_encoding_engine.ScalingEncodingAPIView.post"><code class="docutils literal notranslate"><span class="pre">ScalingEncodingAPIView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#backend.api.scaling_encoding_engine.ScalingEncodingAPIView.run_encoding_scaling_train_test_split"><code class="docutils literal notranslate"><span class="pre">ScalingEncodingAPIView.run_encoding_scaling_train_test_split()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#backend.api.regression_engine.RegressionAPIView"><code class="docutils literal notranslate"><span class="pre">RegressionAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#backend.api.regression_engine.RegressionAPIView.post"><code class="docutils literal notranslate"><span class="pre">RegressionAPIView.post()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#backend.api.classification_engine.ClassificationAPIView"><code class="docutils literal notranslate"><span class="pre">ClassificationAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#backend.api.classification_engine.ClassificationAPIView.post"><code class="docutils literal notranslate"><span class="pre">ClassificationAPIView.post()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Modules and Functionalities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#module-data_filtering.Outlier_final">Data Filtering</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#data_filtering.Outlier_final.OutlierDetection"><code class="docutils literal notranslate"><span class="pre">OutlierDetection</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#data_filtering.Outlier_final.OutlierDetection.detect_outliers_iqr"><code class="docutils literal notranslate"><span class="pre">OutlierDetection.detect_outliers_iqr()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#data_filtering.Outlier_final.OutlierDetection.detect_outliers_isolation_forest"><code class="docutils literal notranslate"><span class="pre">OutlierDetection.detect_outliers_isolation_forest()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#data_filtering.Outlier_final.OutlierDetection.is_numeric_columns"><code class="docutils literal notranslate"><span class="pre">OutlierDetection.is_numeric_columns()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#data_filtering.Smoothing_final.SmoothingMethods"><code class="docutils literal notranslate"><span class="pre">SmoothingMethods</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#data_filtering.Smoothing_final.SmoothingMethods.apply_tes"><code class="docutils literal notranslate"><span class="pre">SmoothingMethods.apply_tes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#data_filtering.Smoothing_final.SmoothingMethods.calculate_sma"><code class="docutils literal notranslate"><span class="pre">SmoothingMethods.calculate_sma()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#data_filtering.Spline_Interpolation_final.SplineInterpolator"><code class="docutils literal notranslate"><span class="pre">SplineInterpolator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#data_filtering.Spline_Interpolation_final.SplineInterpolator.check_column_validity"><code class="docutils literal notranslate"><span class="pre">SplineInterpolator.check_column_validity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#data_filtering.Spline_Interpolation_final.SplineInterpolator.fill_missing_values"><code class="docutils literal notranslate"><span class="pre">SplineInterpolator.fill_missing_values()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling"><code class="docutils literal notranslate"><span class="pre">EncodeAndScaling</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling.encode_categorical_features"><code class="docutils literal notranslate"><span class="pre">EncodeAndScaling.encode_categorical_features()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling.preprocess"><code class="docutils literal notranslate"><span class="pre">EncodeAndScaling.preprocess()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling.scale_numerical_features"><code class="docutils literal notranslate"><span class="pre">EncodeAndScaling.scale_numerical_features()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling.train_test_split"><code class="docutils literal notranslate"><span class="pre">EncodeAndScaling.train_test_split()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#module-regression.regression_models">Regression</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#regression.regression_models.RegressionModels"><code class="docutils literal notranslate"><span class="pre">RegressionModels</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#regression.regression_models.RegressionModels.model"><code class="docutils literal notranslate"><span class="pre">RegressionModels.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#regression.regression_models.RegressionModels.best_params"><code class="docutils literal notranslate"><span class="pre">RegressionModels.best_params</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#regression.regression_models.RegressionModels.train_linear_regression"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_linear_regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#regression.regression_models.RegressionModels.train_polynomial_regression"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_polynomial_regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#regression.regression_models.RegressionModels.train_ridge"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_ridge()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#regression.regression_models.RegressionModels.train_lasso"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_lasso()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id0"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_lasso()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id1"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_linear_regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id3"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_polynomial_regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id5"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_ridge()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#module-classification.base_model">Classification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#classification.base_model.ClassifierClass"><code class="docutils literal notranslate"><span class="pre">ClassifierClass</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#classification.base_model.ClassifierClass.data_train"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.data_train</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#classification.base_model.ClassifierClass.data_test"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.data_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#classification.base_model.ClassifierClass.target_train"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.target_train</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#classification.base_model.ClassifierClass.target_test"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.target_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#classification.base_model.ClassifierClass.target_labels"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.target_labels</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#classification.base_model.ClassifierClass.display_confusion_matrix"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.display_confusion_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#classification.base_model.ClassifierClass.evaluate"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#classification.base_model.ClassifierClass.set_model"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.set_model()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#classification.knn_model.KNNModel"><code class="docutils literal notranslate"><span class="pre">KNNModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#classification.knn_model.KNNModel.train"><code class="docutils literal notranslate"><span class="pre">KNNModel.train()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#classification.random_forest_model.RandomForestModel"><code class="docutils literal notranslate"><span class="pre">RandomForestModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#classification.random_forest_model.RandomForestModel.train"><code class="docutils literal notranslate"><span class="pre">RandomForestModel.train()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#classification.svc_model.SVCModel"><code class="docutils literal notranslate"><span class="pre">SVCModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#classification.svc_model.SVCModel.train"><code class="docutils literal notranslate"><span class="pre">SVCModel.train()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#module-ai_model.ann">AI Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#ai_model.ann.ArtificialNeuralNetwork"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.ann.ArtificialNeuralNetwork.model"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.ann.ArtificialNeuralNetwork.problem_type"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.problem_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.ann.ArtificialNeuralNetwork.batch_size"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.batch_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.ann.ArtificialNeuralNetwork.epochs"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.epochs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.ann.ArtificialNeuralNetwork.evaluate"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.ann.ArtificialNeuralNetwork.load_weights"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.load_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.ann.ArtificialNeuralNetwork.save_weights"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.save_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.ann.ArtificialNeuralNetwork.train"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.train()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#ai_model.base.BaseModel"><code class="docutils literal notranslate"><span class="pre">BaseModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.base.BaseModel.HYPERPARAMETER_RANGES"><code class="docutils literal notranslate"><span class="pre">BaseModel.HYPERPARAMETER_RANGES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.base.BaseModel.model"><code class="docutils literal notranslate"><span class="pre">BaseModel.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.base.BaseModel.problem_type"><code class="docutils literal notranslate"><span class="pre">BaseModel.problem_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.base.BaseModel.X_train"><code class="docutils literal notranslate"><span class="pre">BaseModel.X_train</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.base.BaseModel.X_test"><code class="docutils literal notranslate"><span class="pre">BaseModel.X_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.base.BaseModel.y_train"><code class="docutils literal notranslate"><span class="pre">BaseModel.y_train</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.base.BaseModel.y_test"><code class="docutils literal notranslate"><span class="pre">BaseModel.y_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id7"><code class="docutils literal notranslate"><span class="pre">BaseModel.HYPERPARAMETER_RANGES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.base.BaseModel.validate_options"><code class="docutils literal notranslate"><span class="pre">BaseModel.validate_options()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#ai_model.catboost_model.Catboost"><code class="docutils literal notranslate"><span class="pre">Catboost</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.catboost_model.Catboost.problem_type"><code class="docutils literal notranslate"><span class="pre">Catboost.problem_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#ai_model.catboost_model.Catboost.options"><code class="docutils literal notranslate"><span class="pre">Catboost.options</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#ai_model.xgboost_model.XGBoost"><code class="docutils literal notranslate"><span class="pre">XGBoost</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#ai_model.random_forest.RandomForest"><code class="docutils literal notranslate"><span class="pre">RandomForest</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html#module-image_processing.dataloader">Image Processing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.image_size"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.image_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.data"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.data</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.labels"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.labels</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.label_dict"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.label_dict</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.images"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.images</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.data_loader"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.data_loader()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.get_label_dict"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.get_label_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.encode_labels"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.encode_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.create_labels"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.create_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.unzip_folder"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.unzip_folder()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.normalize_dataset"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.normalize_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.split_dataset"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.split_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id8"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.create_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id9"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.data_loader()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id10"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.encode_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id11"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.get_label_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id12"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.normalize_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id13"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.split_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id14"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.unzip_folder()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#image_processing.evaluator.Evaluation"><code class="docutils literal notranslate"><span class="pre">Evaluation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.evaluator.Evaluation.evaluate_model"><code class="docutils literal notranslate"><span class="pre">Evaluation.evaluate_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.evaluator.Evaluation.get_confusion_matrix"><code class="docutils literal notranslate"><span class="pre">Evaluation.get_confusion_matrix()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#image_processing.nn.NeuralNetwork"><code class="docutils literal notranslate"><span class="pre">NeuralNetwork</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.nn.NeuralNetwork.create_cnn_model"><code class="docutils literal notranslate"><span class="pre">NeuralNetwork.create_cnn_model()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#image_processing.test.Testing"><code class="docutils literal notranslate"><span class="pre">Testing</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.test.Testing.model"><code class="docutils literal notranslate"><span class="pre">Testing.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.test.Testing.X_test"><code class="docutils literal notranslate"><span class="pre">Testing.X_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.test.Testing.y_test"><code class="docutils literal notranslate"><span class="pre">Testing.y_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.test.Testing.label_dict"><code class="docutils literal notranslate"><span class="pre">Testing.label_dict</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.test.Testing.set_label_dict"><code class="docutils literal notranslate"><span class="pre">Testing.set_label_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.test.Testing.make_predictions"><code class="docutils literal notranslate"><span class="pre">Testing.make_predictions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.test.Testing.plot_image"><code class="docutils literal notranslate"><span class="pre">Testing.plot_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.test.Testing.get_predicted_tuple"><code class="docutils literal notranslate"><span class="pre">Testing.get_predicted_tuple()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id17"><code class="docutils literal notranslate"><span class="pre">Testing.get_predicted_tuple()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id18"><code class="docutils literal notranslate"><span class="pre">Testing.make_predictions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id19"><code class="docutils literal notranslate"><span class="pre">Testing.plot_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#id20"><code class="docutils literal notranslate"><span class="pre">Testing.set_label_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="modules.html#image_processing.train.Training"><code class="docutils literal notranslate"><span class="pre">Training</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="modules.html#image_processing.train.Training.train_nn"><code class="docutils literal notranslate"><span class="pre">Training.train_nn()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Data Analytics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Architecture Overview</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/gui.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="architecture-overview">
+<h1>Architecture Overview<a class="headerlink" href="#architecture-overview" title="Link to this heading"></a></h1>
+<p>This project presents a modular and user-friendly <strong>Data Analytics Desktop Application</strong> developed using a <strong>Tkinter-based front end</strong> and a <strong>Django-powered back end</strong>. The application facilitates seamless interaction between users and various data processing and machine learning tasks through RESTful API integration.</p>
+<section id="front-end-tkinter-gui">
+<h2>Front End: Tkinter GUI<a class="headerlink" href="#front-end-tkinter-gui" title="Link to this heading"></a></h2>
+<p>The front end provides an intuitive graphical user interface with a multi-page layout. Each page corresponds to a specific task or process and dynamically updates based on user interaction. Key functionalities include:</p>
+<ul>
+<li><p><strong>File Uploading</strong>:</p>
+<ul class="simple">
+<li><p>Users can upload <cite>.csv</cite> or <cite>.zip</cite> files through the GUI.</p></li>
+<li><p><cite>.csv</cite> files are routed to data analysis processes.</p></li>
+<li><p><cite>.zip</cite> files are routed to image processing workflows.</p></li>
+</ul>
+</li>
+<li><p><strong>Process Selection</strong>:</p>
+<p>For <cite>.csv</cite> files, users choose between:</p>
+<ul class="simple">
+<li><p>Data Filtering &amp; Preprocessing</p></li>
+<li><p>Regression &amp; Classification</p></li>
+<li><p>AI Model-based Analysis</p></li>
+</ul>
+</li>
+<li><p><strong>Dynamic UI Rendering</strong>:</p>
+<p>UI elements (e.g., sliders, dropdowns, radio buttons) change depending on the selected process or model type.</p>
+</li>
+<li><p><strong>Result Display</strong>:</p>
+<p>Graphs (e.g., regression plots, residuals, confusion matrices), metrics, and predictions are rendered directly within the GUI using embedded plotting libraries such as <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>.</p>
+</li>
+</ul>
+<dl class="py class" id="module-main_sphinx">
+<dt class="sig sig-object py" id="main_sphinx.App">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">main_sphinx.</span></span><span class="sig-name descname"><span class="pre">App</span></span><a class="reference internal" href="_modules/main_sphinx.html#App"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main_sphinx.App" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">CTk</span></code></p>
+<p>Main application class for the Tkinter-based GUI.</p>
+<p>This class initializes the GUI, handles page navigation, and manages assets.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="main_sphinx.App.current_page">
+<span class="sig-name descname"><span class="pre">current_page</span></span><a class="headerlink" href="#main_sphinx.App.current_page" title="Link to this definition"></a></dt>
+<dd><p>Stores the current active page in the application.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ctk.CTkFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main_sphinx.App.configure_grid">
+<span class="sig-name descname"><span class="pre">configure_grid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main_sphinx.html#App.configure_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main_sphinx.App.configure_grid" title="Link to this definition"></a></dt>
+<dd><p>Configures the layout grid of the application.</p>
+<p>This method sets up the grid structure for proper UI arrangement.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main_sphinx.App.create_sidebar">
+<span class="sig-name descname"><span class="pre">create_sidebar</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main_sphinx.html#App.create_sidebar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main_sphinx.App.create_sidebar" title="Link to this definition"></a></dt>
+<dd><p>Creates the sidebar navigation panel.</p>
+<p>This method initializes navigation buttons for different pages.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main_sphinx.App.load_assets">
+<span class="sig-name descname"><span class="pre">load_assets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main_sphinx.html#App.load_assets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main_sphinx.App.load_assets" title="Link to this definition"></a></dt>
+<dd><p>Loads all image assets used in the application.</p>
+<p>This method loads required images for the UI elements.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main_sphinx.App.load_header_image">
+<span class="sig-name descname"><span class="pre">load_header_image</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main_sphinx.html#App.load_header_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main_sphinx.App.load_header_image" title="Link to this definition"></a></dt>
+<dd><p>Loads and resizes the header image.</p>
+<p>This method retrieves the header image, resizes it, and assigns it to the header label.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main_sphinx.App.resize_header_image">
+<span class="sig-name descname"><span class="pre">resize_header_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main_sphinx.html#App.resize_header_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main_sphinx.App.resize_header_image" title="Link to this definition"></a></dt>
+<dd><p>Resizes the header image dynamically when the window is resized.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>event</strong> (<em>tk.Event</em>) – The resize event that triggers this function.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main_sphinx.App.show_page">
+<span class="sig-name descname"><span class="pre">show_page</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">page_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main_sphinx.html#App.show_page"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main_sphinx.App.show_page" title="Link to this definition"></a></dt>
+<dd><p>Handles navigation between different pages.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>page_name</strong> (<em>str</em>) – The name of the page to display.</p></li>
+<li><p><strong>*args</strong> (<em>tuple</em>) – Additional arguments passed to the page class.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Keyword arguments passed to the page class.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main_sphinx.App.toggle_mode">
+<span class="sig-name descname"><span class="pre">toggle_mode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main_sphinx.html#App.toggle_mode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main_sphinx.App.toggle_mode" title="Link to this definition"></a></dt>
+<dd><p>Toggles between Light and Dark mode.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-pages.aimodel_page">
+<dt class="sig sig-object py" id="pages.aimodel_page.AImodelPage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pages.aimodel_page.</span></span><span class="sig-name descname"><span class="pre">AImodelPage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/aimodel_page.html#AImodelPage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.aimodel_page.AImodelPage" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">CTkFrame</span></code></p>
+<p>A custom Tkinter frame for configuring and submitting AI models.</p>
+<p>This class provides a GUI interface for selecting and configuring machine learning models
+(RandomForest, CatBoost, Artificial Neural Network, XGBoost), adjusting their hyperparameters,
+and submitting them to a backend for training or evaluation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent</strong> – The parent tkinter container.</p></li>
+<li><p><strong>file_data</strong> – The processed data to be used by the models.</p></li>
+<li><p><strong>file_name</strong> – The name of the file associated with the data.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.aimodel_page.AImodelPage.change_segment">
+<span class="sig-name descname"><span class="pre">change_segment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">segment_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/aimodel_page.html#AImodelPage.change_segment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.aimodel_page.AImodelPage.change_segment" title="Link to this definition"></a></dt>
+<dd><p>Switch between the different AI model configuration segments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>segment_name</strong> – The selected model name from the segmented button.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.aimodel_page.AImodelPage.create_ann_frame">
+<span class="sig-name descname"><span class="pre">create_ann_frame</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/aimodel_page.html#AImodelPage.create_ann_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.aimodel_page.AImodelPage.create_ann_frame" title="Link to this definition"></a></dt>
+<dd><p>Create the UI frame for configuring Artificial Neural Network (ANN) hyperparameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A CTkFrame widget containing sliders and dropdowns for ANN.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.aimodel_page.AImodelPage.create_cb_frame">
+<span class="sig-name descname"><span class="pre">create_cb_frame</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/aimodel_page.html#AImodelPage.create_cb_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.aimodel_page.AImodelPage.create_cb_frame" title="Link to this definition"></a></dt>
+<dd><p>Create the UI frame for configuring CatBoost model hyperparameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A CTkFrame widget containing sliders for CatBoost.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.aimodel_page.AImodelPage.create_combobox_frame">
+<span class="sig-name descname"><span class="pre">create_combobox_frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/aimodel_page.html#AImodelPage.create_combobox_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.aimodel_page.AImodelPage.create_combobox_frame" title="Link to this definition"></a></dt>
+<dd><p>Create a dropdown combobox for selecting categorical parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent</strong> – The parent widget to attach this frame.</p></li>
+<li><p><strong>label_text</strong> – The label describing the dropdown.</p></li>
+<li><p><strong>options</strong> – List of available options.</p></li>
+<li><p><strong>default</strong> – Default selected option.</p></li>
+<li><p><strong>row</strong> – Row position inside the parent grid.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.aimodel_page.AImodelPage.create_info_button">
+<span class="sig-name descname"><span class="pre">create_info_button</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/aimodel_page.html#AImodelPage.create_info_button"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.aimodel_page.AImodelPage.create_info_button" title="Link to this definition"></a></dt>
+<dd><p>Create a small button with an info icon that triggers a popup.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent</strong> – The parent widget to attach this button.</p></li>
+<li><p><strong>text</strong> – The info message to display when clicked.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.aimodel_page.AImodelPage.create_rf_frame">
+<span class="sig-name descname"><span class="pre">create_rf_frame</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/aimodel_page.html#AImodelPage.create_rf_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.aimodel_page.AImodelPage.create_rf_frame" title="Link to this definition"></a></dt>
+<dd><p>Create the UI frame for configuring RandomForest model hyperparameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A CTkFrame widget containing sliders for RandomForest.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.aimodel_page.AImodelPage.create_slider_frame">
+<span class="sig-name descname"><span class="pre">create_slider_frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">from_</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/aimodel_page.html#AImodelPage.create_slider_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.aimodel_page.AImodelPage.create_slider_frame" title="Link to this definition"></a></dt>
+<dd><p>Create a slider UI element for numeric hyperparameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent</strong> – The parent widget to attach this frame.</p></li>
+<li><p><strong>model_name</strong> – Name of the model this parameter belongs to.</p></li>
+<li><p><strong>label_text</strong> – The label describing the slider parameter.</p></li>
+<li><p><strong>from</strong> – Minimum value for the slider.</p></li>
+<li><p><strong>to</strong> – Maximum value for the slider.</p></li>
+<li><p><strong>default</strong> – Default value of the slider.</p></li>
+<li><p><strong>row</strong> – Row position inside the parent grid.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.aimodel_page.AImodelPage.create_xgb_frame">
+<span class="sig-name descname"><span class="pre">create_xgb_frame</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/aimodel_page.html#AImodelPage.create_xgb_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.aimodel_page.AImodelPage.create_xgb_frame" title="Link to this definition"></a></dt>
+<dd><p>Create the UI frame for configuring XGBoost model hyperparameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A CTkFrame widget containing sliders for XGBoost.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.aimodel_page.AImodelPage.get_combobox_value">
+<span class="sig-name descname"><span class="pre">get_combobox_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">combobox_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/aimodel_page.html#AImodelPage.get_combobox_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.aimodel_page.AImodelPage.get_combobox_value" title="Link to this definition"></a></dt>
+<dd><p>Helper to get the value of a specific combobox.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>combobox_name</strong> – The name of the combobox.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The selected value if found, else None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.aimodel_page.AImodelPage.get_slider_value">
+<span class="sig-name descname"><span class="pre">get_slider_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slider_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/aimodel_page.html#AImodelPage.get_slider_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.aimodel_page.AImodelPage.get_slider_value" title="Link to this definition"></a></dt>
+<dd><p>Helper to get the value of a specific slider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>slider_name</strong> – The name of the slider.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Slider value if found, else 0.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pages.aimodel_page.AImodelPage.messagebox">
+<span class="sig-name descname"><span class="pre">messagebox</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;module</span> <span class="pre">'tkinter.messagebox'</span> <span class="pre">from</span> <span class="pre">'C:\\Users\\USER\\.conda\\envs\\oopDevEnv\\lib\\tkinter\\messagebox.py'&gt;</span></em><a class="headerlink" href="#pages.aimodel_page.AImodelPage.messagebox" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.aimodel_page.AImodelPage.preview_data">
+<span class="sig-name descname"><span class="pre">preview_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/aimodel_page.html#AImodelPage.preview_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.aimodel_page.AImodelPage.preview_data" title="Link to this definition"></a></dt>
+<dd><p>Open a popup window displaying the first 50 rows of the processed dataset.
+Provides a scrollable view using ttk.Treeview.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.aimodel_page.AImodelPage.send_request">
+<span class="sig-name descname"><span class="pre">send_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/aimodel_page.html#AImodelPage.send_request"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.aimodel_page.AImodelPage.send_request" title="Link to this definition"></a></dt>
+<dd><p>Send a POST request with the selected model data to the Django backend.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>json_data</strong> – The full dictionary containing model configuration and dataset.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.aimodel_page.AImodelPage.show_info_dialog">
+<span class="sig-name descname"><span class="pre">show_info_dialog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/aimodel_page.html#AImodelPage.show_info_dialog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.aimodel_page.AImodelPage.show_info_dialog" title="Link to this definition"></a></dt>
+<dd><p>Show an information popup with a provided text.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>text</strong> – The info message to display in the dialog.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.aimodel_page.AImodelPage.submit_action">
+<span class="sig-name descname"><span class="pre">submit_action</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/aimodel_page.html#AImodelPage.submit_action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.aimodel_page.AImodelPage.submit_action" title="Link to this definition"></a></dt>
+<dd><p>Handle the submit button click by collecting all model configurations,
+packaging them into a JSON structure, and sending a request to the backend.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-pages.data_filtering_page">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pages.data_filtering_page.</span></span><span class="sig-name descname"><span class="pre">DataFilteringPage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'</span> <span class="pre">'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">CTkFrame</span></code></p>
+<p>A Tkinter-based GUI page for performing various data filtering processes
+including Outlier Detection, Interpolation, Smoothing, and Scaling &amp; Encoding.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent</strong> – The main application container.</p></li>
+<li><p><strong>file_path</strong> – Path to the uploaded CSV file.</p></li>
+<li><p><strong>file_name</strong> – Name of the file (optional).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.add_export_send_buttons">
+<span class="sig-name descname"><span class="pre">add_export_send_buttons</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.add_export_send_buttons"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.add_export_send_buttons" title="Link to this definition"></a></dt>
+<dd><p>Adds export, compare, and send buttons at the bottom of the UI.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.change_segment">
+<span class="sig-name descname"><span class="pre">change_segment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">segment_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.change_segment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.change_segment" title="Link to this definition"></a></dt>
+<dd><p>Changes the active segment based on user navigation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>segment_name</strong> – Name of the segment to activate.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.create_interpolation_frame">
+<span class="sig-name descname"><span class="pre">create_interpolation_frame</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.create_interpolation_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.create_interpolation_frame" title="Link to this definition"></a></dt>
+<dd><p>Creates the Interpolation segment with radio button method selection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>CTkFrame with interpolation method options.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.create_process_selection_frame">
+<span class="sig-name descname"><span class="pre">create_process_selection_frame</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.create_process_selection_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.create_process_selection_frame" title="Link to this definition"></a></dt>
+<dd><p>Creates the initial selection frame for choosing filtering vs scaling.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>CTkFrame with radio button options.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.create_scaling_encoding_frame">
+<span class="sig-name descname"><span class="pre">create_scaling_encoding_frame</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.create_scaling_encoding_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.create_scaling_encoding_frame" title="Link to this definition"></a></dt>
+<dd><p>Creates the Scaling &amp; Encoding segment with sliders for test size and random state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>CTkFrame containing configuration widgets.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.create_segment_frame">
+<span class="sig-name descname"><span class="pre">create_segment_frame</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.create_segment_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.create_segment_frame" title="Link to this definition"></a></dt>
+<dd><p>Creates the Outlier Detection frame with method options and slider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>CTkFrame containing radio buttons, slider, and column checkboxes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.create_smoothing_frame">
+<span class="sig-name descname"><span class="pre">create_smoothing_frame</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.create_smoothing_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.create_smoothing_frame" title="Link to this definition"></a></dt>
+<dd><p>Creates the Smoothing segment, including SMA and TES options.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>CTkFrame with smoothing controls.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.export_data">
+<span class="sig-name descname"><span class="pre">export_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.export_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.export_data" title="Link to this definition"></a></dt>
+<dd><p>Exports processed data to CSV depending on the most completed step.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.get_data_by_name">
+<span class="sig-name descname"><span class="pre">get_data_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.get_data_by_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.get_data_by_name" title="Link to this definition"></a></dt>
+<dd><p>Fetches a DataFrame based on the dataset name string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> – Dataset name like “Raw Data”, “Interpolated Data” etc.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Corresponding Pandas DataFrame.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.load_csv_columns">
+<span class="sig-name descname"><span class="pre">load_csv_columns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.load_csv_columns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.load_csv_columns" title="Link to this definition"></a></dt>
+<dd><p>Loads column names from CSV and sets up dropdowns and checkboxes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> – Path to the CSV file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.lock_segment">
+<span class="sig-name descname"><span class="pre">lock_segment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.lock_segment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.lock_segment" title="Link to this definition"></a></dt>
+<dd><p>Locks a segment UI to prevent changes after completion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>frame</strong> – The segment frame to disable.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.move_to_next_segment">
+<span class="sig-name descname"><span class="pre">move_to_next_segment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.move_to_next_segment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.move_to_next_segment" title="Link to this definition"></a></dt>
+<dd><p>Moves the user to the next logical segment based on progress.
+Updates visibility of segment buttons.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.open_comparison_popup">
+<span class="sig-name descname"><span class="pre">open_comparison_popup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.open_comparison_popup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.open_comparison_popup" title="Link to this definition"></a></dt>
+<dd><p>Opens a popup window to compare different stages of data processing.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.open_send_popup">
+<span class="sig-name descname"><span class="pre">open_send_popup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.open_send_popup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.open_send_popup" title="Link to this definition"></a></dt>
+<dd><p>Opens a destination selection popup after scaling &amp; encoding.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.plot_boxplot">
+<span class="sig-name descname"><span class="pre">plot_boxplot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">column_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cleaned</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.plot_boxplot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.plot_boxplot" title="Link to this definition"></a></dt>
+<dd><p>Generates a boxplot for a selected column with optional cleaned data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>column_name</strong> – Name of the column to visualize.</p></li>
+<li><p><strong>cleaned</strong> – Whether to use cleaned data or not.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.plot_comparison_graph">
+<span class="sig-name descname"><span class="pre">plot_comparison_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">left_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.plot_comparison_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.plot_comparison_graph" title="Link to this definition"></a></dt>
+<dd><p>Plots graph comparison of two data stages using boxplot or line chart.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>left_data</strong> – Name of the left dataset.</p></li>
+<li><p><strong>right_data</strong> – Name of the right dataset.</p></li>
+<li><p><strong>column_name</strong> – Column to plot.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.plot_line_graph">
+<span class="sig-name descname"><span class="pre">plot_line_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">column_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processed_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.plot_line_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.plot_line_graph" title="Link to this definition"></a></dt>
+<dd><p>Plots line graphs comparing original and processed data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>column_name</strong> – Name of the data column.</p></li>
+<li><p><strong>original_data</strong> – The original data series.</p></li>
+<li><p><strong>processed_data</strong> – The processed data series.</p></li>
+<li><p><strong>title</strong> – Plot title.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.preview_csv">
+<span class="sig-name descname"><span class="pre">preview_csv</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.preview_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.preview_csv" title="Link to this definition"></a></dt>
+<dd><p>Opens a popup window showing the first 50 rows of the uploaded CSV.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.preview_scaled_encoded_data">
+<span class="sig-name descname"><span class="pre">preview_scaled_encoded_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.preview_scaled_encoded_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.preview_scaled_encoded_data" title="Link to this definition"></a></dt>
+<dd><p>Displays the scaled and encoded data in a table popup.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.run_interpolation">
+<span class="sig-name descname"><span class="pre">run_interpolation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.run_interpolation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.run_interpolation" title="Link to this definition"></a></dt>
+<dd><p>Executes interpolation on cleaned data and updates graph.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.run_outlier_detection">
+<span class="sig-name descname"><span class="pre">run_outlier_detection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.run_outlier_detection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.run_outlier_detection" title="Link to this definition"></a></dt>
+<dd><p>Triggers outlier detection and updates cleaned data based on user selections.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.run_scaling_and_encoding">
+<span class="sig-name descname"><span class="pre">run_scaling_and_encoding</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.run_scaling_and_encoding"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.run_scaling_and_encoding" title="Link to this definition"></a></dt>
+<dd><p>Executes scaling and encoding on the latest available dataset (raw or processed).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.run_smoothing">
+<span class="sig-name descname"><span class="pre">run_smoothing</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.run_smoothing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.run_smoothing" title="Link to this definition"></a></dt>
+<dd><p>Applies smoothing (SMA or TES) on interpolated data and updates visuals.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.send_request">
+<span class="sig-name descname"><span class="pre">send_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">process_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.send_request"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.send_request" title="Link to this definition"></a></dt>
+<dd><p>Sends a request to the backend with specified process name and data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>process_name</strong> – The name of the backend API process.</p></li>
+<li><p><strong>json_data</strong> – The data payload as dictionary.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Parsed JSON response from backend.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.show_comparison_data">
+<span class="sig-name descname"><span class="pre">show_comparison_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">left_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.show_comparison_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.show_comparison_data" title="Link to this definition"></a></dt>
+<dd><p>Displays side-by-side table comparison of two datasets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>left_data</strong> – Name of the first dataset.</p></li>
+<li><p><strong>right_data</strong> – Name of the second dataset.</p></li>
+<li><p><strong>column_name</strong> – Column to compare.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.show_info_dialog">
+<span class="sig-name descname"><span class="pre">show_info_dialog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.show_info_dialog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.show_info_dialog" title="Link to this definition"></a></dt>
+<dd><p>Displays an information popup with help text.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>text</strong> – The text to show in the popup.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.show_loading_message">
+<span class="sig-name descname"><span class="pre">show_loading_message</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.show_loading_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.show_loading_message" title="Link to this definition"></a></dt>
+<dd><p>Displays a loading message in the graph area.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.submit_action">
+<span class="sig-name descname"><span class="pre">submit_action</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.submit_action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.submit_action" title="Link to this definition"></a></dt>
+<dd><p>Handles submission logic for each segment and moves to the next step.
+Validates inputs and triggers processing functions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.toggle_slider">
+<span class="sig-name descname"><span class="pre">toggle_slider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.toggle_slider"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.toggle_slider" title="Link to this definition"></a></dt>
+<dd><p>Show or hide contamination slider based on outlier method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frame</strong> – The parent frame.</p></li>
+<li><p><strong>show</strong> – Boolean to show or hide.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.toggle_smoothing_options">
+<span class="sig-name descname"><span class="pre">toggle_smoothing_options</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.toggle_smoothing_options"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.toggle_smoothing_options" title="Link to this definition"></a></dt>
+<dd><p>Toggles visibility of smoothing options based on selected method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frame</strong> – The parent frame.</p></li>
+<li><p><strong>method</strong> – Either ‘SMA’ or ‘TES’.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.update_boxplot">
+<span class="sig-name descname"><span class="pre">update_boxplot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">column_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.update_boxplot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.update_boxplot" title="Link to this definition"></a></dt>
+<dd><p>Asynchronously updates the boxplot for a selected column.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>column_name</strong> – The name of the column to plot.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.update_buttons_visibility">
+<span class="sig-name descname"><span class="pre">update_buttons_visibility</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.update_buttons_visibility"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.update_buttons_visibility" title="Link to this definition"></a></dt>
+<dd><p>Updates visibility of export, compare, and send buttons.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.update_comparison_view">
+<span class="sig-name descname"><span class="pre">update_comparison_view</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.update_comparison_view"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.update_comparison_view" title="Link to this definition"></a></dt>
+<dd><p>Handles the action of switching between data and graph views in the compare popup.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.data_filtering_page.DataFilteringPage.update_dropdown">
+<span class="sig-name descname"><span class="pre">update_dropdown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">selected_columns</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/data_filtering_page.html#DataFilteringPage.update_dropdown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.data_filtering_page.DataFilteringPage.update_dropdown" title="Link to this definition"></a></dt>
+<dd><p>Updates the dropdown values and behavior based on selected columns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>selected_columns</strong> – List of column names to include in dropdown.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-pages.file_upload_page">
+<dt class="sig sig-object py" id="pages.file_upload_page.FileUploadPage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pages.file_upload_page.</span></span><span class="sig-name descname"><span class="pre">FileUploadPage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/file_upload_page.html#FileUploadPage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.file_upload_page.FileUploadPage" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">CTkFrame</span></code></p>
+<p>File upload interface for CSV and ZIP files.
+Routes uploaded files to the appropriate next page depending on file type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parent</strong> – The parent application container.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.file_upload_page.FileUploadPage.upload_file">
+<span class="sig-name descname"><span class="pre">upload_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/file_upload_page.html#FileUploadPage.upload_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.file_upload_page.FileUploadPage.upload_file" title="Link to this definition"></a></dt>
+<dd><p>Handles file upload via a file dialog and routes to the correct page based on file type (.csv or .zip).
+Stores file path and name in the main application state.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-pages.image_processing_page">
+<dt class="sig sig-object py" id="pages.image_processing_page.ImageProcessingPage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pages.image_processing_page.</span></span><span class="sig-name descname"><span class="pre">ImageProcessingPage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">page_state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/image_processing_page.html#ImageProcessingPage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.image_processing_page.ImageProcessingPage" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">CTkFrame</span></code></p>
+<p>CustomTkinter page for training an image classification model.
+Allows user to configure activation, optimizer, and dataset splitting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent</strong> – Parent widget.</p></li>
+<li><p><strong>file_path</strong> – Path to the dataset ZIP.</p></li>
+<li><p><strong>file_name</strong> – Optional display name.</p></li>
+<li><p><strong>data</strong> – Placeholder for future data passing.</p></li>
+<li><p><strong>page_state</strong> – Page-specific settings (e.g. saved state).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.image_processing_page.ImageProcessingPage.cancel_file">
+<span class="sig-name descname"><span class="pre">cancel_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/image_processing_page.html#ImageProcessingPage.cancel_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.image_processing_page.ImageProcessingPage.cancel_file" title="Link to this definition"></a></dt>
+<dd><p>Handles file cancellation and resets only this page.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.image_processing_page.ImageProcessingPage.change_segment">
+<span class="sig-name descname"><span class="pre">change_segment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">segment_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/image_processing_page.html#ImageProcessingPage.change_segment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.image_processing_page.ImageProcessingPage.change_segment" title="Link to this definition"></a></dt>
+<dd><p>Switches UI to show only the active segment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>segment_name</strong> – Label of the selected segment.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.image_processing_page.ImageProcessingPage.create_image_train_frame">
+<span class="sig-name descname"><span class="pre">create_image_train_frame</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/image_processing_page.html#ImageProcessingPage.create_image_train_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.image_processing_page.ImageProcessingPage.create_image_train_frame" title="Link to this definition"></a></dt>
+<dd><p>Builds a small image upload and preview block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>CTkFrame containing upload and preview buttons.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.image_processing_page.ImageProcessingPage.create_segment_frame">
+<span class="sig-name descname"><span class="pre">create_segment_frame</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/image_processing_page.html#ImageProcessingPage.create_segment_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.image_processing_page.ImageProcessingPage.create_segment_frame" title="Link to this definition"></a></dt>
+<dd><p>Creates UI segment to configure activation, epochs, optimizer, test size, and random seed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>CTkFrame with interactive settings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.image_processing_page.ImageProcessingPage.plot_confusion_matrix">
+<span class="sig-name descname"><span class="pre">plot_confusion_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cm_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/image_processing_page.html#ImageProcessingPage.plot_confusion_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.image_processing_page.ImageProcessingPage.plot_confusion_matrix" title="Link to this definition"></a></dt>
+<dd><p>Renders a matplotlib confusion matrix inside a popup.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cm_data</strong> – Dictionary with matrix values and labels.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.image_processing_page.ImageProcessingPage.preview_image">
+<span class="sig-name descname"><span class="pre">preview_image</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/image_processing_page.html#ImageProcessingPage.preview_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.image_processing_page.ImageProcessingPage.preview_image" title="Link to this definition"></a></dt>
+<dd><p>Opens a new preview window with the uploaded image.
+Resizes image to fit window if necessary.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.image_processing_page.ImageProcessingPage.show_info_dialog">
+<span class="sig-name descname"><span class="pre">show_info_dialog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/image_processing_page.html#ImageProcessingPage.show_info_dialog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.image_processing_page.ImageProcessingPage.show_info_dialog" title="Link to this definition"></a></dt>
+<dd><p>Displays a popup window with explanatory text.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>text</strong> – Message content to show.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.image_processing_page.ImageProcessingPage.submit_action">
+<span class="sig-name descname"><span class="pre">submit_action</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/image_processing_page.html#ImageProcessingPage.submit_action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.image_processing_page.ImageProcessingPage.submit_action" title="Link to this definition"></a></dt>
+<dd><p>Sends selected image classification settings to the backend for training.
+Logs training info and receives metrics for display.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.image_processing_page.ImageProcessingPage.upload_image">
+<span class="sig-name descname"><span class="pre">upload_image</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/image_processing_page.html#ImageProcessingPage.upload_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.image_processing_page.ImageProcessingPage.upload_image" title="Link to this definition"></a></dt>
+<dd><p>Opens a file picker dialog and stores uploaded image path.
+Enables preview button after selection.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-pages.process_selection_page">
+<dt class="sig sig-object py" id="pages.process_selection_page.ProcessSelectionPage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pages.process_selection_page.</span></span><span class="sig-name descname"><span class="pre">ProcessSelectionPage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/process_selection_page.html#ProcessSelectionPage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.process_selection_page.ProcessSelectionPage" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">CTkFrame</span></code></p>
+<p>This module implements the Process Selection Page using CustomTkinter.
+It allows users to choose between Data Filtering, Regression &amp; Classification, and AI Model training.</p>
+<p>A GUI page that allows users to select the next processing step for the uploaded file.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pages.process_selection_page.ProcessSelectionPage.parent">
+<span class="sig-name descname"><span class="pre">parent</span></span><a class="headerlink" href="#pages.process_selection_page.ProcessSelectionPage.parent" title="Link to this definition"></a></dt>
+<dd><p>The parent application window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ctk.CTk</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pages.process_selection_page.ProcessSelectionPage.file_path">
+<span class="sig-name descname"><span class="pre">file_path</span></span><a class="headerlink" href="#pages.process_selection_page.ProcessSelectionPage.file_path" title="Link to this definition"></a></dt>
+<dd><p>Path of the uploaded file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pages.process_selection_page.ProcessSelectionPage.filename">
+<span class="sig-name descname"><span class="pre">filename</span></span><a class="headerlink" href="#pages.process_selection_page.ProcessSelectionPage.filename" title="Link to this definition"></a></dt>
+<dd><p>Name of the uploaded file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.process_selection_page.ProcessSelectionPage.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/process_selection_page.html#ProcessSelectionPage.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.process_selection_page.ProcessSelectionPage.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initializes the Process Selection Page UI.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.process_selection_page.ProcessSelectionPage.create_buttons">
+<span class="sig-name descname"><span class="pre">create_buttons</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/process_selection_page.html#ProcessSelectionPage.create_buttons"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.process_selection_page.ProcessSelectionPage.create_buttons" title="Link to this definition"></a></dt>
+<dd><p>Creates buttons for different processing options.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent</strong> (<em>ctk.CTk</em>) – The parent application window.</p></li>
+<li><p><strong>file_path</strong> (<em>str</em>) – Path of the uploaded file.</p></li>
+<li><p><strong>filename</strong> (<em>str</em>) – Name of the uploaded file.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-pages.regression_classification">
+<dt class="sig sig-object py" id="pages.regression_classification.RegressionClassificationPage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pages.regression_classification.</span></span><span class="sig-name descname"><span class="pre">RegressionClassificationPage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">page_state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/regression_classification.html#RegressionClassificationPage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.regression_classification.RegressionClassificationPage" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">CTkFrame</span></code></p>
+<p>GUI page for configuring and submitting regression and classification models.
+Supports various regression (Linear, Polynomial, Ridge, Lasso) and classification (RandomForest, SVC, KNN) models.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent</strong> – Main parent application.</p></li>
+<li><p><strong>file_path</strong> – Path to the uploaded file (optional).</p></li>
+<li><p><strong>file_name</strong> – Name of the uploaded file.</p></li>
+<li><p><strong>data</strong> – Preprocessed dataset.</p></li>
+<li><p><strong>page_state</strong> – State dictionary for restoring prior settings (if any).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.regression_classification.RegressionClassificationPage.cancel_file">
+<span class="sig-name descname"><span class="pre">cancel_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/regression_classification.html#RegressionClassificationPage.cancel_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.regression_classification.RegressionClassificationPage.cancel_file" title="Link to this definition"></a></dt>
+<dd><p>Cancels the current file and resets this page state to its default.
+Clears file paths, sidebar references, and page data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.regression_classification.RegressionClassificationPage.change_segment">
+<span class="sig-name descname"><span class="pre">change_segment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">segment_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/regression_classification.html#RegressionClassificationPage.change_segment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.regression_classification.RegressionClassificationPage.change_segment" title="Link to this definition"></a></dt>
+<dd><p>Handles switching between Regression and Classification segments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>segment_name</strong> – Either ‘Regression’ or ‘Classification’.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.regression_classification.RegressionClassificationPage.clear_frame">
+<span class="sig-name descname"><span class="pre">clear_frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/regression_classification.html#RegressionClassificationPage.clear_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.regression_classification.RegressionClassificationPage.clear_frame" title="Link to this definition"></a></dt>
+<dd><p>Clears the contents of a given frame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>frame</strong> – The CTkFrame widget to be cleared.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.regression_classification.RegressionClassificationPage.create_classification_frame">
+<span class="sig-name descname"><span class="pre">create_classification_frame</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/regression_classification.html#RegressionClassificationPage.create_classification_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.regression_classification.RegressionClassificationPage.create_classification_frame" title="Link to this definition"></a></dt>
+<dd><p>Creates the Classification segment frame with dynamic parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A CTkFrame containing radio buttons and config for classification models.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.regression_classification.RegressionClassificationPage.create_dropdown">
+<span class="sig-name descname"><span class="pre">create_dropdown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/regression_classification.html#RegressionClassificationPage.create_dropdown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.regression_classification.RegressionClassificationPage.create_dropdown" title="Link to this definition"></a></dt>
+<dd><p>Creates a labeled dropdown menu.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent</strong> – Container for the dropdown.</p></li>
+<li><p><strong>label_text</strong> – Label to display above the dropdown.</p></li>
+<li><p><strong>options</strong> – List of dropdown options.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.regression_classification.RegressionClassificationPage.create_info_button">
+<span class="sig-name descname"><span class="pre">create_info_button</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/regression_classification.html#RegressionClassificationPage.create_info_button"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.regression_classification.RegressionClassificationPage.create_info_button" title="Link to this definition"></a></dt>
+<dd><p>Creates an info button to show contextual information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent</strong> – The frame to place the button in.</p></li>
+<li><p><strong>text</strong> – Info text to show when clicked.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.regression_classification.RegressionClassificationPage.create_regression_frame">
+<span class="sig-name descname"><span class="pre">create_regression_frame</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/regression_classification.html#RegressionClassificationPage.create_regression_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.regression_classification.RegressionClassificationPage.create_regression_frame" title="Link to this definition"></a></dt>
+<dd><p>Creates the Regression segment frame with dynamic parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A CTkFrame containing radio buttons and config for regression models.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.regression_classification.RegressionClassificationPage.create_slider">
+<span class="sig-name descname"><span class="pre">create_slider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/regression_classification.html#RegressionClassificationPage.create_slider"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.regression_classification.RegressionClassificationPage.create_slider" title="Link to this definition"></a></dt>
+<dd><p>Creates a labeled slider with value label and info button.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent</strong> – The container frame.</p></li>
+<li><p><strong>label_text</strong> – Text to describe the slider.</p></li>
+<li><p><strong>min_val</strong> – Minimum value.</p></li>
+<li><p><strong>max_val</strong> – Maximum value.</p></li>
+<li><p><strong>default</strong> – Default slider position.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.regression_classification.RegressionClassificationPage.create_textbox">
+<span class="sig-name descname"><span class="pre">create_textbox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/regression_classification.html#RegressionClassificationPage.create_textbox"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.regression_classification.RegressionClassificationPage.create_textbox" title="Link to this definition"></a></dt>
+<dd><p>Creates a labeled textbox for custom input parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent</strong> – The container frame.</p></li>
+<li><p><strong>label_text</strong> – The textbox label.</p></li>
+<li><p><strong>mode</strong> – Input mode (‘polynomial’ or ‘alpha’) for validation.
+- “polynomial”: Allows 1-5 single-digit numbers (0-9), separated by commas.
+- “alpha”: Allows 1-5 float values (0-1) with at least 4 decimal places, separated by commas.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.regression_classification.RegressionClassificationPage.lasso_plot">
+<span class="sig-name descname"><span class="pre">lasso_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results_lasso</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">best_params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/regression_classification.html#RegressionClassificationPage.lasso_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.regression_classification.RegressionClassificationPage.lasso_plot" title="Link to this definition"></a></dt>
+<dd><p>Plots Lasso Regression performance with alpha values against R2 scores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>results_lasso</strong> – Dictionary containing cross-validation results.</p></li>
+<li><p><strong>best_params</strong> – Dictionary with best_degree_lasso and best_alpha_lasso.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.regression_classification.RegressionClassificationPage.polynomial_plot">
+<span class="sig-name descname"><span class="pre">polynomial_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_scatter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_scatter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_poly</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degree</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/regression_classification.html#RegressionClassificationPage.polynomial_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.regression_classification.RegressionClassificationPage.polynomial_plot" title="Link to this definition"></a></dt>
+<dd><p>Generates and displays a polynomial regression plot overlaying actual vs predicted values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_scatter</strong> – Input feature values.</p></li>
+<li><p><strong>y_scatter</strong> – Actual target values.</p></li>
+<li><p><strong>y_poly</strong> – Predicted values from polynomial regression.</p></li>
+<li><p><strong>x_label</strong> – Label for x-axis.</p></li>
+<li><p><strong>y_label</strong> – Label for y-axis.</p></li>
+<li><p><strong>degree</strong> – Polynomial degree used in the model.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.regression_classification.RegressionClassificationPage.preview_data">
+<span class="sig-name descname"><span class="pre">preview_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/regression_classification.html#RegressionClassificationPage.preview_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.regression_classification.RegressionClassificationPage.preview_data" title="Link to this definition"></a></dt>
+<dd><p>Opens a new popup window to display the scaled and encoded data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.regression_classification.RegressionClassificationPage.regression_plot">
+<span class="sig-name descname"><span class="pre">regression_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/regression_classification.html#RegressionClassificationPage.regression_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.regression_classification.RegressionClassificationPage.regression_plot" title="Link to this definition"></a></dt>
+<dd><p>Displays a linear regression plot with regression line and scatter points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> – Feature values (can be list, dict, or array).</p></li>
+<li><p><strong>y</strong> – Target values (can be list, dict, or array).</p></li>
+<li><p><strong>x_label</strong> – Label for x-axis.</p></li>
+<li><p><strong>y_label</strong> – Label for y-axis.</p></li>
+<li><p><strong>data</strong> – Optional dataset (not used).</p></li>
+<li><p><strong>ax</strong> – Matplotlib axis to draw on.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.regression_classification.RegressionClassificationPage.residual_plot">
+<span class="sig-name descname"><span class="pre">residual_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/regression_classification.html#RegressionClassificationPage.residual_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.regression_classification.RegressionClassificationPage.residual_plot" title="Link to this definition"></a></dt>
+<dd><p>Creates a residual plot showing prediction errors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> – Predicted values (can be list, dict, or array).</p></li>
+<li><p><strong>y</strong> – Actual target values (can be list, dict, or array).</p></li>
+<li><p><strong>ax</strong> – Optional Matplotlib axis.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.regression_classification.RegressionClassificationPage.ridge_plot">
+<span class="sig-name descname"><span class="pre">ridge_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results_ridge</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">best_params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/regression_classification.html#RegressionClassificationPage.ridge_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.regression_classification.RegressionClassificationPage.ridge_plot" title="Link to this definition"></a></dt>
+<dd><p>Plots Ridge Regression performance with alpha values against R2 scores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>results_ridge</strong> – Dictionary containing cross-validation results.</p></li>
+<li><p><strong>best_params</strong> – Dictionary with best_degree_ridge and best_alpha_ridge.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.regression_classification.RegressionClassificationPage.send_request_classification">
+<span class="sig-name descname"><span class="pre">send_request_classification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/regression_classification.html#RegressionClassificationPage.send_request_classification"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.regression_classification.RegressionClassificationPage.send_request_classification" title="Link to this definition"></a></dt>
+<dd><p>Sends a POST request with classification model data to the Django backend.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>json_data</strong> – JSON-serializable data object to send to the backend.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.regression_classification.RegressionClassificationPage.send_request_regression">
+<span class="sig-name descname"><span class="pre">send_request_regression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/regression_classification.html#RegressionClassificationPage.send_request_regression"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.regression_classification.RegressionClassificationPage.send_request_regression" title="Link to this definition"></a></dt>
+<dd><p>Sends a POST request with regression model data to the Django backend.
+Handles and visualizes results for Linear, Polynomial, Ridge, and Lasso regressions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>json_data</strong> – JSON-serializable data object to send to the backend.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.regression_classification.RegressionClassificationPage.show_info_dialog">
+<span class="sig-name descname"><span class="pre">show_info_dialog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/regression_classification.html#RegressionClassificationPage.show_info_dialog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.regression_classification.RegressionClassificationPage.show_info_dialog" title="Link to this definition"></a></dt>
+<dd><p>Displays an information popup.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>text</strong> – The text to show in the info dialog.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.regression_classification.RegressionClassificationPage.submit_action">
+<span class="sig-name descname"><span class="pre">submit_action</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/regression_classification.html#RegressionClassificationPage.submit_action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.regression_classification.RegressionClassificationPage.submit_action" title="Link to this definition"></a></dt>
+<dd><p>Handles submission of configured model parameters.
+Builds DataObject and sends it to backend.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.regression_classification.RegressionClassificationPage.toggle_classification_options">
+<span class="sig-name descname"><span class="pre">toggle_classification_options</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/regression_classification.html#RegressionClassificationPage.toggle_classification_options"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.regression_classification.RegressionClassificationPage.toggle_classification_options" title="Link to this definition"></a></dt>
+<dd><p>Updates the Classification options dynamically based on selection.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.regression_classification.RegressionClassificationPage.toggle_regression_options">
+<span class="sig-name descname"><span class="pre">toggle_regression_options</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/regression_classification.html#RegressionClassificationPage.toggle_regression_options"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.regression_classification.RegressionClassificationPage.toggle_regression_options" title="Link to this definition"></a></dt>
+<dd><p>Updates the Regression options dynamically based on selection.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-pages.help_page">
+<dt class="sig sig-object py" id="pages.help_page.HelpPage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pages.help_page.</span></span><span class="sig-name descname"><span class="pre">HelpPage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/help_page.html#HelpPage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.help_page.HelpPage" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">CTkFrame</span></code></p>
+<p>This module implements a simple Help Page using CustomTkinter.
+A class representing the Help Page in the GUI.</p>
+<p>This page provides user assistance and guidance.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pages.help_page.HelpPage.None">
+<span class="sig-name descname"><span class="pre">None</span></span><a class="headerlink" href="#pages.help_page.HelpPage.None" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pages.help_page.HelpPage.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/help_page.html#HelpPage.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.help_page.HelpPage.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initializes the Help Page.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="back-end-django-api">
+<h2>Back End: Django API<a class="headerlink" href="#back-end-django-api" title="Link to this heading"></a></h2>
+<p>The Django backend serves as the processing engine and is structured around modular views and serializers. Key responsibilities include:</p>
+<ul>
+<li><p><strong>Process Handling</strong>:</p>
+<p>Performs data transformations, model training, predictions, and visualizations.</p>
+</li>
+<li><p><strong>Modular APIs</strong>:</p>
+<p>Four dedicated API routes handle distinct functionality:</p>
+<ol class="arabic simple">
+<li><p><strong>Data Filtering &amp; Preprocessing</strong></p></li>
+<li><p><strong>Regression &amp; Classification</strong></p></li>
+<li><p><strong>AI Models</strong></p></li>
+<li><p><strong>Image Processing</strong></p></li>
+</ol>
+</li>
+</ul>
+<dl class="py class" id="module-backend.api.image_processing_engine">
+<dt class="sig sig-object py" id="backend.api.image_processing_engine.ImageProcessingAPIView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">backend.api.image_processing_engine.</span></span><span class="sig-name descname"><span class="pre">ImageProcessingAPIView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/backend/api/image_processing_engine.html#ImageProcessingAPIView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.api.image_processing_engine.ImageProcessingAPIView" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>API endpoint to process zipped image datasets for training a CNN-based image classifier.</p>
+<p>The pipeline includes:
+1. Loading and preprocessing zipped image data
+2. Splitting dataset
+3. Creating a CNN model
+4. Training the model
+5. Evaluating test accuracy/loss
+6. Generating a confusion matrix</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="backend.api.image_processing_engine.ImageProcessingAPIView.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/backend/api/image_processing_engine.html#ImageProcessingAPIView.post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.api.image_processing_engine.ImageProcessingAPIView.post" title="Link to this definition"></a></dt>
+<dd><p>Handle POST request containing DataObject with zipped image dataset and model parameters.</p>
+<p>Expects structure:
+- dataobject[image_processing][fileio, train_test_split, model_params, training_params]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> – HTTP request from frontend.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Response containing test accuracy, loss, and confusion matrix.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-backend.api.data_preprocessing_engine">
+<dt class="sig sig-object py" id="backend.api.data_preprocessing_engine.DataFilteringFileAPIView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">backend.api.data_preprocessing_engine.</span></span><span class="sig-name descname"><span class="pre">DataFilteringFileAPIView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/backend/api/data_preprocessing_engine.html#DataFilteringFileAPIView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.api.data_preprocessing_engine.DataFilteringFileAPIView" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="backend.api.data_preprocessing_engine.DataFilteringFileAPIView.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/backend/api/data_preprocessing_engine.html#DataFilteringFileAPIView.post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.api.data_preprocessing_engine.DataFilteringFileAPIView.post" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="backend.api.data_preprocessing_engine.DataFilteringFileAPIView.run_outlier_detection">
+<span class="sig-name descname"><span class="pre">run_outlier_detection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/backend/api/data_preprocessing_engine.html#DataFilteringFileAPIView.run_outlier_detection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.api.data_preprocessing_engine.DataFilteringFileAPIView.run_outlier_detection" title="Link to this definition"></a></dt>
+<dd><p>Runs the outlier detection based on the method defined in DataObject.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="backend.api.data_preprocessing_engine.InterpolationAPIView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">backend.api.data_preprocessing_engine.</span></span><span class="sig-name descname"><span class="pre">InterpolationAPIView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/backend/api/data_preprocessing_engine.html#InterpolationAPIView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.api.data_preprocessing_engine.InterpolationAPIView" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="backend.api.data_preprocessing_engine.InterpolationAPIView.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/backend/api/data_preprocessing_engine.html#InterpolationAPIView.post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.api.data_preprocessing_engine.InterpolationAPIView.post" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="backend.api.data_preprocessing_engine.InterpolationAPIView.run_interpolation">
+<span class="sig-name descname"><span class="pre">run_interpolation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cleaned_outlier_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/backend/api/data_preprocessing_engine.html#InterpolationAPIView.run_interpolation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.api.data_preprocessing_engine.InterpolationAPIView.run_interpolation" title="Link to this definition"></a></dt>
+<dd><p>Runs the cubic spline interpolation on the dataset after outlier detection.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="backend.api.data_preprocessing_engine.SmoothingAPIView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">backend.api.data_preprocessing_engine.</span></span><span class="sig-name descname"><span class="pre">SmoothingAPIView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/backend/api/data_preprocessing_engine.html#SmoothingAPIView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.api.data_preprocessing_engine.SmoothingAPIView" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="backend.api.data_preprocessing_engine.SmoothingAPIView.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/backend/api/data_preprocessing_engine.html#SmoothingAPIView.post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.api.data_preprocessing_engine.SmoothingAPIView.post" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="backend.api.data_preprocessing_engine.SmoothingAPIView.run_smoothing">
+<span class="sig-name descname"><span class="pre">run_smoothing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interpolated_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/backend/api/data_preprocessing_engine.html#SmoothingAPIView.run_smoothing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.api.data_preprocessing_engine.SmoothingAPIView.run_smoothing" title="Link to this definition"></a></dt>
+<dd><p>Runs the smoothing process based on the method defined in DataObject.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-backend.api.ai_models_engine">
+<dt class="sig sig-object py" id="backend.api.ai_models_engine.AIModelAPIView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">backend.api.ai_models_engine.</span></span><span class="sig-name descname"><span class="pre">AIModelAPIView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/backend/api/ai_models_engine.html#AIModelAPIView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.api.ai_models_engine.AIModelAPIView" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>API endpoint to handle training and evaluation of AI models.</p>
+<p>Supports classification and regression models:
+- RandomForest
+- CatBoost
+- Artificial Neural Network (ANN)
+- XGBoost</p>
+<p>Uses user-selected hyperparameters and preprocessed data to fit and evaluate the chosen model.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="backend.api.ai_models_engine.AIModelAPIView.extract_hyperparameters">
+<span class="sig-name descname"><span class="pre">extract_hyperparameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/backend/api/ai_models_engine.html#AIModelAPIView.extract_hyperparameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.api.ai_models_engine.AIModelAPIView.extract_hyperparameters" title="Link to this definition"></a></dt>
+<dd><p>Extract user-defined hyperparameters from the data_object or fallback to defaults.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_object</strong> – Structured DataObject containing model info.</p></li>
+<li><p><strong>model_name</strong> – Name of the selected model.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary of validated hyperparameters.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="backend.api.ai_models_engine.AIModelAPIView.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/backend/api/ai_models_engine.html#AIModelAPIView.post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.api.ai_models_engine.AIModelAPIView.post" title="Link to this definition"></a></dt>
+<dd><p>Handle POST request from the frontend containing a <cite>dataobject</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> – HTTP request object with model input and configuration.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Response with model evaluation results.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="backend.api.ai_models_engine.AIModelAPIView.run_selected_model">
+<span class="sig-name descname"><span class="pre">run_selected_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/backend/api/ai_models_engine.html#AIModelAPIView.run_selected_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.api.ai_models_engine.AIModelAPIView.run_selected_model" title="Link to this definition"></a></dt>
+<dd><p>Orchestrates the training and evaluation pipeline for the selected model.</p>
+<p>Converts JSON lists back into NumPy arrays, instantiates the model class,
+trains it, evaluates performance, and returns metrics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_object</strong> – DataObject containing training data and parameters.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary of results such as accuracy, confusion matrix, or regression scores.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-backend.api.scaling_encoding_engine">
+<dt class="sig sig-object py" id="backend.api.scaling_encoding_engine.ScalingEncodingAPIView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">backend.api.scaling_encoding_engine.</span></span><span class="sig-name descname"><span class="pre">ScalingEncodingAPIView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/backend/api/scaling_encoding_engine.html#ScalingEncodingAPIView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.api.scaling_encoding_engine.ScalingEncodingAPIView" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>API endpoint for scaling, encoding, and train-test splitting of preprocessed data.</p>
+<p>This endpoint accepts smoothed data and configuration from a DataObject,
+applies encoding and scaling transformations, splits the dataset,
+and returns the processed splits ready for training.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="backend.api.scaling_encoding_engine.ScalingEncodingAPIView.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/backend/api/scaling_encoding_engine.html#ScalingEncodingAPIView.post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.api.scaling_encoding_engine.ScalingEncodingAPIView.post" title="Link to this definition"></a></dt>
+<dd><p>Handle POST request with a DataObject and smoothed dataset.</p>
+<p>Performs encoding, scaling, and train-test split using provided parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> – HTTP request with JSON-encoded data and smoothed data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Response containing split, encoded, and scaled data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="backend.api.scaling_encoding_engine.ScalingEncodingAPIView.run_encoding_scaling_train_test_split">
+<span class="sig-name descname"><span class="pre">run_encoding_scaling_train_test_split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/backend/api/scaling_encoding_engine.html#ScalingEncodingAPIView.run_encoding_scaling_train_test_split"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.api.scaling_encoding_engine.ScalingEncodingAPIView.run_encoding_scaling_train_test_split" title="Link to this definition"></a></dt>
+<dd><p>Perform encoding, feature scaling, and split into training/testing sets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – The input pandas DataFrame.</p></li>
+<li><p><strong>params</strong> – Parameters for preprocessing such as scalers, encoders, test size.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary containing split DataFrames for X_train, X_test, y_train, y_test.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-backend.api.regression_engine">
+<dt class="sig sig-object py" id="backend.api.regression_engine.RegressionAPIView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">backend.api.regression_engine.</span></span><span class="sig-name descname"><span class="pre">RegressionAPIView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/backend/api/regression_engine.html#RegressionAPIView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.api.regression_engine.RegressionAPIView" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>API endpoint for training and evaluating regression models on preprocessed data.</p>
+<p>Supports:
+- Linear Regression
+- Polynomial Regression
+- Ridge Regression
+- Lasso Regression</p>
+<p>Takes preprocessed training/test sets and regression configuration from a frontend DataObject.
+Returns appropriate scores, predictions, and hyperparameters.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="backend.api.regression_engine.RegressionAPIView.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/backend/api/regression_engine.html#RegressionAPIView.post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.api.regression_engine.RegressionAPIView.post" title="Link to this definition"></a></dt>
+<dd><p>Handle POST request with dataobject that includes:
+- Train/test split (X_train, y_train, etc.)
+- Selected model
+- Model-specific parameters</p>
+<p>Automatically trains and evaluates the chosen model, and returns regression metrics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> – HTTP request containing a JSON-serialized DataObject.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSON response with evaluation results including R2 score, predictions, and parameters.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-backend.api.classification_engine">
+<dt class="sig sig-object py" id="backend.api.classification_engine.ClassificationAPIView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">backend.api.classification_engine.</span></span><span class="sig-name descname"><span class="pre">ClassificationAPIView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/backend/api/classification_engine.html#ClassificationAPIView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.api.classification_engine.ClassificationAPIView" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>API endpoint to handle training and evaluation of classification models.</p>
+<dl class="simple">
+<dt>Supported Models:</dt><dd><ul class="simple">
+<li><p>Random Forest</p></li>
+<li><p>Support Vector Classifier (SVC)</p></li>
+<li><p>K-Nearest Neighbors (KNN)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Accepts data and model parameters via POST request and returns evaluation metrics.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="backend.api.classification_engine.ClassificationAPIView.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/backend/api/classification_engine.html#ClassificationAPIView.post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#backend.api.classification_engine.ClassificationAPIView.post" title="Link to this definition"></a></dt>
+<dd><p>Handle POST request to train and evaluate a classification model.</p>
+<p>Expects a JSON request with model configuration and split training/testing data
+inside a <cite>dataobject</cite> structure.</p>
+<p class="rubric">Example</p>
+<p>{“dataobject”: {“classification”: {“Model_Selection”: “RandomForest”,”RandomForest”: {“n_estimators”: 100,”max_depth”: 5}},”data_filtering”:”Train-Test Split”: {“split_data”: {“X_train”: […],”X_test”: […],”y_train”: […],”y_test”: […]}}}}}</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> (<em>Request</em>) – Django REST framework request containing the dataobject.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A JSON response with model evaluation results including:</dt><dd><ul class="simple">
+<li><p>accuracy (float)</p></li>
+<li><p>confusion matrix (list)</p></li>
+<li><p>mean squared error (float)</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Response</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If an invalid model name is provided.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="guide.html" class="btn btn-neutral float-left" title="Step-by-Step Usage Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="modules.html" class="btn btn-neutral float-right" title="Modules and Functionalities" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, MAIT24-25.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
