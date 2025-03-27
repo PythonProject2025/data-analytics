@@ -18,7 +18,8 @@ class AIRequestManager:
         backend_model_key = model_map.get(selected_model, selected_model)
 
         dataobject = DataObject()
-
+        print(f"file_data type: {type(self.context.file_data)}")
+        print(f"file_data content: {self.context.file_data}")
         # Step 1: Add preprocessed data
         if self.context.file_data is not None:
             for key, value in self.context.file_data.items():
@@ -64,16 +65,35 @@ class AIRequestManager:
         print(f"   - Payload:")
         for key, val in dataobject.ai_model[backend_model_key].items():
             print(f"     • {key}: {val}")
-
-        # Step 7: Send to backend
+            
         self._send_request({"dataobject": dataobject.to_dict()})
+        print("sending")
         print (dataobject.ai_model)
 
     def _send_request(self, json_data):
         try:
             response = requests.post("http://127.0.0.1:8000/api/ai_model/", json=json_data)
             if response.status_code == 200:
-                print("✅ Success! Response:", response.json())
+                response_data = response.json()
+                print(response_data)
+                if "Accuracy" in response_data:
+                    accuracy = response_data["Accuracy"]
+                    cm = response_data["Confusion Matrix"]
+                    self.context.managers["Visualization"].plot_results_classification(cm,accuracy)
+                    print("Response received successfully")
+                elif "R2" in response_data:
+                    mae = response_data["MAE"]
+                    mse = response_data["MSE"]
+                    r2 = response_data["R2"]
+                    y_pred = response_data["y_test"]
+                    y_test = response_data["y_pred"]
+                    x_label = response_data["x_label"]
+                    y_label = response_data["y_label"]
+                    self.context.managers["Visualization"].plot_results_regression(y_pred,y_test,x_label,y_label,mae,mse,r2)
+                    print("Response received successfully")
+                else:
+                    messagebox.showerror("Error", "Confusion Matrix data not received.")
+                
             else:
                 messagebox.showerror("Error", response.json().get("error", "Request failed."))
         except Exception as e:

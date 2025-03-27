@@ -51,12 +51,7 @@ class UIElementManager:
 
         update_value(float(default_val))
 
-        if model:
-            if model not in self.sliders:
-                self.sliders[model] = {}
-            self.sliders[model][label_text] = slider
-        else:
-            self.sliders[label_text] = slider
+        self.sliders[label_text] = slider
 
         return slider
 

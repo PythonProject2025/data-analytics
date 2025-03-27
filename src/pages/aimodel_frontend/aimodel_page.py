@@ -7,6 +7,7 @@ from src.utils.ui_style_manager import StyleManager
 from src.pages.aimodel_frontend.ui_manager import AIUIManager
 from src.pages.aimodel_frontend.request_manager import AIRequestManager
 from src.assets_management import assets_manage
+from src.pages.aimodel_frontend.ai_visualization import AIVisualization
 
 class AIModelPage(ctk.CTkFrame):
     def __init__(self, parent, file_path=None, file_name=None, data=None, **page_state):
@@ -45,7 +46,8 @@ class AIModelPage(ctk.CTkFrame):
 
         self.managers = {
             "ui": AIUIManager(self, self.ui),
-            "request": AIRequestManager(self)
+            "request": AIRequestManager(self),
+            "Visualization":AIVisualization(self)
         }
 
         self.managers["ui"].initialize_segment("Problem Selection")
@@ -116,9 +118,9 @@ class AIModelPage(ctk.CTkFrame):
         if current == "Problem Selection":
             problem_type = self.managers["ui"].context.problem_var.get()
             if problem_type == "Regression":
-                model_segments = ["RandomForest", "CatBoost", "ANN"]
-            else:
                 model_segments = ["RandomForest", "CatBoost", "XGBoost"]
+            else:
+                model_segments = ["RandomForest", "CatBoost", "ANN"]
 
             for name in model_segments:
                 internal_name = self.ui_to_internal[name]

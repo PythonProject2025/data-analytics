@@ -58,7 +58,7 @@ class ImageProcessingPage(ctk.CTkFrame):
         self.cancel_button.grid(row=0, column=1, padx=10, pady=10)
 
         self.graph_frame = ctk.CTkFrame(self.left_frame, fg_color=self.color_theme, corner_radius=10, height=350)
-        self.graph_frame.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
+        self.graph_frame.grid(row=1, column=0, padx=30, pady=10, sticky="nsew")
         self.graph_frame.grid_columnconfigure(0, weight=1)
         self.graph_frame.grid_rowconfigure(0, weight=1)
         self.graph_frame.grid_rowconfigure(1, weight=4)
