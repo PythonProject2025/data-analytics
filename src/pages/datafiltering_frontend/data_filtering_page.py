@@ -31,7 +31,7 @@ class DataFilteringPage(ctk.CTkFrame):
         self.managers = {}  
 
         self.managers["button"] = ButtonManager(self)
-        self.managers["data"] = DataManager(self)
+        self.managers["data"] = DataManager(self, self.managers)
         self.managers["visualization"] = DataVisualization(self)
         self.managers["preview"] = PreviewManager(self)
         self.managers["request"] = RequestManager(self, self.managers)  # Now it's safe
@@ -83,7 +83,7 @@ class DataFilteringPage(ctk.CTkFrame):
         self.left_frame.grid_columnconfigure(0, weight=2)
 
         # First Frame (Text Box with Cancel Button)
-        self.label_frame = ctk.CTkFrame(self.left_frame, fg_color="#E0E0E0", corner_radius=10,height=50)
+        self.label_frame = ctk.CTkFrame(self.left_frame, fg_color= StyleManager.COLORS.get("Default Mode"), corner_radius=10,height=50)
         self.label_frame.grid(row=0, column=0, padx=10, pady=10, sticky="ew")
         self.left_frame.grid_rowconfigure(0, weight=0)
         self.label = ctk.CTkLabel(self.label_frame, text=self.file_name, font=("Inter", 16, "bold"))
@@ -190,7 +190,8 @@ class DataFilteringPage(ctk.CTkFrame):
             variable=self.radio_var,
             options=["Isolation Forest", "IQR"],
             grid_positions=[(1, 0), (1, 1)],
-            info_text= INFO_TEXT_DF ["segment_frame"]["Select Method"]
+            info_text= INFO_TEXT_DF ["segment_frame"]["Select Method"],
+            command=lambda: self.toggle_slider(frame,True)
         )
 
         slider_frame = ctk.CTkFrame(frame, fg_color=self.color_accent, corner_radius=10)

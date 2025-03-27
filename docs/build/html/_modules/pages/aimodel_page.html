@@ -1,0 +1,983 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pages.aimodel_page &mdash; Data Analytics 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Data Analytics
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction.html#overview-of-the-software">Overview of the software</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction.html#purpose-of-integrating-tkinter-with-django">Purpose of Integrating Tkinter with Django</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../introduction.html#separation-of-concerns">Separation of Concerns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../introduction.html#api-based-communication">API-Based Communication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../introduction.html#enhanced-performance">Enhanced Performance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../introduction.html#scalability-and-extensibility">Scalability and Extensibility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../introduction.html#versatile-file-processing">Versatile File Processing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction.html#frontend-tkinter-based-graphical-user-interface-gui">Frontend: Tkinter-Based Graphical User Interface (GUI)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../introduction.html#file-upload-interface">File Upload Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../introduction.html#automated-navigation-system">Automated Navigation System</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../introduction.html#process-selection-module">Process Selection Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../introduction.html#real-time-processing-updates">Real-Time Processing Updates</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction.html#backend-django-based-api-and-processing-engine">Backend: Django-Based API and Processing Engine</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../introduction.html#data-object-and-api-based-data-exchange">Data Object and API-Based Data Exchange</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../introduction.html#rest-api-for-request-handling">REST API for Request Handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../introduction.html#modular-and-scalable-api-architecture">Modular and Scalable API Architecture</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Prerequisites.html">Installation Prerequisites</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../Prerequisites.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../Prerequisites.html#environment-setup">Environment Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../Prerequisites.html#running-the-application">Running the Application</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide.html">Step-by-Step Usage Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../guide.html#uploading-a-file-and-selecting-a-module">Uploading a File and Selecting a Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guide.html#processing-the-data-and-generating-outputs">Processing the Data and Generating Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guide.html#interpreting-results-and-refining-analysis">Interpreting Results and Refining Analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../gui.html">Architecture Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../gui.html#front-end-tkinter-gui">Front End: Tkinter GUI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#main_sphinx.App"><code class="docutils literal notranslate"><span class="pre">App</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#main_sphinx.App.current_page"><code class="docutils literal notranslate"><span class="pre">App.current_page</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#main_sphinx.App.configure_grid"><code class="docutils literal notranslate"><span class="pre">App.configure_grid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#main_sphinx.App.create_sidebar"><code class="docutils literal notranslate"><span class="pre">App.create_sidebar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#main_sphinx.App.load_assets"><code class="docutils literal notranslate"><span class="pre">App.load_assets()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#main_sphinx.App.load_header_image"><code class="docutils literal notranslate"><span class="pre">App.load_header_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#main_sphinx.App.resize_header_image"><code class="docutils literal notranslate"><span class="pre">App.resize_header_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#main_sphinx.App.show_page"><code class="docutils literal notranslate"><span class="pre">App.show_page()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#main_sphinx.App.toggle_mode"><code class="docutils literal notranslate"><span class="pre">App.toggle_mode()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage"><code class="docutils literal notranslate"><span class="pre">AImodelPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.change_segment"><code class="docutils literal notranslate"><span class="pre">AImodelPage.change_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.create_ann_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_ann_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.create_cb_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_cb_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.create_combobox_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_combobox_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.create_info_button"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_info_button()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.create_rf_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_rf_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.create_slider_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_slider_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.create_xgb_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_xgb_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.get_combobox_value"><code class="docutils literal notranslate"><span class="pre">AImodelPage.get_combobox_value()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.get_slider_value"><code class="docutils literal notranslate"><span class="pre">AImodelPage.get_slider_value()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.messagebox"><code class="docutils literal notranslate"><span class="pre">AImodelPage.messagebox</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.preview_data"><code class="docutils literal notranslate"><span class="pre">AImodelPage.preview_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.send_request"><code class="docutils literal notranslate"><span class="pre">AImodelPage.send_request()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.show_info_dialog"><code class="docutils literal notranslate"><span class="pre">AImodelPage.show_info_dialog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.submit_action"><code class="docutils literal notranslate"><span class="pre">AImodelPage.submit_action()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.add_export_send_buttons"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.add_export_send_buttons()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.change_segment"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.change_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.create_interpolation_frame"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.create_interpolation_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.create_process_selection_frame"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.create_process_selection_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.create_scaling_encoding_frame"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.create_scaling_encoding_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.create_segment_frame"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.create_segment_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.create_smoothing_frame"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.create_smoothing_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.export_data"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.export_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.get_data_by_name"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.get_data_by_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.load_csv_columns"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.load_csv_columns()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.lock_segment"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.lock_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.move_to_next_segment"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.move_to_next_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.open_comparison_popup"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.open_comparison_popup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.open_send_popup"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.open_send_popup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.plot_boxplot"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.plot_boxplot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.plot_comparison_graph"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.plot_comparison_graph()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.plot_line_graph"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.plot_line_graph()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.preview_csv"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.preview_csv()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.preview_scaled_encoded_data"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.preview_scaled_encoded_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.run_interpolation"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.run_interpolation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.run_outlier_detection"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.run_outlier_detection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.run_scaling_and_encoding"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.run_scaling_and_encoding()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.run_smoothing"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.run_smoothing()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.send_request"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.send_request()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.show_comparison_data"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.show_comparison_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.show_info_dialog"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.show_info_dialog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.show_loading_message"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.show_loading_message()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.submit_action"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.submit_action()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.toggle_slider"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.toggle_slider()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.toggle_smoothing_options"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.toggle_smoothing_options()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.update_boxplot"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.update_boxplot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.update_buttons_visibility"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.update_buttons_visibility()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.update_comparison_view"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.update_comparison_view()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.update_dropdown"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.update_dropdown()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#pages.file_upload_page.FileUploadPage"><code class="docutils literal notranslate"><span class="pre">FileUploadPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.file_upload_page.FileUploadPage.upload_file"><code class="docutils literal notranslate"><span class="pre">FileUploadPage.upload_file()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#pages.image_processing_page.ImageProcessingPage"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.image_processing_page.ImageProcessingPage.cancel_file"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.cancel_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.image_processing_page.ImageProcessingPage.change_segment"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.change_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.image_processing_page.ImageProcessingPage.create_image_train_frame"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.create_image_train_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.image_processing_page.ImageProcessingPage.create_segment_frame"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.create_segment_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.image_processing_page.ImageProcessingPage.plot_confusion_matrix"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.plot_confusion_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.image_processing_page.ImageProcessingPage.preview_image"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.preview_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.image_processing_page.ImageProcessingPage.show_info_dialog"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.show_info_dialog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.image_processing_page.ImageProcessingPage.submit_action"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.submit_action()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.image_processing_page.ImageProcessingPage.upload_image"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.upload_image()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#pages.process_selection_page.ProcessSelectionPage"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.process_selection_page.ProcessSelectionPage.parent"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage.parent</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.process_selection_page.ProcessSelectionPage.file_path"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage.file_path</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.process_selection_page.ProcessSelectionPage.filename"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage.filename</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.process_selection_page.ProcessSelectionPage.__init__"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.process_selection_page.ProcessSelectionPage.create_buttons"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage.create_buttons()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.cancel_file"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.cancel_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.change_segment"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.change_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.clear_frame"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.clear_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.create_classification_frame"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_classification_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.create_dropdown"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_dropdown()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.create_info_button"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_info_button()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.create_regression_frame"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_regression_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.create_slider"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_slider()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.create_textbox"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_textbox()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.lasso_plot"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.lasso_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.polynomial_plot"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.polynomial_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.preview_data"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.preview_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.regression_plot"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.regression_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.residual_plot"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.residual_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.ridge_plot"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.ridge_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.send_request_classification"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.send_request_classification()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.send_request_regression"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.send_request_regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.show_info_dialog"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.show_info_dialog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.submit_action"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.submit_action()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.toggle_classification_options"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.toggle_classification_options()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.toggle_regression_options"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.toggle_regression_options()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#pages.help_page.HelpPage"><code class="docutils literal notranslate"><span class="pre">HelpPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.help_page.HelpPage.None"><code class="docutils literal notranslate"><span class="pre">HelpPage.None</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.help_page.HelpPage.__init__"><code class="docutils literal notranslate"><span class="pre">HelpPage.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../gui.html#back-end-django-api">Back End: Django API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#backend.api.image_processing_engine.ImageProcessingAPIView"><code class="docutils literal notranslate"><span class="pre">ImageProcessingAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#backend.api.image_processing_engine.ImageProcessingAPIView.post"><code class="docutils literal notranslate"><span class="pre">ImageProcessingAPIView.post()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#backend.api.data_preprocessing_engine.DataFilteringFileAPIView"><code class="docutils literal notranslate"><span class="pre">DataFilteringFileAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#backend.api.data_preprocessing_engine.DataFilteringFileAPIView.post"><code class="docutils literal notranslate"><span class="pre">DataFilteringFileAPIView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#backend.api.data_preprocessing_engine.DataFilteringFileAPIView.run_outlier_detection"><code class="docutils literal notranslate"><span class="pre">DataFilteringFileAPIView.run_outlier_detection()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#backend.api.data_preprocessing_engine.InterpolationAPIView"><code class="docutils literal notranslate"><span class="pre">InterpolationAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#backend.api.data_preprocessing_engine.InterpolationAPIView.post"><code class="docutils literal notranslate"><span class="pre">InterpolationAPIView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#backend.api.data_preprocessing_engine.InterpolationAPIView.run_interpolation"><code class="docutils literal notranslate"><span class="pre">InterpolationAPIView.run_interpolation()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#backend.api.data_preprocessing_engine.SmoothingAPIView"><code class="docutils literal notranslate"><span class="pre">SmoothingAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#backend.api.data_preprocessing_engine.SmoothingAPIView.post"><code class="docutils literal notranslate"><span class="pre">SmoothingAPIView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#backend.api.data_preprocessing_engine.SmoothingAPIView.run_smoothing"><code class="docutils literal notranslate"><span class="pre">SmoothingAPIView.run_smoothing()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#backend.api.ai_models_engine.AIModelAPIView"><code class="docutils literal notranslate"><span class="pre">AIModelAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#backend.api.ai_models_engine.AIModelAPIView.extract_hyperparameters"><code class="docutils literal notranslate"><span class="pre">AIModelAPIView.extract_hyperparameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#backend.api.ai_models_engine.AIModelAPIView.post"><code class="docutils literal notranslate"><span class="pre">AIModelAPIView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#backend.api.ai_models_engine.AIModelAPIView.run_selected_model"><code class="docutils literal notranslate"><span class="pre">AIModelAPIView.run_selected_model()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#backend.api.scaling_encoding_engine.ScalingEncodingAPIView"><code class="docutils literal notranslate"><span class="pre">ScalingEncodingAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#backend.api.scaling_encoding_engine.ScalingEncodingAPIView.post"><code class="docutils literal notranslate"><span class="pre">ScalingEncodingAPIView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#backend.api.scaling_encoding_engine.ScalingEncodingAPIView.run_encoding_scaling_train_test_split"><code class="docutils literal notranslate"><span class="pre">ScalingEncodingAPIView.run_encoding_scaling_train_test_split()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#backend.api.regression_engine.RegressionAPIView"><code class="docutils literal notranslate"><span class="pre">RegressionAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#backend.api.regression_engine.RegressionAPIView.post"><code class="docutils literal notranslate"><span class="pre">RegressionAPIView.post()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#backend.api.classification_engine.ClassificationAPIView"><code class="docutils literal notranslate"><span class="pre">ClassificationAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#backend.api.classification_engine.ClassificationAPIView.post"><code class="docutils literal notranslate"><span class="pre">ClassificationAPIView.post()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Modules and Functionalities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html#module-data_filtering.Outlier_final">Data Filtering</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#data_filtering.Outlier_final.OutlierDetection"><code class="docutils literal notranslate"><span class="pre">OutlierDetection</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#data_filtering.Outlier_final.OutlierDetection.detect_outliers_iqr"><code class="docutils literal notranslate"><span class="pre">OutlierDetection.detect_outliers_iqr()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#data_filtering.Outlier_final.OutlierDetection.detect_outliers_isolation_forest"><code class="docutils literal notranslate"><span class="pre">OutlierDetection.detect_outliers_isolation_forest()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#data_filtering.Outlier_final.OutlierDetection.is_numeric_columns"><code class="docutils literal notranslate"><span class="pre">OutlierDetection.is_numeric_columns()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#data_filtering.Smoothing_final.SmoothingMethods"><code class="docutils literal notranslate"><span class="pre">SmoothingMethods</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#data_filtering.Smoothing_final.SmoothingMethods.apply_tes"><code class="docutils literal notranslate"><span class="pre">SmoothingMethods.apply_tes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#data_filtering.Smoothing_final.SmoothingMethods.calculate_sma"><code class="docutils literal notranslate"><span class="pre">SmoothingMethods.calculate_sma()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#data_filtering.Spline_Interpolation_final.SplineInterpolator"><code class="docutils literal notranslate"><span class="pre">SplineInterpolator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#data_filtering.Spline_Interpolation_final.SplineInterpolator.check_column_validity"><code class="docutils literal notranslate"><span class="pre">SplineInterpolator.check_column_validity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#data_filtering.Spline_Interpolation_final.SplineInterpolator.fill_missing_values"><code class="docutils literal notranslate"><span class="pre">SplineInterpolator.fill_missing_values()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling"><code class="docutils literal notranslate"><span class="pre">EncodeAndScaling</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling.encode_categorical_features"><code class="docutils literal notranslate"><span class="pre">EncodeAndScaling.encode_categorical_features()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling.preprocess"><code class="docutils literal notranslate"><span class="pre">EncodeAndScaling.preprocess()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling.scale_numerical_features"><code class="docutils literal notranslate"><span class="pre">EncodeAndScaling.scale_numerical_features()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling.train_test_split"><code class="docutils literal notranslate"><span class="pre">EncodeAndScaling.train_test_split()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html#module-regression.regression_models">Regression</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#regression.regression_models.RegressionModels"><code class="docutils literal notranslate"><span class="pre">RegressionModels</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#regression.regression_models.RegressionModels.model"><code class="docutils literal notranslate"><span class="pre">RegressionModels.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#regression.regression_models.RegressionModels.best_params"><code class="docutils literal notranslate"><span class="pre">RegressionModels.best_params</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#regression.regression_models.RegressionModels.train_linear_regression"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_linear_regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#regression.regression_models.RegressionModels.train_polynomial_regression"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_polynomial_regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#regression.regression_models.RegressionModels.train_ridge"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_ridge()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#regression.regression_models.RegressionModels.train_lasso"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_lasso()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id0"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_lasso()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id1"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_linear_regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id3"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_polynomial_regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id5"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_ridge()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html#module-classification.base_model">Classification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#classification.base_model.ClassifierClass"><code class="docutils literal notranslate"><span class="pre">ClassifierClass</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#classification.base_model.ClassifierClass.data_train"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.data_train</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#classification.base_model.ClassifierClass.data_test"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.data_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#classification.base_model.ClassifierClass.target_train"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.target_train</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#classification.base_model.ClassifierClass.target_test"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.target_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#classification.base_model.ClassifierClass.target_labels"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.target_labels</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#classification.base_model.ClassifierClass.display_confusion_matrix"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.display_confusion_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#classification.base_model.ClassifierClass.evaluate"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#classification.base_model.ClassifierClass.set_model"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.set_model()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#classification.knn_model.KNNModel"><code class="docutils literal notranslate"><span class="pre">KNNModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#classification.knn_model.KNNModel.train"><code class="docutils literal notranslate"><span class="pre">KNNModel.train()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#classification.random_forest_model.RandomForestModel"><code class="docutils literal notranslate"><span class="pre">RandomForestModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#classification.random_forest_model.RandomForestModel.train"><code class="docutils literal notranslate"><span class="pre">RandomForestModel.train()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#classification.svc_model.SVCModel"><code class="docutils literal notranslate"><span class="pre">SVCModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#classification.svc_model.SVCModel.train"><code class="docutils literal notranslate"><span class="pre">SVCModel.train()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html#module-ai_model.ann">AI Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#ai_model.ann.ArtificialNeuralNetwork"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.ann.ArtificialNeuralNetwork.model"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.ann.ArtificialNeuralNetwork.problem_type"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.problem_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.ann.ArtificialNeuralNetwork.batch_size"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.batch_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.ann.ArtificialNeuralNetwork.epochs"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.epochs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.ann.ArtificialNeuralNetwork.evaluate"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.ann.ArtificialNeuralNetwork.load_weights"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.load_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.ann.ArtificialNeuralNetwork.save_weights"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.save_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.ann.ArtificialNeuralNetwork.train"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.train()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#ai_model.base.BaseModel"><code class="docutils literal notranslate"><span class="pre">BaseModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.base.BaseModel.HYPERPARAMETER_RANGES"><code class="docutils literal notranslate"><span class="pre">BaseModel.HYPERPARAMETER_RANGES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.base.BaseModel.model"><code class="docutils literal notranslate"><span class="pre">BaseModel.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.base.BaseModel.problem_type"><code class="docutils literal notranslate"><span class="pre">BaseModel.problem_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.base.BaseModel.X_train"><code class="docutils literal notranslate"><span class="pre">BaseModel.X_train</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.base.BaseModel.X_test"><code class="docutils literal notranslate"><span class="pre">BaseModel.X_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.base.BaseModel.y_train"><code class="docutils literal notranslate"><span class="pre">BaseModel.y_train</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.base.BaseModel.y_test"><code class="docutils literal notranslate"><span class="pre">BaseModel.y_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id7"><code class="docutils literal notranslate"><span class="pre">BaseModel.HYPERPARAMETER_RANGES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.base.BaseModel.validate_options"><code class="docutils literal notranslate"><span class="pre">BaseModel.validate_options()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#ai_model.catboost_model.Catboost"><code class="docutils literal notranslate"><span class="pre">Catboost</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.catboost_model.Catboost.problem_type"><code class="docutils literal notranslate"><span class="pre">Catboost.problem_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.catboost_model.Catboost.options"><code class="docutils literal notranslate"><span class="pre">Catboost.options</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#ai_model.xgboost_model.XGBoost"><code class="docutils literal notranslate"><span class="pre">XGBoost</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#ai_model.random_forest.RandomForest"><code class="docutils literal notranslate"><span class="pre">RandomForest</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html#module-image_processing.dataloader">Image Processing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.image_size"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.image_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.data"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.data</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.labels"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.labels</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.label_dict"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.label_dict</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.images"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.images</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.data_loader"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.data_loader()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.get_label_dict"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.get_label_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.encode_labels"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.encode_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.create_labels"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.create_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.unzip_folder"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.unzip_folder()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.normalize_dataset"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.normalize_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.split_dataset"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.split_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id8"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.create_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id9"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.data_loader()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id10"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.encode_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id11"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.get_label_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id12"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.normalize_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id13"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.split_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id14"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.unzip_folder()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#image_processing.evaluator.Evaluation"><code class="docutils literal notranslate"><span class="pre">Evaluation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.evaluator.Evaluation.evaluate_model"><code class="docutils literal notranslate"><span class="pre">Evaluation.evaluate_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.evaluator.Evaluation.get_confusion_matrix"><code class="docutils literal notranslate"><span class="pre">Evaluation.get_confusion_matrix()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#image_processing.nn.NeuralNetwork"><code class="docutils literal notranslate"><span class="pre">NeuralNetwork</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.nn.NeuralNetwork.create_cnn_model"><code class="docutils literal notranslate"><span class="pre">NeuralNetwork.create_cnn_model()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#image_processing.test.Testing"><code class="docutils literal notranslate"><span class="pre">Testing</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.test.Testing.model"><code class="docutils literal notranslate"><span class="pre">Testing.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.test.Testing.X_test"><code class="docutils literal notranslate"><span class="pre">Testing.X_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.test.Testing.y_test"><code class="docutils literal notranslate"><span class="pre">Testing.y_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.test.Testing.label_dict"><code class="docutils literal notranslate"><span class="pre">Testing.label_dict</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.test.Testing.set_label_dict"><code class="docutils literal notranslate"><span class="pre">Testing.set_label_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.test.Testing.make_predictions"><code class="docutils literal notranslate"><span class="pre">Testing.make_predictions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.test.Testing.plot_image"><code class="docutils literal notranslate"><span class="pre">Testing.plot_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.test.Testing.get_predicted_tuple"><code class="docutils literal notranslate"><span class="pre">Testing.get_predicted_tuple()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id17"><code class="docutils literal notranslate"><span class="pre">Testing.get_predicted_tuple()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id18"><code class="docutils literal notranslate"><span class="pre">Testing.make_predictions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id19"><code class="docutils literal notranslate"><span class="pre">Testing.plot_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id20"><code class="docutils literal notranslate"><span class="pre">Testing.set_label_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#image_processing.train.Training"><code class="docutils literal notranslate"><span class="pre">Training</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.train.Training.train_nn"><code class="docutils literal notranslate"><span class="pre">Training.train_nn()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Data Analytics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pages.aimodel_page</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pages.aimodel_page</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">customtkinter</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ctk</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="kn">import</span> <span class="n">Button</span><span class="p">,</span> <span class="n">PhotoImage</span><span class="p">,</span> <span class="n">Toplevel</span><span class="p">,</span><span class="n">messagebox</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.models.data_object_class</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataObject</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.assets_management</span><span class="w"> </span><span class="kn">import</span> <span class="n">assets_manage</span><span class="p">,</span> <span class="n">load_image</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tk</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="kn">import</span> <span class="n">ttk</span>
+
+
+<div class="viewcode-block" id="AImodelPage">
+<a class="viewcode-back" href="../../gui.html#pages.aimodel_page.AImodelPage">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AImodelPage</span><span class="p">(</span><span class="n">ctk</span><span class="o">.</span><span class="n">CTkFrame</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A custom Tkinter frame for configuring and submitting AI models.</span>
+
+<span class="sd">    This class provides a GUI interface for selecting and configuring machine learning models</span>
+<span class="sd">    (RandomForest, CatBoost, Artificial Neural Network, XGBoost), adjusting their hyperparameters,</span>
+<span class="sd">    and submitting them to a backend for training or evaluation.</span>
+
+<span class="sd">    :param parent: The parent tkinter container.</span>
+<span class="sd">    :param file_data: The processed data to be used by the models.</span>
+<span class="sd">    :param file_name: The name of the file associated with the data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">file_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the AI model configuration page and all UI components.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">corner_radius</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">=</span><span class="n">parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_data</span><span class="o">=</span><span class="n">file_data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_name</span> <span class="o">=</span> <span class="n">file_name</span>
+        <span class="n">right_frame_height</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.8</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">winfo_screenheight</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sliders</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comboboxes</span> <span class="o">=</span><span class="p">{}</span>
+
+
+        <span class="c1"># Configure grid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid_rowconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid_columnconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>  
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid_columnconfigure</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  
+
+         <span class="c1"># Left Side Frame</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left_frame</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;transparent&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left_frame</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;nsew&quot;</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left_frame</span><span class="o">.</span><span class="n">grid_columnconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># First Frame (Text Box with Cancel Button)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_frame</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left_frame</span><span class="p">,</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;#E0E0E0&quot;</span><span class="p">,</span> <span class="n">corner_radius</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">height</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_frame</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;ew&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left_frame</span><span class="o">.</span><span class="n">grid_rowconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkLabel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">file_name</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Inter&quot;</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="s2">&quot;bold&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">relx</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">rely</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">preview_label</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkLabel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Preview&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Inter&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="s2">&quot;bold&quot;</span><span class="p">),</span>
+                                  <span class="n">text_color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">cursor</span><span class="o">=</span><span class="s2">&quot;hand2&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">preview_label</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">relx</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">rely</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>  <span class="c1"># Adjusted position</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">preview_label</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s2">&quot;&lt;Button-1&gt;&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">event</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">preview_data</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cancel_button</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkButton</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">parent</span><span class="o">.</span><span class="n">show_page</span><span class="p">(</span><span class="s2">&quot;file_upload&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cancel_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="c1"># Second Frame (Dropdown &amp; Graph Display) - Increased Size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph_frame</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left_frame</span><span class="p">,</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;#E0E0E0&quot;</span><span class="p">,</span> <span class="n">corner_radius</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">350</span><span class="p">)</span>  <span class="c1"># Increased Height</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph_frame</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;nsew&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left_frame</span><span class="o">.</span><span class="n">grid_rowconfigure</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Keep left frame standard but allow graph frame to take space</span>
+
+        <span class="c1"># Configure Graph Frame Grid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph_frame</span><span class="o">.</span><span class="n">grid_rowconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Center the dropdown</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph_frame</span><span class="o">.</span><span class="n">grid_rowconfigure</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>  <span class="c1"># Allow graph display to expand</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph_frame</span><span class="o">.</span><span class="n">grid_columnconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+       
+        <span class="c1"># Graph Display Area (Expanded)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph_display</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph_frame</span><span class="p">,</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;#D1D1D1&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">corner_radius</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># Increased Size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph_display</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;nsew&quot;</span><span class="p">)</span>  <span class="c1"># Expands to fill space</span>
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">Info_button_image</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">assets_manage</span><span class="p">(</span><span class="s2">&quot;info_B.png&quot;</span><span class="p">))</span>
+
+        <span class="c1"># Right Side Frame (Segmented Buttons for AI Model)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right_frame</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkScrollableFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;#171821&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">300</span> <span class="p">,</span> <span class="n">height</span><span class="o">=</span> <span class="n">right_frame_height</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right_frame</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right_frame</span><span class="o">.</span><span class="n">grid_columnconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Segmented Button for AI Model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">segmented_frame</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkSegmentedButton</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">right_frame</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;RandomForest&quot;</span><span class="p">,</span> <span class="s2">&quot;CatBoost&quot;</span><span class="p">,</span> <span class="s2">&quot;ArtificialNeuralNetwork&quot;</span><span class="p">,</span> <span class="s2">&quot;XGBoost&quot;</span><span class="p">],</span>
+                                                    <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">change_segment</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">segmented_frame</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">segmented_frame</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;RandomForest&quot;</span><span class="p">)</span>  <span class="c1"># Default Segment</span>
+
+        <span class="c1"># Frame that holds AI Model settings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">segment_container</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">right_frame</span><span class="p">,</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;transparent&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">segment_container</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="c1"># Create segment frames</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">segments</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;RandomForest&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_rf_frame</span><span class="p">(),</span>
+            <span class="s2">&quot;CatBoost&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_cb_frame</span><span class="p">(),</span>
+            <span class="s2">&quot;ArtificialNeuralNetwork&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_ann_frame</span><span class="p">(),</span>
+            <span class="s2">&quot;XGBoost&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_xgb_frame</span><span class="p">()</span>
+        <span class="p">}</span>
+
+        <span class="c1"># Submit Button</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">submit_button</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkButton</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">right_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Submit&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">submit_action</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">submit_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="c1"># Show default segment</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_segment</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">change_segment</span><span class="p">(</span><span class="s2">&quot;RandomForest&quot;</span><span class="p">)</span>
+        
+
+
+<div class="viewcode-block" id="AImodelPage.create_rf_frame">
+<a class="viewcode-back" href="../../gui.html#pages.aimodel_page.AImodelPage.create_rf_frame">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_rf_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create the UI frame for configuring RandomForest model hyperparameters.</span>
+
+<span class="sd">        :return: A CTkFrame widget containing sliders for RandomForest.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">segment_container</span><span class="p">,</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;#E0E0E0&quot;</span><span class="p">,</span> <span class="n">corner_radius</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">frame</span><span class="o">.</span><span class="n">grid_columnconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Sliders for Random Forest</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_slider_frame</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="s2">&quot;RandomForest&quot;</span><span class="p">,</span><span class="s2">&quot;n_estimators&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_slider_frame</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="s2">&quot;RandomForest&quot;</span><span class="p">,</span><span class="s2">&quot;max_depth&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_slider_frame</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="s2">&quot;RandomForest&quot;</span><span class="p">,</span><span class="s2">&quot;min_samples_split&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_slider_frame</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="s2">&quot;RandomForest&quot;</span><span class="p">,</span><span class="s2">&quot;min_samples_leaf&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">frame</span></div>
+
+
+
+<div class="viewcode-block" id="AImodelPage.create_cb_frame">
+<a class="viewcode-back" href="../../gui.html#pages.aimodel_page.AImodelPage.create_cb_frame">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_cb_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create the UI frame for configuring CatBoost model hyperparameters.</span>
+
+<span class="sd">        :return: A CTkFrame widget containing sliders for CatBoost.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">segment_container</span><span class="p">,</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;#E0E0E0&quot;</span><span class="p">,</span> <span class="n">corner_radius</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">frame</span><span class="o">.</span><span class="n">grid_columnconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Sliders for CatBoost</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_slider_frame</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="s2">&quot;CatBoost&quot;</span><span class="p">,</span><span class="s2">&quot;n_estimators&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_slider_frame</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="s2">&quot;CatBoost&quot;</span><span class="p">,</span><span class="s2">&quot;learning_rate&quot;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_slider_frame</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="s2">&quot;CatBoost&quot;</span><span class="p">,</span><span class="s2">&quot;max_depth&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_slider_frame</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="s2">&quot;CatBoost&quot;</span><span class="p">,</span><span class="s2">&quot;reg_lambda&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">frame</span></div>
+
+
+
+<div class="viewcode-block" id="AImodelPage.create_ann_frame">
+<a class="viewcode-back" href="../../gui.html#pages.aimodel_page.AImodelPage.create_ann_frame">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_ann_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create the UI frame for configuring Artificial Neural Network (ANN) hyperparameters.</span>
+
+<span class="sd">        :return: A CTkFrame widget containing sliders and dropdowns for ANN.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">segment_container</span><span class="p">,</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;#E0E0E0&quot;</span><span class="p">,</span> <span class="n">corner_radius</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">frame</span><span class="o">.</span><span class="n">grid_columnconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Sliders for ArtificialNeuralNetwork</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_slider_frame</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="s2">&quot;ArtificialNeuralNetwork&quot;</span><span class="p">,</span><span class="s2">&quot;Layer Number&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_slider_frame</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="s2">&quot;ArtificialNeuralNetwork&quot;</span><span class="p">,</span><span class="s2">&quot;Units&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="c1"># Activation Function Dropdown</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_combobox_frame</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="s2">&quot;Activation Function&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;relu&quot;</span><span class="p">,</span> <span class="s2">&quot;sigmoid&quot;</span><span class="p">,</span> <span class="s2">&quot;tanh&quot;</span><span class="p">,</span> <span class="s2">&quot;softmax&quot;</span><span class="p">],</span> <span class="s2">&quot;relu&quot;</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        
+        <span class="c1"># Optimizer Dropdown</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_combobox_frame</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="s2">&quot;Optimizer&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;adam&quot;</span><span class="p">,</span> <span class="s2">&quot;sgd&quot;</span><span class="p">,</span> <span class="s2">&quot;rmsprop&quot;</span><span class="p">],</span> <span class="s2">&quot;adam&quot;</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        
+        <span class="c1"># Sliders for ANN</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_slider_frame</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="s2">&quot;ArtificialNeuralNetwork&quot;</span><span class="p">,</span><span class="s2">&quot;Batch Size&quot;</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_slider_frame</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="s2">&quot;ArtificialNeuralNetwork&quot;</span><span class="p">,</span><span class="s2">&quot;Epochs&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">frame</span></div>
+
+
+
+<div class="viewcode-block" id="AImodelPage.create_xgb_frame">
+<a class="viewcode-back" href="../../gui.html#pages.aimodel_page.AImodelPage.create_xgb_frame">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_xgb_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create the UI frame for configuring XGBoost model hyperparameters.</span>
+
+<span class="sd">        :return: A CTkFrame widget containing sliders for XGBoost.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">segment_container</span><span class="p">,</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;#E0E0E0&quot;</span><span class="p">,</span> <span class="n">corner_radius</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">frame</span><span class="o">.</span><span class="n">grid_columnconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Sliders for XGBoost</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_slider_frame</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="s2">&quot;XGBoost&quot;</span><span class="p">,</span><span class="s2">&quot;n_estimators&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_slider_frame</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="s2">&quot;XGBoost&quot;</span><span class="p">,</span><span class="s2">&quot;learning_rate&quot;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_slider_frame</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="s2">&quot;XGBoost&quot;</span><span class="p">,</span><span class="s2">&quot;min_split_loss&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_slider_frame</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="s2">&quot;XGBoost&quot;</span><span class="p">,</span><span class="s2">&quot;max_depth&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">frame</span></div>
+
+    
+
+<div class="viewcode-block" id="AImodelPage.create_slider_frame">
+<a class="viewcode-back" href="../../gui.html#pages.aimodel_page.AImodelPage.create_slider_frame">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_slider_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span><span class="n">label_text</span><span class="p">,</span> <span class="n">from_</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">default</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a slider UI element for numeric hyperparameters.</span>
+
+<span class="sd">        :param parent: The parent widget to attach this frame.</span>
+<span class="sd">        :param model_name: Name of the model this parameter belongs to.</span>
+<span class="sd">        :param label_text: The label describing the slider parameter.</span>
+<span class="sd">        :param from_: Minimum value for the slider.</span>
+<span class="sd">        :param to: Maximum value for the slider.</span>
+<span class="sd">        :param default: Default value of the slider.</span>
+<span class="sd">        :param row: Row position inside the parent grid.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkFrame</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;#D1D1D1&quot;</span><span class="p">,</span> <span class="n">corner_radius</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">frame</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;nsew&quot;</span><span class="p">)</span>
+
+        <span class="n">label</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkLabel</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">label_text</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Inter&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="s2">&quot;bold&quot;</span><span class="p">),</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;#A0A0A0&quot;</span><span class="p">)</span>
+        <span class="n">label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;nesw&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_info_button</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Information about </span><span class="si">{</span><span class="n">label_text</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">value_label</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkLabel</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Value: </span><span class="si">{</span><span class="n">default</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Inter&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+        <span class="n">value_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">update_value</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="n">value_label</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Value: </span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">slider</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkSlider</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">from_</span><span class="o">=</span><span class="n">from_</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="n">to</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">update_value</span><span class="p">)</span>
+        <span class="n">slider</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">default</span><span class="p">)</span>
+        <span class="n">slider</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;ew&quot;</span><span class="p">)</span>
+
+        
+        <span class="k">if</span> <span class="n">model_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="p">[</span><span class="n">model_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># ✅ Store the slider under its model category</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="p">[</span><span class="n">model_name</span><span class="p">][</span><span class="n">label_text</span><span class="p">]</span> <span class="o">=</span> <span class="n">slider</span></div>
+
+
+
+<div class="viewcode-block" id="AImodelPage.create_combobox_frame">
+<a class="viewcode-back" href="../../gui.html#pages.aimodel_page.AImodelPage.create_combobox_frame">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_combobox_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">label_text</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">default</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a dropdown combobox for selecting categorical parameters.</span>
+
+<span class="sd">        :param parent: The parent widget to attach this frame.</span>
+<span class="sd">        :param label_text: The label describing the dropdown.</span>
+<span class="sd">        :param options: List of available options.</span>
+<span class="sd">        :param default: Default selected option.</span>
+<span class="sd">        :param row: Row position inside the parent grid.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkFrame</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;#D1D1D1&quot;</span><span class="p">,</span> <span class="n">corner_radius</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">frame</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;nsew&quot;</span><span class="p">)</span>
+
+        <span class="n">label</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkLabel</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">label_text</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Inter&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="s2">&quot;bold&quot;</span><span class="p">),</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;#A0A0A0&quot;</span><span class="p">)</span>
+        <span class="n">label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;nesw&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_info_button</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Information about </span><span class="si">{</span><span class="n">label_text</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">combobox</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkComboBox</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
+        <span class="n">combobox</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">default</span><span class="p">)</span>
+        <span class="n">combobox</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;ew&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">comboboxes</span><span class="p">[</span><span class="n">label_text</span><span class="p">]</span> <span class="o">=</span> <span class="n">combobox</span></div>
+
+
+
+<div class="viewcode-block" id="AImodelPage.show_info_dialog">
+<a class="viewcode-back" href="../../gui.html#pages.aimodel_page.AImodelPage.show_info_dialog">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">show_info_dialog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Show an information popup with a provided text.</span>
+
+<span class="sd">        :param text: The info message to display in the dialog.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dialog</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkToplevel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">dialog</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Information&quot;</span><span class="p">)</span>
+        <span class="n">dialog</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="s2">&quot;300x150&quot;</span><span class="p">)</span>
+        <span class="n">dialog</span><span class="o">.</span><span class="n">grab_set</span><span class="p">()</span>
+        <span class="n">ctk</span><span class="o">.</span><span class="n">CTkLabel</span><span class="p">(</span><span class="n">dialog</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Inter&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+        <span class="n">ctk</span><span class="o">.</span><span class="n">CTkButton</span><span class="p">(</span><span class="n">dialog</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;OK&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">dialog</span><span class="o">.</span><span class="n">destroy</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="AImodelPage.create_info_button">
+<a class="viewcode-back" href="../../gui.html#pages.aimodel_page.AImodelPage.create_info_button">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_info_button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a small button with an info icon that triggers a popup.</span>
+
+<span class="sd">        :param parent: The parent widget to attach this button.</span>
+<span class="sd">        :param text: The info message to display when clicked.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">button</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Info_button_image</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_info_dialog</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+        <span class="n">button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span> </div>
+
+
+    <span class="kn">from</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="kn">import</span> <span class="n">messagebox</span>
+
+<div class="viewcode-block" id="AImodelPage.change_segment">
+<a class="viewcode-back" href="../../gui.html#pages.aimodel_page.AImodelPage.change_segment">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">change_segment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">segment_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Switch between the different AI model configuration segments.</span>
+
+<span class="sd">        :param segment_name: The selected model name from the segmented button.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">segment_name</span> <span class="o">==</span> <span class="s2">&quot;ArtificialNeuralNetwork&quot;</span><span class="p">:</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showwarning</span><span class="p">(</span><span class="s2">&quot;Model Restriction&quot;</span><span class="p">,</span> <span class="s2">&quot;This method is only for regression.&quot;</span><span class="p">)</span>
+            
+
+        <span class="k">elif</span> <span class="n">segment_name</span> <span class="o">==</span> <span class="s2">&quot;XGBoost&quot;</span><span class="p">:</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showwarning</span><span class="p">(</span><span class="s2">&quot;Model Restriction&quot;</span><span class="p">,</span> <span class="s2">&quot;This method is only for classification.&quot;</span><span class="p">)</span>
+           
+
+        <span class="c1"># If switching is allowed, update the tab</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_segment</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_segment</span><span class="o">.</span><span class="n">grid_forget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_segment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="p">[</span><span class="n">segment_name</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_segment</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;nsew&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">segmented_frame</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">segment_name</span><span class="p">)</span>  <span class="c1"># Highlight the active segment</span></div>
+
+
+<div class="viewcode-block" id="AImodelPage.submit_action">
+<a class="viewcode-back" href="../../gui.html#pages.aimodel_page.AImodelPage.submit_action">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">submit_action</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handle the submit button click by collecting all model configurations,</span>
+<span class="sd">        packaging them into a JSON structure, and sending a request to the backend.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">selected_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">segmented_frame</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>  <span class="c1"># Get the currently selected model</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Submitting model: </span><span class="si">{</span><span class="n">selected_model</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="n">dataobject</span> <span class="o">=</span> <span class="n">DataObject</span><span class="p">()</span>
+        <span class="c1"># Store the preprocessed data from file_data</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">split_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_data</span>  <span class="c1"># Assuming file_data contains the split dataset</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">split_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+                    <span class="n">dataobject</span><span class="o">.</span><span class="n">data_filtering</span><span class="p">[</span><span class="s2">&quot;Train-Test Split&quot;</span><span class="p">][</span><span class="s2">&quot;split_data&quot;</span><span class="p">][</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s2">&quot;records&quot;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+                    <span class="n">dataobject</span><span class="o">.</span><span class="n">data_filtering</span><span class="p">[</span><span class="s2">&quot;Train-Test Split&quot;</span><span class="p">][</span><span class="s2">&quot;split_data&quot;</span><span class="p">][</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>  <span class="c1"># Convert to list</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="n">dataobject</span><span class="o">.</span><span class="n">data_filtering</span><span class="p">[</span><span class="s2">&quot;Train-Test Split&quot;</span><span class="p">][</span><span class="s2">&quot;split_data&quot;</span><span class="p">][</span><span class="s2">&quot;X_train&quot;</span><span class="p">])</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">dataobject</span><span class="o">.</span><span class="n">data_filtering</span><span class="p">[</span><span class="s2">&quot;Train-Test Split&quot;</span><span class="p">][</span><span class="s2">&quot;split_data&quot;</span><span class="p">][</span><span class="s2">&quot;X_test&quot;</span><span class="p">])</span>
+            <span class="c1"># Retrieve slider values for the selected model</span>
+        <span class="k">if</span> <span class="n">selected_model</span> <span class="o">==</span> <span class="s2">&quot;RandomForest&quot;</span><span class="p">:</span>
+        
+            <span class="n">dataobject</span><span class="o">.</span><span class="n">ai_model</span><span class="p">[</span><span class="s2">&quot;Selected Model&quot;</span><span class="p">]</span><span class="o">=</span> <span class="n">selected_model</span>
+            <span class="n">dataobject</span><span class="o">.</span><span class="n">ai_model</span><span class="p">[</span><span class="s2">&quot;RandomForest&quot;</span><span class="p">][</span><span class="s2">&quot;n_estimators&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="p">[</span><span class="s2">&quot;RandomForest&quot;</span><span class="p">][</span><span class="s2">&quot;n_estimators&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">()))</span>
+            <span class="n">dataobject</span><span class="o">.</span><span class="n">ai_model</span><span class="p">[</span><span class="s2">&quot;RandomForest&quot;</span><span class="p">][</span><span class="s2">&quot;max_depth&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="p">[</span><span class="s2">&quot;RandomForest&quot;</span><span class="p">][</span><span class="s2">&quot;max_depth&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">()))</span>
+            <span class="n">dataobject</span><span class="o">.</span><span class="n">ai_model</span><span class="p">[</span><span class="s2">&quot;RandomForest&quot;</span><span class="p">][</span><span class="s2">&quot;min_samples_split&quot;</span><span class="p">]</span><span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="p">[</span><span class="s2">&quot;RandomForest&quot;</span><span class="p">][</span><span class="s2">&quot;min_samples_split&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">()))</span>
+            <span class="n">dataobject</span><span class="o">.</span><span class="n">ai_model</span><span class="p">[</span><span class="s2">&quot;RandomForest&quot;</span><span class="p">][</span><span class="s2">&quot;min_samples_leaf&quot;</span><span class="p">]</span><span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="p">[</span><span class="s2">&quot;RandomForest&quot;</span><span class="p">][</span><span class="s2">&quot;min_samples_leaf&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">()))</span>
+            
+            <span class="nb">print</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="p">[</span><span class="s2">&quot;RandomForest&quot;</span><span class="p">][</span><span class="s2">&quot;n_estimators&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">()))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="p">[</span><span class="s2">&quot;RandomForest&quot;</span><span class="p">][</span><span class="s2">&quot;max_depth&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">()))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="p">[</span><span class="s2">&quot;RandomForest&quot;</span><span class="p">][</span><span class="s2">&quot;min_samples_split&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">()))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="p">[</span><span class="s2">&quot;RandomForest&quot;</span><span class="p">][</span><span class="s2">&quot;min_samples_leaf&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">()))</span>
+
+            <span class="c1"># Convert DataObject to JSON</span>
+            <span class="n">json_data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;dataobject&quot;</span><span class="p">:</span> <span class="n">dataobject</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()}</span>
+            <span class="c1"># Send request</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">send_request</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
+            
+        <span class="k">elif</span> <span class="n">selected_model</span> <span class="o">==</span> <span class="s2">&quot;CatBoost&quot;</span><span class="p">:</span>
+            
+            <span class="n">dataobject</span><span class="o">.</span><span class="n">ai_model</span><span class="p">[</span><span class="s2">&quot;Selected Model&quot;</span><span class="p">]</span><span class="o">=</span> <span class="n">selected_model</span>
+            <span class="n">dataobject</span><span class="o">.</span><span class="n">ai_model</span><span class="p">[</span><span class="s2">&quot;CatBoost&quot;</span><span class="p">][</span><span class="s2">&quot;n_estimators&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="p">[</span><span class="s2">&quot;CatBoost&quot;</span><span class="p">][</span><span class="s2">&quot;n_estimators&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+            <span class="n">dataobject</span><span class="o">.</span><span class="n">ai_model</span><span class="p">[</span><span class="s2">&quot;CatBoost&quot;</span><span class="p">][</span><span class="s2">&quot;learning_rate&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="p">[</span><span class="s2">&quot;CatBoost&quot;</span><span class="p">][</span><span class="s2">&quot;learning_rate&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+            <span class="n">dataobject</span><span class="o">.</span><span class="n">ai_model</span><span class="p">[</span><span class="s2">&quot;CatBoost&quot;</span><span class="p">][</span><span class="s2">&quot;max_depth&quot;</span><span class="p">]</span><span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="p">[</span><span class="s2">&quot;CatBoost&quot;</span><span class="p">][</span><span class="s2">&quot;max_depth&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+            <span class="n">dataobject</span><span class="o">.</span><span class="n">ai_model</span><span class="p">[</span><span class="s2">&quot;CatBoost&quot;</span><span class="p">][</span><span class="s2">&quot;reg_lambda&quot;</span><span class="p">]</span><span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="p">[</span><span class="s2">&quot;CatBoost&quot;</span><span class="p">][</span><span class="s2">&quot;reg_lambda&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+            
+            <span class="c1"># Convert DataObject to JSON</span>
+            <span class="n">json_data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;dataobject&quot;</span><span class="p">:</span> <span class="n">dataobject</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()}</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
+            <span class="c1"># Send request</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">send_request</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
+            
+        <span class="k">elif</span> <span class="n">selected_model</span> <span class="o">==</span> <span class="s2">&quot;ArtificialNeuralNetwork&quot;</span><span class="p">:</span>
+            
+            <span class="n">dataobject</span><span class="o">.</span><span class="n">ai_model</span><span class="p">[</span><span class="s2">&quot;Selected Model&quot;</span><span class="p">]</span><span class="o">=</span> <span class="n">selected_model</span>
+            <span class="n">dataobject</span><span class="o">.</span><span class="n">ai_model</span><span class="p">[</span><span class="s2">&quot;ArtificialNeuralNetwork&quot;</span><span class="p">][</span><span class="s2">&quot;layer_number&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="p">[</span><span class="s2">&quot;ArtificialNeuralNetwork&quot;</span><span class="p">][</span><span class="s2">&quot;Layer Number&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+            <span class="n">dataobject</span><span class="o">.</span><span class="n">ai_model</span><span class="p">[</span><span class="s2">&quot;ArtificialNeuralNetwork&quot;</span><span class="p">][</span><span class="s2">&quot;units&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="p">[</span><span class="s2">&quot;ArtificialNeuralNetwork&quot;</span><span class="p">][</span><span class="s2">&quot;Units&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+            <span class="n">dataobject</span><span class="o">.</span><span class="n">ai_model</span><span class="p">[</span><span class="s2">&quot;ArtificialNeuralNetwork&quot;</span><span class="p">][</span><span class="s2">&quot;activation&quot;</span><span class="p">]</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_combobox_value</span><span class="p">(</span><span class="s2">&quot;Activation Function&quot;</span><span class="p">)</span>
+            <span class="n">dataobject</span><span class="o">.</span><span class="n">ai_model</span><span class="p">[</span><span class="s2">&quot;ArtificialNeuralNetwork&quot;</span><span class="p">][</span><span class="s2">&quot;optimizer&quot;</span><span class="p">]</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_combobox_value</span><span class="p">(</span><span class="s2">&quot;Optimizer&quot;</span><span class="p">)</span>
+            <span class="n">dataobject</span><span class="o">.</span><span class="n">ai_model</span><span class="p">[</span><span class="s2">&quot;ArtificialNeuralNetwork&quot;</span><span class="p">][</span><span class="s2">&quot;batch_size&quot;</span><span class="p">]</span><span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="p">[</span><span class="s2">&quot;ArtificialNeuralNetwork&quot;</span><span class="p">][</span><span class="s2">&quot;Batch Size&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+            <span class="n">dataobject</span><span class="o">.</span><span class="n">ai_model</span><span class="p">[</span><span class="s2">&quot;ArtificialNeuralNetwork&quot;</span><span class="p">][</span><span class="s2">&quot;epochs&quot;</span><span class="p">]</span><span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="p">[</span><span class="s2">&quot;ArtificialNeuralNetwork&quot;</span><span class="p">][</span><span class="s2">&quot;Epochs&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+            
+            <span class="c1"># Convert DataObject to JSON</span>
+            <span class="n">json_data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;dataobject&quot;</span><span class="p">:</span> <span class="n">dataobject</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()}</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
+            <span class="c1"># Send request</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">send_request</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">selected_model</span> <span class="o">==</span> <span class="s2">&quot;XGBoost&quot;</span><span class="p">:</span>
+            
+            <span class="n">dataobject</span><span class="o">.</span><span class="n">ai_model</span><span class="p">[</span><span class="s2">&quot;Selected Model&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">selected_model</span>
+            <span class="n">dataobject</span><span class="o">.</span><span class="n">ai_model</span><span class="p">[</span><span class="s2">&quot;XGBoost&quot;</span><span class="p">][</span><span class="s2">&quot;n_estimators&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="p">[</span><span class="s2">&quot;XGBoost&quot;</span><span class="p">][</span><span class="s2">&quot;n_estimators&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">()))</span>
+            <span class="n">dataobject</span><span class="o">.</span><span class="n">ai_model</span><span class="p">[</span><span class="s2">&quot;XGBoost&quot;</span><span class="p">][</span><span class="s2">&quot;learning_rate&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="p">[</span><span class="s2">&quot;XGBoost&quot;</span><span class="p">][</span><span class="s2">&quot;learning_rate&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">()))</span>
+            <span class="n">dataobject</span><span class="o">.</span><span class="n">ai_model</span><span class="p">[</span><span class="s2">&quot;XGBoost&quot;</span><span class="p">][</span><span class="s2">&quot;min_split_loss&quot;</span><span class="p">]</span><span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="p">[</span><span class="s2">&quot;XGBoost&quot;</span><span class="p">][</span><span class="s2">&quot;min_split_loss&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">()))</span>
+            <span class="n">dataobject</span><span class="o">.</span><span class="n">ai_model</span><span class="p">[</span><span class="s2">&quot;XGBoost&quot;</span><span class="p">][</span><span class="s2">&quot;max_depth&quot;</span><span class="p">]</span><span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sliders</span><span class="p">[</span><span class="s2">&quot;XGBoost&quot;</span><span class="p">][</span><span class="s2">&quot;max_depth&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">()))</span>
+            
+            <span class="c1"># Convert DataObject to JSON</span>
+            <span class="n">json_data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;dataobject&quot;</span><span class="p">:</span> <span class="n">dataobject</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()}</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
+            <span class="c1"># Send request</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">send_request</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AImodelPage.get_slider_value">
+<a class="viewcode-back" href="../../gui.html#pages.aimodel_page.AImodelPage.get_slider_value">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_slider_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slider_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper to get the value of a specific slider.</span>
+
+<span class="sd">        :param slider_name: The name of the slider.</span>
+<span class="sd">        :return: Slider value if found, else 0.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_segment</span><span class="o">.</span><span class="n">winfo_children</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkSlider</span><span class="p">)</span> <span class="ow">and</span> <span class="n">slider_name</span> <span class="ow">in</span> <span class="n">widget</span><span class="o">.</span><span class="n">winfo_parent</span><span class="p">():</span>
+                <span class="k">return</span> <span class="n">widget</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="k">return</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="AImodelPage.get_combobox_value">
+<a class="viewcode-back" href="../../gui.html#pages.aimodel_page.AImodelPage.get_combobox_value">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_combobox_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">combobox_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper to get the value of a specific combobox.</span>
+
+<span class="sd">        :param combobox_name: The name of the combobox.</span>
+<span class="sd">        :return: The selected value if found, else None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_segment</span><span class="o">.</span><span class="n">winfo_children</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkComboBox</span><span class="p">)</span> <span class="ow">and</span> <span class="n">combobox_name</span> <span class="ow">in</span> <span class="n">widget</span><span class="o">.</span><span class="n">winfo_parent</span><span class="p">():</span>
+                <span class="k">return</span> <span class="n">widget</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+    
+<div class="viewcode-block" id="AImodelPage.preview_data">
+<a class="viewcode-back" href="../../gui.html#pages.aimodel_page.AImodelPage.preview_data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">preview_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Open a popup window displaying the first 50 rows of the processed dataset.</span>
+<span class="sd">        Provides a scrollable view using ttk.Treeview.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;file_data&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_data</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_data</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="s2">&quot;No processed data available for preview!&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1"># ✅ Create a new popup window</span>
+        <span class="n">preview_window</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkToplevel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">preview_window</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Processed Data Preview&quot;</span><span class="p">)</span>
+        <span class="n">preview_window</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="s2">&quot;900x500&quot;</span><span class="p">)</span>
+        <span class="n">preview_window</span><span class="o">.</span><span class="n">grab_set</span><span class="p">()</span>
+
+        <span class="c1"># ✅ Create a frame for the Treeview</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">preview_window</span><span class="p">)</span>
+        <span class="n">frame</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># ✅ Treeview (Table) widget</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Treeview</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_data</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span> <span class="n">show</span><span class="o">=</span><span class="s2">&quot;headings&quot;</span><span class="p">)</span>
+
+        <span class="c1"># ✅ Add column headers</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_data</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">tree</span><span class="o">.</span><span class="n">heading</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">col</span><span class="p">)</span>
+            <span class="n">tree</span><span class="o">.</span><span class="n">column</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>  <span class="c1"># Adjust column width</span>
+
+        <span class="c1"># ✅ Insert rows (limit to first 50 rows to avoid UI lag)</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="n">tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;end&quot;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">row</span><span class="p">))</span>
+
+        <span class="c1"># ✅ Add vertical scrollbar</span>
+        <span class="n">v_scrollbar</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Scrollbar</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">tree</span><span class="o">.</span><span class="n">yview</span><span class="p">)</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">yscroll</span><span class="o">=</span><span class="n">v_scrollbar</span><span class="o">.</span><span class="n">set</span><span class="p">)</span>
+
+        <span class="c1"># ✅ Add horizontal scrollbar</span>
+        <span class="n">h_scrollbar</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Scrollbar</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s2">&quot;horizontal&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">tree</span><span class="o">.</span><span class="n">xview</span><span class="p">)</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">xscroll</span><span class="o">=</span><span class="n">h_scrollbar</span><span class="o">.</span><span class="n">set</span><span class="p">)</span>
+
+        <span class="c1"># ✅ Pack elements</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">v_scrollbar</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+        <span class="n">h_scrollbar</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Processed Data preview displayed successfully!&quot;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="AImodelPage.send_request">
+<a class="viewcode-back" href="../../gui.html#pages.aimodel_page.AImodelPage.send_request">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">send_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Send a POST request with the selected model data to the Django backend.</span>
+
+<span class="sd">        :param json_data: The full dictionary containing model configuration and dataset.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+ 
+        <span class="k">try</span><span class="p">:</span>
+           
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+                    <span class="s2">&quot;http://127.0.0.1:8000/api/ai_model/&quot;</span><span class="p">,</span>
+                    <span class="n">json</span><span class="o">=</span><span class="n">json_data</span>
+            <span class="p">)</span>
+ 
+            <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+                    <span class="n">response_data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">response_data</span><span class="p">)</span>
+                    
+            <span class="k">else</span><span class="p">:</span>
+                    <span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span>
+                        <span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="s1">&#39;File upload failed.&#39;</span><span class="p">)</span>
+                    <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, MAIT24-25.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

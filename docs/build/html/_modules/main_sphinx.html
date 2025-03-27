@@ -1,0 +1,673 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>main_sphinx &mdash; Data Analytics 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Data Analytics
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../introduction.html#overview-of-the-software">Overview of the software</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction.html#purpose-of-integrating-tkinter-with-django">Purpose of Integrating Tkinter with Django</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../introduction.html#separation-of-concerns">Separation of Concerns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../introduction.html#api-based-communication">API-Based Communication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../introduction.html#enhanced-performance">Enhanced Performance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../introduction.html#scalability-and-extensibility">Scalability and Extensibility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../introduction.html#versatile-file-processing">Versatile File Processing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction.html#frontend-tkinter-based-graphical-user-interface-gui">Frontend: Tkinter-Based Graphical User Interface (GUI)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../introduction.html#file-upload-interface">File Upload Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../introduction.html#automated-navigation-system">Automated Navigation System</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../introduction.html#process-selection-module">Process Selection Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../introduction.html#real-time-processing-updates">Real-Time Processing Updates</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../introduction.html#backend-django-based-api-and-processing-engine">Backend: Django-Based API and Processing Engine</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../introduction.html#data-object-and-api-based-data-exchange">Data Object and API-Based Data Exchange</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../introduction.html#rest-api-for-request-handling">REST API for Request Handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../introduction.html#modular-and-scalable-api-architecture">Modular and Scalable API Architecture</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Prerequisites.html">Installation Prerequisites</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Prerequisites.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Prerequisites.html#environment-setup">Environment Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Prerequisites.html#running-the-application">Running the Application</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../guide.html">Step-by-Step Usage Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#uploading-a-file-and-selecting-a-module">Uploading a File and Selecting a Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#processing-the-data-and-generating-outputs">Processing the Data and Generating Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide.html#interpreting-results-and-refining-analysis">Interpreting Results and Refining Analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../gui.html">Architecture Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../gui.html#front-end-tkinter-gui">Front End: Tkinter GUI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../gui.html#main_sphinx.App"><code class="docutils literal notranslate"><span class="pre">App</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#main_sphinx.App.current_page"><code class="docutils literal notranslate"><span class="pre">App.current_page</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#main_sphinx.App.configure_grid"><code class="docutils literal notranslate"><span class="pre">App.configure_grid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#main_sphinx.App.create_sidebar"><code class="docutils literal notranslate"><span class="pre">App.create_sidebar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#main_sphinx.App.load_assets"><code class="docutils literal notranslate"><span class="pre">App.load_assets()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#main_sphinx.App.load_header_image"><code class="docutils literal notranslate"><span class="pre">App.load_header_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#main_sphinx.App.resize_header_image"><code class="docutils literal notranslate"><span class="pre">App.resize_header_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#main_sphinx.App.show_page"><code class="docutils literal notranslate"><span class="pre">App.show_page()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#main_sphinx.App.toggle_mode"><code class="docutils literal notranslate"><span class="pre">App.toggle_mode()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../gui.html#pages.aimodel_page.AImodelPage"><code class="docutils literal notranslate"><span class="pre">AImodelPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.aimodel_page.AImodelPage.change_segment"><code class="docutils literal notranslate"><span class="pre">AImodelPage.change_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.aimodel_page.AImodelPage.create_ann_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_ann_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.aimodel_page.AImodelPage.create_cb_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_cb_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.aimodel_page.AImodelPage.create_combobox_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_combobox_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.aimodel_page.AImodelPage.create_info_button"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_info_button()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.aimodel_page.AImodelPage.create_rf_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_rf_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.aimodel_page.AImodelPage.create_slider_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_slider_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.aimodel_page.AImodelPage.create_xgb_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_xgb_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.aimodel_page.AImodelPage.get_combobox_value"><code class="docutils literal notranslate"><span class="pre">AImodelPage.get_combobox_value()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.aimodel_page.AImodelPage.get_slider_value"><code class="docutils literal notranslate"><span class="pre">AImodelPage.get_slider_value()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.aimodel_page.AImodelPage.messagebox"><code class="docutils literal notranslate"><span class="pre">AImodelPage.messagebox</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.aimodel_page.AImodelPage.preview_data"><code class="docutils literal notranslate"><span class="pre">AImodelPage.preview_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.aimodel_page.AImodelPage.send_request"><code class="docutils literal notranslate"><span class="pre">AImodelPage.send_request()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.aimodel_page.AImodelPage.show_info_dialog"><code class="docutils literal notranslate"><span class="pre">AImodelPage.show_info_dialog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.aimodel_page.AImodelPage.submit_action"><code class="docutils literal notranslate"><span class="pre">AImodelPage.submit_action()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.add_export_send_buttons"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.add_export_send_buttons()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.change_segment"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.change_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.create_interpolation_frame"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.create_interpolation_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.create_process_selection_frame"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.create_process_selection_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.create_scaling_encoding_frame"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.create_scaling_encoding_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.create_segment_frame"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.create_segment_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.create_smoothing_frame"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.create_smoothing_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.export_data"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.export_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.get_data_by_name"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.get_data_by_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.load_csv_columns"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.load_csv_columns()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.lock_segment"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.lock_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.move_to_next_segment"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.move_to_next_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.open_comparison_popup"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.open_comparison_popup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.open_send_popup"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.open_send_popup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.plot_boxplot"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.plot_boxplot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.plot_comparison_graph"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.plot_comparison_graph()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.plot_line_graph"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.plot_line_graph()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.preview_csv"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.preview_csv()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.preview_scaled_encoded_data"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.preview_scaled_encoded_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.run_interpolation"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.run_interpolation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.run_outlier_detection"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.run_outlier_detection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.run_scaling_and_encoding"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.run_scaling_and_encoding()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.run_smoothing"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.run_smoothing()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.send_request"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.send_request()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.show_comparison_data"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.show_comparison_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.show_info_dialog"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.show_info_dialog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.show_loading_message"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.show_loading_message()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.submit_action"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.submit_action()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.toggle_slider"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.toggle_slider()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.toggle_smoothing_options"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.toggle_smoothing_options()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.update_boxplot"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.update_boxplot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.update_buttons_visibility"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.update_buttons_visibility()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.update_comparison_view"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.update_comparison_view()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.data_filtering_page.DataFilteringPage.update_dropdown"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.update_dropdown()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../gui.html#pages.file_upload_page.FileUploadPage"><code class="docutils literal notranslate"><span class="pre">FileUploadPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.file_upload_page.FileUploadPage.upload_file"><code class="docutils literal notranslate"><span class="pre">FileUploadPage.upload_file()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../gui.html#pages.image_processing_page.ImageProcessingPage"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.image_processing_page.ImageProcessingPage.cancel_file"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.cancel_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.image_processing_page.ImageProcessingPage.change_segment"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.change_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.image_processing_page.ImageProcessingPage.create_image_train_frame"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.create_image_train_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.image_processing_page.ImageProcessingPage.create_segment_frame"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.create_segment_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.image_processing_page.ImageProcessingPage.plot_confusion_matrix"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.plot_confusion_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.image_processing_page.ImageProcessingPage.preview_image"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.preview_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.image_processing_page.ImageProcessingPage.show_info_dialog"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.show_info_dialog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.image_processing_page.ImageProcessingPage.submit_action"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.submit_action()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.image_processing_page.ImageProcessingPage.upload_image"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.upload_image()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../gui.html#pages.process_selection_page.ProcessSelectionPage"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.process_selection_page.ProcessSelectionPage.parent"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage.parent</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.process_selection_page.ProcessSelectionPage.file_path"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage.file_path</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.process_selection_page.ProcessSelectionPage.filename"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage.filename</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.process_selection_page.ProcessSelectionPage.__init__"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.process_selection_page.ProcessSelectionPage.create_buttons"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage.create_buttons()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../gui.html#pages.regression_classification.RegressionClassificationPage"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.regression_classification.RegressionClassificationPage.cancel_file"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.cancel_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.regression_classification.RegressionClassificationPage.change_segment"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.change_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.regression_classification.RegressionClassificationPage.clear_frame"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.clear_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.regression_classification.RegressionClassificationPage.create_classification_frame"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_classification_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.regression_classification.RegressionClassificationPage.create_dropdown"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_dropdown()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.regression_classification.RegressionClassificationPage.create_info_button"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_info_button()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.regression_classification.RegressionClassificationPage.create_regression_frame"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_regression_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.regression_classification.RegressionClassificationPage.create_slider"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_slider()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.regression_classification.RegressionClassificationPage.create_textbox"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_textbox()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.regression_classification.RegressionClassificationPage.lasso_plot"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.lasso_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.regression_classification.RegressionClassificationPage.polynomial_plot"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.polynomial_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.regression_classification.RegressionClassificationPage.preview_data"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.preview_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.regression_classification.RegressionClassificationPage.regression_plot"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.regression_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.regression_classification.RegressionClassificationPage.residual_plot"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.residual_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.regression_classification.RegressionClassificationPage.ridge_plot"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.ridge_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.regression_classification.RegressionClassificationPage.send_request_classification"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.send_request_classification()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.regression_classification.RegressionClassificationPage.send_request_regression"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.send_request_regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.regression_classification.RegressionClassificationPage.show_info_dialog"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.show_info_dialog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.regression_classification.RegressionClassificationPage.submit_action"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.submit_action()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.regression_classification.RegressionClassificationPage.toggle_classification_options"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.toggle_classification_options()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.regression_classification.RegressionClassificationPage.toggle_regression_options"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.toggle_regression_options()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../gui.html#pages.help_page.HelpPage"><code class="docutils literal notranslate"><span class="pre">HelpPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.help_page.HelpPage.None"><code class="docutils literal notranslate"><span class="pre">HelpPage.None</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#pages.help_page.HelpPage.__init__"><code class="docutils literal notranslate"><span class="pre">HelpPage.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../gui.html#back-end-django-api">Back End: Django API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../gui.html#backend.api.image_processing_engine.ImageProcessingAPIView"><code class="docutils literal notranslate"><span class="pre">ImageProcessingAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#backend.api.image_processing_engine.ImageProcessingAPIView.post"><code class="docutils literal notranslate"><span class="pre">ImageProcessingAPIView.post()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../gui.html#backend.api.data_preprocessing_engine.DataFilteringFileAPIView"><code class="docutils literal notranslate"><span class="pre">DataFilteringFileAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#backend.api.data_preprocessing_engine.DataFilteringFileAPIView.post"><code class="docutils literal notranslate"><span class="pre">DataFilteringFileAPIView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#backend.api.data_preprocessing_engine.DataFilteringFileAPIView.run_outlier_detection"><code class="docutils literal notranslate"><span class="pre">DataFilteringFileAPIView.run_outlier_detection()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../gui.html#backend.api.data_preprocessing_engine.InterpolationAPIView"><code class="docutils literal notranslate"><span class="pre">InterpolationAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#backend.api.data_preprocessing_engine.InterpolationAPIView.post"><code class="docutils literal notranslate"><span class="pre">InterpolationAPIView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#backend.api.data_preprocessing_engine.InterpolationAPIView.run_interpolation"><code class="docutils literal notranslate"><span class="pre">InterpolationAPIView.run_interpolation()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../gui.html#backend.api.data_preprocessing_engine.SmoothingAPIView"><code class="docutils literal notranslate"><span class="pre">SmoothingAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#backend.api.data_preprocessing_engine.SmoothingAPIView.post"><code class="docutils literal notranslate"><span class="pre">SmoothingAPIView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#backend.api.data_preprocessing_engine.SmoothingAPIView.run_smoothing"><code class="docutils literal notranslate"><span class="pre">SmoothingAPIView.run_smoothing()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../gui.html#backend.api.ai_models_engine.AIModelAPIView"><code class="docutils literal notranslate"><span class="pre">AIModelAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#backend.api.ai_models_engine.AIModelAPIView.extract_hyperparameters"><code class="docutils literal notranslate"><span class="pre">AIModelAPIView.extract_hyperparameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#backend.api.ai_models_engine.AIModelAPIView.post"><code class="docutils literal notranslate"><span class="pre">AIModelAPIView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#backend.api.ai_models_engine.AIModelAPIView.run_selected_model"><code class="docutils literal notranslate"><span class="pre">AIModelAPIView.run_selected_model()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../gui.html#backend.api.scaling_encoding_engine.ScalingEncodingAPIView"><code class="docutils literal notranslate"><span class="pre">ScalingEncodingAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#backend.api.scaling_encoding_engine.ScalingEncodingAPIView.post"><code class="docutils literal notranslate"><span class="pre">ScalingEncodingAPIView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#backend.api.scaling_encoding_engine.ScalingEncodingAPIView.run_encoding_scaling_train_test_split"><code class="docutils literal notranslate"><span class="pre">ScalingEncodingAPIView.run_encoding_scaling_train_test_split()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../gui.html#backend.api.regression_engine.RegressionAPIView"><code class="docutils literal notranslate"><span class="pre">RegressionAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#backend.api.regression_engine.RegressionAPIView.post"><code class="docutils literal notranslate"><span class="pre">RegressionAPIView.post()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../gui.html#backend.api.classification_engine.ClassificationAPIView"><code class="docutils literal notranslate"><span class="pre">ClassificationAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../gui.html#backend.api.classification_engine.ClassificationAPIView.post"><code class="docutils literal notranslate"><span class="pre">ClassificationAPIView.post()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">Modules and Functionalities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../modules.html#module-data_filtering.Outlier_final">Data Filtering</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../modules.html#data_filtering.Outlier_final.OutlierDetection"><code class="docutils literal notranslate"><span class="pre">OutlierDetection</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#data_filtering.Outlier_final.OutlierDetection.detect_outliers_iqr"><code class="docutils literal notranslate"><span class="pre">OutlierDetection.detect_outliers_iqr()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#data_filtering.Outlier_final.OutlierDetection.detect_outliers_isolation_forest"><code class="docutils literal notranslate"><span class="pre">OutlierDetection.detect_outliers_isolation_forest()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#data_filtering.Outlier_final.OutlierDetection.is_numeric_columns"><code class="docutils literal notranslate"><span class="pre">OutlierDetection.is_numeric_columns()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../modules.html#data_filtering.Smoothing_final.SmoothingMethods"><code class="docutils literal notranslate"><span class="pre">SmoothingMethods</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#data_filtering.Smoothing_final.SmoothingMethods.apply_tes"><code class="docutils literal notranslate"><span class="pre">SmoothingMethods.apply_tes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#data_filtering.Smoothing_final.SmoothingMethods.calculate_sma"><code class="docutils literal notranslate"><span class="pre">SmoothingMethods.calculate_sma()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../modules.html#data_filtering.Spline_Interpolation_final.SplineInterpolator"><code class="docutils literal notranslate"><span class="pre">SplineInterpolator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#data_filtering.Spline_Interpolation_final.SplineInterpolator.check_column_validity"><code class="docutils literal notranslate"><span class="pre">SplineInterpolator.check_column_validity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#data_filtering.Spline_Interpolation_final.SplineInterpolator.fill_missing_values"><code class="docutils literal notranslate"><span class="pre">SplineInterpolator.fill_missing_values()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling"><code class="docutils literal notranslate"><span class="pre">EncodeAndScaling</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling.encode_categorical_features"><code class="docutils literal notranslate"><span class="pre">EncodeAndScaling.encode_categorical_features()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling.preprocess"><code class="docutils literal notranslate"><span class="pre">EncodeAndScaling.preprocess()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling.scale_numerical_features"><code class="docutils literal notranslate"><span class="pre">EncodeAndScaling.scale_numerical_features()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling.train_test_split"><code class="docutils literal notranslate"><span class="pre">EncodeAndScaling.train_test_split()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../modules.html#module-regression.regression_models">Regression</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../modules.html#regression.regression_models.RegressionModels"><code class="docutils literal notranslate"><span class="pre">RegressionModels</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#regression.regression_models.RegressionModels.model"><code class="docutils literal notranslate"><span class="pre">RegressionModels.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#regression.regression_models.RegressionModels.best_params"><code class="docutils literal notranslate"><span class="pre">RegressionModels.best_params</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#regression.regression_models.RegressionModels.train_linear_regression"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_linear_regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#regression.regression_models.RegressionModels.train_polynomial_regression"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_polynomial_regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#regression.regression_models.RegressionModels.train_ridge"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_ridge()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#regression.regression_models.RegressionModels.train_lasso"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_lasso()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#id0"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_lasso()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#id1"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_linear_regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#id3"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_polynomial_regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#id5"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_ridge()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../modules.html#module-classification.base_model">Classification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../modules.html#classification.base_model.ClassifierClass"><code class="docutils literal notranslate"><span class="pre">ClassifierClass</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#classification.base_model.ClassifierClass.data_train"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.data_train</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#classification.base_model.ClassifierClass.data_test"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.data_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#classification.base_model.ClassifierClass.target_train"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.target_train</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#classification.base_model.ClassifierClass.target_test"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.target_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#classification.base_model.ClassifierClass.target_labels"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.target_labels</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#classification.base_model.ClassifierClass.display_confusion_matrix"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.display_confusion_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#classification.base_model.ClassifierClass.evaluate"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#classification.base_model.ClassifierClass.set_model"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.set_model()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../modules.html#classification.knn_model.KNNModel"><code class="docutils literal notranslate"><span class="pre">KNNModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#classification.knn_model.KNNModel.train"><code class="docutils literal notranslate"><span class="pre">KNNModel.train()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../modules.html#classification.random_forest_model.RandomForestModel"><code class="docutils literal notranslate"><span class="pre">RandomForestModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#classification.random_forest_model.RandomForestModel.train"><code class="docutils literal notranslate"><span class="pre">RandomForestModel.train()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../modules.html#classification.svc_model.SVCModel"><code class="docutils literal notranslate"><span class="pre">SVCModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#classification.svc_model.SVCModel.train"><code class="docutils literal notranslate"><span class="pre">SVCModel.train()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../modules.html#module-ai_model.ann">AI Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../modules.html#ai_model.ann.ArtificialNeuralNetwork"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#ai_model.ann.ArtificialNeuralNetwork.model"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#ai_model.ann.ArtificialNeuralNetwork.problem_type"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.problem_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#ai_model.ann.ArtificialNeuralNetwork.batch_size"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.batch_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#ai_model.ann.ArtificialNeuralNetwork.epochs"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.epochs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#ai_model.ann.ArtificialNeuralNetwork.evaluate"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#ai_model.ann.ArtificialNeuralNetwork.load_weights"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.load_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#ai_model.ann.ArtificialNeuralNetwork.save_weights"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.save_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#ai_model.ann.ArtificialNeuralNetwork.train"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.train()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../modules.html#ai_model.base.BaseModel"><code class="docutils literal notranslate"><span class="pre">BaseModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#ai_model.base.BaseModel.HYPERPARAMETER_RANGES"><code class="docutils literal notranslate"><span class="pre">BaseModel.HYPERPARAMETER_RANGES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#ai_model.base.BaseModel.model"><code class="docutils literal notranslate"><span class="pre">BaseModel.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#ai_model.base.BaseModel.problem_type"><code class="docutils literal notranslate"><span class="pre">BaseModel.problem_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#ai_model.base.BaseModel.X_train"><code class="docutils literal notranslate"><span class="pre">BaseModel.X_train</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#ai_model.base.BaseModel.X_test"><code class="docutils literal notranslate"><span class="pre">BaseModel.X_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#ai_model.base.BaseModel.y_train"><code class="docutils literal notranslate"><span class="pre">BaseModel.y_train</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#ai_model.base.BaseModel.y_test"><code class="docutils literal notranslate"><span class="pre">BaseModel.y_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#id7"><code class="docutils literal notranslate"><span class="pre">BaseModel.HYPERPARAMETER_RANGES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#ai_model.base.BaseModel.validate_options"><code class="docutils literal notranslate"><span class="pre">BaseModel.validate_options()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../modules.html#ai_model.catboost_model.Catboost"><code class="docutils literal notranslate"><span class="pre">Catboost</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#ai_model.catboost_model.Catboost.problem_type"><code class="docutils literal notranslate"><span class="pre">Catboost.problem_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#ai_model.catboost_model.Catboost.options"><code class="docutils literal notranslate"><span class="pre">Catboost.options</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../modules.html#ai_model.xgboost_model.XGBoost"><code class="docutils literal notranslate"><span class="pre">XGBoost</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../modules.html#ai_model.random_forest.RandomForest"><code class="docutils literal notranslate"><span class="pre">RandomForest</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../modules.html#module-image_processing.dataloader">Image Processing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.image_size"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.image_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.data"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.data</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.labels"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.labels</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.label_dict"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.label_dict</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.images"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.images</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.data_loader"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.data_loader()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.get_label_dict"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.get_label_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.encode_labels"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.encode_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.create_labels"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.create_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.unzip_folder"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.unzip_folder()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.normalize_dataset"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.normalize_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.split_dataset"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.split_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#id8"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.create_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#id9"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.data_loader()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#id10"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.encode_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#id11"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.get_label_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#id12"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.normalize_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#id13"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.split_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#id14"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.unzip_folder()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../modules.html#image_processing.evaluator.Evaluation"><code class="docutils literal notranslate"><span class="pre">Evaluation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#image_processing.evaluator.Evaluation.evaluate_model"><code class="docutils literal notranslate"><span class="pre">Evaluation.evaluate_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#image_processing.evaluator.Evaluation.get_confusion_matrix"><code class="docutils literal notranslate"><span class="pre">Evaluation.get_confusion_matrix()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../modules.html#image_processing.nn.NeuralNetwork"><code class="docutils literal notranslate"><span class="pre">NeuralNetwork</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#image_processing.nn.NeuralNetwork.create_cnn_model"><code class="docutils literal notranslate"><span class="pre">NeuralNetwork.create_cnn_model()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../modules.html#image_processing.test.Testing"><code class="docutils literal notranslate"><span class="pre">Testing</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#image_processing.test.Testing.model"><code class="docutils literal notranslate"><span class="pre">Testing.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#image_processing.test.Testing.X_test"><code class="docutils literal notranslate"><span class="pre">Testing.X_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#image_processing.test.Testing.y_test"><code class="docutils literal notranslate"><span class="pre">Testing.y_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#image_processing.test.Testing.label_dict"><code class="docutils literal notranslate"><span class="pre">Testing.label_dict</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#image_processing.test.Testing.set_label_dict"><code class="docutils literal notranslate"><span class="pre">Testing.set_label_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#image_processing.test.Testing.make_predictions"><code class="docutils literal notranslate"><span class="pre">Testing.make_predictions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#image_processing.test.Testing.plot_image"><code class="docutils literal notranslate"><span class="pre">Testing.plot_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#image_processing.test.Testing.get_predicted_tuple"><code class="docutils literal notranslate"><span class="pre">Testing.get_predicted_tuple()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#id17"><code class="docutils literal notranslate"><span class="pre">Testing.get_predicted_tuple()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#id18"><code class="docutils literal notranslate"><span class="pre">Testing.make_predictions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#id19"><code class="docutils literal notranslate"><span class="pre">Testing.plot_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#id20"><code class="docutils literal notranslate"><span class="pre">Testing.set_label_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../modules.html#image_processing.train.Training"><code class="docutils literal notranslate"><span class="pre">Training</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../modules.html#image_processing.train.Training.train_nn"><code class="docutils literal notranslate"><span class="pre">Training.train_nn()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Data Analytics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">main_sphinx</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for main_sphinx</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">customtkinter</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ctk</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.assets_management</span><span class="w"> </span><span class="kn">import</span> <span class="n">assets_manage</span><span class="p">,</span> <span class="n">load_image</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.pages.file_upload_page</span><span class="w"> </span><span class="kn">import</span> <span class="n">FileUploadPage</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.pages.process_selection_page</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProcessSelectionPage</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.pages.data_filtering_page</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataFilteringPage</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.pages.help_page</span><span class="w"> </span><span class="kn">import</span> <span class="n">HelpPage</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.pages.image_processing_page</span><span class="w"> </span><span class="kn">import</span> <span class="n">ImageProcessingPage</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.pages.aimodel_page</span><span class="w"> </span><span class="kn">import</span> <span class="n">AImodelPage</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.pages.regression_classification</span><span class="w"> </span><span class="kn">import</span> <span class="n">RegressionClassificationPage</span>
+
+
+<div class="viewcode-block" id="App">
+<a class="viewcode-back" href="../gui.html#main_sphinx.App">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">App</span><span class="p">(</span><span class="n">ctk</span><span class="o">.</span><span class="n">CTk</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Main application class for the Tkinter-based GUI.</span>
+
+<span class="sd">    This class initializes the GUI, handles page navigation, and manages assets.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    current_page : ctk.CTkFrame</span>
+<span class="sd">        Stores the current active page in the application.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the application window, sidebar, and the first page.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Data Analytics&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="mi">1100</span><span class="si">}</span><span class="s2">x</span><span class="si">{</span><span class="mi">580</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">configure_grid</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_assets</span><span class="p">()</span>
+
+        <span class="c1"># Sidebar (Navigation)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_sidebar</span><span class="p">()</span>
+
+        <span class="c1"># Header Frame</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header_frame</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;transparent&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">corner_radius</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header_frame</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;nesw&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_header_image</span><span class="p">()</span>
+
+        <span class="c1"># Main Content Area (Initially File Upload Page)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_page</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">show_page</span><span class="p">(</span><span class="s2">&quot;file_upload&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="App.configure_grid">
+<a class="viewcode-back" href="../gui.html#main_sphinx.App.configure_grid">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">configure_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Configures the layout grid of the application.</span>
+
+<span class="sd">        This method sets up the grid structure for proper UI arrangement.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid_columnconfigure</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid_columnconfigure</span><span class="p">((</span><span class="mi">1</span><span class="p">),</span> <span class="n">weight</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid_columnconfigure</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid_rowconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid_rowconfigure</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="App.load_assets">
+<a class="viewcode-back" href="../gui.html#main_sphinx.App.load_assets">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_assets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Loads all image assets used in the application.</span>
+
+<span class="sd">        This method loads required images for the UI elements.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">home_image</span> <span class="o">=</span> <span class="n">load_image</span><span class="p">(</span><span class="s2">&quot;home_dark.png&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">help_image</span> <span class="o">=</span> <span class="n">load_image</span><span class="p">(</span><span class="s2">&quot;Help_B.png&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mode_image_light</span> <span class="o">=</span> <span class="n">load_image</span><span class="p">(</span><span class="s2">&quot;Mode_B.png&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mode_image_dark</span> <span class="o">=</span> <span class="n">load_image</span><span class="p">(</span><span class="s2">&quot;Mode_W.png&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upload_button_image</span> <span class="o">=</span> <span class="n">load_image</span><span class="p">(</span><span class="s2">&quot;button_4.png&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="App.create_sidebar">
+<a class="viewcode-back" href="../gui.html#main_sphinx.App.create_sidebar">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_sidebar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates the sidebar navigation panel.</span>
+
+<span class="sd">        This method initializes navigation buttons for different pages.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sidebar_frame</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;#2C72EA&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">corner_radius</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sidebar_frame</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">rowspan</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;nsw&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sidebar_frame</span><span class="o">.</span><span class="n">grid_rowconfigure</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">navigation_frame_label</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkLabel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sidebar_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;  &quot;</span><span class="p">,</span>
+                                                   <span class="n">compound</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="n">ctk</span><span class="o">.</span><span class="n">CTkFont</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">navigation_frame_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">home_button</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkButton</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sidebar_frame</span><span class="p">,</span> <span class="n">corner_radius</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">border_spacing</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Dashboard&quot;</span><span class="p">,</span>
+            <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;transparent&quot;</span><span class="p">,</span> <span class="n">text_color</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;gray10&quot;</span><span class="p">,</span> <span class="s2">&quot;gray90&quot;</span><span class="p">),</span> <span class="n">hover_color</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;gray70&quot;</span><span class="p">,</span> <span class="s2">&quot;gray30&quot;</span><span class="p">),</span>
+            <span class="n">image</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">home_image</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Inter&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span> <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_page</span><span class="p">(</span><span class="s2">&quot;file_upload&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">home_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;ew&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">help_button</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkButton</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sidebar_frame</span><span class="p">,</span> <span class="n">corner_radius</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">border_spacing</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Help&quot;</span><span class="p">,</span>
+            <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;transparent&quot;</span><span class="p">,</span> <span class="n">text_color</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;gray10&quot;</span><span class="p">,</span> <span class="s2">&quot;gray90&quot;</span><span class="p">),</span> <span class="n">hover_color</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;gray70&quot;</span><span class="p">,</span> <span class="s2">&quot;gray30&quot;</span><span class="p">),</span>
+            <span class="n">image</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">help_image</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Inter&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span> <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_page</span><span class="p">(</span><span class="s2">&quot;help&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">help_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;ew&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mode_button</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkButton</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sidebar_frame</span><span class="p">,</span> <span class="n">corner_radius</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">border_spacing</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Mode&quot;</span><span class="p">,</span>
+            <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;transparent&quot;</span><span class="p">,</span> <span class="n">text_color</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;gray10&quot;</span><span class="p">,</span> <span class="s2">&quot;gray90&quot;</span><span class="p">),</span> <span class="n">hover_color</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;gray70&quot;</span><span class="p">,</span> <span class="s2">&quot;gray30&quot;</span><span class="p">),</span>
+            <span class="n">image</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mode_image_light</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Inter&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">toggle_mode</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mode_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;ew&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="App.load_header_image">
+<a class="viewcode-back" href="../gui.html#main_sphinx.App.load_header_image">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_header_image</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Loads and resizes the header image.</span>
+
+<span class="sd">        This method retrieves the header image, resizes it, and assigns it to the header label.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">image_path</span> <span class="o">=</span> <span class="n">assets_manage</span><span class="p">(</span><span class="s2">&quot;Data Analytics.png&quot;</span><span class="p">)</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">image_path</span><span class="p">)</span>
+        <span class="n">resized_img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">resize</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">winfo_width</span><span class="p">(),</span> <span class="mi">60</span><span class="p">))</span>
+        <span class="n">header_img</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkImage</span><span class="p">(</span><span class="n">light_image</span><span class="o">=</span><span class="n">resized_img</span><span class="p">,</span> <span class="n">dark_image</span><span class="o">=</span><span class="n">resized_img</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">winfo_width</span><span class="p">(),</span> <span class="mi">60</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">header_label</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkLabel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="n">header_img</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;n&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header_label</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">header_img</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s2">&quot;&lt;Configure&gt;&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">resize_header_image</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="App.resize_header_image">
+<a class="viewcode-back" href="../gui.html#main_sphinx.App.resize_header_image">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">resize_header_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Resizes the header image dynamically when the window is resized.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        event : tk.Event</span>
+<span class="sd">            The resize event that triggers this function.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">image_path</span> <span class="o">=</span> <span class="n">assets_manage</span><span class="p">(</span><span class="s2">&quot;Data Analytics.png&quot;</span><span class="p">)</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">image_path</span><span class="p">)</span>
+        <span class="n">resized_img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">resize</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">winfo_width</span><span class="p">(),</span> <span class="mi">60</span><span class="p">))</span>
+        <span class="n">header_img</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkImage</span><span class="p">(</span><span class="n">light_image</span><span class="o">=</span><span class="n">resized_img</span><span class="p">,</span> <span class="n">dark_image</span><span class="o">=</span><span class="n">resized_img</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">winfo_width</span><span class="p">(),</span> <span class="mi">60</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">header_label</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="n">header_img</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header_label</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">header_img</span></div>
+
+
+<div class="viewcode-block" id="App.show_page">
+<a class="viewcode-back" href="../gui.html#main_sphinx.App.show_page">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">show_page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">page_name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handles navigation between different pages.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        page_name : str</span>
+<span class="sd">            The name of the page to display.</span>
+<span class="sd">        *args : tuple</span>
+<span class="sd">            Additional arguments passed to the page class.</span>
+<span class="sd">        **kwargs : dict</span>
+<span class="sd">            Keyword arguments passed to the page class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;current_page&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_page</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_page</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>  <span class="c1"># Destroy the current page before switching</span>
+
+        <span class="c1"># Map page names to corresponding classes</span>
+        <span class="n">page_mapping</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;file_upload&quot;</span><span class="p">:</span> <span class="n">FileUploadPage</span><span class="p">,</span>
+            <span class="s2">&quot;Process_selection&quot;</span><span class="p">:</span> <span class="n">ProcessSelectionPage</span><span class="p">,</span>
+            <span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="n">HelpPage</span><span class="p">,</span>
+            <span class="s2">&quot;DataFilteringPage&quot;</span><span class="p">:</span> <span class="n">DataFilteringPage</span><span class="p">,</span>
+            <span class="s2">&quot;ImageProcessingPage&quot;</span><span class="p">:</span> <span class="n">ImageProcessingPage</span><span class="p">,</span>
+            <span class="s2">&quot;AIModelPage&quot;</span><span class="p">:</span> <span class="n">AImodelPage</span><span class="p">,</span>
+            <span class="s2">&quot;RegressionClassificationPage&quot;</span><span class="p">:</span> <span class="n">RegressionClassificationpage</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">page_name</span> <span class="ow">in</span> <span class="n">page_mapping</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_page</span> <span class="o">=</span> <span class="n">page_mapping</span><span class="p">[</span><span class="n">page_name</span><span class="p">](</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_page</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">rowspan</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;nsew&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: Page &#39;</span><span class="si">{</span><span class="n">page_name</span><span class="si">}</span><span class="s2">&#39; not found!&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="App.toggle_mode">
+<a class="viewcode-back" href="../gui.html#main_sphinx.App.toggle_mode">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">toggle_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Toggles between Light and Dark mode.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">current_mode</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">get_appearance_mode</span><span class="p">()</span>
+        <span class="n">new_mode</span> <span class="o">=</span> <span class="s2">&quot;dark&quot;</span> <span class="k">if</span> <span class="n">current_mode</span> <span class="o">==</span> <span class="s2">&quot;Light&quot;</span> <span class="k">else</span> <span class="s2">&quot;Light&quot;</span>
+        <span class="n">ctk</span><span class="o">.</span><span class="n">set_appearance_mode</span><span class="p">(</span><span class="n">new_mode</span><span class="p">)</span>
+
+        <span class="c1"># Update mode button icon</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mode_button</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mode_image_dark</span> <span class="k">if</span> <span class="n">new_mode</span> <span class="o">==</span> <span class="s2">&quot;dark&quot;</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode_image_light</span><span class="p">)</span></div>
+</div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">App</span><span class="p">()</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, MAIT24-25.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

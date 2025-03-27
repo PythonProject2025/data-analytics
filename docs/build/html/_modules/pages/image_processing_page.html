@@ -1,0 +1,900 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pages.image_processing_page &mdash; Data Analytics 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Data Analytics
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction.html#overview-of-the-software">Overview of the software</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction.html#purpose-of-integrating-tkinter-with-django">Purpose of Integrating Tkinter with Django</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../introduction.html#separation-of-concerns">Separation of Concerns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../introduction.html#api-based-communication">API-Based Communication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../introduction.html#enhanced-performance">Enhanced Performance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../introduction.html#scalability-and-extensibility">Scalability and Extensibility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../introduction.html#versatile-file-processing">Versatile File Processing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction.html#frontend-tkinter-based-graphical-user-interface-gui">Frontend: Tkinter-Based Graphical User Interface (GUI)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../introduction.html#file-upload-interface">File Upload Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../introduction.html#automated-navigation-system">Automated Navigation System</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../introduction.html#process-selection-module">Process Selection Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../introduction.html#real-time-processing-updates">Real-Time Processing Updates</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../introduction.html#backend-django-based-api-and-processing-engine">Backend: Django-Based API and Processing Engine</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../introduction.html#data-object-and-api-based-data-exchange">Data Object and API-Based Data Exchange</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../introduction.html#rest-api-for-request-handling">REST API for Request Handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../introduction.html#modular-and-scalable-api-architecture">Modular and Scalable API Architecture</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Prerequisites.html">Installation Prerequisites</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../Prerequisites.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../Prerequisites.html#environment-setup">Environment Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../Prerequisites.html#running-the-application">Running the Application</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide.html">Step-by-Step Usage Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../guide.html#uploading-a-file-and-selecting-a-module">Uploading a File and Selecting a Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guide.html#processing-the-data-and-generating-outputs">Processing the Data and Generating Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guide.html#interpreting-results-and-refining-analysis">Interpreting Results and Refining Analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../gui.html">Architecture Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../gui.html#front-end-tkinter-gui">Front End: Tkinter GUI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#main_sphinx.App"><code class="docutils literal notranslate"><span class="pre">App</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#main_sphinx.App.current_page"><code class="docutils literal notranslate"><span class="pre">App.current_page</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#main_sphinx.App.configure_grid"><code class="docutils literal notranslate"><span class="pre">App.configure_grid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#main_sphinx.App.create_sidebar"><code class="docutils literal notranslate"><span class="pre">App.create_sidebar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#main_sphinx.App.load_assets"><code class="docutils literal notranslate"><span class="pre">App.load_assets()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#main_sphinx.App.load_header_image"><code class="docutils literal notranslate"><span class="pre">App.load_header_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#main_sphinx.App.resize_header_image"><code class="docutils literal notranslate"><span class="pre">App.resize_header_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#main_sphinx.App.show_page"><code class="docutils literal notranslate"><span class="pre">App.show_page()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#main_sphinx.App.toggle_mode"><code class="docutils literal notranslate"><span class="pre">App.toggle_mode()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage"><code class="docutils literal notranslate"><span class="pre">AImodelPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.change_segment"><code class="docutils literal notranslate"><span class="pre">AImodelPage.change_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.create_ann_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_ann_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.create_cb_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_cb_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.create_combobox_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_combobox_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.create_info_button"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_info_button()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.create_rf_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_rf_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.create_slider_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_slider_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.create_xgb_frame"><code class="docutils literal notranslate"><span class="pre">AImodelPage.create_xgb_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.get_combobox_value"><code class="docutils literal notranslate"><span class="pre">AImodelPage.get_combobox_value()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.get_slider_value"><code class="docutils literal notranslate"><span class="pre">AImodelPage.get_slider_value()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.messagebox"><code class="docutils literal notranslate"><span class="pre">AImodelPage.messagebox</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.preview_data"><code class="docutils literal notranslate"><span class="pre">AImodelPage.preview_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.send_request"><code class="docutils literal notranslate"><span class="pre">AImodelPage.send_request()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.show_info_dialog"><code class="docutils literal notranslate"><span class="pre">AImodelPage.show_info_dialog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.aimodel_page.AImodelPage.submit_action"><code class="docutils literal notranslate"><span class="pre">AImodelPage.submit_action()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.add_export_send_buttons"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.add_export_send_buttons()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.change_segment"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.change_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.create_interpolation_frame"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.create_interpolation_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.create_process_selection_frame"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.create_process_selection_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.create_scaling_encoding_frame"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.create_scaling_encoding_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.create_segment_frame"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.create_segment_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.create_smoothing_frame"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.create_smoothing_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.export_data"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.export_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.get_data_by_name"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.get_data_by_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.load_csv_columns"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.load_csv_columns()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.lock_segment"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.lock_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.move_to_next_segment"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.move_to_next_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.open_comparison_popup"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.open_comparison_popup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.open_send_popup"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.open_send_popup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.plot_boxplot"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.plot_boxplot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.plot_comparison_graph"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.plot_comparison_graph()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.plot_line_graph"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.plot_line_graph()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.preview_csv"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.preview_csv()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.preview_scaled_encoded_data"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.preview_scaled_encoded_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.run_interpolation"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.run_interpolation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.run_outlier_detection"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.run_outlier_detection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.run_scaling_and_encoding"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.run_scaling_and_encoding()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.run_smoothing"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.run_smoothing()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.send_request"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.send_request()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.show_comparison_data"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.show_comparison_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.show_info_dialog"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.show_info_dialog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.show_loading_message"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.show_loading_message()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.submit_action"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.submit_action()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.toggle_slider"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.toggle_slider()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.toggle_smoothing_options"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.toggle_smoothing_options()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.update_boxplot"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.update_boxplot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.update_buttons_visibility"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.update_buttons_visibility()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.update_comparison_view"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.update_comparison_view()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.data_filtering_page.DataFilteringPage.update_dropdown"><code class="docutils literal notranslate"><span class="pre">DataFilteringPage.update_dropdown()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#pages.file_upload_page.FileUploadPage"><code class="docutils literal notranslate"><span class="pre">FileUploadPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.file_upload_page.FileUploadPage.upload_file"><code class="docutils literal notranslate"><span class="pre">FileUploadPage.upload_file()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#pages.image_processing_page.ImageProcessingPage"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.image_processing_page.ImageProcessingPage.cancel_file"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.cancel_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.image_processing_page.ImageProcessingPage.change_segment"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.change_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.image_processing_page.ImageProcessingPage.create_image_train_frame"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.create_image_train_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.image_processing_page.ImageProcessingPage.create_segment_frame"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.create_segment_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.image_processing_page.ImageProcessingPage.plot_confusion_matrix"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.plot_confusion_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.image_processing_page.ImageProcessingPage.preview_image"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.preview_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.image_processing_page.ImageProcessingPage.show_info_dialog"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.show_info_dialog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.image_processing_page.ImageProcessingPage.submit_action"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.submit_action()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.image_processing_page.ImageProcessingPage.upload_image"><code class="docutils literal notranslate"><span class="pre">ImageProcessingPage.upload_image()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#pages.process_selection_page.ProcessSelectionPage"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.process_selection_page.ProcessSelectionPage.parent"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage.parent</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.process_selection_page.ProcessSelectionPage.file_path"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage.file_path</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.process_selection_page.ProcessSelectionPage.filename"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage.filename</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.process_selection_page.ProcessSelectionPage.__init__"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.process_selection_page.ProcessSelectionPage.create_buttons"><code class="docutils literal notranslate"><span class="pre">ProcessSelectionPage.create_buttons()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.cancel_file"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.cancel_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.change_segment"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.change_segment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.clear_frame"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.clear_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.create_classification_frame"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_classification_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.create_dropdown"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_dropdown()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.create_info_button"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_info_button()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.create_regression_frame"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_regression_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.create_slider"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_slider()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.create_textbox"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.create_textbox()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.lasso_plot"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.lasso_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.polynomial_plot"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.polynomial_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.preview_data"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.preview_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.regression_plot"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.regression_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.residual_plot"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.residual_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.ridge_plot"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.ridge_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.send_request_classification"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.send_request_classification()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.send_request_regression"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.send_request_regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.show_info_dialog"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.show_info_dialog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.submit_action"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.submit_action()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.toggle_classification_options"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.toggle_classification_options()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.regression_classification.RegressionClassificationPage.toggle_regression_options"><code class="docutils literal notranslate"><span class="pre">RegressionClassificationPage.toggle_regression_options()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#pages.help_page.HelpPage"><code class="docutils literal notranslate"><span class="pre">HelpPage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.help_page.HelpPage.None"><code class="docutils literal notranslate"><span class="pre">HelpPage.None</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#pages.help_page.HelpPage.__init__"><code class="docutils literal notranslate"><span class="pre">HelpPage.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../gui.html#back-end-django-api">Back End: Django API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#backend.api.image_processing_engine.ImageProcessingAPIView"><code class="docutils literal notranslate"><span class="pre">ImageProcessingAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#backend.api.image_processing_engine.ImageProcessingAPIView.post"><code class="docutils literal notranslate"><span class="pre">ImageProcessingAPIView.post()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#backend.api.data_preprocessing_engine.DataFilteringFileAPIView"><code class="docutils literal notranslate"><span class="pre">DataFilteringFileAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#backend.api.data_preprocessing_engine.DataFilteringFileAPIView.post"><code class="docutils literal notranslate"><span class="pre">DataFilteringFileAPIView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#backend.api.data_preprocessing_engine.DataFilteringFileAPIView.run_outlier_detection"><code class="docutils literal notranslate"><span class="pre">DataFilteringFileAPIView.run_outlier_detection()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#backend.api.data_preprocessing_engine.InterpolationAPIView"><code class="docutils literal notranslate"><span class="pre">InterpolationAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#backend.api.data_preprocessing_engine.InterpolationAPIView.post"><code class="docutils literal notranslate"><span class="pre">InterpolationAPIView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#backend.api.data_preprocessing_engine.InterpolationAPIView.run_interpolation"><code class="docutils literal notranslate"><span class="pre">InterpolationAPIView.run_interpolation()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#backend.api.data_preprocessing_engine.SmoothingAPIView"><code class="docutils literal notranslate"><span class="pre">SmoothingAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#backend.api.data_preprocessing_engine.SmoothingAPIView.post"><code class="docutils literal notranslate"><span class="pre">SmoothingAPIView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#backend.api.data_preprocessing_engine.SmoothingAPIView.run_smoothing"><code class="docutils literal notranslate"><span class="pre">SmoothingAPIView.run_smoothing()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#backend.api.ai_models_engine.AIModelAPIView"><code class="docutils literal notranslate"><span class="pre">AIModelAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#backend.api.ai_models_engine.AIModelAPIView.extract_hyperparameters"><code class="docutils literal notranslate"><span class="pre">AIModelAPIView.extract_hyperparameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#backend.api.ai_models_engine.AIModelAPIView.post"><code class="docutils literal notranslate"><span class="pre">AIModelAPIView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#backend.api.ai_models_engine.AIModelAPIView.run_selected_model"><code class="docutils literal notranslate"><span class="pre">AIModelAPIView.run_selected_model()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#backend.api.scaling_encoding_engine.ScalingEncodingAPIView"><code class="docutils literal notranslate"><span class="pre">ScalingEncodingAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#backend.api.scaling_encoding_engine.ScalingEncodingAPIView.post"><code class="docutils literal notranslate"><span class="pre">ScalingEncodingAPIView.post()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#backend.api.scaling_encoding_engine.ScalingEncodingAPIView.run_encoding_scaling_train_test_split"><code class="docutils literal notranslate"><span class="pre">ScalingEncodingAPIView.run_encoding_scaling_train_test_split()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#backend.api.regression_engine.RegressionAPIView"><code class="docutils literal notranslate"><span class="pre">RegressionAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#backend.api.regression_engine.RegressionAPIView.post"><code class="docutils literal notranslate"><span class="pre">RegressionAPIView.post()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../gui.html#backend.api.classification_engine.ClassificationAPIView"><code class="docutils literal notranslate"><span class="pre">ClassificationAPIView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../gui.html#backend.api.classification_engine.ClassificationAPIView.post"><code class="docutils literal notranslate"><span class="pre">ClassificationAPIView.post()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Modules and Functionalities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html#module-data_filtering.Outlier_final">Data Filtering</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#data_filtering.Outlier_final.OutlierDetection"><code class="docutils literal notranslate"><span class="pre">OutlierDetection</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#data_filtering.Outlier_final.OutlierDetection.detect_outliers_iqr"><code class="docutils literal notranslate"><span class="pre">OutlierDetection.detect_outliers_iqr()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#data_filtering.Outlier_final.OutlierDetection.detect_outliers_isolation_forest"><code class="docutils literal notranslate"><span class="pre">OutlierDetection.detect_outliers_isolation_forest()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#data_filtering.Outlier_final.OutlierDetection.is_numeric_columns"><code class="docutils literal notranslate"><span class="pre">OutlierDetection.is_numeric_columns()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#data_filtering.Smoothing_final.SmoothingMethods"><code class="docutils literal notranslate"><span class="pre">SmoothingMethods</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#data_filtering.Smoothing_final.SmoothingMethods.apply_tes"><code class="docutils literal notranslate"><span class="pre">SmoothingMethods.apply_tes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#data_filtering.Smoothing_final.SmoothingMethods.calculate_sma"><code class="docutils literal notranslate"><span class="pre">SmoothingMethods.calculate_sma()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#data_filtering.Spline_Interpolation_final.SplineInterpolator"><code class="docutils literal notranslate"><span class="pre">SplineInterpolator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#data_filtering.Spline_Interpolation_final.SplineInterpolator.check_column_validity"><code class="docutils literal notranslate"><span class="pre">SplineInterpolator.check_column_validity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#data_filtering.Spline_Interpolation_final.SplineInterpolator.fill_missing_values"><code class="docutils literal notranslate"><span class="pre">SplineInterpolator.fill_missing_values()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling"><code class="docutils literal notranslate"><span class="pre">EncodeAndScaling</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling.encode_categorical_features"><code class="docutils literal notranslate"><span class="pre">EncodeAndScaling.encode_categorical_features()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling.preprocess"><code class="docutils literal notranslate"><span class="pre">EncodeAndScaling.preprocess()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling.scale_numerical_features"><code class="docutils literal notranslate"><span class="pre">EncodeAndScaling.scale_numerical_features()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#data_filtering.Scaling_and_Encoding_final.EncodeAndScaling.train_test_split"><code class="docutils literal notranslate"><span class="pre">EncodeAndScaling.train_test_split()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html#module-regression.regression_models">Regression</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#regression.regression_models.RegressionModels"><code class="docutils literal notranslate"><span class="pre">RegressionModels</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#regression.regression_models.RegressionModels.model"><code class="docutils literal notranslate"><span class="pre">RegressionModels.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#regression.regression_models.RegressionModels.best_params"><code class="docutils literal notranslate"><span class="pre">RegressionModels.best_params</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#regression.regression_models.RegressionModels.train_linear_regression"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_linear_regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#regression.regression_models.RegressionModels.train_polynomial_regression"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_polynomial_regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#regression.regression_models.RegressionModels.train_ridge"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_ridge()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#regression.regression_models.RegressionModels.train_lasso"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_lasso()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id0"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_lasso()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id1"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_linear_regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id3"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_polynomial_regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id5"><code class="docutils literal notranslate"><span class="pre">RegressionModels.train_ridge()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html#module-classification.base_model">Classification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#classification.base_model.ClassifierClass"><code class="docutils literal notranslate"><span class="pre">ClassifierClass</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#classification.base_model.ClassifierClass.data_train"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.data_train</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#classification.base_model.ClassifierClass.data_test"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.data_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#classification.base_model.ClassifierClass.target_train"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.target_train</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#classification.base_model.ClassifierClass.target_test"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.target_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#classification.base_model.ClassifierClass.target_labels"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.target_labels</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#classification.base_model.ClassifierClass.display_confusion_matrix"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.display_confusion_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#classification.base_model.ClassifierClass.evaluate"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#classification.base_model.ClassifierClass.set_model"><code class="docutils literal notranslate"><span class="pre">ClassifierClass.set_model()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#classification.knn_model.KNNModel"><code class="docutils literal notranslate"><span class="pre">KNNModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#classification.knn_model.KNNModel.train"><code class="docutils literal notranslate"><span class="pre">KNNModel.train()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#classification.random_forest_model.RandomForestModel"><code class="docutils literal notranslate"><span class="pre">RandomForestModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#classification.random_forest_model.RandomForestModel.train"><code class="docutils literal notranslate"><span class="pre">RandomForestModel.train()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#classification.svc_model.SVCModel"><code class="docutils literal notranslate"><span class="pre">SVCModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#classification.svc_model.SVCModel.train"><code class="docutils literal notranslate"><span class="pre">SVCModel.train()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html#module-ai_model.ann">AI Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#ai_model.ann.ArtificialNeuralNetwork"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.ann.ArtificialNeuralNetwork.model"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.ann.ArtificialNeuralNetwork.problem_type"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.problem_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.ann.ArtificialNeuralNetwork.batch_size"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.batch_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.ann.ArtificialNeuralNetwork.epochs"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.epochs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.ann.ArtificialNeuralNetwork.evaluate"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.ann.ArtificialNeuralNetwork.load_weights"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.load_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.ann.ArtificialNeuralNetwork.save_weights"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.save_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.ann.ArtificialNeuralNetwork.train"><code class="docutils literal notranslate"><span class="pre">ArtificialNeuralNetwork.train()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#ai_model.base.BaseModel"><code class="docutils literal notranslate"><span class="pre">BaseModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.base.BaseModel.HYPERPARAMETER_RANGES"><code class="docutils literal notranslate"><span class="pre">BaseModel.HYPERPARAMETER_RANGES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.base.BaseModel.model"><code class="docutils literal notranslate"><span class="pre">BaseModel.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.base.BaseModel.problem_type"><code class="docutils literal notranslate"><span class="pre">BaseModel.problem_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.base.BaseModel.X_train"><code class="docutils literal notranslate"><span class="pre">BaseModel.X_train</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.base.BaseModel.X_test"><code class="docutils literal notranslate"><span class="pre">BaseModel.X_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.base.BaseModel.y_train"><code class="docutils literal notranslate"><span class="pre">BaseModel.y_train</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.base.BaseModel.y_test"><code class="docutils literal notranslate"><span class="pre">BaseModel.y_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id7"><code class="docutils literal notranslate"><span class="pre">BaseModel.HYPERPARAMETER_RANGES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.base.BaseModel.validate_options"><code class="docutils literal notranslate"><span class="pre">BaseModel.validate_options()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#ai_model.catboost_model.Catboost"><code class="docutils literal notranslate"><span class="pre">Catboost</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.catboost_model.Catboost.problem_type"><code class="docutils literal notranslate"><span class="pre">Catboost.problem_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#ai_model.catboost_model.Catboost.options"><code class="docutils literal notranslate"><span class="pre">Catboost.options</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#ai_model.xgboost_model.XGBoost"><code class="docutils literal notranslate"><span class="pre">XGBoost</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#ai_model.random_forest.RandomForest"><code class="docutils literal notranslate"><span class="pre">RandomForest</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules.html#module-image_processing.dataloader">Image Processing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.image_size"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.image_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.data"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.data</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.labels"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.labels</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.label_dict"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.label_dict</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.images"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.images</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.data_loader"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.data_loader()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.get_label_dict"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.get_label_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.encode_labels"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.encode_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.create_labels"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.create_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.unzip_folder"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.unzip_folder()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.normalize_dataset"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.normalize_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.dataloader.DataLoadingAndPreprocessing.split_dataset"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.split_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id8"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.create_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id9"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.data_loader()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id10"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.encode_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id11"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.get_label_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id12"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.normalize_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id13"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.split_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id14"><code class="docutils literal notranslate"><span class="pre">DataLoadingAndPreprocessing.unzip_folder()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#image_processing.evaluator.Evaluation"><code class="docutils literal notranslate"><span class="pre">Evaluation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.evaluator.Evaluation.evaluate_model"><code class="docutils literal notranslate"><span class="pre">Evaluation.evaluate_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.evaluator.Evaluation.get_confusion_matrix"><code class="docutils literal notranslate"><span class="pre">Evaluation.get_confusion_matrix()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#image_processing.nn.NeuralNetwork"><code class="docutils literal notranslate"><span class="pre">NeuralNetwork</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.nn.NeuralNetwork.create_cnn_model"><code class="docutils literal notranslate"><span class="pre">NeuralNetwork.create_cnn_model()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#image_processing.test.Testing"><code class="docutils literal notranslate"><span class="pre">Testing</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.test.Testing.model"><code class="docutils literal notranslate"><span class="pre">Testing.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.test.Testing.X_test"><code class="docutils literal notranslate"><span class="pre">Testing.X_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.test.Testing.y_test"><code class="docutils literal notranslate"><span class="pre">Testing.y_test</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.test.Testing.label_dict"><code class="docutils literal notranslate"><span class="pre">Testing.label_dict</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.test.Testing.set_label_dict"><code class="docutils literal notranslate"><span class="pre">Testing.set_label_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.test.Testing.make_predictions"><code class="docutils literal notranslate"><span class="pre">Testing.make_predictions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.test.Testing.plot_image"><code class="docutils literal notranslate"><span class="pre">Testing.plot_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.test.Testing.get_predicted_tuple"><code class="docutils literal notranslate"><span class="pre">Testing.get_predicted_tuple()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id17"><code class="docutils literal notranslate"><span class="pre">Testing.get_predicted_tuple()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id18"><code class="docutils literal notranslate"><span class="pre">Testing.make_predictions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id19"><code class="docutils literal notranslate"><span class="pre">Testing.plot_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#id20"><code class="docutils literal notranslate"><span class="pre">Testing.set_label_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../modules.html#image_processing.train.Training"><code class="docutils literal notranslate"><span class="pre">Training</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../modules.html#image_processing.train.Training.train_nn"><code class="docutils literal notranslate"><span class="pre">Training.train_nn()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Data Analytics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pages.image_processing_page</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pages.image_processing_page</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">customtkinter</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ctk</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tkinter</span><span class="w"> </span><span class="kn">import</span> <span class="n">Button</span><span class="p">,</span> <span class="n">PhotoImage</span><span class="p">,</span> <span class="n">Toplevel</span><span class="p">,</span><span class="n">messagebox</span><span class="p">,</span><span class="n">filedialog</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.assets_management</span><span class="w"> </span><span class="kn">import</span> <span class="n">assets_manage</span><span class="p">,</span> <span class="n">load_image</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.models.data_object_class</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataObject</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.backends.backend_tkagg</span><span class="w"> </span><span class="kn">import</span> <span class="n">FigureCanvasTkAgg</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span><span class="p">,</span> <span class="n">ImageTk</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow.keras.callbacks</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callback</span>
+
+
+<div class="viewcode-block" id="ImageProcessingPage">
+<a class="viewcode-back" href="../../gui.html#pages.image_processing_page.ImageProcessingPage">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ImageProcessingPage</span><span class="p">(</span><span class="n">ctk</span><span class="o">.</span><span class="n">CTkFrame</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    CustomTkinter page for training an image classification model.</span>
+<span class="sd">    Allows user to configure activation, optimizer, and dataset splitting.</span>
+
+<span class="sd">    :param parent: Parent widget.</span>
+<span class="sd">    :param file_path: Path to the dataset ZIP.</span>
+<span class="sd">    :param file_name: Optional display name.</span>
+<span class="sd">    :param data: Placeholder for future data passing.</span>
+<span class="sd">    :param page_state: Page-specific settings (e.g. saved state).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span><span class="n">file_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">file_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="o">**</span><span class="n">page_state</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes layout, state, and UI for the Image Processing Page.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">corner_radius</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">right_frame_height</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.8</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">winfo_screenheight</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_name</span> <span class="o">=</span> <span class="n">file_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span> <span class="o">=</span> <span class="n">file_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uploaded_image_path</span> <span class="o">=</span> <span class="kc">None</span>
+        
+
+        <span class="c1"># Configure grid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid_rowconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid_columnconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>  
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid_columnconfigure</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  
+
+         <span class="c1"># Left Side Frame</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left_frame</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;transparent&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left_frame</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;nsew&quot;</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left_frame</span><span class="o">.</span><span class="n">grid_columnconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># First Frame (Text Box with Cancel Button)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_frame</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left_frame</span><span class="p">,</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;#E0E0E0&quot;</span><span class="p">,</span> <span class="n">corner_radius</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">height</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_frame</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;ew&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left_frame</span><span class="o">.</span><span class="n">grid_rowconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkLabel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">file_name</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Inter&quot;</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="s2">&quot;bold&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">relx</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">rely</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cancel_button</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkButton</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">cancel_file</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cancel_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="c1"># Second Frame (Dropdown &amp; Graph Display) - Increased Size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph_frame</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left_frame</span><span class="p">,</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;#E0E0E0&quot;</span><span class="p">,</span> <span class="n">corner_radius</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">350</span><span class="p">)</span>  <span class="c1"># Increased Height</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph_frame</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;nsew&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left_frame</span><span class="o">.</span><span class="n">grid_rowconfigure</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Keep left frame standard but allow graph frame to take space</span>
+
+        <span class="c1"># Configure Graph Frame Grid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph_frame</span><span class="o">.</span><span class="n">grid_rowconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Center the dropdown</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph_frame</span><span class="o">.</span><span class="n">grid_rowconfigure</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>  <span class="c1"># Allow graph display to expand</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph_frame</span><span class="o">.</span><span class="n">grid_columnconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+       
+        <span class="c1"># Graph Display Area (Expanded)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_display</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkTextbox</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph_frame</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">wrap</span><span class="o">=</span><span class="s1">&#39;word&#39;</span><span class="p">,</span><span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;transparent&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_display</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s1">&#39;nsew&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">Info_button_image</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">assets_manage</span><span class="p">(</span><span class="s2">&quot;info_B.png&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upload_button_image</span> <span class="o">=</span> <span class="n">load_image</span><span class="p">(</span><span class="s2">&quot;Upload Icon_B.png&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Right Side Frame (Segmented Buttons)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right_frame</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkScrollableFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;#171821&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">300</span> <span class="p">,</span> <span class="n">height</span><span class="o">=</span> <span class="n">right_frame_height</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right_frame</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right_frame</span><span class="o">.</span><span class="n">grid_columnconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Segmented Button Frame</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">segmented_frame</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkSegmentedButton</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">right_frame</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Image Processing&quot;</span><span class="p">],</span>
+                                                      <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">change_segment</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">segmented_frame</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">segmented_frame</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;Image Processing&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Frame that holds all segment contents</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">segment_container</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">right_frame</span><span class="p">,</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;transparent&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">segment_container</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="c1"># Create segment frames</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">segments</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;Image Processing&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_segment_frame</span><span class="p">()</span>
+        <span class="p">}</span>
+
+        <span class="c1"># Submit Button</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">submit_button</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkButton</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">right_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Submit&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">submit_action</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">submit_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="c1"># Show default segment</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_segment</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">change_segment</span><span class="p">(</span><span class="s2">&quot;Image Processing&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ImageProcessingPage.create_segment_frame">
+<a class="viewcode-back" href="../../gui.html#pages.image_processing_page.ImageProcessingPage.create_segment_frame">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_segment_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates UI segment to configure activation, epochs, optimizer, test size, and random seed.</span>
+
+<span class="sd">        :return: CTkFrame with interactive settings.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">segment_container</span><span class="p">,</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;#E0E0E0&quot;</span><span class="p">,</span> <span class="n">corner_radius</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">frame</span><span class="o">.</span><span class="n">grid_columnconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">create_info_button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;Creates an inline info button next to the label.&quot;&quot;&quot;</span>
+            <span class="n">button</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Info_button_image</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> 
+                            <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_info_dialog</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+            <span class="n">button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>  
+
+        <span class="c1"># 🔹 Activation Function (Radio Buttons)</span>
+        <span class="n">radio_frame</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkFrame</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;#D1D1D1&quot;</span><span class="p">,</span> <span class="n">corner_radius</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">radio_frame</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;new&quot;</span><span class="p">)</span>
+
+        <span class="n">radio_label</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkLabel</span><span class="p">(</span><span class="n">radio_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Activation Function&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Inter&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="s2">&quot;bold&quot;</span><span class="p">),</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;#A0A0A0&quot;</span><span class="p">)</span>
+        <span class="n">radio_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;nesw&quot;</span><span class="p">)</span>
+        <span class="n">create_info_button</span><span class="p">(</span><span class="n">radio_frame</span><span class="p">,</span> <span class="s2">&quot;Select activation function&quot;</span><span class="p">)</span>
+
+        <span class="c1">#  Store as an instance variable</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radio_var</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">StringVar</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s2">&quot;relu&quot;</span><span class="p">)</span>  <span class="c1"># Default: relu</span>
+        <span class="n">ctk</span><span class="o">.</span><span class="n">CTkRadioButton</span><span class="p">(</span><span class="n">radio_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;ReLU&quot;</span><span class="p">,</span> <span class="n">variable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">radio_var</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;relu&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+        <span class="n">ctk</span><span class="o">.</span><span class="n">CTkRadioButton</span><span class="p">(</span><span class="n">radio_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;sigmoid&quot;</span><span class="p">,</span> <span class="n">variable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">radio_var</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;sigmoid&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+
+        <span class="c1"># 🔹 Epochs (Slider)</span>
+        <span class="n">slider_frame</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkFrame</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;#D1D1D1&quot;</span><span class="p">,</span> <span class="n">corner_radius</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">slider_frame</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;nsew&quot;</span><span class="p">)</span>
+
+        <span class="n">slider_label</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkLabel</span><span class="p">(</span><span class="n">slider_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Epochs&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Inter&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="s2">&quot;bold&quot;</span><span class="p">),</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;#A0A0A0&quot;</span><span class="p">)</span>
+        <span class="n">slider_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;new&quot;</span><span class="p">)</span>
+        <span class="n">create_info_button</span><span class="p">(</span><span class="n">slider_frame</span><span class="p">,</span> <span class="s2">&quot;Number of training epochs&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">epoch_label</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkLabel</span><span class="p">(</span><span class="n">slider_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Value: 5&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Inter&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epoch_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">update_epoch</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">epoch_label</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Value: </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">epoch_slider</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkSlider</span><span class="p">(</span><span class="n">slider_frame</span><span class="p">,</span> <span class="n">from_</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">update_epoch</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epoch_slider</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>  
+        <span class="bp">self</span><span class="o">.</span><span class="n">epoch_slider</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;ew&quot;</span><span class="p">)</span>
+
+        <span class="c1"># 🔹 Optimizer (ComboBox)</span>
+        <span class="n">optimizer_frame</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkFrame</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;#D1D1D1&quot;</span><span class="p">,</span> <span class="n">corner_radius</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">optimizer_frame</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;nsew&quot;</span><span class="p">)</span>
+
+        <span class="n">optimizer_label</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkLabel</span><span class="p">(</span><span class="n">optimizer_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Optimizer&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Inter&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="s2">&quot;bold&quot;</span><span class="p">),</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;#A0A0A0&quot;</span><span class="p">)</span>
+        <span class="n">optimizer_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;nesw&quot;</span><span class="p">)</span>
+        <span class="n">create_info_button</span><span class="p">(</span><span class="n">optimizer_frame</span><span class="p">,</span> <span class="s2">&quot;Select optimizer for training&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">optimizer_combobox</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkComboBox</span><span class="p">(</span><span class="n">optimizer_frame</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;adam&quot;</span><span class="p">,</span> <span class="s2">&quot;RMSPROP&quot;</span><span class="p">,</span> <span class="s2">&quot;adamax&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optimizer_combobox</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;adam&quot;</span><span class="p">)</span>  
+        <span class="bp">self</span><span class="o">.</span><span class="n">optimizer_combobox</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;ew&quot;</span><span class="p">)</span>
+
+        <span class="c1"># 🔹 Test Size (Slider)</span>
+        <span class="n">test_size_frame</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkFrame</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;#D1D1D1&quot;</span><span class="p">,</span> <span class="n">corner_radius</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">test_size_frame</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;nsew&quot;</span><span class="p">)</span>
+
+        <span class="n">test_size_label</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkLabel</span><span class="p">(</span><span class="n">test_size_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Test Size&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Inter&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="s2">&quot;bold&quot;</span><span class="p">),</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;#A0A0A0&quot;</span><span class="p">)</span>
+        <span class="n">test_size_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;new&quot;</span><span class="p">)</span>
+        <span class="n">create_info_button</span><span class="p">(</span><span class="n">test_size_frame</span><span class="p">,</span> <span class="s2">&quot;Fraction of dataset used for testing&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_size_value</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkLabel</span><span class="p">(</span><span class="n">test_size_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Value: 0.2&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Inter&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_size_value</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">update_test_size</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">test_size_value</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Value: </span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_size_slider</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkSlider</span><span class="p">(</span><span class="n">test_size_frame</span><span class="p">,</span> <span class="n">from_</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">update_test_size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_size_slider</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>  
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_size_slider</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;ew&quot;</span><span class="p">)</span>
+
+        <span class="c1"># 🔹 Random State (Slider)</span>
+        <span class="n">random_state_frame</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkFrame</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;#D1D1D1&quot;</span><span class="p">,</span> <span class="n">corner_radius</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">random_state_frame</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;nsew&quot;</span><span class="p">)</span>
+
+        <span class="n">random_state_label</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkLabel</span><span class="p">(</span><span class="n">random_state_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Random State&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Inter&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="s2">&quot;bold&quot;</span><span class="p">),</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;#A0A0A0&quot;</span><span class="p">)</span>
+        <span class="n">random_state_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;new&quot;</span><span class="p">)</span>
+        <span class="n">create_info_button</span><span class="p">(</span><span class="n">random_state_frame</span><span class="p">,</span> <span class="s2">&quot;Seed for reproducibility&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_state_value</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkLabel</span><span class="p">(</span><span class="n">random_state_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Value: 42&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Inter&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_state_value</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">update_random_state</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">random_state_value</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Value: </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_state_slider</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkSlider</span><span class="p">(</span><span class="n">random_state_frame</span><span class="p">,</span> <span class="n">from_</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">update_random_state</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_state_slider</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>  
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_state_slider</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;ew&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">frame</span></div>
+
+    
+<div class="viewcode-block" id="ImageProcessingPage.create_image_train_frame">
+<a class="viewcode-back" href="../../gui.html#pages.image_processing_page.ImageProcessingPage.create_image_train_frame">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_image_train_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Builds a small image upload and preview block.</span>
+
+<span class="sd">        :return: CTkFrame containing upload and preview buttons.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">segment_container</span><span class="p">,</span> <span class="n">fg_color</span><span class="o">=</span><span class="s2">&quot;#E0E0E0&quot;</span><span class="p">,</span> <span class="n">corner_radius</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">frame</span><span class="o">.</span><span class="n">grid_columnconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Upload Image Button</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upload_button</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkButton</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Upload Image&quot;</span><span class="p">,</span><span class="n">image</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">upload_button_image</span><span class="p">,</span><span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">upload_image</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upload_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="c1"># Label to show uploaded file name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image_label</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkLabel</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;No file uploaded&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Inter&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+        <span class="c1"># Preview Button</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">preview_button</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkButton</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Preview Image&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">preview_image</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">preview_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">frame</span></div>
+
+
+<div class="viewcode-block" id="ImageProcessingPage.upload_image">
+<a class="viewcode-back" href="../../gui.html#pages.image_processing_page.ImageProcessingPage.upload_image">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">upload_image</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Opens a file picker dialog and stores uploaded image path.</span>
+<span class="sd">        Enables preview button after selection.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">file_path</span> <span class="o">=</span> <span class="n">filedialog</span><span class="o">.</span><span class="n">askopenfilename</span><span class="p">(</span><span class="n">filetypes</span><span class="o">=</span><span class="p">[(</span><span class="s2">&quot;Image Files&quot;</span><span class="p">,</span> <span class="s2">&quot;*.png;*.jpg;*.jpeg&quot;</span><span class="p">)])</span>
+        <span class="k">if</span> <span class="n">file_path</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">uploaded_image_path</span> <span class="o">=</span> <span class="n">file_path</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image_label</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Uploaded: </span><span class="si">{</span><span class="n">file_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">preview_button</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">)</span>  <span class="c1"># Enable preview button</span></div>
+
+
+<div class="viewcode-block" id="ImageProcessingPage.preview_image">
+<a class="viewcode-back" href="../../gui.html#pages.image_processing_page.ImageProcessingPage.preview_image">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">preview_image</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Opens a new preview window with the uploaded image.</span>
+<span class="sd">        Resizes image to fit window if necessary.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">uploaded_image_path</span><span class="p">:</span>
+            <span class="n">preview_window</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkToplevel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">preview_window</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Image Preview&quot;</span><span class="p">)</span>
+            <span class="n">preview_window</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="s2">&quot;500x500&quot;</span><span class="p">)</span>
+            <span class="n">preview_window</span><span class="o">.</span><span class="n">grab_set</span><span class="p">()</span>  <span class="c1"># Prevents flickering</span>
+
+            <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uploaded_image_path</span><span class="p">)</span>
+            <span class="n">img</span><span class="o">.</span><span class="n">thumbnail</span><span class="p">((</span><span class="mi">450</span><span class="p">,</span> <span class="mi">450</span><span class="p">))</span>
+            <span class="n">img</span> <span class="o">=</span> <span class="n">ImageTk</span><span class="o">.</span><span class="n">PhotoImage</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+
+            <span class="n">image_label</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkLabel</span><span class="p">(</span><span class="n">preview_window</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="n">img</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">image_label</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">img</span>  <span class="c1"># Keep a reference</span>
+            <span class="n">image_label</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ImageProcessingPage.show_info_dialog">
+<a class="viewcode-back" href="../../gui.html#pages.image_processing_page.ImageProcessingPage.show_info_dialog">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">show_info_dialog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Displays a popup window with explanatory text.</span>
+
+<span class="sd">        :param text: Message content to show.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dialog</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkToplevel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">dialog</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Information&quot;</span><span class="p">)</span>
+        <span class="n">dialog</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="s2">&quot;300x150&quot;</span><span class="p">)</span>
+        <span class="n">dialog</span><span class="o">.</span><span class="n">grab_set</span><span class="p">()</span>
+        <span class="n">ctk</span><span class="o">.</span><span class="n">CTkLabel</span><span class="p">(</span><span class="n">dialog</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Inter&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">pady</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+        <span class="n">ctk</span><span class="o">.</span><span class="n">CTkButton</span><span class="p">(</span><span class="n">dialog</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;OK&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">dialog</span><span class="o">.</span><span class="n">destroy</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ImageProcessingPage.change_segment">
+<a class="viewcode-back" href="../../gui.html#pages.image_processing_page.ImageProcessingPage.change_segment">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">change_segment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">segment_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Switches UI to show only the active segment.</span>
+
+<span class="sd">        :param segment_name: Label of the selected segment.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_segment</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_segment</span><span class="o">.</span><span class="n">grid_forget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_segment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="p">[</span><span class="n">segment_name</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_segment</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;nsew&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">segmented_frame</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">segment_name</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ImageProcessingPage.submit_action">
+<a class="viewcode-back" href="../../gui.html#pages.image_processing_page.ImageProcessingPage.submit_action">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">submit_action</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sends selected image classification settings to the backend for training.</span>
+<span class="sd">        Logs training info and receives metrics for display.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">active_tab</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">segmented_frame</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>  
+
+        <span class="k">if</span> <span class="n">active_tab</span> <span class="o">==</span> <span class="s2">&quot;Image Processing&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Image Processing Submitted&quot;</span><span class="p">)</span>
+        
+            <span class="c1"># Create Image Train tab only if it doesn&#39;t exist</span>
+            <span class="k">if</span> <span class="s2">&quot;Image Train&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">segmented_frame</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Image Processing&quot;</span><span class="p">,</span> <span class="s2">&quot;Image Train&quot;</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="p">[</span><span class="s2">&quot;Image Train&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_image_train_frame</span><span class="p">()</span>
+
+            
+
+            
+            <span class="c1"># Activation Function Selection</span>
+            <span class="n">activation_function</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radio_var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        
+            <span class="c1"># Epochs</span>
+            <span class="n">epochs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">epoch_slider</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+
+            <span class="c1"># Optimizer</span>
+            <span class="n">optimizer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizer_combobox</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+            <span class="c1"># Test Size</span>
+            <span class="n">test_size</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_size_slider</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+
+            <span class="c1"># Random State</span>
+            <span class="n">random_state</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state_slider</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+
+            <span class="c1"># Create DataObject</span>
+            <span class="n">dataobject</span> <span class="o">=</span> <span class="n">DataObject</span><span class="p">()</span>
+            <span class="n">dataobject</span><span class="o">.</span><span class="n">image_processing</span><span class="p">[</span><span class="s2">&quot;fileio&quot;</span><span class="p">][</span><span class="s2">&quot;zipFilePath&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_path</span>
+            <span class="n">dataobject</span><span class="o">.</span><span class="n">image_processing</span><span class="p">[</span><span class="s2">&quot;fileio&quot;</span><span class="p">][</span><span class="s2">&quot;isZipped&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">dataobject</span><span class="o">.</span><span class="n">image_processing</span><span class="p">[</span><span class="s2">&quot;model_params&quot;</span><span class="p">][</span><span class="s2">&quot;activation_fn&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">activation_function</span>
+            <span class="n">dataobject</span><span class="o">.</span><span class="n">image_processing</span><span class="p">[</span><span class="s2">&quot;model_params&quot;</span><span class="p">][</span><span class="s2">&quot;optimizer&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">optimizer</span>
+            <span class="n">dataobject</span><span class="o">.</span><span class="n">image_processing</span><span class="p">[</span><span class="s2">&quot;training_params&quot;</span><span class="p">][</span><span class="s2">&quot;epochs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">epochs</span>
+            <span class="n">dataobject</span><span class="o">.</span><span class="n">image_processing</span><span class="p">[</span><span class="s2">&quot;train_test_split&quot;</span><span class="p">][</span><span class="s2">&quot;test_size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">test_size</span>
+            <span class="n">dataobject</span><span class="o">.</span><span class="n">image_processing</span><span class="p">[</span><span class="s2">&quot;train_test_split&quot;</span><span class="p">][</span><span class="s2">&quot;random_state&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">random_state</span>
+
+            <span class="c1"># Convert DataObject to JSON</span>
+            <span class="n">json_data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;dataobject&quot;</span><span class="p">:</span> <span class="n">dataobject</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()}</span>
+
+            <span class="k">try</span><span class="p">:</span>
+
+                <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+                    <span class="s1">&#39;http://127.0.0.1:8000/api/imageprocessing/&#39;</span><span class="p">,</span>
+                    <span class="n">json</span><span class="o">=</span><span class="n">json_data</span>
+                <span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+                    <span class="n">response_data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+                    
+                    <span class="c1"># Extract confusion matrix data</span>
+                    <span class="n">cm_data</span><span class="o">=</span> <span class="n">response_data</span><span class="p">[</span><span class="s2">&quot;confusionMatrix&quot;</span><span class="p">]</span>
+                    <span class="n">test_loss</span> <span class="o">=</span><span class="n">response_data</span><span class="p">[</span><span class="s2">&quot;testLoss&quot;</span><span class="p">]</span>
+                    <span class="n">test_accuracy</span><span class="o">=</span><span class="n">response_data</span><span class="p">[</span><span class="s2">&quot;testAccuracy&quot;</span><span class="p">]</span>
+                    
+                    <span class="k">if</span> <span class="n">cm_data</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">cm_data</span><span class="p">)</span>  <span class="c1"># Call plotting function</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Response received successfully&quot;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="s2">&quot;Confusion Matrix data not received.&quot;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span>
+                        <span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="s1">&#39;File upload failed.&#39;</span><span class="p">)</span>
+                    <span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+        <span class="k">elif</span> <span class="n">active_tab</span> <span class="o">==</span> <span class="s2">&quot;Image Train&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Image Train Submitted&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ImageProcessingPage.plot_confusion_matrix">
+<a class="viewcode-back" href="../../gui.html#pages.image_processing_page.ImageProcessingPage.plot_confusion_matrix">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_confusion_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cm_data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Renders a matplotlib confusion matrix inside a popup.</span>
+
+<span class="sd">        :param cm_data: Dictionary with matrix values and labels.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">popup</span> <span class="o">=</span> <span class="n">ctk</span><span class="o">.</span><span class="n">CTkToplevel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">popup</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Confusion Matrix&#39;</span><span class="p">)</span>
+        <span class="n">popup</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="s1">&#39;800x800&#39;</span><span class="p">)</span>
+        
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">cm_data</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">]</span>
+        <span class="n">cm_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">cm_data</span><span class="p">[</span><span class="s2">&quot;values&quot;</span><span class="p">])</span>
+        
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+        <span class="n">cax</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">cm_values</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">cax</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cm_values</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cm_values</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cm_values</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">)</span>
+
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">labels</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">labels</span><span class="p">)</span>
+        
+        <span class="n">canvas</span> <span class="o">=</span> <span class="n">FigureCanvasTkAgg</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">master</span><span class="o">=</span><span class="n">popup</span><span class="p">)</span>
+        <span class="n">canvas_widget</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">get_tk_widget</span><span class="p">()</span>
+        <span class="n">canvas_widget</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ImageProcessingPage.cancel_file">
+<a class="viewcode-back" href="../../gui.html#pages.image_processing_page.ImageProcessingPage.cancel_file">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">cancel_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Handles file cancellation and resets only this page.&quot;&quot;&quot;</span>
+        
+        <span class="n">page_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>  <span class="c1"># Get the page&#39;s class name</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">file_paths</span><span class="p">[</span><span class="n">page_name</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># ✅ Reset file path for this page</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">file_names</span><span class="p">[</span><span class="n">page_name</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># ✅ Reset file name for this page</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">page_data</span><span class="p">[</span><span class="n">page_name</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>   <span class="c1"># ✅ Reset data for this page</span>
+
+        <span class="c1"># ✅ Remove the sidebar button for this page only</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">update_sidebar_buttons</span><span class="p">(</span><span class="n">page_name</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;remove&quot;</span><span class="p">)</span>
+
+        <span class="c1"># ✅ Reset this page instance so it opens fresh on next upload</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">page_name</span><span class="si">}</span><span class="s2">_instance&quot;</span><span class="p">):</span>
+            <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">page_name</span><span class="si">}</span><span class="s2">_instance&quot;</span><span class="p">)</span>
+
+        <span class="c1"># ✅ Go back to file upload page</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">show_page</span><span class="p">(</span><span class="s2">&quot;file_upload&quot;</span><span class="p">)</span></div>
+</div>
+
+
+
+
+
+
+    
+
+        
+
+        
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, MAIT24-25.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

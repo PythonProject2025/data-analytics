@@ -81,15 +81,15 @@ class ImageUIManager:
         self.context.upload_button = ctk.CTkButton(
             frame, text="Upload Image", image=self.context.upload_button_image, command=self.upload_image
         )
-        self.context.upload_button.grid(row=0, column=0, padx=10, pady=10)
+        self.context.upload_button.grid(row=5, column=0, padx=10, pady=10)
 
         self.context.image_label = ctk.CTkLabel(frame, text="No file uploaded", font=self.font_normal)
-        self.context.image_label.grid(row=1, column=0, padx=10, pady=5)
+        self.context.image_label.grid(row=6, column=0, padx=10, pady=5)
 
         self.context.preview_button = ctk.CTkButton(
             frame, text="Preview Image", command=self.preview_image, state="disabled"
         )
-        self.context.preview_button.grid(row=2, column=0, padx=10, pady=10)
+        self.context.preview_button.grid(row=7, column=0, padx=10, pady=10)
         
         return frame
 
