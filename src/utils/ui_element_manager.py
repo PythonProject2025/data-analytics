@@ -39,7 +39,7 @@ class UIElementManager:
             width=24,  
             height=24,
             fg_color="transparent",  # Make button background transparent
-            hover_color="#d3d3d3",  # Optional: subtle hover effect
+            hover_color="#d3d3d3",  #  hovering effect
             command=lambda: self.show_info_dialog(text)
         )
         button.grid(row=row, column=column, padx=5, sticky="e")
@@ -54,17 +54,16 @@ class UIElementManager:
         dialog_width = 350
         dialog_height = 180
 
-        # --- Center the dialog on the screen ---
+        # Centering the dialog on the screen
         screen_width = dialog.winfo_screenwidth()
         screen_height = dialog.winfo_screenheight()
         x = int((screen_width / 2) - (dialog_width / 2))
         y = int((screen_height / 2) - (dialog_height / 2))
         dialog.geometry(f"{dialog_width}x{dialog_height}+{x}+{y}")
 
-        # --- Make it modal ---
         dialog.grab_set()
 
-        # --- Wrapped Label ---
+        # Wrapped Label
         ctk.CTkLabel(
             dialog,
             text=text,
@@ -74,7 +73,6 @@ class UIElementManager:
         ).pack(padx=20, pady=(20, 10), expand=True)
 
 
-        # --- OK Button ---
         ctk.CTkButton(
             dialog,
             text="OK",

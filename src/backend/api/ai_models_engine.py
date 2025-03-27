@@ -18,14 +18,11 @@ class  AIModelAPIView (APIView):
         data_dict = request.data.get("dataobject", {})
         if "dataobject" in data_dict:  
             data_dict = data_dict["dataobject"]
-        # Create an instance of DataObject
         data_object = DataObject()
         data_object.data_filtering = data_dict.get("data_filtering", {})
         data_object.ai_model = data_dict.get("ai_model", {})
 
-        # Run selected model
         response_data = self.run_selected_model(data_object)
-        print("Response Data:", response_data)
         return Response(response_data, status=status.HTTP_200_OK)
 
 
@@ -34,7 +31,6 @@ class  AIModelAPIView (APIView):
         params = data_object.data_filtering["Outlier Detection"]
 
         if not params:
-            print(f"Warning: No parameters found for {model_name}, using defaults.")
             return BaseModel.HYPERPARAMETER_RANGES.get(model_name, {})
 
         validated_params = {
@@ -42,14 +38,11 @@ class  AIModelAPIView (APIView):
             for key, value in params.items()
         }
         
-        print(f"Extracted Hyperparameters for {model_name}: {validated_params}")  
         return validated_params
 
     def run_selected_model(self, data_object):
         """Runs only the selected AI model based on user input."""
         
-        # Get the selected model from DataObject
-        # selected_model = data_object.ai_model["Selected Model"]
         selected_model = data_object.ai_model.get("Selected Model")
         problem_type = data_object.ai_model.get("problem_type")
 
@@ -59,15 +52,12 @@ class  AIModelAPIView (APIView):
         
         # Extract hyperparameters
         model_params = self.extract_hyperparameters(data_object, selected_model)
-        print(model_params)
         try:
             split_data = data_object.data_filtering["Train-Test Split"]["split_data"]
             if not all(k in split_data for k in ["X_train", "X_test", "y_train", "y_test"]):
                 return {"error": "Missing one or more training/testing data in DataObject!"}
-            # ✅ Convert X_train and X_test using DataFrame to handle dicts
             X_train = pd.DataFrame(split_data["X_train"]).values if split_data["X_train"] else None
             X_test = pd.DataFrame(split_data["X_test"]).values if split_data["X_test"] else None
-            # ✅ Convert labels directly to arrays
             y_train = np.array(split_data["y_train"]) if split_data["y_train"] else None
             y_test = np.array(split_data["y_test"]) if split_data["y_test"] else None
             
@@ -80,22 +70,6 @@ class  AIModelAPIView (APIView):
         if X_train.size == 0 or X_test.size == 0 or y_train.size == 0 or y_test.size == 0:
             return {"error": "Training or testing data arrays are empty!"}
 
-        print(f"Debugging Data Before Training:")
-        print(f"X_train Shape: {X_train.shape}, y_train Shape: {y_train.shape}")
-        # print(data_object.ai_model["RandomForest"]["n_estimators"])
-        # Initialize only the selected model
-        # model=None
-        # if selected_model == "RandomForest":
-        #     model = RandomForest(problem_type="classification", options=data_object.ai_model["RandomForest"])
-        # elif selected_model == "CatBoost":
-        #     model = Catboost(problem_type="classification", options=data_object.ai_model["CatBoost"])
-        # elif selected_model == "ArtificialNeuralNetwork":
-        #     model = ArtificialNeuralNetwork(problem_type="classification", options=data_object.ai_model["ArtificialNeuralNetwork"])
-        # elif selected_model == "XGBoost":
-        #     model = XGBoost(problem_type="regression", options=data_object.ai_model["XGBoost"])
-        # else:
-        #     return {"error": f"Selected model '{selected_model}' is not recognized!"}
-        
         model = None
         if selected_model == "RandomForest":
             model = RandomForest(problem_type=problem_type, options=data_object.ai_model["RandomForest"])
@@ -108,45 +82,13 @@ class  AIModelAPIView (APIView):
         else:
             return {"error": f"Selected model '{selected_model}' is not recognized!"}
 
-        # Assign Data
-        # model.X_train, model.X_test, model.y_train, model.y_test = X_train, X_test, y_train, y_test
-        # print(model.X_train, model.X_test, model.y_train, model.y_test)
-        # Train the model
         model.train(X_train, y_train)
 
         # Evaluate the model
         results = model.evaluate(X_test, y_test)
         
         if results is None:
-            print(f"Warning: Model {selected_model} returned None during evaluation.")
-            return {"error": f"Model {selected_model} failed during evaluation."}
-
-        # # Store results in DataObject under respective category
-        # if selected_model in ["RandomForest", "CatBoost", "ArtificialNeuralNetwork"]:  # Classification models
-        #     data_object.outputs["AI_Classification"][selected_model] = {
-        #         "Accuracy": results.get("Accuracy", 0.0),
-        #         "Confusion Matrix": results.get("Confusion Matrix", [])
-        #     }
-        #     return {
-        #         "message": f"Classification completed for {selected_model}",
-        #         "results": data_object.outputs["AI_Classification"][selected_model]
-        #     }
-        
-        # elif selected_model == "XGBoost":  # Regression model
-        #     data_object.outputs["AI_Regression"][selected_model] = {
-        #         "MAE": results.get("MAE", 0.0),
-        #         "MSE": results.get("MSE", 0.0),
-        #         "R2": results.get("R2", 0.0)
-        #     }
-        # print("ai working successfully")
-        # print(data_object.outputs["AI_Classification"][selected_model])
-        # response_data = {
-        #     "MAE": data_object.outputs["AI_Regression"][selected_model]["MAE"],
-        #     "MSE": data_object.outputs["AI_Regression"][selected_model]["MSE"],
-        #     "R2": data_object.outputs["AI_Regression"][selected_model]["R2"]
-        # }
-        # print(response_data)
-        # return response_data    
+            return {"error": f"Model {selected_model} failed during evaluation."}   
         
         if problem_type == "classification":
             data_object.outputs["AI_Classification"][selected_model] = {

@@ -13,7 +13,6 @@ class ClassificationAPIView (APIView):
     def post(self, request):
         
         data_dict = request.data.get("dataobject", {})
-        print(data_dict.get("classification", {}))
         if not data_dict:
             return Response({"error": "Invalid request, 'dataobject' missing"}, status=status.HTTP_400_BAD_REQUEST)
         
@@ -23,7 +22,6 @@ class ClassificationAPIView (APIView):
         try:
             split_data = data_object.data_filtering["Train-Test Split"]["split_data"]
 
-            # ✅ Ensure all keys exist before conversion
             if not all(k in split_data for k in ["X_train", "X_test", "y_train", "y_test"]):
                 return {"error": "Missing one or more training/testing data in DataObject!"}
             
@@ -36,15 +34,12 @@ class ClassificationAPIView (APIView):
             data_test=  pd.DataFrame(X_test_list)
             target_train= pd.DataFrame(y_train_list)
             target_test= pd.DataFrame(y_test_list)
-            print(data_train)
         except KeyError:
             return {"error": "Missing training/testing data in DataObject!"}
 
         if data_train.size == 0 or data_test.size == 0 or target_train.size == 0 or target_test.size == 0:
             return {"error": "Training or testing data arrays are empty!"}
         # Prompt user to select a model
-        print("Available models: RandomForest, SVC, KNN")
-        #selected_model = input("Enter the name of the model you want to use: ")
         selected_model = data_object.classification["Model_Selection"]
 
         # Create and use the selected model
@@ -66,8 +61,6 @@ class ClassificationAPIView (APIView):
             # Train and evaluate the model
             model.train()
             accuracy, report, cm, mse = model.evaluate(model.model)
-            print("classificiation done")
-            print(accuracy, report, cm, mse)
             response_data = {
             "accuracy": accuracy,
             "cm": cm,

@@ -66,7 +66,7 @@ class RequestManager:
                 self.context.managers["visualization"].plot_boxplot(self.context.selected_columns[0], cleaned=True)
 
         except json.JSONDecodeError as e:
-            print("❌ Error: Failed to parse cleaned data JSON:", e)
+            print("Error: Failed to parse cleaned data JSON:", e)
             self.context.cleaned_data = None
 
     def run_interpolation(self):
@@ -93,7 +93,7 @@ class RequestManager:
                         title="Interpolated Data"
                     )
             except json.JSONDecodeError as e:
-                print("❌ Error: Failed to parse interpolated data JSON:", e)
+                print("Error: Failed to parse interpolated data JSON:", e)
                 self.context.interpolated_data = None
 
     def run_smoothing(self):
@@ -138,15 +138,13 @@ class RequestManager:
                         title="Smoothed Data"
                     )
             except json.JSONDecodeError as e:
-                print("❌ Error: Failed to parse smoothed data JSON:", e)
+                print(" Error: Failed to parse smoothed data JSON:", e)
                 self.context.smoothed_data = None
 
     def run_scaling_and_encoding(self):
         if hasattr(self.context, "smoothed_data"):
-            print("✅ Using Smoothed Data for Scaling & Encoding")
             data_str = self.context.smoothed_data_str
         else:
-            print("⚠️ Smoothed Data Not Found. Using Raw Data for Scaling & Encoding")
             if not hasattr(self.context, "data"):
                 messagebox.showerror("Error", "No raw data found! Please upload a dataset first.")
                 return
@@ -162,14 +160,12 @@ class RequestManager:
             "smoothed_data": data_str
         }
 
-        print("Sending request to backend for Scaling & Encoding...")
         response = self.send_request("scaling_encoding", json_data)
 
         if response and "processed_data" in response:
             processed_data = response["processed_data"]
 
             if not isinstance(processed_data, dict):
-                print("Error: Processed data is not a valid dictionary.")
                 messagebox.showerror("Error", "Invalid processed data format received.")
                 return
 
@@ -178,9 +174,6 @@ class RequestManager:
             cleaned_data = {k: list(v)[:min_length] for k, v in processed_data.items()}
 
             self.context.scaled_encoded_data = pd.DataFrame(cleaned_data)
-            print("✅ Scaled & Encoded Data received:")
-            print(self.context.scaled_encoded_data)
             self.context.managers["preview"].preview_scaled_encoded_data()
         else:
-            print("❌ Error: No processed data received from backend.")
             messagebox.showerror("Error", "Failed to retrieve scaled and encoded data.")

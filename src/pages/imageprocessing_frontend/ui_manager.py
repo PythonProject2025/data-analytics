@@ -91,12 +91,6 @@ class ImageUIManager:
         
         return frame
 
-
-    # def create_image_train_frame(self):
-    #     frame = ctk.CTkFrame(self.context.segment_container, fg_color=self.color_secondary, corner_radius=10)
-    #     frame.grid_columnconfigure(0, weight=1)
-    #     return frame
-
     def upload_image(self):
         file_path = filedialog.askopenfilename(filetypes=[("Image Files", "*.png;*.jpg;*.jpeg")])
         if file_path:

@@ -44,11 +44,11 @@ class AIVisualization:
         y_pred = np.array(y_pred)
         y_test = np.array(y_test)
 
-        # 🧹 Clear previous widgets in graph display
+        # Clear previous widgets in graph display
         for widget in self.graph_display.winfo_children():
             widget.destroy()
 
-        # 🧾 Display regression metrics (MAE, MSE, R²)
+        # Display regression metrics (MAE, MSE, R²)
         metrics_text = f"MAE: {mae:.4f} | MSE: {mse:.4f} | R² Score: {r2:.4f}"
         metrics_label = ctk.CTkLabel(
             self.graph_display,
@@ -59,7 +59,6 @@ class AIVisualization:
         )
         metrics_label.pack(pady=(5, 0))
 
-        # 📊 Create regression scatter plot with identity line
         fig = Figure(figsize=(5, 4), dpi=100)
         ax = fig.add_subplot(111)
         ax.scatter(y_test, y_pred, alpha=0.5, label="Predictions")

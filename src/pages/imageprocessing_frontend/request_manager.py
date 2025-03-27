@@ -19,11 +19,6 @@ class ImageRequestManager:
             print("Image Train Submitted")
 
     def _handle_image_processing_submission(self):
-        print("Image Processing Submitted")
-
-        # if "Image Train" not in self.context.segments:
-        #     self.context.segmented_frame.configure(values=["Image Processing", "Image Train"])
-        #     self.context.managers["ui"].initialize_segment("Image Train")
 
         # Extract parameters from context
         activation_function = self.context.radio_var.get()
@@ -32,10 +27,6 @@ class ImageRequestManager:
         test_size = float(self.context.test_size_slider.get())
         random_state = int(self.context.random_state_slider.get())
 
-        print(epochs)
-
-
-        # Build data object
         dataobject = DataObject()
         dataobject.image_processing["fileio"]["zipFilePath"] = self.context.file_path
         dataobject.image_processing["fileio"]["isZipped"] = True
@@ -87,7 +78,6 @@ class ImageRequestManager:
                     result_label.grid(row=0, column=0, padx=10, pady=5, sticky="new")
                 if cm_data:
                     self.context.managers["visualization"].plot_confusion_matrix(cm_data)
-                    print("Response received successfully")
                 else:
                     messagebox.showerror("Error", "Confusion Matrix data not received.")
             else:

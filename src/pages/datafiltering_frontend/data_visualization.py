@@ -19,7 +19,7 @@ class DataVisualization:
             plot_data = self.context.data
 
         if column_name not in plot_data.columns:
-            print(f"❌ Column '{column_name}' not found in dataset!")
+            print(f" Column '{column_name}' not found in dataset!")
             return
 
         if cleaned:
@@ -166,7 +166,7 @@ class DataVisualization:
             messagebox.showerror("Error", f"Column '{column_name}' not found in selected datasets!")
             return
 
-        # ✅ Convert timestamps to same format for both datasets
+        # Convert timestamps to same format for both datasets
         def process_datetime(df):
             if isinstance(df, pd.DataFrame):
                 date_column = df.iloc[:, 0]  # Assume first column is Date/Time
@@ -181,33 +181,31 @@ class DataVisualization:
         left_timestamps = process_datetime(left_df)
         right_timestamps = process_datetime(left_df)
 
-        # ✅ Clear previous widgets in the compare popup
+        # Clear previous widgets in the compare popup
         for widget in self.context.compare_popup.winfo_children():
             if isinstance(widget, tk.Canvas):
                 widget.destroy()
 
-        # ✅ Create Matplotlib Figure with Two Subplots (Side-by-Side)
+        # Create Matplotlib Figure with Two Subplots (Side-by-Side)
         fig, axes = plt.subplots(1, 2, figsize=(12, 5))  # Side-by-side comparison
         fig.patch.set_facecolor("#E0E0E0")  # Match UI Theme
-
-        # ✅ Decide whether to use Boxplot or Line Graph
         use_boxplot = (left_data == "Raw Data" and right_data == "Outlier Cleaned Data")
 
         if use_boxplot:
-            # ✅ Left Graph - Boxplot (Raw Data)
+            # Left Graph - Boxplot (Raw Data)
             axes[0].boxplot(left_df[column_name].dropna(), vert=False, patch_artist=True,
                             boxprops=dict(facecolor='lightblue', edgecolor='black'),
                             medianprops=dict(color='red'))
             axes[0].set_title(f"{left_data} - Box Plot", fontsize=11)
 
-            # ✅ Right Graph - Boxplot (Outlier Cleaned Data, also blue color)
+            # Right Graph - Boxplot (Outlier Cleaned Data, also blue color)
             axes[1].boxplot(right_df[column_name].dropna(), vert=False, patch_artist=True,
                             boxprops=dict(facecolor='lightblue', edgecolor='black'),
                             medianprops=dict(color='red'))
             axes[1].set_title(f"{right_data} - Box Plot", fontsize=11)
 
         else:
-            # ✅ Left Graph - Line Plot
+            # Left Graph - Line Plot
             axes[0].plot(left_timestamps, left_df[column_name], color="blue", label=left_data)
             axes[0].set_title(f"{left_data} - Line Graph", fontsize=11)
             axes[0].set_xlabel("Timestamp")
@@ -215,12 +213,12 @@ class DataVisualization:
             axes[0].legend()
             axes[0].grid(True, linestyle="--", alpha=0.5)
 
-            # ✅ Format X-axis for Date/Time
+            # Format X-axis for Date/Time
             axes[0].xaxis.set_major_formatter(mdates.DateFormatter("%d-%m-%Y"))
             axes[0].xaxis.set_major_locator(mdates.AutoDateLocator())
             plt.setp(axes[0].xaxis.get_majorticklabels(), rotation=30, ha="right")
 
-            # ✅ Right Graph - Line Plot
+            # Right Graph - Line Plot
             axes[1].plot(right_timestamps, right_df[column_name], color="red", label=right_data)
             axes[1].set_title(f"{right_data} - Line Graph", fontsize=11)
             axes[1].set_xlabel("Timestamp")
@@ -228,20 +226,20 @@ class DataVisualization:
             axes[1].legend()
             axes[1].grid(True, linestyle="--", alpha=0.5)
 
-            # ✅ Format X-axis for Date/Time
+            # Format X-axis for Date/Time
             axes[1].xaxis.set_major_formatter(mdates.DateFormatter("%d-%m-%Y"))
             axes[1].xaxis.set_major_locator(mdates.AutoDateLocator())
             plt.setp(axes[1].xaxis.get_majorticklabels(), rotation=30, ha="right")
 
-        # ✅ Adjust layout to prevent X-label overlap
+        # Adjust layout to prevent X-label overlap
         plt.subplots_adjust(bottom=0.3)
 
-        # ✅ Embed the Matplotlib Figure inside Tkinter Frame
+        # Embed the Matplotlib Figure inside Tkinter Frame
         canvas = FigureCanvasTkAgg(fig, master=self.context.compare_popup)
         canvas_widget = canvas.get_tk_widget()
         canvas_widget.grid(row=2, column=0, columnspan=2, pady=10, sticky="nsew")
 
-        # ✅ Add Toolbars Below Each Graph
+        # Add Toolbars Below Each Graph
         toolbar_frame_left = ctk.CTkFrame(self.context.compare_popup, fg_color="#E0E0E0")
         toolbar_frame_left.grid(row=3, column=0, padx=10, pady=5, sticky="n")
         toolbar_left = NavigationToolbar2Tk(canvas, toolbar_frame_left)
@@ -252,6 +250,6 @@ class DataVisualization:
         toolbar_right = NavigationToolbar2Tk(canvas, toolbar_frame_right)
         toolbar_right.update()
 
-        # ✅ Render the plot
+        # Render the plot
         canvas.draw()
 
